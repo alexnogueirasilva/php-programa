@@ -3,9 +3,7 @@ require_once 'cabecalho.php';
 include_once 'vrf_lgin.php';
 include_once '../core/crud.php';
 
-//$queryDepart = "SELECT * FROM departamentos";
-
-//$queryUsuarios = "SELECT usr.id, usr.nome, usr.email, usr.nivel,usr.status,usr.id_dep, dep.nome as nome_dep FROM usuarios as usr INNER JOIN departamentos as dep ON usr.id_dep = dep.id ORDER BY status ASC";
+$queryCliente = "SELECT * FROM cliente";
 
 ?>
 <div class="container-fluid">
@@ -16,11 +14,11 @@ include_once '../core/crud.php';
 		<!-- /.col-lg-12 -->
 	</div>
 	
-	<h1>Cadastra de cliente</h1><h4>Insira os dados do novo cliente</h4>
-	<form id="cdt">
+	<h1>Cadastro de cliente</h1><h4>Insira os dados do novo cliente</h4>
+	<form method="POST" id="cdt">
 		<div class="row">
 			<div class="col-lg-12">
-				<div class="form-inline">
+				<div-- class="form-inline">
 					<div class="form-group">
 						<input type="text" hidden id="tipo" value="criarCliente">					
 						<div class="input-group">
@@ -29,12 +27,12 @@ include_once '../core/crud.php';
 							<span class="input-group-addon"><span class="fa fa-user"></span></span>
 						</div>
 					</div>
-					<div class="form-group">
+					<!--div class="form-group">
 						<div class="input-group">
 							<input type="email" class="form-control" size="50" id="email" name="email" placeholder="E-mail" required >
 							<span class="input-group-addon"><span class="fa fa-envelope"></span></span>
 						</div>
-					</div>
+					</div-->
 				</div>	
 				<br>
 
@@ -42,13 +40,13 @@ include_once '../core/crud.php';
 					
 					<div class="form-group">
 						<div class="input-group">
-							<select class="form-control" name="departamento" id="departamento" required>
+							<select class="form-control" name="departamento" id="departamento">
 								<option value="" selected disabled>Departamento</option>
 								<?php
-								$selectDepart = crud::dataview($queryDepart);
-								if($selectDepart->rowCount()>0)
+								$selectCliente = crud::dataview($queryCliente);
+								if($selectCliente->rowCount()>0)
 								{
-									while($row=$selectDepart->fetch(PDO::FETCH_ASSOC)){
+									while($row=$selectCliente->fetch(PDO::FETCH_ASSOC)){
 										?>
 										<option value="<?php print($row['id']);?>"><?php print($row['nome']); ?></option>
 										<?php
@@ -79,7 +77,7 @@ include_once '../core/crud.php';
 	</form>
 
 
-	<!-- LISTAGEM USUÁRIOS -->
+	<!-- LISTAGEM CLIENTE -->
 
 	<div class="row">
 		<div class="col-sm-12"> 
@@ -95,10 +93,7 @@ include_once '../core/crud.php';
 						<tr>
 							<th>Código</th>
 							<th>Nome</th>
-							<th>E-mail</th>
-							<th>Nível</th>                                
 							<th>status</th>                                
-							<th>Departamento</th>                                
 							<th>Editar</th>                                
 							<th>Excluir</th>                                
 							<th>Desativar</th>                    
@@ -108,25 +103,19 @@ include_once '../core/crud.php';
 					<tbody>
 
 						<?php
-						$dados = crud::dataview($queryUsuarios);
+						$dados = crud::dataview($queryCliente);
                                        
 						if($dados->rowCount()>0){
 							while($row=$dados->fetch(PDO::FETCH_ASSOC)){
 
 								?> 
 								<tr>
-									<td><?php print($row['id']); ?></td>
-									<td><?php print($row['nome']); ?></td>       
-									<td><?php print($row['email']); ?></td>       
-									<td><?php print($row['nivel']); ?></td>       
+									<td><?php print($row['codCliente']); ?></td>
+									<td><?php print($row['nomeCliente']); ?></td>       
 									<td><?php print($row['status']); ?></td>       
-									<td><?php print($row['nome_dep']); ?></td>
 									<td><a class="btn btn-info waves-effect waves-light" id="btnEdita" data-toggle="modal" data-target="#modalEditaUsuario" data-whatever="@getbootstrap"
-										data-codigo="<?php print($row['id']); ?>" 
-										data-nome="<?php print($row['nome']); ?>"
-										data-email="<?php print($row['email']); ?>"
-										data-nivel="<?php print($row['nivel']); ?>"
-										data-dep="<?php print($row['id_dep']); ?>"
+										data-codigo="<?php print($row['codCliente']); ?>" 
+										data-nome="<?php print($row['nomeCliente']); ?>"
 										data-statusatual="<?php print($row['status']); ?>" 
 
 										>Editar</a></td>
@@ -140,7 +129,7 @@ include_once '../core/crud.php';
 							}
 
 						}else{              
-							echo "<p class='text-danger'>Sem demandas abertas</p>";               
+							echo "<p class='text-danger'>Sem Cliente cadastrado</p>";               
 						}
 						?>
 
@@ -165,7 +154,7 @@ include_once '../core/crud.php';
 					<input type="hidden" name="statusAtual" id="statusAtual">                        
 					<div class="col-md-12">
 						<div id="contextoModal">
-							<h2>Você vai DESATIVAR o usuário: <span id="nomeUsuario"></span>?</h2>
+							<h2>Você vai DESATIVAR o Cliente ?: <span id="nomeUsuario"></span>?</h2>
 						</div>
 					</div>
 				</div>  
@@ -193,7 +182,7 @@ include_once '../core/crud.php';
 					<input type="hidden" name="statusAtualAt" id="statusAtualAt">                        
 					<div class="col-md-12">
 						<div id="contextoModal">
-							<h2>Você vai ATIVAR o usuário: <span id="nomeUsuarioAt"></span>?</h2>
+							<h2>Você vai ATIVAR o Cliente: <span id="nomeUsuarioAt"></span>?</h2>
 						</div>
 					</div>
 				</div>  
@@ -221,7 +210,7 @@ include_once '../core/crud.php';
 					
 					<div class="col-md-12">
 						<div id="contextoModal">
-							<h2>Você vai EXCLUIR o usuário: <span id="ExcNomeUsuario"></span>?</h2>
+							<h2>Você vai EXCLUIR o Cliente: <span id="ExcNomeUsuario"></span>?</h2>
 						</div>
 					</div>
 				</div>  
@@ -276,10 +265,10 @@ include_once '../core/crud.php';
 													<select class="form-control" width="100" name="edtdepartamento" id="edtdepartamento" required>
 														<option value="" selected disabled>Departamento</option>
 														<?php
-														$selectDepart = crud::dataview($queryDepart);
-														if($selectDepart->rowCount()>0)
+														$selectCliente = crud::dataview($queryCliente);
+														if($selectCliente->rowCount()>0)
 														{
-															while($row=$selectDepart->fetch(PDO::FETCH_ASSOC)){
+															while($row=$selectCliente->fetch(PDO::FETCH_ASSOC)){
 																?>
 																<option value="<?php print($row['id']);?>"><?php print($row['nome']); ?></option>
 																<?php
@@ -293,28 +282,15 @@ include_once '../core/crud.php';
 											<div class="form-group">
 												<div class="input-group">
 													<select class="form-control" name="edtnivelUser" id="edtnivelUser" required="true">
-														<option value="">Nível</option>
-														<option value="1">1 - Administrador</option>
-														<option value="2">2 - Usuário</option>
+														<option value="">status</option>
+														<option value="1">1 - Ativo</option>
+														<option value="2">2 - Inativo</option>
 													</select>
 													<span class="input-group-addon"><span class="fa fa-signal"></span></span>
 												</div>
 											</div>
 										</div>
 										<br>
-											<div class="form-group">
-												<div class="input-group">
-													<input type="password" class="form-control" id="edtPass" name="edtPass" placeholder="Senha" required >
-													<span class="input-group-addon"><span class="fa fa-key"></span></span>
-												</div>
-											</div>
-											<div class="form-group">
-												<div class="input-group">
-													<input type="password" class="form-control" id="edtPass2" name="edtPass2" placeholder="Repita a Senha" required value="">
-													<span class="input-group-addon"><span class="fa fa-key"></span></span>
-												</div>
-											</div>
-
 										<button type="submit" class="btn btn-info btn-md btn-block" id="submit"><span class="fa fa-save"></span> Salvar</button>
 
 										</div>				
@@ -343,36 +319,23 @@ require_once "rodape.php";
 ?>
 
 <script type="text/javascript">
-	$(document).ready(function(){
-		
-		permissaoNivel();
-		
-		$('#cdt').submit(function(){
-			var tipo = "cadUsuario";		
-			var nome = $("#nome").val();
-			var email = $("#email").val();
-			var dep = $("#departamento").val();
-			var nivel = $("#nivelUser").val();
-			var pass = $("#uPass").val();
-			var pass2 = $("#uPass2").val();
-
-
+	
 			if (pass == pass2) {
 			$.ajax({ //Função AJAX
 					url:"../core/save.php",			//Arquivo php
 					type:"post",				//Método de envio
-					data: {tipo:tipo, nome:nome, email:email, nivel:nivel, dep:dep, pass:pass},	//Dados
+					data: {tipo:Cliente, nome:nome, },	//Dados
 					success: function (result){	
 		   				//alert(result)
 		   				if(result==1){	
 		   					alert("Cadastrado com Sucesso!");
-		   					$("#nome").val('');		                			
-		   					$("#email").val('');
+		   					$("#nomeCliente").val('');		                			
+		   					//$("#email").val('');
 		   					$("#nivel").val('');
-		   					$("#uPass").val('');
-		   					$("#uPass2").val('');
-		   					$("#departamento").val('');
-		   					$("#nivelUser").val('');
+		   					//$("#uPass").val('');
+		   					//$("#uPass2").val('');
+		   					//$("#departamento").val('');
+		   					//$("#nivelUser").val('');
 
 		                			//location.href('index_usr.php')
 		                		}else{

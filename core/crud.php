@@ -188,13 +188,13 @@ class crud
 		
 	}
 
-	public static function criarCliente($nomeCleinte, $statusCliente){
+	public static function criarCliente($nomeCliente, $statusCliente){
 
 		$pdo = Database::connect();
 
 		try{
 			$stmt=$pdo->prepare("INSERT INTO cliente(nomeCliente, status) VALUES (:nomeCliente, :status)");
-			$stmt->bindparam(":nomeCliente", $nomeCleinte);
+			$stmt->bindparam(":nomeCliente", $nomeCliente);
 			$stmt->bindparam(":status", $statusCliente);
 
 			$stmt->execute();
@@ -215,8 +215,8 @@ class crud
 		$pdo = Database::connect();
 
 		try{
-			$stmt=$pdo->prepare("DELETE FROM cliente WHERE idCliente=:idCliente");
-			$stmt->bindparam(":idCliente", $idCliente);
+			$stmt=$pdo->prepare("DELETE FROM cliente WHERE codCliente=:codCliente");
+			$stmt->bindparam(":codCliente", $idCliente);
 			$stmt->execute();
 
 		}catch(PDOException $e){
@@ -280,6 +280,19 @@ class crud
 			echo $e->getMessage();	
 			return false;
 		}
+		
+	}
+
+	public static function mostrarCliente(){
+
+		$query = "SELECT * FROM cliente";
+
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare($query);
+		$stmt->execute();
+
+		return $stmt;
 		
 	}
 
