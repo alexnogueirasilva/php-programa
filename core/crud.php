@@ -188,6 +188,25 @@ class crud
 		
 	}
 
+	public static function criarCliente($nomeCleinte, $statusCliente){
+
+		$pdo = Database::connect();
+
+		try{
+			$stmt=$pdo->prepare("INSERT INTO cliente(nomeCliente, status) VALUES (:nomeCliente, :status)");
+			$stmt->bindparam(":nomeCliente", $nomeCleinte);
+			$stmt->bindparam(":status", $statusCliente);
+
+			$stmt->execute();
+
+			return true;
+		}catch(PDOException $e){
+			echo $e->getMessage();
+			return false;
+		}
+
+	}
+
 	public static function edtUsr($id, $nome, $email, $nivel, $dep, $status, $pass){
 
 		$pdo = Database::connect();
