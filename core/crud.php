@@ -207,6 +207,26 @@ class crud
 
 	}
 
+	public static function deleteCleinte($idCliente){
+
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ATT_EXCEPTION);
+
+		$pdo = Database::connect();
+
+		try{
+			$stmt=$pdo->prepare("DELETE FROM cliente WHERE idCliente=:idCliente");
+			$stmt->bindparam(":idCliente", $idCliente);
+			$stmt->execute();
+
+		}catch(PDOException $e){
+			echo $e->getMessage();
+			return false;
+		}
+
+
+	}
+
 	public static function edtUsr($id, $nome, $email, $nivel, $dep, $status, $pass){
 
 		$pdo = Database::connect();
