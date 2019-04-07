@@ -298,6 +298,10 @@ switch ($value) {
 			echo 0;
 		}
 		break;
+
+		case '':
+		
+		break;
 	}
 
 

@@ -15,7 +15,7 @@ $queryCliente = "SELECT * FROM cliente";
 	</div>
 	
 	<h1>Cadastro de cliente</h1><h4>Insira os dados do novo cliente</h4>
-	<form method="POST" id="cdt">
+	<form  id="cdt">
 		<div class="row">
 			<div class="col-lg-12">
 				<div-- class="form-inline">
@@ -27,12 +27,12 @@ $queryCliente = "SELECT * FROM cliente";
 							<span class="input-group-addon"><span class="fa fa-user"></span></span>
 						</div>
 					</div>
-					<!--div class="form-group">
+					<div class="form-group">
 						<div class="input-group">
 							<input type="email" class="form-control" size="50" id="email" name="email" placeholder="E-mail" required >
 							<span class="input-group-addon"><span class="fa fa-envelope"></span></span>
 						</div>
-					</div-->
+					</div>
 				</div>	
 				<br>
 
@@ -57,7 +57,7 @@ $queryCliente = "SELECT * FROM cliente";
 							<span class="input-group-addon"><span class="fa fa-users"></span></span>
 						</div>
 					</div>
-					<!--div class="form-group">
+					<div class="form-group">
 						<div class="input-group">
 							<select class="form-control" name="nivelUser" id="nivelUser" required="true">
 								<option value="">Tipo</option>
@@ -66,7 +66,7 @@ $queryCliente = "SELECT * FROM cliente";
 							</select>
 							<span class="input-group-addon"><span class="fa fa-signal"></span></span>
 						</div>
-					</div-->
+					</div>
 					</div>					
 				</div>				
 				<br><br>
