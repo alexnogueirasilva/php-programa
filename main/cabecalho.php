@@ -44,7 +44,7 @@ $nivel = $_SESSION['nivel'];
         <nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0">
             <div class="navbar-header"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
                 <div class="top-left-part">
-                    <a class="logo" href="#"><b><img src="../assets/images/logo2.png" alt="Home"></b><span class="hidden-xs"><img src="../assets/images/logo-topo2.png" alt="Home"></span>
+                    <a class="logo" href="index_user.php"><b><img src="../assets/images/logo2.png" alt="Home"></b><span class="hidden-xs"><img src="../assets/images/logo-topo2.png" alt="Home"></span>
                     </a>
                 </div>
                 <ul class="nav navbar-top-links navbar-left">
@@ -107,6 +107,7 @@ $nivel = $_SESSION['nivel'];
                         <ul class="nav nav-second-level">
                             <li><a href="relatorios.php">Relatórios</a></li>
                             <li><a href="cad_user.php">Cadastros Usuários</a></li>                            
+                            <li><a href="cad_cliente.php">Cadastros Clientes</a></li>                            
                             <li><a href="cad_dep.php">Cadastros Departamentos</a></li>
                             <li><a href="cad_sla.php">Cadastros SLAs</a></li>                           
                             <li><a href="lista_todas.php">Listar Todas Demandas</a></li>                            
