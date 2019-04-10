@@ -153,6 +153,36 @@ switch ($value) {
 		}
 		break;
 
+		
+		case 'criarCliente':
+		
+		$nomeCliente = $_POST['nomeCliente'];
+		$statusCliente = $_POST['statusCliente'];
+
+		$cdt = crud::criarCliente($nomeCliente, $statusCliente);
+		if($cdt == true){
+			echo 1;
+		}else {
+			echo 0;
+		}
+		break;
+
+		case 'excluirCliente':
+		
+		$codCliente = $_POST['codCliente'];
+		$nomeCliente = $_POST['nomeCliente'];
+		$statusCliente = $_post['statusCliente'];
+
+		$cdt = crud::deleteCliente($codCliente, $nomeCliente, $statusCliente);
+
+		if($cdt == true){
+			echo 1;
+		}else {
+			echo 0;
+		}
+		
+		break;
+
 		//EDITA USUÁRIO
 		case 'editaUsr':
 
@@ -299,9 +329,6 @@ switch ($value) {
 		}
 		break;
 
-		case '':
-		
-		break;
 	}
 
 
