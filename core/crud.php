@@ -188,14 +188,14 @@ class crud
 		
 	}
 
-	public static function criarCliente($nomeCliente, $statusCliente){
+	public static function criarCliente($nomeCliente){
 
 		$pdo = Database::connect();
 
 		try{
-			$stmt=$pdo->prepare("INSERT INTO cliente(nomeCliente, status) VALUES (:nomeCliente, :status)");
+			$stmt=$pdo->prepare("INSERT INTO cliente(nomeCliente) VALUES (:nomeCliente)");
 			$stmt->bindparam(":nomeCliente", $nomeCliente);
-			$stmt->bindparam(":status", $statusCliente);
+			//$stmt->bindparam(":status", $statusCliente);
 
 			$stmt->execute();
 

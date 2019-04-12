@@ -3,7 +3,7 @@ require_once 'cabecalho.php';
 include_once 'vrf_lgin.php';
 include_once '../core/crud.php';
 
-$queryCliente = "SELECT * FROM u325780549_fab.cliente ";
+$queryCliente = "SELECT * FROM cliente ";
 
 ?>
 <div class="container-fluid">
@@ -23,7 +23,7 @@ $queryCliente = "SELECT * FROM u325780549_fab.cliente ";
 						<input type="text" hidden id="tipo" value="criarCliente">					
 						<div class="input-group">
 							
-							<input type="text" class="form-control" size="50" name="nomeCliente" id="nomeCliente" placeholder="Nome Cliente" required value="">
+							<input type="text" class="form-control" size="70" name="nomeCliente" id="nomeCliente" placeholder="Nome Cliente" required value="">
 							<span class="input-group-addon"><span class="fa fa-user"></span></span>
 						</div>
 					</div>
@@ -243,7 +243,9 @@ require_once "rodape.php";
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		
+
+		permissaoNivel();
+
 		$('#cdt').submit(function(){
 			var tipo = "criarCliente";		
 			var nomeCliente = $("#nomeCliente").val();
@@ -266,7 +268,7 @@ require_once "rodape.php";
 		                	}
 		                });
 
-		$(document).on("click", "#btnDesativa", function () {
+		/*$(document).on("click", "#btnDesativa", function () {
 			var id = $(this).data('codigo');
 			var status = $(this).data('statusatual');
 			var nome = $(this).data('nome');
@@ -457,7 +459,7 @@ require_once "rodape.php";
 				alert("Senhas não são iguais!");
 			}
 				return false;//Evita que a página seja atualizada
-		});
+		});*/
 
 
 		$("#tbl-user").DataTable({
@@ -480,7 +482,7 @@ require_once "rodape.php";
                     }
                 }
             });
-
+		}
 
 	});
 </script>
