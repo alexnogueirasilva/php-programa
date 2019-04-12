@@ -3,7 +3,7 @@ require_once 'cabecalho.php';
 include_once 'vrf_lgin.php';
 include_once '../core/crud.php';
 
-$queryCliente = "SELECT * FROM cliente";
+$queryCliente = "SELECT * FROM u325780549_fab.cliente ";
 
 ?>
 <div class="container-fluid">
@@ -14,60 +14,22 @@ $queryCliente = "SELECT * FROM cliente";
 		<!-- /.col-lg-12 -->
 	</div>
 	
-	<h1>Cadastro de cliente</h1><h4>Insira os dados do novo cliente</h4>
-	<form  id="cdt">
+	<h1>Cadastra Cliente</h1><h4>Insira os dados do novo cliente</h4>
+	<form id="cdt">
 		<div class="row">
 			<div class="col-lg-12">
-				<div-- class="form-inline">
+				<div class="form-inline">
 					<div class="form-group">
 						<input type="text" hidden id="tipo" value="criarCliente">					
 						<div class="input-group">
 							
-							<input type="text" class="form-control" size="50" name="nome" id="nome" placeholder="Razão Social" required value="">
+							<input type="text" class="form-control" size="50" name="nomeCliente" id="nomeCliente" placeholder="Nome Cliente" required value="">
 							<span class="input-group-addon"><span class="fa fa-user"></span></span>
 						</div>
 					</div>
-					<div class="form-group">
-						<div class="input-group">
-							<input type="email" class="form-control" size="50" id="email" name="email" placeholder="E-mail" required >
-							<span class="input-group-addon"><span class="fa fa-envelope"></span></span>
-						</div>
-					</div>
+					
 				</div>	
 				<br>
-
-				<div-- class="form-inline">
-					
-					<div class="form-group">
-						<div class="input-group">
-							<select class="form-control" name="departamento" id="departamento">
-								<option value="" selected disabled>Departamento</option>
-								<?php
-								$selectCliente = crud::dataview($queryCliente);
-								if($selectCliente->rowCount()>0)
-								{
-									while($row=$selectCliente->fetch(PDO::FETCH_ASSOC)){
-										?>
-										<option value="<?php print($row['id']);?>"><?php print($row['nome']); ?></option>
-										<?php
-									}
-								}
-								?>
-							</select>
-							<span class="input-group-addon"><span class="fa fa-users"></span></span>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="input-group">
-							<select class="form-control" name="nivelUser" id="nivelUser" required="true">
-								<option value="">Tipo</option>
-								<option value="1">1 - Clientes</option>
-								<option value="2">2 - Fornecedor</option>
-							</select>
-							<span class="input-group-addon"><span class="fa fa-signal"></span></span>
-						</div>
-					</div>
-					</div>					
 				</div>				
 				<br><br>
 				<button type="submit" class="btn btn-info btn-lg btn-block" id="submit"><span class="fa fa-save"></span> Salvar</button>
@@ -77,7 +39,7 @@ $queryCliente = "SELECT * FROM cliente";
 	</form>
 
 
-	<!-- LISTAGEM CLIENTE -->
+	<!-- LISTAGEM USUÁRIOS -->
 
 	<div class="row">
 		<div class="col-sm-12"> 
@@ -93,11 +55,7 @@ $queryCliente = "SELECT * FROM cliente";
 						<tr>
 							<th>Código</th>
 							<th>Nome</th>
-							<th>status</th>                                
-							<th>Editar</th>                                
-							<th>Excluir</th>                                
-							<th>Desativar</th>                    
-							<th>Ativar</th>                    
+							<th>Status</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -115,21 +73,21 @@ $queryCliente = "SELECT * FROM cliente";
 									<td><?php print($row['status']); ?></td>       
 									<td><a class="btn btn-info waves-effect waves-light" id="btnEdita" data-toggle="modal" data-target="#modalEditaUsuario" data-whatever="@getbootstrap"
 										data-codigo="<?php print($row['codCliente']); ?>" 
-										data-nome="<?php print($row['nomeCliente']); ?>"
+										data-nome="<?php print($row['nomeCleinte']); ?>"
 										data-statusatual="<?php print($row['status']); ?>" 
 
 										>Editar</a></td>
 
-									<td><a class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#modalExluirUser" data-whatever="@getbootstrap" id="btnExcluiUser" data-codigo="<?php print($row['id']); ?>" data-nome="<?php print($row['nome']); ?>">Excluir</a></td>                                    
-									<td><a class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#modalConfirmacaoDesativa" data-whatever="@getbootstrap" id="btnDesativa" data-codigo="<?php print($row['id']); ?>" data-statusatual="<?php print($row['status']); ?>" data-nome="<?php print($row['nome']); ?>">Desativar</a></td>
+									<td><a class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#modalExluirUser" data-whatever="@getbootstrap" id="btnExcluiUser" data-codigo="<?php print($row['codCliente']); ?>" data-nome="<?php print($row['nomeCliente']); ?>">Excluir</a></td>                                    
+									<td><a class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#modalConfirmacaoDesativa" data-whatever="@getbootstrap" id="btnDesativa" data-codigo="<?php print($row['codCliente']); ?>" data-statusatual="<?php print($row['status']); ?>" data-nome="<?php print($row['nomeCliente']); ?>">Desativar</a></td>
 
-									<td><a class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#modalConfirmacaoAtiva" data-whatever="@getbootstrap" id="btnAtiva" data-codigo="<?php print($row['id']); ?>" data-statusatual="<?php print($row['status']); ?>" data-nome="<?php print($row['nome']); ?>">Ativa</a></td>         
+									<td><a class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#modalConfirmacaoAtiva" data-whatever="@getbootstrap" id="btnAtiva" data-codigo="<?php print($row['codCliente']); ?>" data-statusatual="<?php print($row['status']); ?>" data-nome="<?php print($row['nomeCliente']); ?>">Ativa</a></td>         
 								</tr>
 								<?php 
 							}
 
 						}else{              
-							echo "<p class='text-danger'>Sem Cliente cadastrado</p>";               
+							echo "<p class='text-danger'>Sem demandas abertas</p>";               
 						}
 						?>
 
@@ -154,7 +112,7 @@ $queryCliente = "SELECT * FROM cliente";
 					<input type="hidden" name="statusAtual" id="statusAtual">                        
 					<div class="col-md-12">
 						<div id="contextoModal">
-							<h2>Você vai DESATIVAR o Cliente ?: <span id="nomeUsuario"></span>?</h2>
+							<h2>Você vai DESATIVAR o usuário: <span id="nomeUsuario"></span>?</h2>
 						</div>
 					</div>
 				</div>  
@@ -182,7 +140,7 @@ $queryCliente = "SELECT * FROM cliente";
 					<input type="hidden" name="statusAtualAt" id="statusAtualAt">                        
 					<div class="col-md-12">
 						<div id="contextoModal">
-							<h2>Você vai ATIVAR o Cliente: <span id="nomeUsuarioAt"></span>?</h2>
+							<h2>Você vai ATIVAR o usuário: <span id="nomeUsuarioAt"></span>?</h2>
 						</div>
 					</div>
 				</div>  
@@ -210,7 +168,7 @@ $queryCliente = "SELECT * FROM cliente";
 					
 					<div class="col-md-12">
 						<div id="contextoModal">
-							<h2>Você vai EXCLUIR o Cliente: <span id="ExcNomeUsuario"></span>?</h2>
+							<h2>Você vai EXCLUIR o usuário: <span id="ExcNomeUsuario"></span>?</h2>
 						</div>
 					</div>
 				</div>  
@@ -256,41 +214,6 @@ $queryCliente = "SELECT * FROM cliente";
 												</div>
 											</div>
 										
-										
-
-										<div class="form-inline">
-											
-											<div class="form-group">
-												<div class="input-group">
-													<select class="form-control" width="100" name="edtdepartamento" id="edtdepartamento" required>
-														<option value="" selected disabled>Departamento</option>
-														<?php
-														$selectCliente = crud::dataview($queryCliente);
-														if($selectCliente->rowCount()>0)
-														{
-															while($row=$selectCliente->fetch(PDO::FETCH_ASSOC)){
-																?>
-																<option value="<?php print($row['id']);?>"><?php print($row['nome']); ?></option>
-																<?php
-															}
-														}
-														?>
-													</select>
-													<span class="input-group-addon"><span class="fa fa-users"></span></span>
-												</div>
-											</div>
-											<div class="form-group">
-												<div class="input-group">
-													<select class="form-control" name="edtnivelUser" id="edtnivelUser" required="true">
-														<option value="">status</option>
-														<option value="1">1 - Ativo</option>
-														<option value="2">2 - Inativo</option>
-													</select>
-													<span class="input-group-addon"><span class="fa fa-signal"></span></span>
-												</div>
-											</div>
-										</div>
-										<br>
 										<button type="submit" class="btn btn-info btn-md btn-block" id="submit"><span class="fa fa-save"></span> Salvar</button>
 
 										</div>				
@@ -319,36 +242,29 @@ require_once "rodape.php";
 ?>
 
 <script type="text/javascript">
-	
-			if (pass == pass2) {
+	$(document).ready(function(){
+		
+		$('#cdt').submit(function(){
+			var tipo = "criarCliente";		
+			var nomeCliente = $("#nomeCliente").val();
+
+
 			$.ajax({ //Função AJAX
 					url:"../core/save.php",			//Arquivo php
 					type:"post",				//Método de envio
-					data: {tipo:Cliente, nome:nome, },	//Dados
+					data: {tipo:tipo, nomeCliente:nomeCliente},	//Dados
 					success: function (result){	
 		   				//alert(result)
 		   				if(result==1){	
 		   					alert("Cadastrado com Sucesso!");
 		   					$("#nomeCliente").val('');		                			
-		   					//$("#email").val('');
-		   					$("#nivel").val('');
-		   					//$("#uPass").val('');
-		   					//$("#uPass2").val('');
-		   					//$("#departamento").val('');
-		   					//$("#nivelUser").val('');
-
+		   					
 		                			//location.href('index_usr.php')
 		                		}else{
 		                			alert("Erro ao salvar");		//Informa o erro
 		                		}
 		                	}
 		                });
-		}else{
-			alert("Senhas não são iguais!");
-		}
-				return false;//Evita que a página seja atualizada
-			});
-
 
 		$(document).on("click", "#btnDesativa", function () {
 			var id = $(this).data('codigo');

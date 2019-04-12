@@ -159,7 +159,7 @@ switch ($value) {
 		$nomeCliente = $_POST['nomeCliente'];
 		$statusCliente = $_POST['statusCliente'];
 
-		$cdt = crud::criarCliente($nomeCliente, $statusCliente);
+		$cdt = crud::criarCliente($nomeCliente,$status);
 		if($cdt == true){
 			echo 1;
 		}else {
