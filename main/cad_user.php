@@ -615,4 +615,4 @@ require_once "rodape.php";
 
 
 	});
-</script>
+</Script>
