@@ -285,6 +285,35 @@ switch ($value) {
 		}
 		break;
 
+		//ATUALIZA STATUS DO CLIENTE PARA DESATIVADO
+		case 'desativaCliente':
+
+		$id = $_POST['id'];
+		$status = "Desativado";
+
+		$edt = crud::atualizaStatusCliente($id,$status);
+		if ($edt == true) {
+			echo 1;
+		}else{
+			
+			echo 0;
+		}
+		break;
+
+		//ATUALIZA STATUS DO CLIENTE PARA DESATIVADO/ ATIVADO
+		case 'ativaCliente':
+
+		$id = $_POST['id'];
+		$status = "Ativo";
+
+		$edt = crud::atualizaStatusCliente($id,$status);
+		if ($edt == true) {
+			echo 1;
+		}else{
+			echo 0;
+		}
+		break;
+//ATUALIZA STATUS DO CLIENTE PARA ATIVADO
 
 		// MANAGER SLA
 		case 'cadSla':

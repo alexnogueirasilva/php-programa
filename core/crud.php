@@ -3,8 +3,7 @@ include_once 'conex.php';
 class crud
 {
 	//Aqui fazemos a verificação do login do usuário e do seu nível de acesso
-	public static function pesquisaLoginUsr($nome,$senha)
-	{
+	public static function pesquisaLoginUsr($nome,$senha){
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$pwd = sha1($senha);
@@ -16,8 +15,7 @@ class crud
 	}
 
 	//Nessa função, fazemos a montagem da tabela de dados.
-	public static function dataview($query)
-	{
+	public static function dataview($query){
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$stmt = $pdo->prepare($query);
@@ -26,8 +24,7 @@ class crud
 		
 	}
 
-	public static function mostraDemandas($usuarioSessao)
-	{
+	public static function mostraDemandas($usuarioSessao){
 		//SQL QUE VAI MOSTRAR A LISTA DE CHAMADOS DE CADA USUÁRIO UNINDO TRÊS TABELAS - (DEMANDAS, USUÁRIOS E DEPARTAMENTOS)
 		
 		$query = 'SELECT d.id, d.mensagem, d.titulo, d.prioridade, d.ordem_servico, d.data_criacao, d.status,d.anexo, u.nome, dep.nome as nome_dep FROM demanda AS d INNER JOIN usuarios AS u ON d.id_usr_destino = u.id AND id_usr_criador = '.$usuarioSessao.' INNER JOIN departamentos AS dep ON u.id_dep = dep.id ORDER BY data_criacao ASC';
@@ -63,8 +60,7 @@ class crud
 	public static function atualizaStatusUsuario($id, $status){
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		try
-		{
+		try	{
 			$stmt=$pdo->prepare("UPDATE usuarios SET status=:status WHERE id=:id ");
 			$stmt->bindparam(":id",$id);
 			$stmt->bindparam(":status",$status);
@@ -79,6 +75,23 @@ class crud
 		}
 	}
 
+	public static function atualizaStatusCliente($id, $status){
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		try	{
+			$stmt=$pdo->prepare("UPDATE cliente SET status=:status WHERE codCliente=:id ");
+			$stmt->bindparam(":id",$id);
+			$stmt->bindparam(":status",$status);
+			
+			$stmt->execute();
+			
+			return true;	
+		}catch(PDOException $e)
+		{			
+			echo $e->getMessage();	
+			return false;
+		}
+	}
 
 	public static function fechaDemanda($codigoDemanda, $status, $dataFechamento){
 		$pdo = Database::connect();
@@ -99,8 +112,6 @@ class crud
 			return false;
 		}
 	}
-
-
 
 	//Essa é a função responsável pela criação das demandas
 	public static function criaDemanda($dataAbertura, $idLogado, $titulo, $departamento, $usuarioDestino, $prioridade, $ordemServico, $mensagem, $status, $nomeAnexo){
@@ -150,8 +161,6 @@ class crud
 		}
 	}
 
-	
-
 	//Essa é a função responsável por deletar a pessoa da lista.
 	public static function deletaCad($id)
 	{
@@ -162,7 +171,6 @@ class crud
 		$stmt->execute();
 		return true;
 	}
-
 
 	public static function criaUsr($nome, $email, $nivel, $dep, $status, $pass){
 		$pdo = Database::connect();
@@ -207,7 +215,7 @@ class crud
 
 	}
 
-	public static function deleteCleinte($idCliente){
+	public static function deleteCliente($idCliente){
 
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ATT_EXCEPTION);
@@ -263,8 +271,6 @@ class crud
 		return true;
 	}
 
-
-
 	public static function criaDep($nomeDep){
 		$pdo = Database::connect();
 			
@@ -297,8 +303,7 @@ class crud
 	}
 
 	//Nessa função, fazemos a montagem da tabela de dados.
-	public static function mostraDep()
-	{
+	public static function mostraDep()	{
 		$query = "SELECT * FROM departamentos";
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -327,8 +332,7 @@ class crud
 		}
 	}
 
-	public static function deleteDep($id)
-	{
+	public static function deleteDep($id){
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$stmt = $pdo->prepare("DELETE FROM departamentos WHERE id=:id");
@@ -337,10 +341,7 @@ class crud
 		return true;
 	}
 
-
-
  	//MANAGER SLA --------------------------------------------
-
 	public static function cadSla($descricao,$tempo,$uniTempo){
 		$pdo = Database::connect();
 			
@@ -361,14 +362,11 @@ class crud
 		
 	}
 
-	
-
 
 	public static function edtSla($id,$descricao,$tempo,$uniTempo){
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		try
-		{
+		try	{
 			$stmt=$pdo->prepare("UPDATE tbl_sla SET descricao=:descricao, tempo=:tempo, uniTempo=:uniTempo WHERE id=:id ");
 			$stmt->bindparam(":id",$id);
 			$stmt->bindparam(":descricao",$descricao);
@@ -385,8 +383,7 @@ class crud
 		}
 	}
 
-	public static function excluiSla($id)
-	{
+	public static function excluiSla($id)	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$stmt = $pdo->prepare("DELETE FROM tbl_sla WHERE id=:id");
@@ -395,8 +392,7 @@ class crud
 		return true;
 	}
 
-	public static function mostraSla()
-	{
+	public static function mostraSla()	{
 		$query = "SELECT * FROM tbl_sla";
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

@@ -139,7 +139,6 @@ $queryUsuarios = "SELECT usr.id, usr.nome, usr.email, usr.nivel,usr.status,usr.i
 										data-nivel="<?php print($row['nivel']); ?>"
 										data-dep="<?php print($row['id_dep']); ?>"
 										data-statusatual="<?php print($row['status']); ?>" 
-
 										>Editar</a></td>
 
 									<td><a class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#modalExluirUser" data-whatever="@getbootstrap" id="btnExcluiUser" data-codigo="<?php print($row['id']); ?>" data-nome="<?php print($row['nome']); ?>">Excluir</a></td>                                    
@@ -184,7 +183,7 @@ $queryUsuarios = "SELECT usr.id, usr.nome, usr.email, usr.nivel,usr.status,usr.i
 			<div class="modal-footer">              
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 				<button type="submit" id="btnDesativaUsuario" class="btn btn-primary" >Confirmar</button
-				</div>
+				>
 			</div>
 		</div>
 	</div>
@@ -211,8 +210,7 @@ $queryUsuarios = "SELECT usr.id, usr.nome, usr.email, usr.nivel,usr.status,usr.i
 			</div>
 			<div class="modal-footer">              
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				<button type="submit" id="btnAtivaUsuario" class="btn btn-primary" >Confirmar</button
-				</div>
+				<button type="submit" id="btnAtivaUsuario" class="btn btn-primary" >Confirmar</button>
 			</div>
 		</div>
 	</div>
@@ -367,7 +365,6 @@ require_once "rodape.php";
 			var pass = $("#uPass").val();
 			var pass2 = $("#uPass2").val();
 
-
 			if (pass == pass2) {
 			$.ajax({ //Função AJAX
 					url:"../core/save.php",			//Arquivo php
@@ -446,8 +443,6 @@ require_once "rodape.php";
 			var tipo = "excluiUsuario";
 			var idUser = $('#excIdUser').val();
 			
-
-
 			$.ajax({
 				url: '../core/save.php',
 				type: "POST",
@@ -481,7 +476,6 @@ require_once "rodape.php";
 
 		});
 
-
 		$('#btnDesativaUsuario').click(function(){
 			var tipo = "desativaUsuario";
 			var id = $('#codigoUsuario').val();
@@ -491,7 +485,6 @@ require_once "rodape.php";
                 alert("Usuário já está desativado!");
                 die();
             } 
-
 			$.ajax({
 				url: '../core/save.php',
 				type: "POST",
@@ -504,7 +497,7 @@ require_once "rodape.php";
                             //$('#contextoModal').empty().append("<h2>Atualizado</h2>");
                             $('#modalConfirmacaoDesativa').modal('hide');
                             window.location.reload();
-                            
+                          
                         }else{
                             //alert(result);
                             alert("Erro ao salvar");                            
@@ -524,7 +517,6 @@ require_once "rodape.php";
                 alert("Usuário já está ATIVO!");
                 die();
             }
-
 			$.ajax({
 				url: '../core/save.php',
 				type: "POST",
@@ -590,8 +582,6 @@ require_once "rodape.php";
 			}
 				return false;//Evita que a página seja atualizada
 		});
-
-
 		$("#tbl-user").DataTable({
                //TRADUÇÃO DATATABLE
                 "oLanguage": {
