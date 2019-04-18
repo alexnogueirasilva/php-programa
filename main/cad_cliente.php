@@ -196,8 +196,8 @@ $queryCliente = "SELECT * FROM cliente ";
 						<div id="contextoModal">
 
 							<form id="edtcliente">
-								<input type="text" hidden name="tipo" value="editaUsr">
-								<input type="hidden" name="iduser" id="iduser">
+								<input type="text" hidden name="tipo" value="editaCliente">
+								<input type="hidden" name="idcliente" id="idcliente">
 								<div class="row">
 									<div class="col-lg-12">
 
@@ -206,16 +206,18 @@ $queryCliente = "SELECT * FROM cliente ";
 												<input type="text" class="form-control" size="50" name="edtnome" id="edtnome">
 												<span class="input-group-addon"><span class="fa fa-user"></span></span>
 											</div>
-										</div>
+										</div>										
 										<div class="form-group">
-											<div class="input-group">
-												<input type="email" class="form-control" size="50" id="edtemail" name="edtemail">
-												<span class="input-group-addon"><span class="fa fa-envelope"></span></span>
+												<div class="input-group">
+													<select class="form-control" name="edtstatus" id="edtstatus" required="true">
+														<option value="">Status</option>
+														<option value="A">1 - Ativado</option>
+														<option value="D">2 - Desativado</option>
+													</select>
+													<span class="input-group-addon"><span class="fa fa-signal"></span></span>
+												</div>
 											</div>
-										</div>
-
 										<button type="submit" class="btn btn-info btn-md btn-block" id="submit"><span class="fa fa-save"></span> Salvar</button>
-
 									</div>
 									<br><br>
 								</div>
@@ -296,16 +298,11 @@ require_once "rodape.php";
 	$(document).on("click", "#btnEdita", function() {
 		var id = $(this).data('codigo');
 		var nome = $(this).data('nome');
-		var email = $(this).data('email');
-		var nivel = $(this).data('nivel');
-		var id_dep = $(this).data('dep');
-
-		$('#iduser').val(id);
+		var status = $(this).data('statusatual');
+		
+		$('#idcliente').val(id);
 		$('#edtnome').val(nome);
-		$('#edtemail').val(email);
-		$('#edtdepartamento').val(id_dep);
-		$('#edtnivelUser').val(nivel);
-
+		$('#edtstatus').val(status);
 	});
 
 	$('#btnExcluirCliente').click(function() {
@@ -418,14 +415,9 @@ require_once "rodape.php";
 
 	});
 
-	$('#edtcliente').submit(function() {
-
-		var pass = $("#edtPass").val();
-		var pass2 = $("#edtPass2").val();
-
-
-
+	$('#edtcliente').submit(function() {		
 		$.ajax({ //Função AJAX
+			
 			url: "../core/save.php",
 			type: "POST",
 			data: new FormData(this),
@@ -433,11 +425,11 @@ require_once "rodape.php";
 			cache: false,
 			processData: false,
 			success: function(result) {
-				//alert(result)
+				
 				if (result == 1) {
 					swal({
 							title: "OK!",
-							text: "Usuário editado com Sucesso!",
+							text: "Cliente editado com Sucesso!",
 							type: "success",
 							confirmButtonText: "Fechar",
 							closeOnConfirm: false
@@ -445,7 +437,7 @@ require_once "rodape.php";
 
 						function(isConfirm) {
 							if (isConfirm) {
-								window.location = "cad_user.php";
+								window.location = "cad_cliente.php";
 							}
 						});
 

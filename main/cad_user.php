@@ -275,8 +275,6 @@ $queryUsuarios = "SELECT usr.id, usr.nome, usr.email, usr.nivel,usr.status,usr.i
 													<span class="input-group-addon"><span class="fa fa-envelope"></span></span>
 												</div>
 											</div>
-										
-										
 
 										<div class="form-inline">
 											

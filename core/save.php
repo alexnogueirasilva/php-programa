@@ -18,6 +18,21 @@ switch ($value) {
 	}
 	break;
 	
+	case 'editaCliente':
+	
+	$id = $_POST['idcliente'];	
+	$nome = $_POST['edtnome'];	
+	$status = $_POST['edtstatus'];
+
+	$edt = crud::atualizaCliente($id, $nome, $status);
+	if ($edt == true) {
+		echo 1;
+	}else{
+		echo 0;
+	}
+
+	break;
+
 	case 'criaDemanda':
 
 	$dataAbertura = $_POST['dataAtual'];

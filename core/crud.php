@@ -75,6 +75,25 @@ class crud
 		}
 	}
 
+	public static function atualizaCliente($id, $nome, $status){
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		try	{
+			$stmt=$pdo->prepare("UPDATE cliente SET nomecliente=:nome, status=:status WHERE codCliente=:id ");
+			$stmt->bindparam(":id",$id);
+			$stmt->bindparam(":status",$status);
+			$stmt->bindparam(":nome",$nome);
+			
+			$stmt->execute();
+			
+			return true;	
+		}catch(PDOException $e)
+		{			
+			echo $e->getMessage();	
+			return false;
+		}
+	}
+
 	public static function atualizaStatusCliente($id, $status){
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
