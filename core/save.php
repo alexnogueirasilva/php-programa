@@ -184,18 +184,17 @@ switch ($value) {
 
 		case 'excluirCliente':
 		
-		$codCliente = $_POST['codCliente'];
-		$nomeCliente = $_POST['nomeCliente'];
-		$statusCliente = $_post['statusCliente'];
-
-		$cdt = crud::deleteCliente($codCliente, $nomeCliente, $statusCliente);
+		$idCliente = $_POST['codCliente'];
+		
+		$cdt = crud::deleteCliente($idCliente);
 
 		if($cdt == true){
 			echo 1;
+			
 		}else {
 			echo 0;
 		}
-		
+				
 		break;
 
 		//EDITA USUÁRIO

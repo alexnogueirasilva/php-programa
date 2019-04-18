@@ -440,15 +440,14 @@ require_once "rodape.php";
 		$('#btnExcluiUsuario').click(function(){
 			var tipo = "excluiUsuario";
 			var idUser = $('#excIdUser').val();
-			
 			$.ajax({
 				url: '../core/save.php',
 				type: "POST",
-				data: {tipo : tipo, idUser : idUser},
-				success: function(result) {
-                    //alert(data);
-                    if(result==1){
-                       
+				data: {tipo : tipo, 
+				idUser : idUser
+				},
+				success: function(result) { //alert(data);
+                    if(result==1){           
                     	swal({
 							title: "OK!",
 							text: "Usuário Excluído com Sucesso!",
@@ -456,16 +455,12 @@ require_once "rodape.php";
 							confirmButtonText: "Fechar",
 							closeOnConfirm: false
 						},
-
 						function(isConfirm){
 							if (isConfirm) {
 									window.location = "cad_user.php";
 								}
-						});
-                            
-                            
-	                }else{
-	                    //alert(result);
+						});  
+	                }else{   //alert(result);
 	                    alert("Erro ao salvar");                            
 	                }
 

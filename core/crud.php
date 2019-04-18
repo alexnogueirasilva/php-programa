@@ -56,7 +56,6 @@ class crud
 		}
 	}
 
-
 	public static function atualizaStatusUsuario($id, $status){
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -181,8 +180,7 @@ class crud
 	}
 
 	//Essa é a função responsável por deletar a pessoa da lista.
-	public static function deletaCad($id)
-	{
+	public static function deletaCad($id)	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$stmt = $pdo->prepare("DELETE FROM usuarios WHERE id=:id");
@@ -223,7 +221,6 @@ class crud
 			$stmt=$pdo->prepare("INSERT INTO cliente(nomeCliente) VALUES (:nomeCliente)");
 			$stmt->bindparam(":nomeCliente", $nomeCliente);
 			//$stmt->bindparam(":status", $statusCliente);
-
 			$stmt->execute();
 
 			return true;
@@ -231,27 +228,20 @@ class crud
 			echo $e->getMessage();
 			return false;
 		}
-
 	}
 
 	public static function deleteCliente($idCliente){
-
-		$pdo = Database::connect();
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ATT_EXCEPTION);
-
-		$pdo = Database::connect();
-
-		try{
+		$pdo = Database::connect();	
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);	
+		try{			
 			$stmt=$pdo->prepare("DELETE FROM cliente WHERE codCliente=:codCliente");
 			$stmt->bindparam(":codCliente", $idCliente);
 			$stmt->execute();
-
+			return true;
 		}catch(PDOException $e){
 			echo $e->getMessage();
 			return false;
 		}
-
-
 	}
 
 	public static function edtUsr($id, $nome, $email, $nivel, $dep, $status, $pass){
@@ -260,8 +250,7 @@ class crud
 		$pwd = sha1($pass);
 
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		try
-		{
+		try	{
 			$stmt=$pdo->prepare("UPDATE usuarios SET nome=:nome, email=:email, nivel=:nivel, id_dep=:id_dep, senha=:senha  WHERE id=:id ");
 			$stmt->bindparam(":id",$id);
 			$stmt->bindparam(":nome",$nome);
@@ -280,8 +269,7 @@ class crud
 		}
 	}
 
-	public static function deleteUser($id)
-	{
+	public static function deleteUser($id)	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$stmt = $pdo->prepare("DELETE FROM usuarios WHERE id=:id");
@@ -381,7 +369,6 @@ class crud
 		
 	}
 
-
 	public static function edtSla($id,$descricao,$tempo,$uniTempo){
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -424,4 +411,3 @@ class crud
 
 	
 }
-?>

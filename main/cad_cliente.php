@@ -70,15 +70,11 @@ $queryCliente = "SELECT * FROM cliente ";
 							<tr>
 								<td><?php print($row['codCliente']); ?></td>
 								<td><?php print($row['nomeCliente']); ?></td>
-								<td><?php print($row['status']); ?></td>
+								<td id="status"><?php print($row['status']); ?></td>
 								<td>
-									<a class="btn btn-info waves-effect waves-light" id="btnEdita" data-toggle="modal" data-target="#modalEditaCliente" data-whatever="@getbootstrap" 
-									data-codigo="<?php print($row['codCliente']); ?>" 
-									data-nome="<?php print($row['nomeCliente']); ?>" 
-									data-statusatual="<?php print($row['status']); ?>"
-									>Editar</a></td>
+									<a class="btn btn-info waves-effect waves-light" id="btnEdita" data-toggle="modal" data-target="#modalEditaCliente" data-whatever="@getbootstrap" data-codigo="<?php print($row['codCliente']); ?>" data-nome="<?php print($row['nomeCliente']); ?>" data-statusatual="<?php print($row['status']); ?>">Editar</a></td>
 
-								<td><a class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#modalExluirCliente" data-whatever="@getbootstrap" id="btnExcluiCliente" data-codigo="<?php print($row['codCliente']); ?>" data-nome="<?php print($row['nomeCliente']); ?>">Excluir</a></td>
+								<td><a class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#modalExluirCliente" data-whatever="@getbootstrap" id="btnExcluiCliente" data-codigo="<?php print($row['codCliente']); ?>" data-nome="<?php print($row['nomeCliente']); ?>" data-statusatual="<?php print($row['status']); ?>">Excluir</a></td>
 								<td><a class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#modalConfirmacaoDesativa" data-whatever="@getbootstrap" id="btnDesativa" data-codigo="<?php print($row['codCliente']); ?>" data-statusatual="<?php print($row['status']); ?>" data-nome="<?php print($row['nomeCliente']); ?>">Desativar</a></td>
 
 								<td><a class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#modalConfirmacaoAtiva" data-whatever="@getbootstrap" id="btnAtiva" data-codigo="<?php print($row['codCliente']); ?>" data-statusatual="<?php print($row['status']); ?>" data-nome="<?php print($row['nomeCliente']); ?>">Ativa</a></td>
@@ -108,7 +104,7 @@ $queryCliente = "SELECT * FROM cliente ";
 			</div>
 			<div class="modal-body">
 				<div class="row">
-				<input type="hidden" name="codigoClienteDes" id="codigoClienteDes">
+					<input type="hidden" name="codigoClienteDes" id="codigoClienteDes">
 					<input type="hidden" name="statusAtualDes" id="statusAtualDes">
 					<div class="col-md-12">
 						<div id="contextoModal">
@@ -164,6 +160,7 @@ $queryCliente = "SELECT * FROM cliente ";
 			<div class="modal-body">
 				<div class="row">
 					<input type="hidden" name="excIdCliente" id="excIdCliente">
+					<input type="hidden" name="excStatusCliente" id="excStatusCliente">
 
 					<div class="col-md-12">
 						<div id="contextoModal">
@@ -206,17 +203,17 @@ $queryCliente = "SELECT * FROM cliente ";
 												<input type="text" class="form-control" size="50" name="edtnome" id="edtnome">
 												<span class="input-group-addon"><span class="fa fa-user"></span></span>
 											</div>
-										</div>										
+										</div>
 										<div class="form-group">
-												<div class="input-group">
-													<select class="form-control" name="edtstatus" id="edtstatus" required="true">
-														<option value="">Status</option>
-														<option value="A">1 - Ativado</option>
-														<option value="D">2 - Desativado</option>
-													</select>
-													<span class="input-group-addon"><span class="fa fa-signal"></span></span>
-												</div>
+											<div class="input-group">
+												<select class="form-control" name="edtstatus" id="edtstatus" required="true">
+													<option value="">Status</option>
+													<option value="A">1 - Ativado</option>
+													<option value="D">2 - Desativado</option>
+												</select>
+												<span class="input-group-addon"><span class="fa fa-signal"></span></span>
 											</div>
+										</div>
 										<button type="submit" class="btn btn-info btn-md btn-block" id="submit"><span class="fa fa-save"></span> Salvar</button>
 									</div>
 									<br><br>
@@ -241,235 +238,238 @@ require_once "rodape.php";
 
 <script type="text/javascript">
 	$(document).ready(function() {
-	permissaoNivel();
+		permissaoNivel();
 
-	$('#cdt').submit(function() {
-		var tipo = "criarCliente";
-		var nomeCliente = $("#cdtnomeCliente").val();
+		$('#cdt').submit(function() {
+			var tipo = "criarCliente";
+			var nomeCliente = $("#cdtnomeCliente").val();
 
-		$.ajax({ //Função AJAX
-			url: "../core/save.php", //Arquivo php
-			type: "post", //Método de envio
-			data: {
-				tipo: tipo,
-				nomeCliente: nomeCliente
-			}, //Dados
-			success: function(result) {
-				//alert(result)
-				if (result == 1) {
-					alert("Cadastrado com Sucesso!");
-					$("#cdtnomeCliente").val('');
+			$.ajax({ //Função AJAX
+				url: "../core/save.php", //Arquivo php
+				type: "post", //Método de envio
+				data: {
+					tipo: tipo,
+					nomeCliente: nomeCliente
+				}, //Dados
+				success: function(result) {
+					//alert(result)
+					if (result == 1) {
+						alert("Cadastrado com Sucesso!");
+						$("#cdtnomeCliente").val('');
 
-					//location.href('index_usr.php')
-				} else {
-					alert("Erro ao salvar"); //Informa o erro
+						//location.href('index_usr.php')
+					} else {
+						alert("Erro ao salvar"); //Informa o erro
+					}
 				}
-			}
+			});
 		});
-	});
 
-	$(document).on("click", "#btnAtiva", function() {
-		var id = $(this).data('codigo');
-		var status = $(this).data('statusatual');
-		var nome = $(this).data('nome');
-		$('#codigoClienteAt').val(id);
-		$('#statusAtualAt').val(status);
-		$('#nomeClienteAt').html(nome);
-	});
+		$(document).on("click", "#btnAtiva", function() {
+			var id = $(this).data('codigo');
+			var status = $(this).data('statusatual');
+			var nome = $(this).data('nome');
+			$('#codigoClienteAt').val(id);
+			$('#statusAtualAt').val(status);
+			$('#nomeClienteAt').html(nome);
+		});
 
-	$(document).on("click", "#btnDesativa", function() {
-		var id = $(this).data('codigo');
-		var status = $(this).data('statusatual');
-		var nome = $(this).data('nome');
-		$('#codigoClienteDes').val(id);
-		$('#statusAtualDes').val(status);
-		$('#nomeClienteDes').html(nome);
-	});	
+		$(document).on("click", "#btnDesativa", function() {
+			var id = $(this).data('codigo');
+			var status = $(this).data('statusatual');
+			var nome = $(this).data('nome');
+			$('#codigoClienteDes').val(id);
+			$('#statusAtualDes').val(status);
+			$('#nomeClienteDes').html(nome);
+		});
 
-	$(document).on("click", "#btnExcluiUser", function() {
-		var id = $(this).data('codigo');
-		var nome = $(this).data('nome');
+		$(document).on("click", "#btnExcluiCliente", function() {
+			var id = $(this).data('codigo');
+			var nome = $(this).data('nome');
+			var status = $(this).data('statusatual');
 
-		$('#excIdCliente').val(id);
-		$('#ExcNomeCliente').html(nome);
+			$('#excIdCliente').val(id);
+			$('#ExcNomeCliente').html(nome);
+			$('#excStatusCliente').val(status);
+		});
 
-	});
+		$(document).on("click", "#btnEdita", function() {
+			var id = $(this).data('codigo');
+			var nome = $(this).data('nome');
+			var status = $(this).data('statusatual');
 
-	$(document).on("click", "#btnEdita", function() {
-		var id = $(this).data('codigo');
-		var nome = $(this).data('nome');
-		var status = $(this).data('statusatual');
+			$('#idcliente').val(id);
+			$('#edtnome').val(nome);
+			$('#edtstatus').val(status);
+		});
+
+		$('#btnExcluirCliente').click(function() {
+			var tipo = "excluirCliente";
+			var idCliente = $('#excIdCliente').val();
+			//	var nomeCliente = $('#excnomeCliente').val();
+			//	var statusCliente = $('#excStatusCliente').val();
+			$.ajax({
+				url: '../core/save.php',
+				type: "POST",
+				data: {
+					tipo: tipo,
+					codCliente: idCliente
+				},
+				success: function(result) { //alert(result);
+					if (result == 1) {
+						swal({
+								title: "OK!",
+								text: "Cliente Excluído com Sucesso!",
+								type: "success",
+								confirmButtonText: "Fechar",
+								closeOnConfirm: false
+							},
+							function(isConfirm) {
+								if (isConfirm) {
+									window.location = "cad_cliente.php";
+								}
+							});
+					} else {
+						alert(result); //teste
+						alert("Erro ao excluir cliente");
+					}
+				}
+			});
+		});
+
+		$('#btnDesativaCliente').click(function() {
+			var tipo = "desativaCliente";
+			var id = $('#codigoClienteDes').val();
+			var status = $('#statusAtualDes').val();
+
+			if (status == "D") {
+				alert("Cliente já está desativado!");
+				$('#modalConfirmacaoDesativa').modal('hide');
+				die();
+			}
+			$.ajax({
+				url: '../core/save.php',
+				type: "POST",
+				data: {
+					tipo: tipo,
+					id: id
+				},
+				success: function(result) {
+					//alert(data);
+					if (result == 1) {
+						//alert(result);
+						//alert("Desativado com Sucesso!");
+						//$('#contextoModal').empty().append("<h2>Atualizado</h2>");
+						$('#modalConfirmacaoDesativa').modal('hide');
+						window.location.reload();
+					} else {
+						//	alert(result);
+						alert("Erro ao salvar");
+					}
+				}
+			});
+		});
+
+		$('#btnAtivaCliente').click(function() {
+			var tipo = "ativaCliente";
+			var id = $('#codigoClienteAt').val();
+			var status = $('#statusAtualAt').val();
+
+			if (status == "A") {
+				alert("Cliente já está ATIVO!");
+				$('#modalConfirmacaoAtiva').modal('hide');
+				die();
+			}
+
+			$.ajax({
+				url: '../core/save.php',
+				type: "POST",
+				data: {
+					tipo: tipo,
+					id: id
+				},
+				success: function(result) {
+					//alert(data);
+					if (result == 1) {
+						//alert(result);
+						//alert("Ativado com Sucesso!");
+						//$('#contextoModal').empty().append("<h2>Atualizado</h2>");
+						$('#modalConfirmacaoAtiva').modal('hide');
+						window.location.reload();
+
+					} else {
+						//alert(result);
+						alert("Erro ao salvar");
+					}
+
+				}
+			});
+
+		});
+
+		$('#edtcliente').submit(function() {
+			$.ajax({ //Função AJAX
+
+				url: "../core/save.php",
+				type: "POST",
+				data: new FormData(this),
+				contentType: false,
+				cache: false,
+				processData: false,
+				success: function(result) {
+
+					if (result == 1) {
+						swal({
+								title: "OK!",
+								text: "Cliente editado com Sucesso!",
+								type: "success",
+								confirmButtonText: "Fechar",
+								closeOnConfirm: false
+							},
+
+							function(isConfirm) {
+								if (isConfirm) {
+									window.location = "cad_cliente.php";
+								}
+							});
+
+					} else {
+						alert("Erro ao salvar"); //Informa o erro
+					}
+				}
+			});
+
+			//	return false;//Evita que a página seja atualizada
+		});
 		
-		$('#idcliente').val(id);
-		$('#edtnome').val(nome);
-		$('#edtstatus').val(status);
-	});
-
-	$('#btnExcluirCliente').click(function() {
-		var tipo = "excluiCliente";
-		var idUser = $('#excIdCliente').val();
-
-		$.ajax({
-			url: '../core/save.php',
-			type: "POST",
-			data: {
-				tipo: tipo,
-				idUser: idUser
-			},
-			success: function(result) {
-				//alert(data);
-				if (result == 1) {
-
-					swal({
-							title: "OK!",
-							text: "Usuário Excluído com Sucesso!",
-							type: "success",
-							confirmButtonText: "Fechar",
-							closeOnConfirm: false
-						},
-
-						function(isConfirm) {
-							if (isConfirm) {
-								window.location = "cad_user.php";
-							}
-						});
-
-
-				} else {
-					//alert(result);
-					alert("Erro ao salvar");
-				}
-
+		//BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
+		$("tr #status").each(function(i) {
+			if ($(this).text() == "D") {
+				this.style.color = "red";
+			} else {
+				this.style.color = "";
 			}
 		});
 
-	});
-
-	$('#btnDesativaCliente').click(function() {
-		var tipo = "desativaCliente";
-		var id = $('#codigoClienteDes').val();
-		var status = $('#statusAtualDes').val();
-		
-		if (status == "D") {
-			alert("Cliente já está desativado!");
-			$('#modalConfirmacaoDesativa').modal('hide');
-			die();
-		}		
-		$.ajax({
-			url: '../core/save.php',
-			type: "POST",
-			data: {
-				tipo: tipo,
-				id: id
-			},
-			success: function(result) {
-				//alert(data);
-				if (result == 1) {
-					//alert(result);
-					//alert("Desativado com Sucesso!");
-					//$('#contextoModal').empty().append("<h2>Atualizado</h2>");
-					$('#modalConfirmacaoDesativa').modal('hide');
-					window.location.reload();
-				} else {
-				//	alert(result);
-					alert("Erro ao salvar");
+		$("#tbl-user").DataTable({
+			//TRADUÇÃO DATATABLE
+			"oLanguage": {
+				"sProcessing": "Processando...",
+				"sLengthMenu": "Mostrar _MENU_ registros",
+				"sZeroRecords": "Não foram encontrados resultados",
+				"sInfo": "",
+				"sInfoEmpty": "",
+				"sInfoFiltered": "",
+				"sInfoPostFix": "",
+				"sSearch": "Buscar:",
+				"sUrl": "",
+				"oPaginate": {
+					"sFirst": "Primeiro",
+					"sPrevious": "Anterior",
+					"sNext": "Seguinte",
+					"sLast": "Último"
 				}
 			}
 		});
 	});
-
-	$('#btnAtivaCliente').click(function() {
-		var tipo = "ativaCliente";
-		var id = $('#codigoClienteAt').val();
-		var status = $('#statusAtualAt').val();
-
-		if (status == "A") {
-			alert("Cliente já está ATIVO!");
-			$('#modalConfirmacaoAtiva').modal('hide');
-			die();
-		}
-		
-		$.ajax({
-			url: '../core/save.php',
-			type: "POST",
-			data: {
-				tipo: tipo,
-				id: id
-			},
-			success: function(result) {
-				//alert(data);
-				if (result == 1) {
-					//alert(result);
-					//alert("Ativado com Sucesso!");
-					//$('#contextoModal').empty().append("<h2>Atualizado</h2>");
-					$('#modalConfirmacaoAtiva').modal('hide');
-					window.location.reload();
-
-				} else {
-					//alert(result);
-					alert("Erro ao salvar");
-				}
-
-			}
-		});
-
-	});
-
-	$('#edtcliente').submit(function() {		
-		$.ajax({ //Função AJAX
-			
-			url: "../core/save.php",
-			type: "POST",
-			data: new FormData(this),
-			contentType: false,
-			cache: false,
-			processData: false,
-			success: function(result) {
-				
-				if (result == 1) {
-					swal({
-							title: "OK!",
-							text: "Cliente editado com Sucesso!",
-							type: "success",
-							confirmButtonText: "Fechar",
-							closeOnConfirm: false
-						},
-
-						function(isConfirm) {
-							if (isConfirm) {
-								window.location = "cad_cliente.php";
-							}
-						});
-
-				} else {
-					alert("Erro ao salvar"); //Informa o erro
-				}
-			}
-		});
-
-		//	return false;//Evita que a página seja atualizada
-	});
-
-	$("#tbl-user").DataTable({
-		//TRADUÇÃO DATATABLE
-		"oLanguage": {
-			"sProcessing": "Processando...",
-			"sLengthMenu": "Mostrar _MENU_ registros",
-			"sZeroRecords": "Não foram encontrados resultados",
-			"sInfo": "",
-			"sInfoEmpty": "",
-			"sInfoFiltered": "",
-			"sInfoPostFix": "",
-			"sSearch": "Buscar:",
-			"sUrl": "",
-			"oPaginate": {
-				"sFirst": "Primeiro",
-				"sPrevious": "Anterior",
-				"sNext": "Seguinte",
-				"sLast": "Último"
-			}
-		}
-	});
-	});
-
 </script>
