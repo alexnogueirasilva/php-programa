@@ -38,6 +38,7 @@ switch ($value) {
 	$dataAbertura = $_POST['dataAtual'];
 	$idLogado = $_POST['idLogado'];
 	$titulo = $_POST['titulo'];
+	$nomeSolicitante = $_POST['nomeSolicitante'];
 	$departamento = $_POST['departamento'];
 	$usuarioDestino = $_POST['usuarioDestino'];
 	$prioridade = $_POST['prioridade'];
@@ -65,7 +66,8 @@ switch ($value) {
 			$targetPath = "../anexos/".md5($dataAbertura).".". $file_extension;
 				move_uploaded_file($sourcePath,$targetPath) ; // Move arquivo				
 				//SALVA NO BANCO 
-				$cdt = crud::criaDemanda($dataAbertura, $idLogado, $titulo, $departamento, $usuarioDestino, $prioridade, $ordemServico, $mensagem, $status, $nomeAnexo);
+										/*data_criacao, id_dep, id_usr_criador, id_usr_destino, titulo,	codCliente_dem,prioridade, ordem_servico, mensagem, status, anexo*/
+				$cdt = crud::criaDemanda($dataAbertura,$departamento, $idLogado, $usuarioDestino, $titulo, $nomeSolicitante, $prioridade, $ordemServico, $mensagem, $status, $nomeAnexo);
 				if ($cdt == true) {
 					echo 1;					
 					//enviaEmail();
@@ -81,15 +83,13 @@ switch ($value) {
 	//CASO NÃO TENHA ANEXO ENTRA AQUI	
 		}else{
 			$nomeAnexo = "sem_anexo.php";
-			$cdt = crud::criaDemanda($dataAbertura, $idLogado, $titulo, $departamento, $usuarioDestino, $prioridade, $ordemServico, $mensagem, $status, $nomeAnexo);
+			$cdt = crud::criaDemanda($dataAbertura,$departamento, $idLogado, $usuarioDestino, $titulo, $nomeSolicitante, $prioridade, $ordemServico, $mensagem, $status, $nomeAnexo);
 			if ($cdt == true) {
 				echo 1;
 			}else{
 				echo 0;
 			}
 		}	
-
-
 		break;
 
 
