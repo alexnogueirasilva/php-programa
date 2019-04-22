@@ -40,6 +40,10 @@
                             </div>
                         </div>                       
                     </div>
+
+                        <label class="rec-senha">esqueceu a senha ?<br><a href="#">clique aqui.</a></label>
+
+                        
                      <div class="alert alert-danger" id="errolog">Usuario ou senha incorreto</div>
                     <div class="form-group text-center m-t-40">
                         <div class="col-xs-12">

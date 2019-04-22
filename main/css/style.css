@@ -11931,6 +11931,14 @@ input[type=search]{
     width: 350px;
 }
 
+/*RECUPERAÇÃO DE SENHA*/
+.rec-senha{
+  left: 156px;
+  top: -20px
+
+}
+
+/*FIM - RECUPERAÇÃO DE SENHA*/
 #tblTotaisStatus td{font-size: 20px;}
 #headerModalAlerta{background-color: #b50000 !important;}
 #centro{margin: auto; text-align: center;}
