@@ -19,7 +19,7 @@ $idLogado = $_SESSION['usuarioID'];
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="exampleModalLabel1">Criar Demanda</h4>
+                <h4 class="modal-title" id="exampleModalLabel1">Criar Ocorrencia</h4>
             </div>
             <div class="modal-body">
                 <form id="frmCriaDemanda" action="" method="post" enctype="multipart/form-data" >                    
@@ -47,16 +47,17 @@ $idLogado = $_SESSION['usuarioID'];
                                     }
                                 ?>
                             </select>
+                        </div>           
+                        <div class="form-group">
+                            <select class="form-control" name="usuarioDestino" id="usuarioDestino" required>                               
+                            
+                        </select>
                         </div>
                     </div>
                     <br>
+                    
                     <div class="form-inline">
-                        <div class="form-group">
-                            <select class="form-control" name="usuarioDestino" id="usuarioDestino" required>
-                               
-                                
-                            </select>
-                        </div>
+                        
                         <div class="form-group">
                             <select class="form-control" name="prioridade" id="prioridade" required>
                                 <option value="" selected disabled>Prioridade</option>
@@ -64,10 +65,8 @@ $idLogado = $_SESSION['usuarioID'];
                                     $selectSla = crud::mostraSla();
                                     if($selectSla->rowCount()>0)
                                     {
-                                        while($row=$selectSla->fetch(PDO::FETCH_ASSOC)){
-                                            
-                                            echo '<option value="'.$row['id'].'">'.$row['descricao'].' - '.$row['tempo'].' '.$row['unitempo'].'</option>';
-                                            
+                                        while($row=$selectSla->fetch(PDO::FETCH_ASSOC)){                                            
+                                            echo '<option value="'.$row['id'].'">'.$row['descricao'].' - '.$row['tempo'].' '.$row['unitempo'].'</option>';                                            
                                         }
                                     }
                                 ?>
@@ -75,16 +74,30 @@ $idLogado = $_SESSION['usuarioID'];
                         </div>
                         <div class="form-group">
                             <input type="text" size="30" maxlength="30" class="form-control" name="ordemServico" id="ordemServico" placeholder="Ordem de Serviço" style="text-transform: uppercase;">
-                        </div>               
+                        </div>                      
+                        <div class="form-group">
+                            <select class="form-control"maxlength="50" name="nomeSolicitante" id="nomeSolicitante" required>
+                                <option value="" selected disabled>Selecione o solicitante</option>
+                                <?php
+                                    $selectCliente = crud::mostrarCliente();
+                                    if($selectCliente->rowCount()>0)
+                                    {
+                                        while($row=$selectCliente->fetch(PDO::FETCH_ASSOC)){
+                                            ?>
+                                            <option value="<?php print($row['codCliente']);?>"><?php print($row['nomeCliente']); ?></option>
+                                            <?php
+                                        }
+                                    }
+                                ?>
+                            </select>
+                        </div>
                     </div>
                     <br>
                         <div class="form-group">
                             <label for="message-text" class="control-label">Mensagem:</label>
                             <textarea name="mensagem" class="form-control" rows="5" id="mensagem" required></textarea>          
-                        </div>
-                    
+                        </div>                    
                     <input type="file" name="file" id="file">                    
-
             </div>
                     <div class="modal-footer">
                         <button type="submit" id="salvaDemanda" class="btn btn-primary" >Enviar</button>
@@ -94,7 +107,6 @@ $idLogado = $_SESSION['usuarioID'];
         </div>
     </div>
 </div>
-
 
 <!-- MODAL CONFIRMAÇÃO DE ATENDIMENTO DE DEMANDA -->
     <div class="modal fade" id="modalSemAnexo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
@@ -108,7 +120,7 @@ $idLogado = $_SESSION['usuarioID'];
                     <div class="row">                       
                         <div class="col-md-12">
                             <div id="contextoModal">
-                                <h2>Demanda não possui anexo!</h2>
+                                <h2>Ocorrencia não possui anexo!</h2>
                             </div>
                         </div>
                     </div>  
@@ -123,10 +135,6 @@ $idLogado = $_SESSION['usuarioID'];
 
 <!-- MODAL EDITA DEPARTAMENTO -->
 
-    
-
-    
-  
 
 <!-- UPLOAD DE ARQUIVOS -->
 <script src="js/jquery.form.js"></script>

@@ -8,7 +8,7 @@ date_default_timezone_set('America/Sao_Paulo');
 $logado = $_SESSION['nomeUsuario'];
 
 $queryDepart = "SELECT * FROM departamentos";
-
+$queryCliente = "SELECT * FROM cliente";
 
 ?>
 
@@ -22,7 +22,7 @@ $queryDepart = "SELECT * FROM departamentos";
     <!-- row -->
     <div class="row">
         <div class="col-md-12">
-            <button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalCriaDemanda" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-plus"></i></span>Criar Demanda</button>                        
+            <button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalCriaDemanda" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-plus"></i></span>Criar Ocorrencia</button>                        
         </div>
         <div class="row">
             <div class="col-sm-12"> 
@@ -30,8 +30,7 @@ $queryDepart = "SELECT * FROM departamentos";
                 <div class="white-box">
                     <div class="col-sm-6"> 
                         <h3>Demandas Criadas</h3>
-                    </div>
-                    
+                    </div>                   
                     <table id="tabela" class="table table-striped">
                         <thead>
                             <tr>
@@ -39,6 +38,7 @@ $queryDepart = "SELECT * FROM departamentos";
                                 <th>Status</th>
                                 <th>OS</th>
                                 <th>Destinatário</th>
+                                <th>Solicitante</th>
                                 <th>Depart.</th>                                
                                 <th>Data Criação</th>
                                 <th>Decorridos</th>
@@ -47,14 +47,11 @@ $queryDepart = "SELECT * FROM departamentos";
                             </tr>
                         </thead>
                         <tbody>
-
-                            <?php
-                            
+                            <?php                            
                             $dados = crud::mostraDemandas($_SESSION['usuarioID']);
                                         //print_r($dados);
                             if($dados->rowCount()>0){
-                                while($row=$dados->fetch(PDO::FETCH_ASSOC)){
-                                   
+                                while($row=$dados->fetch(PDO::FETCH_ASSOC)){                                   
 
                                     $dataCriada = $row['data_criacao'];
                                     $dataAtual = date('Y-m-d H:i:s');
@@ -63,8 +60,7 @@ $queryDepart = "SELECT * FROM departamentos";
                                     $datatime2 = new DateTime($dataAtual);
 
                                     $data1  = $datatime1->format('Y-m-d H:i');
-                                    $data2  = $datatime2->format('Y-m-d H:i');
-                                    
+                                    $data2  = $datatime2->format('Y-m-d H:i');                                    
 
                                     $criada = strtotime( $data1 );
                                     $atual = strtotime( $data2 );
@@ -74,20 +70,17 @@ $queryDepart = "SELECT * FROM departamentos";
                                     $horas = (int)($intervalo / 60);                                 
                                     $minutos = $intervalo%60;
                                     
-                                    
-
                                     ?> 
                                     <tr >
                                         <td><?php print($row['titulo']); ?></td>
                                         <td id="status"><?php print($row['status']); ?></td>       
-                                        <td style="text-transform: uppercase;" ><?php print($row['ordem_servico']); ?></td>
-                                        <td><?php print($row['nome']); ?></td>       
+                                        <td style="text-transform: uppercase;"> <?php print($row['ordem_servico']); ?></td>
+                                        <td><?php print($row['nome']); ?></td>
+                                        <td><?php print($row['nomecliente']);?></td>       
                                         <td><?php print($row['nome_dep']); ?></td>                                        
                                         <td><?php print($row['data_criacao']); ?></td>
                                         <td><?php 
-                                            print($horas .' Horas'. ' e ' .$minutos." Minutos");
-                                            ?>                                                
-                                            </td>
+                                            print($horas .' Horas'. ' e ' .$minutos." Minutos");?></td>
 
                                         <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']);?>">Anexo</a></td>
 
@@ -97,7 +90,8 @@ $queryDepart = "SELECT * FROM departamentos";
                                             data-target="#modalDetDemanda" 
                                             data-whatever="@getbootstrap"
                                             data-codigodet="<?php print($row['id']);?>"
-                                            data-titulodet="<?php print($row['titulo']);?>"
+                                            data-titulodet="<?php print($row['titulo']);?>"                                            
+                                            data-nomesolicitante="<?php print($row['nomecliente']);?>"
                                             data-status="<?php print($row['status']); ?>"
                                             data-datacriacao="<?php print($row['data_criacao']); ?>"
                                             data-mensagem="<?php print($row['mensagem']); ?>"
@@ -120,8 +114,7 @@ $queryDepart = "SELECT * FROM departamentos";
         <!-- /.row -->
     </div>
 
-
-    <!-- MODAL CRIA DEMANDA -->
+    <!-- MODAL detalhe DEMANDA -->
     <div class="modal fade bs-example-modal-lg" id="modalDetDemanda" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -142,6 +135,10 @@ $queryDepart = "SELECT * FROM departamentos";
                                     <td><span id="tituloDetalhes"></span></td>
                                 </tr>
                                 <tr>
+                                    <td>Solicitante</td>
+                                    <td><span id="nomeSolicitanteDetalhes"></span></td>
+                                </tr>
+                                <tr>
                                     <td>Status</td>
                                     <td id="statusDet"></td>
                                 </tr>
@@ -153,14 +150,12 @@ $queryDepart = "SELECT * FROM departamentos";
                                     <td>Mensagem</td>
                                     <td id="mensagemDet"></td>
                                 </tr> 
-                            </table>
-                            
+                            </table>                            
                         </div>
                         <div class="col-md-12">
                             <h4><strong>Comentários:</strong></h4>
                             <table class="table table-striped">
                                 <tbody id="comentariosDemand">
-
                                 </tbody>
                             </table>
                         </div>
@@ -173,26 +168,19 @@ $queryDepart = "SELECT * FROM departamentos";
             </div>
         </div>
     </div>
-
-
 </div>
 <!-- /#page-wrapper -->
-
-
-
 
 <?php
 require_once "rodape.php";
 include_once "modais.php";
 ?>
 
-
 <script type="text/javascript">
 
     $(document).ready(function (e) {
 
         permissaoNivel();
-
 
         $("#frmCriaDemanda").on('submit',(function(e) {
             e.preventDefault();
@@ -222,10 +210,8 @@ include_once "modais.php";
         }));
         
 
-
         $('#departamento').change(function(){
             var codDepart = $("#departamento").val();
-
             $.ajax({
                 url: 'busca_funcionario.php',
                 type: "POST",
@@ -259,16 +245,37 @@ include_once "modais.php";
             
         });
 
-    //PEGA O CODIGO E O NOME DO BAIRRO AO CICAR NO BOTÃO DE RESERVAR
+/* testanto inclusao de cliente no modal criar demanda */
+        /*   $('#nomeSolicitante').change(function(){
+            var nomeSolicitante = $("#nomeSolicitante").val();
+
+            $.ajax({
+                url: 'busca_cliente.php',
+                type: "POST",
+                data: {nomeSolicitante : nomeSolicitante},
+                success: function(data) {
+                    //alert(data);
+                    if (data) {
+
+                        $('#nomeSolicitante').val(data);
+                    } 
+                }
+            });
+            
+        });*/
+
+    //PEGA O CODIGO E O NOME DO DEPARTAMENTO AO CICAR NO BOTÃO DE RESERVAR
     $(document).on("click", "#idDemanda2", function () {
         var id = $(this).data('codigodet');
         var titulo = $(this).data('titulodet');
+        var nomeSolicitante = $(this).data('nomesolicitante');
         var status = $(this).data('status');
         var dataCriacao = $(this).data('datacriacao');
         var mensagem = $(this).data('mensagem');          
             
         $('#codigoDetalhes').html(id);
         $('#tituloDetalhes').html(titulo);
+        $('#nomeSolicitanteDetalhes').html(nomeSolicitante);
         $('#statusDet').html(status);
         $('#dataCriacaoDet').html(dataCriacao);
         $('#mensagemDet').html(mensagem);
@@ -283,8 +290,7 @@ include_once "modais.php";
                         $('#comentariosDemand').html(data);
                     } 
                 }
-            }); 
-            
+            });             
         });
 
     //VERIFICA SE DEMANDA TEM ANEXO --------------------------------------------------------------
@@ -297,8 +303,6 @@ include_once "modais.php";
             }         
 
         });//VERIFICA SE DEMANDA TEM ANEXO ------------------------------------------------------------
-
-    
     
     
     //BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
@@ -314,11 +318,6 @@ include_once "modais.php";
             this.style.color = "";
         }
     });
-
-    
-
-    
-
 
 });
 
