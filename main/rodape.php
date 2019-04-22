@@ -16,6 +16,8 @@
     <!-- This page plugins -->
     <!-- ============================================================== -->
     <!-- chartist chart -->
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/js/bootstrap4-toggle.min.js"></script>
+    <script src="../assets/bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
     <script src="../assets/bower_components/chartist-js/dist/chartist.min.js"></script>
     <script src="../assets/bower_components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
     <script src="../assets/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>

@@ -17,6 +17,19 @@ $nivel = $_SESSION['nivel'];
     <title>SD - Sistema de Ocorrências</title>
     <!-- Bootstrap Core CSS -->
     <link href="../assets/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap-toggle -->
+    <!--link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet"-->
+    <link href="css/bootstrap2-toggle.css" rel="stylesheet">
+	<!--
+	<link rel="stylesheet" href="../css/bootstrap4-toggle.css">
+	-->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<!--script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script-->
+    <!--script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script-->
+	<script src="js/bootstrap2-toggle.min.js"></script>
+	<!-- Fim - Bootstrap-toggle -->
+
     <!-- Menu CSS -->
     <link href="../assets/bower_components/chartist-js/dist/chartist.min.css" rel="stylesheet">
     <link href="../assets/bower_components/chartist-js/dist/chartist-init.css" rel="stylesheet">
@@ -24,10 +37,11 @@ $nivel = $_SESSION['nivel'];
     <link href="../assets/bower_components/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet">
     <link href="../assets/bower_components/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />    
     <link href="../assets/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
-    
-     <script src="../assets/bower_components/sweetalert/sweetalert.min.js"></script>
-     <script type="text/javascript" src="js/loader.js"></script>
-     <script type="text/javascript" src="js/custom.js"></script>
+
+    <script src="../assets/bower_components/sweetalert/sweetalert.min.js"></script>
+    <script type="text/javascript" src="js/loader.js"></script>
+    <script type="text/javascript" src="js/custom.js"></script>
+    <script type="text/javascript" src="js/toggle.js" ></script>
   
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
