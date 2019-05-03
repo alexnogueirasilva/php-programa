@@ -65,19 +65,20 @@ $queryCliente = "SELECT * FROM cliente ";
 
 					if ($dados->rowCount() > 0) {
 						while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
-
 							?>
 							<tr>
 								<td><?php print($row['codCliente']); ?></td>
 								<td><?php print($row['nomeCliente']); ?></td>
 								<td id="status"><?php print($row['status']); ?></td>
-								<td>
-									<a class="btn btn-info waves-effect waves-light" id="btnEdita" data-toggle="modal" data-target="#modalEditaCliente" data-whatever="@getbootstrap" data-codigo="<?php print($row['codCliente']); ?>" data-nome="<?php print($row['nomeCliente']); ?>" data-statusatual="<?php print($row['status']); ?>">Editar</a></td>
+								<td><a class="btn btn-info waves-effect waves-light" id="btnEdita" data-toggle="modal"  data-target="#modalEditaCliente" data-whatever="@getbootstrap" 
+								data-codigo="<?php print($row['codCliente']); ?>" 
+								data-nome="<?php print($row['nomeCliente']); ?>" 
+								data-statusatual="<?php print($row['status']); ?>">Editar</a></td>
+								  
+								<td><a class="btn btn-danger waves-effect waves-light"  data-target="#modalExluirCliente" data-whatever="@getbootstrap" id="btnExcluiCliente" data-codigo="<?php print($row['codCliente']); ?>" data-nome="<?php print($row['nomeCliente']); ?>" data-statusatual="<?php print($row['status']); ?>">Excluir</a></td>
+								<td><a class="btn btn-danger waves-effect waves-light" data-target="#modalConfirmacaoDesativa" data-whatever="@getbootstrap" id="btnDesativa" data-codigo="<?php print($row['codCliente']); ?>" data-statusatual="<?php print($row['status']); ?>" data-nome="<?php print($row['nomeCliente']); ?>">Desativar</a></td>
 
-								<td><a class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#modalExluirCliente" data-whatever="@getbootstrap" id="btnExcluiCliente" data-codigo="<?php print($row['codCliente']); ?>" data-nome="<?php print($row['nomeCliente']); ?>" data-statusatual="<?php print($row['status']); ?>">Excluir</a></td>
-								<td><a class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#modalConfirmacaoDesativa" data-whatever="@getbootstrap" id="btnDesativa" data-codigo="<?php print($row['codCliente']); ?>" data-statusatual="<?php print($row['status']); ?>" data-nome="<?php print($row['nomeCliente']); ?>">Desativar</a></td>
-
-								<td><a class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#modalConfirmacaoAtiva" data-whatever="@getbootstrap" id="btnAtiva" data-codigo="<?php print($row['codCliente']); ?>" data-statusatual="<?php print($row['status']); ?>" data-nome="<?php print($row['nomeCliente']); ?>">Ativa</a></td>
+								<td><a class="btn btn-info waves-effect waves-light"  data-target="#modalConfirmacaoAtiva" data-whatever="@getbootstrap" id="btnAtiva" data-codigo="<?php print($row['codCliente']); ?>" data-statusatual="<?php print($row['status']); ?>" data-nome="<?php print($row['nomeCliente']); ?>">Ativa</a></td>
 							</tr>
 						<?php
 					}
@@ -149,6 +150,7 @@ $queryCliente = "SELECT * FROM cliente ";
 	</div>
 </div>
 <!-- MODAL ativar cliete -->
+
 <!-- MODAL EXCLUIR cliente-->
 <div class="modal fade" id="modalExluirCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
 	<div class="modal-dialog" role="document">
@@ -159,7 +161,8 @@ $queryCliente = "SELECT * FROM cliente ";
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<input type="hidden" name="excIdCliente" id="excIdCliente">
+					
+				<input type="hidden" name="excIdCliente" id="excIdCliente">
 					<input type="hidden" name="excStatusCliente" id="excStatusCliente">
 
 					<div class="col-md-12">
@@ -215,6 +218,7 @@ $queryCliente = "SELECT * FROM cliente ";
 											</div>
 										</div>
 										<button type="submit" class="btn btn-info btn-md btn-block" id="submit"><span class="fa fa-save"></span> Salvar</button>
+										
 									</div>
 									<br><br>
 								</div>
@@ -269,28 +273,43 @@ require_once "rodape.php";
 			var id = $(this).data('codigo');
 			var status = $(this).data('statusatual');
 			var nome = $(this).data('nome');
+			if (status == "A") {
+				alert("Cliente já está Ativo!");				
+			}else{
+				$('#modalConfirmacaoAtiva').modal('show');
+			}
 			$('#codigoClienteAt').val(id);
 			$('#statusAtualAt').val(status);
 			$('#nomeClienteAt').html(nome);
+
 		});
 
 		$(document).on("click", "#btnDesativa", function() {
 			var id = $(this).data('codigo');
 			var status = $(this).data('statusatual');
 			var nome = $(this).data('nome');
+			
+			if (status == "D") {
+				alert("Cliente já está Desativado!");				
+			}else{
+				$('#modalConfirmacaoDesativa').modal('show');
+			}
 			$('#codigoClienteDes').val(id);
 			$('#statusAtualDes').val(status);
 			$('#nomeClienteDes').html(nome);
+			
 		});
 
 		$(document).on("click", "#btnExcluiCliente", function() {
 			var id = $(this).data('codigo');
 			var nome = $(this).data('nome');
+			var nome1 = $(this).data('nome');
 			var status = $(this).data('statusatual');
 
 			$('#excIdCliente').val(id);
-			$('#ExcNomeCliente').html(nome);
+			$('#ExcNomeCliente').html(nome);			
 			$('#excStatusCliente').val(status);
+			$('#modalExluirCliente').modal('show');
 		});
 
 		$(document).on("click", "#btnEdita", function() {
@@ -300,14 +319,14 @@ require_once "rodape.php";
 
 			$('#idcliente').val(id);
 			$('#edtnome').val(nome);
-			$('#edtstatus').val(status);
+			$('#edtstatus').val(status);			
+			$('#modalEditaCliente').modal('show');
 		});
 
-		$('#btnExcluirCliente').click(function() {
+		$('#btnExcluirCliente').click(function() {		
 			var tipo = "excluirCliente";
 			var idCliente = $('#excIdCliente').val();
-			//	var nomeCliente = $('#excnomeCliente').val();
-			//	var statusCliente = $('#excStatusCliente').val();
+			var status = $('#excStatusCliente').val();		
 			$.ajax({
 				url: '../core/save.php',
 				type: "POST",
@@ -315,7 +334,7 @@ require_once "rodape.php";
 					tipo: tipo,
 					codCliente: idCliente
 				},
-				success: function(result) { //alert(result);
+				success: function(result) { //alert(result);			
 					if (result == 1) {
 						swal({
 								title: "OK!",
@@ -330,8 +349,18 @@ require_once "rodape.php";
 								}
 							});
 					} else {
-						alert(result); //teste
-						alert("Erro ao excluir cliente");
+						swal({
+								title: "Ops!",
+								text: "Algo deu errado ao excluir! ",
+								type: "error",
+								confirmButtonText: "Fechar",
+								closeOnConfirm: false
+							},
+							function(isConfirm){
+								if (isConfirm) {
+									window.location = "cad_cliente.php";
+									}
+							});
 					}
 				}
 			});
@@ -341,30 +370,43 @@ require_once "rodape.php";
 			var tipo = "desativaCliente";
 			var id = $('#codigoClienteDes').val();
 			var status = $('#statusAtualDes').val();
-
-			if (status == "D") {
-				alert("Cliente já está desativado!");
-				$('#modalConfirmacaoDesativa').modal('hide');
-				die();
-			}
-			$.ajax({
+			$.ajax({			
 				url: '../core/save.php',
 				type: "POST",
 				data: {
 					tipo: tipo,
 					id: id
-				},
+				},				
 				success: function(result) {
-					//alert(data);
 					if (result == 1) {
-						//alert(result);
-						//alert("Desativado com Sucesso!");
-						//$('#contextoModal').empty().append("<h2>Atualizado</h2>");
-						$('#modalConfirmacaoDesativa').modal('hide');
-						window.location.reload();
+						swal({
+								title: "OK!",
+								text: "Clinte desativado com Sucesso!",
+								type: "success",
+								confirmButtonText: "Fechar",
+								closeOnConfirm: false
+							},
+							function(isConfirm){
+								if (isConfirm) {
+								//	$('#modalConfirmacaoDesativa').modal('hide');
+										window.location = "cad_cliente.php";
+									}
+							});						
 					} else {
+						swal({
+								title: "Ops!",
+								text: "Algo deu errado ao desativar o cliente!",
+								type: "error",
+								confirmButtonText: "Fechar",
+								closeOnConfirm: false
+							},
+							function(isConfirm){
+								if (isConfirm) {
+									window.location = "cad_cliente.php";
+									}
+							});
 						//	alert(result);
-						alert("Erro ao salvar");
+						//alert("Erro ao salvar");
 					}
 				}
 			});
@@ -374,13 +416,7 @@ require_once "rodape.php";
 			var tipo = "ativaCliente";
 			var id = $('#codigoClienteAt').val();
 			var status = $('#statusAtualAt').val();
-
-			if (status == "A") {
-				alert("Cliente já está ATIVO!");
-				$('#modalConfirmacaoAtiva').modal('hide');
-				die();
-			}
-
+			
 			$.ajax({
 				url: '../core/save.php',
 				type: "POST",
@@ -389,17 +425,35 @@ require_once "rodape.php";
 					id: id
 				},
 				success: function(result) {
-					//alert(data);
 					if (result == 1) {
-						//alert(result);
-						//alert("Ativado com Sucesso!");
-						//$('#contextoModal').empty().append("<h2>Atualizado</h2>");
-						$('#modalConfirmacaoAtiva').modal('hide');
-						window.location.reload();
-
+						swal({
+								title: "OK!",
+								text: "Clinte ativado com Sucesso!",
+								type: "success",
+								confirmButtonText: "Fechar",
+								closeOnConfirm: false
+							},
+							function(isConfirm){
+								if (isConfirm) {
+								//	$('#modalConfirmacaoDesativa').modal('hide');
+										window.location = "cad_cliente.php";
+									}
+							});						
 					} else {
-						//alert(result);
-						alert("Erro ao salvar");
+						swal({
+								title: "Ops!",
+								text: "Algo deu errado ao ativar o cliente!",
+								type: "error",
+								confirmButtonText: "Fechar",
+								closeOnConfirm: false
+							},
+							function(isConfirm){
+								if (isConfirm) {
+									window.location = "cad_cliente.php";
+									}
+							});
+						//	alert(result);
+						//alert("Erro ao salvar");
 					}
 
 				}
@@ -409,7 +463,6 @@ require_once "rodape.php";
 
 		$('#edtcliente').submit(function() {
 			$.ajax({ //Função AJAX
-
 				url: "../core/save.php",
 				type: "POST",
 				data: new FormData(this),
@@ -417,7 +470,6 @@ require_once "rodape.php";
 				cache: false,
 				processData: false,
 				success: function(result) {
-
 					if (result == 1) {
 						swal({
 								title: "OK!",
@@ -426,28 +478,36 @@ require_once "rodape.php";
 								confirmButtonText: "Fechar",
 								closeOnConfirm: false
 							},
-
 							function(isConfirm) {
 								if (isConfirm) {
 									window.location = "cad_cliente.php";
 								}
 							});
-
 					} else {
-						alert("Erro ao salvar"); //Informa o erro
+						swal({
+								title: "Ops!",
+								text: "Algo deu errado ao editar cliente!",
+								type: "error",
+								confirmButtonText: "Fechar",
+								closeOnConfirm: false
+							},
+							function(isConfirm){
+								if (isConfirm) {
+									window.location = "cad_cliente.php";
+									}
+							});
 					}
 				}
 			});
-
-			//	return false;//Evita que a página seja atualizada
+				return false;//Evita que a página seja atualizada
 		});
 		
 		//BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
 		$("tr #status").each(function(i) {
 			if ($(this).text() == "D") {
 				this.style.color = "red";
-			} else {
-				this.style.color = "";
+			} else {				
+				this.style.color = "green";
 			}
 		});
 

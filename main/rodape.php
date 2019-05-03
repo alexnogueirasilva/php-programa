@@ -1,4 +1,3 @@
-
     <footer class="footer text-center"> 2019 &copy; SD - Sistemas de Ocorrência  </footer>
         
     </div>
@@ -52,16 +51,8 @@
                         "sLast":     "Último"
                     }
                 }
+            });            
             });
-            
-
-
-
-
-            });
-
-
-
             </script>
              <!--Wave Effects -->
     <script src="js/waves.js"></script>

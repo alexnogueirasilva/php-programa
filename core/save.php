@@ -303,7 +303,7 @@ switch ($value) {
 		case 'desativaCliente':
 
 		$id = $_POST['id'];
-		$status = "Desativado";
+		$status = "D";
 
 		$edt = crud::atualizaStatusCliente($id,$status);
 		if ($edt == true) {
@@ -318,7 +318,7 @@ switch ($value) {
 		case 'ativaCliente':
 
 		$id = $_POST['id'];
-		$status = "Ativo";
+		$status = "A";
 
 		$edt = crud::atualizaStatusCliente($id,$status);
 		if ($edt == true) {

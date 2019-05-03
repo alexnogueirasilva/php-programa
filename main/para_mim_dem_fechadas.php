@@ -30,7 +30,7 @@ $queryDemandas = 'SELECT d.id, d.mensagem, d.titulo, d.prioridade, d.ordem_servi
                 <div id="dado"></div>
                 <div class="white-box">
                     <div class="col-sm-6"> 
-                        <h3>Demandas Criadas</h3>
+                        <h3>Demandas Fechadas de <?php echo $logado ?></h3>
                     </div>
                     <div class="col-sm-6"> 
                         <a href="" id="atualizar"> <i class="fa fa-refresh"></i> Atualizar</a>

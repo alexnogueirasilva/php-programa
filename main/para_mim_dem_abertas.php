@@ -36,7 +36,7 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
 
                 <div class="white-box">
                     <div class="col-sm-6"> 
-                        <h3>Demandas Criadas</h3>
+                        <h3>Demandas Abertas de <?php echo $logado ?>  </h3>
                     </div>
                     <div class="col-sm-6"> 
                         <a href="" id="atualizar"> <i class="fa fa-refresh"></i> Atualizar</a>

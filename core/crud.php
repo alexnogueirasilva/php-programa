@@ -35,6 +35,16 @@ class crud
 		return $stmt;
 		
 	}
+	public static function mostraTodasDemandas(){
+		//SQL QUE VAI MOSTRAR A LISTA DE CHAMADOS DE CADA USUÁRIO UNINDO TRÊS TABELAS - (DEMANDAS, USUÁRIOS E DEPARTAMENTOS)
+		$query = 'SELECT d.id, d.mensagem, d.titulo, d.prioridade, d.ordem_servico, d.data_criacao, d.status, d.anexo, u.nome, d.id_usr_criador, dep.nome AS nome_dep FROM demanda AS d INNER JOIN usuarios AS u ON d.id_usr_criador = u.id INNER JOIN departamentos AS dep ON d.id_dep = dep.id ORDER BY data_criacao ASC';
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare($query);
+		$stmt->execute();
+		return $stmt;
+		
+	}
 	
 	//Esta é a função que atualiza o cadastro com os dados vindos da edição.
 	public static function atualizaStatus($codigoDemanda,$status){
@@ -99,16 +109,16 @@ class crud
 		try	{
 			$stmt=$pdo->prepare("UPDATE cliente SET status=:status WHERE codCliente=:id ");
 			$stmt->bindparam(":id",$id);
-			$stmt->bindparam(":status",$status);
-			
-			$stmt->execute();
-			
+			$stmt->bindparam(":status",$status);			
+			$stmt->execute();			
 			return true;	
-		}catch(PDOException $e)
-		{			
+			echo getMessage("Atualizado com sucesso;");
+		}catch(PDOException $e)	{			
 			echo $e->getMessage();	
 			return false;
 		}
+		
+	
 	}
 
 	public static function fechaDemanda($codigoDemanda, $status, $dataFechamento){

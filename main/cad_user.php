@@ -538,7 +538,6 @@ require_once "rodape.php";
 			var pass = $("#edtPass").val();
 			var pass2 = $("#edtPass2").val();
 
-
 			if (pass == pass2) {
 				$.ajax({ //Função AJAX
 						url: "../core/save.php",
@@ -548,8 +547,7 @@ require_once "rodape.php";
 		                cache: false,
 		                processData:false,
 						success: function (result){
-			   				//alert(result)
-			   				if(result==1){
+							if(result==1){
 			   					swal({
 									title: "OK!",
 									text: "Usuário editado com Sucesso!",
@@ -557,13 +555,11 @@ require_once "rodape.php";
 									confirmButtonText: "Fechar",
 									closeOnConfirm: false
 								},
-
 								function(isConfirm){
 									if (isConfirm) {
 											window.location = "cad_user.php";
 										}
 								});
-			                		
 	                		}else{
 	                			alert("Erro ao salvar");		//Informa o erro
 	                		}

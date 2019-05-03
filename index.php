@@ -12,6 +12,8 @@
     <link href="main/css/style.css" rel="stylesheet" type="text/css" />   
 </head>
 
+
+
 <body>
     <section id="wrapper" class="login-register">
         <div class="login-box">
@@ -88,6 +90,7 @@
                 if(result==1){  
                     $("#errolog").fadeOut();                    
                             location.href='main/index_user.php'   //Redireciona
+                          //  location.href='./core/routes.php/pag_Index_User()'   //Redireciona
                         }else{
                             
                             $('#errolog').fadeIn();     //Informa o erro
