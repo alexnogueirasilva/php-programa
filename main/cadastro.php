@@ -42,7 +42,7 @@ $queryUsuarios = "SELECT usr.id, usr.nome, usr.email, usr.nivel,usr.status,usr.i
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon"><span class="fa fa-envelope"></span></span>
-                    <input type="text" class="form-control" size="70" minlength="3" maxlength="50" name="dica" id="dica" placeholder="digite a dica" >
+                    <input type="text" class="form-control" size="70" minlength="3" maxlength="50" name="dica" id="dica" placeholder="digite a dica" required>
                 </div>
             </div>
         </div>

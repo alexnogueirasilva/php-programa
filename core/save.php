@@ -262,7 +262,7 @@ switch ($value) {
 				$emailUser2 = $_POST['emailUser'];	
 				
 				$ativo = 0;	
-				$valida = md5($emailUser);
+				$valida = md5($emailUser2);
 		
 				$cdt = crud::VericaEmailUser($emailUser2);
 				if ($cdt == true) {
