@@ -316,7 +316,7 @@ class crud
 
 			$stmt->execute();
 
-			return true;
+			
 
 			$to = $emailUser;			
 			$valida = md5("$to");
@@ -331,7 +331,7 @@ class crud
 			$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";
 			
 			mail($to,$subject,$message,$headers);
-
+			return true;
 		} catch (PDOException $e) {
 
 			echo $e->getMessage();
