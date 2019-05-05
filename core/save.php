@@ -71,8 +71,6 @@ switch ($value) {
 				if ($cdt == true) {
 					echo 1;					
 					//enviaEmail();
-
-
 				}else{
 					echo 0;
 				}
@@ -242,6 +240,38 @@ switch ($value) {
 		}
 		break;
 
+		case 'CadastroUsuario':
+//tipo emailUser senhalUser dicalUser
+		$emailUser = $_POST['emailUser'];	
+		$senhalUser = $_POST['senhalUser'];	
+		$dicalUser = $_POST['dicalUser'];	
+		$ativo = 0;	
+		$valida = md5($emailUser);
+
+		$cdt = crud::criaUsuario($emailUser,$senhalUser,$dicalUser, $ativo, $valida);
+		if ($cdt == true) {
+			echo 1;
+					
+		}else{
+			echo 0;
+		}
+		break;
+
+		case 'VerificaEmail':
+		//tipo emailUser senhalUser dicalUser
+				$emailUser2 = $_POST['emailUser'];	
+				
+				$ativo = 0;	
+				$valida = md5($emailUser);
+		
+				$cdt = crud::VericaEmailUser($emailUser2);
+				if ($cdt == true) {
+					echo 1;
+							
+				}else{
+					echo 0;
+				}
+				break;
 
 		case 'EditDep':
 

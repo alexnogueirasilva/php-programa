@@ -89,8 +89,7 @@
                     //alert(result)                 
                 if(result==1){  
                     $("#errolog").fadeOut();                    
-                            location.href='main/index_user.php'   //Redireciona
-                          //  location.href='./core/routes.php/pag_Index_User()'   //Redireciona
+                            location.href='main/index_user.php'   //Redireciona                          
                         }else{
                             
                             $('#errolog').fadeIn();     //Informa o erro

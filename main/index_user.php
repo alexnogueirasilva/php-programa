@@ -190,7 +190,7 @@ include_once "modais.php";
                 success: function(data) {
                     /*$('#loading').hide();
                     $("#message").html(data);*/
-                    alert("Salvo com Sucesso!"); //Redireciona
+                    alert("Salvo com Sucesso! " + data); //Redireciona
                     $('#modalCriaDemanda').modal('hide');
                     location.reload(table);
                 }

@@ -25,19 +25,14 @@ include_once '../core/crud.php';
 							<input type="text" class="form-control" size="200" name="nomeDep" id="nomeDep" placeholder="Nome do departamento" required >
 							<span class="input-group-addon"><span class="fa fa-cubes"></span></span>
 						</div>
-					</div>
-					
-				</div>	
-				
-
+					</div>					
+				</div>				
 				<br><br>
 				<button type="submit" class="btn btn-info btn-lg btn-block" id="submit"><span class="fa fa-save"></span> Salvar</button>
 			</div>
 
 		</div>
 	</form>
-
-
 		<div class="row">
 		<div class="col-sm-12"> 
 			<div class="white-box">
@@ -85,11 +80,8 @@ include_once '../core/crud.php';
 			</div>
 		</div>
 	</div>
-
 </div>
 </div>
-
-
 
 <div class="modal fade" id="modalEditDep" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
         <div class="modal-dialog" role="document">

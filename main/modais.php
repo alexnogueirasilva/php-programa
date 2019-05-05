@@ -49,7 +49,7 @@ $idLogado = $_SESSION['usuarioID'];
                             </select>
                         </div>           
                         <div class="form-group">
-                            <select class="form-control" name="usuarioDestino" id="usuarioDestino" required>                               
+                            <select class="form-control" name="usuarioDestino" id="usuarioDestino" required>
                             
                         </select>
                         </div>
@@ -73,7 +73,7 @@ $idLogado = $_SESSION['usuarioID'];
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="text" pattern="[0-9]" size="30" maxlength="30" class="form-control" name="ordemServico" id="ordemServico" placeholder="Ordem de Serviço" style="text-transform: uppercase;">
+                            <input type="text" size="30" maxlength="30" class="form-control" name="ordemServico" id="ordemServico" placeholder="Ordem de Serviço" style="text-transform: uppercase;">
                         </div>                      
                         <div class="form-group">
                             <select class="form-control"maxlength="50" name="nomeSolicitante" id="nomeSolicitante" required>

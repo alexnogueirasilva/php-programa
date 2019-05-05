@@ -50,7 +50,8 @@ if ($dados->rowCount() > 0) {
                         </tr>';
                     }
                 } else {
-                    echo "<p >Sem demandas abertas</p>";             
+                    echo "<p >Sem demandas abertas</p>"; 
+                    echo "<a href=index_user.php>Retornar para página inicial</a>";            
                 }
                 $html .= '<tbody>
                         </table>';

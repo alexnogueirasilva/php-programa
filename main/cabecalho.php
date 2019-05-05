@@ -128,6 +128,17 @@ $nivel = $_SESSION['nivel'];
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
+
+                    <li id="Desenvolvimento"> <a href="#" class="waves-effect"><i class="icon-graph fa-fw"></i> Desenvolvimento<span class="fa arrow"></span>  </a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="andre.php">Andre Dashboard</a></li>
+                            <li><a href="cadastro.php">Cadastros Usuários</a></li>                            
+                            <li><a href="e-mail.php">E-mail</a></li>                            
+                            <li><a href="valida_cadastro.php">Validacação de Cadastros</a></li>
+                            <li><a href="teste_dem_fechada.php">Demandas fechadas</a></li>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
                                  
                 </ul>
             </div>
