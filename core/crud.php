@@ -324,7 +324,7 @@ class crud
 			$headers = 'MIME-Version: 1.0'. "\r\n";
 			$headers .= 'content-type: text/html; charset=iso-8859-1'."\r\n";
 			$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>'."\r\n";
-			//$headers .= 'From:< carlosandrefsaba@carlosandrefsaba.com>'."\r\n";
+			$headers .= 'From:< contato@sistemacocorrencia.com.br>'."\r\n";
 			$headers .= 'CC:< programadorfsaba@gmail.com>'."\r\n";
 			$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";
 			
