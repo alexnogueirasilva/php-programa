@@ -267,7 +267,6 @@ switch ($value) {
 				$cdt = crud::VericaEmailUser($emailUser2);
 				if ($cdt == true) {
 					echo 1;
-							
 				}else{
 					echo 0;
 				}
