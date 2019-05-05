@@ -316,17 +316,15 @@ class crud
 
 			$stmt->execute();
 
-			
-
 			$to = $emailUser;			
 			$valida = md5("$to");
 					
-			$subject = "Assunto Teste e-mail";
-			$message="<a href=valida_cadastro.php?v=$valida&$to> Teste de envio de mensagem </a>";
+			$subject = "Cadastro no Sistema de Ocorrencias";
+			$message="<a href=http://sistemaocorrencia.devnogueira.online/main/valida_cadastro.php?v=$valida&$to> SO - Click aqui para validar seu cadastro </a>";
 			$headers = 'MIME-Version: 1.0'. "\r\n";
 			$headers .= 'content-type: text/html; charset=iso-8859-1'."\r\n";
 			$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>'."\r\n";
-			$headers .= 'From:< carlosandrefsaba@carlosandrefsaba.com>'."\r\n";
+			//$headers .= 'From:< carlosandrefsaba@carlosandrefsaba.com>'."\r\n";
 			$headers .= 'CC:< programadorfsaba@gmail.com>'."\r\n";
 			$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";
 			
@@ -342,9 +340,9 @@ class crud
 	public static function ativarUsuario($ativo, $valida){
 		$pdo = Database::connect();
 		try {
-			$stmt = $pdo->prepare("UPDATE usuario SET ativo=:ativo WHERE valida=:valida");
-			$stmt->bindparam(":valida", $valida);
+			$stmt = $pdo->prepare("UPDATE usuario SET ativo=:ativo WHERE valida=:valida");		
 			$stmt->bindparam(":ativo", $ativo);
+			$stmt->bindparam(":valida", $valida);
 
 			$stmt->execute();
 
