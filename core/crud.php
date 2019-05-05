@@ -320,7 +320,7 @@ class crud
 			$valida = md5("$to");
 					
 			$subject = "Cadastro no Sistema de Ocorrencias";
-			$message="<a href=http://sistemaocorrencia.devnogueira.online/main/valida_cadastro.php?v=$valida&$to> SO - Click aqui para validar seu cadastro </a>";
+			$message="<a href=http://sistemaocorrencia.devnogueira.online/main/valida_cadastro.php?v=$valida> SO - Click aqui para validar seu cadastro </a>";
 			$headers = 'MIME-Version: 1.0'. "\r\n";
 			$headers .= 'content-type: text/html; charset=iso-8859-1'."\r\n";
 			$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>'."\r\n";
@@ -354,9 +354,9 @@ class crud
 		}
 	}
 
-	public static function mostraUsuario($valor, $valor2){
+	public static function mostraUsuario($valor){
 		$pdo = Database::connect();
-		$sql = "SELECT * FROM usuario WHERE valida='" . $valor . "' AND email='" .$valor2. "'   ";
+		$sql = "SELECT * FROM usuario WHERE valida='" . $valor . "'   ";
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
 			$q = $pdo->prepare($sql);

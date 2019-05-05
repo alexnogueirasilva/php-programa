@@ -8,17 +8,17 @@ include_once '../core/crud.php';
 
 $ativo = 0;
 $valor  = $_GET['v'];
-$valor2  = $_GET['v2'];
+//$valor2  = $_GET['v2'];
 
-if ($valor == "" || $valor2 == "") {
+if ($valor == "") {
     echo "<script>window.location ='cadastro.php';</script>";  
 }
 
-$cdt = crud::mostraUsuario($valor, $valor2);
+$cdt = crud::mostraUsuario($valor);
 $codigo = $cdt['valida'];
-$email = $cdt['email'];
+//$email = $cdt['email'];
 
-if ($valor == $codigo && $valor2 == $email ) {
+if ($valor == $codigo ) {
     $ativo = 1;
     $valida = $valor;
     $cdt = crud::ativarUsuario($ativo, $valida);
