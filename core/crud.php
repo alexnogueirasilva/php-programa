@@ -319,14 +319,14 @@ class crud
 			$to = $emailUser;			
 			$valida = md5("$to");
 					
-			$subject = "Cadastro no Sistema de Ocorrencias";
-			$message="<a href=http://sistemaocorrencia.devnogueira.online/main/valida_cadastro.php?v=$valida> SO - Click aqui para validar seu cadastro </a>";
+			$subject = "Cadastro no Sistema de Ocorrencias";// assunto
+			$message="Validacao de cadastro <a href=http://sistemaocorrencia.devnogueira.online/main/valida_cadastro.php?v=$valida&v2=$to> SO - Click aqui para validar seu cadastro </a>";
 			$headers = 'MIME-Version: 1.0'. "\r\n";
-			$headers .= 'content-type: text/html; charset=iso-8859-1'."\r\n";
-			$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>'."\r\n";
-			$headers .= 'From:< contato@sistemacocorrencia.com.br>'."\r\n";
-			$headers .= 'CC:< programadorfsaba@gmail.com>'."\r\n";
-			$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";
+			$headers .= 'content-type: text/html; charset=iso-8859-1'."\r\n";//formato
+			$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>'."\r\n";//
+			$headers .= 'From:< contato@sistemacocorrencia.com.br>'."\r\n";//email de envio
+			$headers .= 'CC:< programadorfsaba@gmail.com>'."\r\n";// email de copia
+			$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";//email para resposta
 			
 			mail($to,$subject,$message,$headers);
 			return true;
@@ -354,9 +354,9 @@ class crud
 		}
 	}
 
-	public static function mostraUsuario($valor){
+	public static function mostraUsuario($valor, $valor2){
 		$pdo = Database::connect();
-		$sql = "SELECT * FROM usuario WHERE valida='" . $valor . "'   ";
+		$sql = "SELECT * FROM usuario WHERE valida='" . $valor . "' AND email='".$valor2."'";
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
 			$q = $pdo->prepare($sql);
