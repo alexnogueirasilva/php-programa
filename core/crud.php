@@ -164,10 +164,10 @@ $emailLogado =  $_POST['emaillogado'];
 		//	$message="<a href=http://sistemaocorrencia.devnogueira.online/main/valida_cadastro.php?v=$valida&v2=$to> SO - Click aqui para buscar a demanda </a>"; //menssagem com link
 			$headers = 'MIME-Version: 1.0'. "\r\n";
 			$headers .= 'content-type: text/html; charset=iso-8859-1'."\r\n";//formato
-			$headers .= 'To: <'.$emailDestino.'>' ."\r\n";// email enviado para
-			$headers .= 'From:< '.$emailLogado.'>'."\r\n";//email de envio
+			$headers .= 'To: '.$emailDestino."\r\n";// email enviado para
+			$headers .= 'From: '.$emailLogado."\r\n";//email de envio
 			//$headers .= 'CC:< programadorfsaba@gmail.com>'."\r\n";// email de copia
-			$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";//email para resposta
+			//$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";//email para resposta
 	
 			mail($emailLogado,$subject,$message,$headers);
 			$stmt->execute();
