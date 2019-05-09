@@ -23,9 +23,9 @@ if ($valor == $codigo && $valor2 == $email ) {
     $valida = $valor;
     $cdt = crud::ativarUsuario($ativo, $valida);
     echo "Cadastro ativado com sucesso!";
-    //echo "<script>window.location ='../index.php';</script>"; 
+    echo "<script>window.location ='logout.php';</script>"; 
 } else {
-    echo "<a href=cadastro.php>Nao foi possivel ativar o cadastro</a>";
+    echo "Nao foi possivel ativar o cadastro - " + " <a href=cadastro.php> Click aqui para tentar novamente</a>";
 }
 
 ?>

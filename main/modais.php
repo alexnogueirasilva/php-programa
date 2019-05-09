@@ -10,6 +10,7 @@ $nomeAnexo = date('Y-m-d-H:i');
 $novoNomeAnexo = md5($nomeAnexo);
 
 $idLogado = $_SESSION['usuarioID'];
+$emailLogado = $_SESSION['nome'];
 
 ?>
 
@@ -27,7 +28,7 @@ $idLogado = $_SESSION['usuarioID'];
                     <input type="hidden" value="<?php echo $data; ?>" name="dataAtual" id="dataAtual">
                     <input type="hidden" value="<?php echo $idLogado; ?>" name="idLogado" id="idLogado">
                     <input type="hidden" value="" name="emailDestino" id="emailDestino">
-                                      
+                    <input type="hidden" value="<?php echo $emailLogado; ?>" name="emaillogado" id="emaillogado">                                      
                     <div class="form-inline">                       
                         <div class="form-group">
                             <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="titulo" id="titulo" placeholder="Título/Assunto" required>

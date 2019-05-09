@@ -6,6 +6,7 @@ include_once '../core/crud.php';
 date_default_timezone_set('America/Sao_Paulo');
 
 $logado = $_SESSION['nomeUsuario'];
+$emailLogado = $_SESSION['nome'];
 
 $queryDepart = "SELECT * FROM departamentos";
 $queryCliente = "SELECT * FROM cliente";
@@ -91,7 +92,7 @@ $queryCliente = "SELECT * FROM cliente";
                                 <?php
                             }
                         } else {
-                            //echo "<p class='text-danger'>Sem demandas abertas</p>";               
+                            echo "<p class='text-danger'>Sem demandas abertas</p>";               
                         }
                         ?>
                         </tbody>
@@ -190,7 +191,7 @@ include_once "modais.php";
                 success: function(data) {
                     /*$('#loading').hide();
                     $("#message").html(data);*/
-                    alert("Salvo com Sucesso! " + data); //Redireciona
+                    alert("Salvo com Sucesso! "); //Redireciona
                     $('#modalCriaDemanda').modal('hide');
                     location.reload(table);
                 }
