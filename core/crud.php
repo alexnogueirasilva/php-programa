@@ -157,24 +157,25 @@ $emailDestino = $_POST['emailDestino'];
 $emailLogado =  $_POST['emaillogado'];
 $to = $_POST['emaillogado'];		
 			//$valida = md5("$to");
-					
+			echo $emailDestino ;
+			echo $emailLogado ;
+
 			$subject = "Cadastro de Ocorrencia";// assunto
 			$message ="Uma demanda cadastrada para você, "."\r\n";//mensagem
 			$message .="acesse com seu login para da tratamento "."\r\n";//mensagem
-			$message ="<a href=http://sistemaocorrencia.devnogueira.online/index.php> SO - Click aqui para fazer o login </a>"; //menssagem com link
+			$message .="<a href=http://sistemaocorrencia.devnogueira.online/index.php> SO - Click aqui para fazer o login </a>"."\r\n"; //menssagem com link
 			$headers = 'MIME-Version: 1.0'. "\r\n";
 			$headers .= 'content-type: text/html; charset=iso-8859-1'."\r\n";//formato
 			$headers .= 'To: <'.$emailDestino.'>'."\r\n";// email enviado para
-			$headers .= 'From: < contato@sistemacocorrencia.com.br>'."\r\n";//email de envio
-			$headers .= 'CC: < '.$emailLogado.'>'."\r\n";//email de copia
+			$headers .= 'From: <contato@sistemacocorrencia.com.br>'."\r\n";//email de envio
+			$headers .= 'CC: <'.$emailLogado.'>'."\r\n";//email de copia
 			//$headers .= 'CC:< programadorfsaba@gmail.com>'."\r\n";// email de copia
 			//$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";//email para resposta
 	
 	
 			mail($to,$subject,$message,$headers);
 			$stmt->execute();
-			echo $emailDestino ;
-			echo $emailLogado ;
+			
 			return true;
 		} catch (PDOException $e) {
 			echo $e->getMessage();
@@ -329,7 +330,7 @@ $to = $_POST['emaillogado'];
 					
 			$subject = "Cadastro no Sistema de Ocorrencias";// assunto
 			$message="Validacao de cadastro "."\r\n";
-			$message="<a href=http://sistemaocorrencia.devnogueira.online/main/valida_cadastro.php?v=$valida&v2=$to> SO - Click aqui para validar seu cadastro </a>";
+			$message .="<a href=http://sistemaocorrencia.devnogueira.online/main/valida_cadastro.php?v=$valida&v2=$to> SO - Click aqui para validar seu cadastro </a>";
 			$headers = 'MIME-Version: 1.0'. "\r\n";
 			$headers .= 'content-type: text/html; charset=iso-8859-1'."\r\n";//formato
 			$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>'."\r\n";//
