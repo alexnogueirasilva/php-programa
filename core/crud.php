@@ -159,8 +159,8 @@ $emailLogado =  $_POST['emaillogado'];
 			//$valida = md5("$to");
 					
 			$subject = "Cadastro de Ocorrencia";// assunto
-			$message="Uma demanada cadastro para, "."\r\n";//mensagem
-			$message="acesse com seu login para da tratamento";//mensagem
+			$message ="Uma demanada cadastro para, "."\r\n";//mensagem
+			$message .="acesse com seu login para da tratamento";//mensagem
 		//	$message="<a href=http://sistemaocorrencia.devnogueira.online/main/valida_cadastro.php?v=$valida&v2=$to> SO - Click aqui para buscar a demanda </a>"; //menssagem com link
 			$headers = 'MIME-Version: 1.0'. "\r\n";
 			$headers .= 'content-type: text/html; charset=iso-8859-1'."\r\n";//formato
