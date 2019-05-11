@@ -155,7 +155,7 @@ class crud
 			$stmt->bindparam(":anexo", $nomeAnexo);
 $emailDestino = $_POST['emailDestino'];
 $emailLogado =  $_POST['emaillogado'];
-$to = $_POST['emailDestino'];		
+$to = $_POST['emailDestino']; // email enviado para
 			//$valida = md5("$to");		
 
 			$subject = "Cadastro de Ocorrencia";// assunto
@@ -168,11 +168,10 @@ $to = $_POST['emailDestino'];
 			//$headers .= 'From: '.$emailLogado."\r\n";//email de envio
 		//	$headers .= 'To: <'.$emailDestino.'>'."\r\n";// email enviado para
 			$headers .= 'From: <contato@sistemacocorrencia.com.br>'."\r\n";//email de envio
-			//$headers .= 'CC: <'.$emailLogado.'>'."\r\n";//email de copia
+			$headers .= 'CC: <'.$emailLogado.'>'."\r\n";//email de copia
 			//$headers .= 'CC:< programadorfsaba@gmail.com>'."\r\n";// email de copia
 			//$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";//email para resposta
-	
-	
+		
 			mail($to,$subject,$message,$headers);
 			$stmt->execute();
 			
