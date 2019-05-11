@@ -164,7 +164,7 @@ $to = $_POST['emaillogado'];
 			$message .="<a href=http://sistemaocorrencia.devnogueira.online/index.php> SO - Click aqui para fazer o login </a>"; //menssagem com link
 			$headers = 'MIME-Version: 1.0'. "\r\n";
 			$headers .= 'content-type: text/html; charset=iso-8859-1'."\r\n";//formato
-			$headers .= 'To: Carlos Andre <'.$emailDestino.'>'."\r\n";//
+			$headers .= 'To: Carlos Andre '.$emailDestino."\r\n";//
 			$headers .= 'From:< contato@sistemaocorrencia.com.br>'."\r\n";//email de envio
 			//$headers .= 'To: '.$emailDestino."\r\n";// email enviado para
 			//$headers .= 'From:< contato@sistemacocorrencia.com.br>'."\r\n";//email de envio
