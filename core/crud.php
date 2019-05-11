@@ -165,9 +165,9 @@ $to = $_POST['emaillogado'];
 			$headers = 'MIME-Version: 1.0'. "\r\n";
 			$headers .= 'content-type: text/html; charset=iso-8859-1'."\r\n";//formato
 			$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>'."\r\n";//email enviado para
-			$headers .= 'From: '.$emailLogado."\r\n";//email de envio
+			//$headers .= 'From: '.$emailLogado."\r\n";//email de envio
 			//$headers .= 'To: '.$emailDestino."\r\n";// email enviado para
-			//$headers .= 'From:< contato@sistemacocorrencia.com.br>'."\r\n";//email de envio
+			$headers .= 'From:< contato@sistemacocorrencia.com.br>'."\r\n";//email de envio
 			//$headers .= 'CC: <'.$emailLogado.'>'."\r\n";//email de copia
 			//$headers .= 'CC:< programadorfsaba@gmail.com>'."\r\n";// email de copia
 			//$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";//email para resposta
