@@ -9,6 +9,7 @@ $dataMsg = date('d/m/Y - H:i');
 
 $logado = $_SESSION['nomeUsuario'];
 $idLogado = $_SESSION['usuarioID'];
+$emailLogado = $_SESSION['nome'];
 
 $queryDepart = "SELECT * FROM departamentos";
 //SQL QUE VAI MOSTRAR A LISTA DE CHAMADOS DE CADA USUÁRIO UNINDO TRÊS TABELAS - (DEMANDAS, USUÁRIOS E DEPARTAMENTOS)
