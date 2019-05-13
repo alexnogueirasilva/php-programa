@@ -58,9 +58,7 @@ class crud
 			$stmt->bindparam(":status", $status);
 
 			$stmt->execute();
-
-			return true;
-	$emailSolicitante = $_POST['emailsolicitante'];
+			$emailSolicitante = $_POST['emailsolicitante'];
 			$subject = "Cadastro de Ocorrencia"; // assunto
 			$message = "Sua demanda esta em atendimento, para você visualisar " . "\r\n"; //mensagem
 			$message .= "acesse com seu login " . "\r\n"; //mensagem
@@ -74,6 +72,8 @@ class crud
 			$to = $_POST['emailDestino']; // recuperando email do destinatario e envia notificacao da demanda
 
 			mail($to, $subject, $message, $headers);
+			return true;
+	
 
 		} catch (PDOException $e) {
 			echo $e->getMessage();
@@ -146,7 +146,7 @@ class crud
 
 			$stmt->execute();
 
-			return true;
+		
 			$emailSolicitante = $_POST['emailsolicitante'];
 			$subject = "Cadastro de Ocorrencia"; // assunto
 			$message = "Sua demanda foi fechada com sucesso, para você visualisar " . "\r\n"; //mensagem
@@ -161,7 +161,7 @@ class crud
 			$to = $_POST['emailDestino']; // recuperando email do destinatario e envia notificacao da demanda
 
 			mail($to, $subject, $message, $headers);
-
+			return true;
 		} catch (PDOException $e) {
 			echo $e->getMessage();
 			return false;
