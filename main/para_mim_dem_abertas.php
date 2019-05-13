@@ -108,7 +108,7 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
                                             data-mensagem="<?php print($row['mensagem']); ?>">Detalhes</a></td>
                                            
                                             <td><a class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#modalConfirmacaoAtend" data-whatever="@getbootstrap" id="btnAtender" data-codigo="<?php print($row['id']); ?>" data-statusatual="<?php print($row['status']);  ?>"  data-emailsolicitante="<?php print($row['email']);  ?> ">Atender</a></td>
-                                            <td><a class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#modalConfirmacaoFecha" data-whatever="@getbootstrap" id="btnFechar" class="btn btn-danger waves-effect waves-light" data-codigo="<?php print($row['id']); ?>" data-statusatual="<?php print($row['status']); ?>">Fechar</a></td>
+                                            <td><a class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#modalConfirmacaoFecha" data-whatever="@getbootstrap" id="btnFechar" class="btn btn-danger waves-effect waves-light" data-codigo="<?php print($row['id']); ?>" data-statusatual="<?php print($row['status']); ?>" data-emailsolicitante="<?php print($row['email']);  ?> " >Fechar</a></td>
                                            
                                             
                                     </tr>
@@ -235,7 +235,7 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
                     <div class="row">
                         <input type="hidden" name="codigoDemanda" id="codigoDemanda">
                         <input type="hidden" name="statusAtual" id="statusAtual">
-                        <input type="hidden" name="emailsolicitante" id="emailsolicitante">
+                        <input type="hidden" name="emailSolicitante" id="emailSolicitante">
                         <input type="hidden" value="<?php echo $data; ?>" name="dataAtual" id="dataAtual">
                         <div class="col-md-12">
                             <div id="contextoModal">
@@ -349,7 +349,7 @@ include_once "modais.php";
 
             $('#codigoDemanda').val(codigo);   
             $('#statusAtual').val(statusAtual);
-            $('#emailsolicitante').val(emailSolicitante);
+            $('#emailSolicitante').val(emailSolicitante);
             $('#contextoModal').empty().append("<h2>Você colocará a demanda EM ATENDIMENTO?</h2>");
 
         }); //SETA O CÓDIGO NO MODAL PARA ATUALIZAR O STATUS ------------------------------------------
@@ -361,6 +361,7 @@ include_once "modais.php";
             var tipo = "atualizaStatus";
             var codigoDemanda = $("#codigoDemanda").val();
             var status = "Em atendimento";
+            var emailSolicitante = $("#emailSolicitante").val();
             var statusAtual = $("#statusAtual").val();
             //alert(statusAtual);
             if (statusAtual == "Em atendimento") {
@@ -371,7 +372,7 @@ include_once "modais.php";
             $.ajax({
                 url: '../core/save.php',
                 type: "POST",
-                data: {tipo : tipo, codigoDemanda : codigoDemanda, status : status},
+                data: {tipo : tipo, codigoDemanda : codigoDemanda, status : status, emailSolicitante: emailSolicitante},
                 success: function(result) {
                     //alert(data);
                     if(result==1){
@@ -431,7 +432,9 @@ include_once "modais.php";
     $(document).on("click", "#btnFechar", function () {
         var codigo = $(this).data('codigo');
         var statusAtual = $(this).data('statusatual');
+        var emailSolicitante = $(this).data('emailsolicitante');
 
+        $('#emailSolicitante').val(emailSolicitante);
         $('#codigoDemanda').val(codigo);   
         $('#statusAtual').val(statusAtual);
         $('#contextoModal').empty().append("<h2>Você pretende fechar a demanda agora?</h2>");
@@ -442,13 +445,14 @@ include_once "modais.php";
     $('#btnFechaDemanda').click(function(){
         var tipo = "fechaDemanda";
         var codigoDemanda = $("#codigoDemanda").val();
+        var emailSolicitante = $("#emailSolicitante").val();
         var status = "Fechada";
         var dataFechamento = $("#dataAtual").val();
 
         $.ajax({
             url: '../core/save.php',
             type: "POST",
-            data: {tipo : tipo, codigoDemanda : codigoDemanda, status : status, dataFechamento : dataFechamento},
+            data: {tipo : tipo, codigoDemanda : codigoDemanda, status : status, dataFechamento : dataFechamento, emailSolicitante : emailSolicitante},
             success: function(result) {
                     //alert(data);
                     if(result==1){
