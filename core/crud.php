@@ -3,7 +3,8 @@ include_once 'conex.php';
 class crud
 {
 	//Aqui fazemos a verificação do login do usuário e do seu nível de acesso
-	public static function pesquisaLoginUsr($nome, $senha)	{
+	public static function pesquisaLoginUsr($nome, $senha)
+	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$pwd = sha1($senha);
@@ -15,7 +16,8 @@ class crud
 	}
 
 	//Nessa função, fazemos a montagem da tabela de dados.
-	public static function dataview($query){
+	public static function dataview($query)
+	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$stmt = $pdo->prepare($query);
@@ -23,7 +25,8 @@ class crud
 		return $stmt;
 	}
 
-	public static function mostraDemandas($usuarioSessao){
+	public static function mostraDemandas($usuarioSessao)
+	{
 		//SQL QUE VAI MOSTRAR A LISTA DE CHAMADOS DE CADA USUÁRIO UNINDO TRÊS TABELAS - (DEMANDAS, USUÁRIOS E DEPARTAMENTOS)
 
 		$query = 'SELECT d.id, d.mensagem, cli.nomecliente, d.titulo, d.prioridade, d.ordem_servico, d.data_criacao, d.status,d.anexo, u.nome, dep.nome as nome_dep FROM demanda AS d INNER JOIN usuarios AS u ON d.id_usr_destino = u.id AND id_usr_criador = ' . $usuarioSessao . ' INNER JOIN departamentos AS dep ON u.id_dep = dep.id INNER JOIN cliente AS cli ON cli.codCliente = d.codCliente_dem ORDER BY data_criacao ASC';
@@ -34,7 +37,8 @@ class crud
 		return $stmt;
 	}
 
-	public static function mostraTodasDemandas()	{
+	public static function mostraTodasDemandas()
+	{
 		//SQL QUE VAI MOSTRAR A LISTA DE CHAMADOS DE CADA USUÁRIO UNINDO TRÊS TABELAS - (DEMANDAS, USUÁRIOS E DEPARTAMENTOS)
 		$query = 'SELECT d.id, d.mensagem, d.titulo, d.prioridade, d.ordem_servico, d.data_criacao, d.status, d.anexo, u.nome, d.id_usr_criador, dep.nome AS nome_dep FROM demanda AS d INNER JOIN usuarios AS u ON d.id_usr_criador = u.id INNER JOIN departamentos AS dep ON d.id_dep = dep.id ORDER BY data_criacao ASC';
 		$pdo = Database::connect();
@@ -56,13 +60,29 @@ class crud
 			$stmt->execute();
 
 			return true;
+	$emailSolicitante = $_POST['emailsolicitante'];
+			$subject = "Cadastro de Ocorrencia"; // assunto
+			$message = "Sua demanda esta em atendimento, para você visualisar " . "\r\n"; //mensagem
+			$message .= "acesse com seu login " . "\r\n"; //mensagem
+			$message .= "<a href=http://sistemaocorrencia.devnogueira.online/index.php> SO - Click aqui para fazer o login </a>"; //menssagem com link
+			$headers = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n"; //formato
+			$headers .= 'From: <contato@sistemaocorrencia.com.br>' . "\r\n"; //email de envio
+			$headers .= 'CC: <' . $emailSolicitante . '>' . "\r\n"; //email de copia
+			$emailLogado =  $_POST['emaillogado']; //recuperando o e-mail do usuario logado
+			//$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";//email para resposta
+			$to = $_POST['emailDestino']; // recuperando email do destinatario e envia notificacao da demanda
+
+			mail($to, $subject, $message, $headers);
+
 		} catch (PDOException $e) {
 			echo $e->getMessage();
 			return false;
 		}
 	}
 
-	public static function atualizaStatusUsuario($id, $status)	{
+	public static function atualizaStatusUsuario($id, $status)
+	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
@@ -79,7 +99,8 @@ class crud
 		}
 	}
 
-	public static function atualizaCliente($id, $nome, $status)	{
+	public static function atualizaCliente($id, $nome, $status)
+	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
@@ -97,7 +118,8 @@ class crud
 		}
 	}
 
-	public static function atualizaStatusCliente($id, $status)	{
+	public static function atualizaStatusCliente($id, $status)
+	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
@@ -113,7 +135,7 @@ class crud
 		}
 	}
 
-	public static function fechaDemanda($codigoDemanda, $status, $dataFechamento)	{
+	public static function fechaDemanda($codigoDemanda, $status, $dataFechamento){
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
@@ -125,6 +147,21 @@ class crud
 			$stmt->execute();
 
 			return true;
+			$emailSolicitante = $_POST['emailsolicitante'];
+			$subject = "Cadastro de Ocorrencia"; // assunto
+			$message = "Sua demanda foi fechada com sucesso, para você visualisar " . "\r\n"; //mensagem
+			$message .= "acesse com seu login " . "\r\n"; //mensagem
+			$message .= "<a href=http://sistemaocorrencia.devnogueira.online/index.php> SO - Click aqui para fazer o login </a>"; //menssagem com link
+			$headers = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n"; //formato
+			$headers .= 'From: <contato@sistemaocorrencia.com.br>' . "\r\n"; //email de envio
+			$headers .= 'CC: <' . $emailSolicitante . '>' . "\r\n"; //email de copia
+			$emailLogado =  $_POST['emaillogado']; //recuperando o e-mail do usuario logado
+			//$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";//email para resposta
+			$to = $_POST['emailDestino']; // recuperando email do destinatario e envia notificacao da demanda
+
+			mail($to, $subject, $message, $headers);
+
 		} catch (PDOException $e) {
 			echo $e->getMessage();
 			return false;
@@ -132,12 +169,12 @@ class crud
 	}
 
 	//Essa é a função responsável pela criação das demandas
-	public static function criaDemanda($dataAbertura, $departamento, $idLogado, $usuarioDestino, $titulo, $nomeSolicitante, $prioridade, $ordemServico, $mensagem, $status, $nomeAnexo)	{
-		
-		if($ordemServico == ""){
+	public static function criaDemanda($dataAbertura, $departamento, $idLogado, $usuarioDestino, $titulo, $nomeSolicitante, $prioridade, $ordemServico, $mensagem, $status, $nomeAnexo){
+
+		if ($ordemServico == "") {
 			$ordemServico = 0;
 		}
-		
+
 		$pdo = Database::connect();
 		try {
 			$stmt = $pdo->prepare("INSERT INTO demanda(data_criacao, id_dep, id_usr_criador, id_usr_destino, titulo, codCliente_dem, prioridade, ordem_servico, mensagem, status, anexo) 
@@ -153,36 +190,34 @@ class crud
 			$stmt->bindparam(":mensagem", $mensagem);
 			$stmt->bindparam(":status", $status);
 			$stmt->bindparam(":anexo", $nomeAnexo);
-$emailDestino = $_POST['emailDestino'];
-$emailLogado =  $_POST['emaillogado'];
-$to = $_POST['emailDestino']; // email enviado para
-			//$valida = md5("$to");		
 
-			$subject = "Cadastro de Ocorrencia";// assunto
-			$message ="Uma demanda cadastrada para você, "."\r\n";//mensagem
-			$message .="acesse com seu login para da tratamento "."\r\n";//mensagem
-			$message .="<a href=http://sistemaocorrencia.devnogueira.online/index.php> SO - Click aqui para fazer o login </a>"; //menssagem com link
-			$headers = 'MIME-Version: 1.0'. "\r\n";
-			$headers .= 'content-type: text/html; charset=iso-8859-1'."\r\n";//formato
-			//$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>'."\r\n";//email enviado para
-			//$headers .= 'From: '.$emailLogado."\r\n";//email de envio
-		//	$headers .= 'To: <'.$emailDestino.'>'."\r\n";// email enviado para
-			$headers .= 'From: <contato@sistemacocorrencia.com.br>'."\r\n";//email de envio
-			$headers .= 'CC: <'.$emailLogado.'>'."\r\n";//email de copia
-			//$headers .= 'CC:< programadorfsaba@gmail.com>'."\r\n";// email de copia
-			//$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";//email para resposta
-		
-			mail($to,$subject,$message,$headers);
 			$stmt->execute();
-			
+
+		//	$id = mysql_insert_id($pdo->$stmt);	
+
 			return true;
+
+			$subject = "Cadastro de Ocorrencia"; // assunto
+			$message = "Uma demanda cadastrada para você, " . "\r\n"; //mensagem
+			$message .= "acesse com seu login para da tratamento " . "\r\n"; //mensagem
+			$message .= "<a href=http://sistemaocorrencia.devnogueira.online/index.php> SO - Click aqui para fazer o login </a>"; //menssagem com link
+			$headers = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n"; //formato
+			$headers .= 'From: <contato@sistemaocorrencia.com.br>' . "\r\n"; //email de envio
+			$headers .= 'CC: <' . $emailLogado . '>' . "\r\n"; //email de copia
+			$emailLogado =  $_POST['emaillogado']; //recuperando o e-mail do usuario logado
+			//$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";//email para resposta
+			$to = $_POST['emailDestino']; // recuperando email do destinatario e envia notificacao da demanda
+
+			mail($to, $subject, $message, $headers);
+
 		} catch (PDOException $e) {
 			echo $e->getMessage();
 			return false;
 		}
 	}
 
-	public static function addMensagem($idLogado, $dataHora, $codDemanda, $mensagem)	{
+	public static function addMensagem($idLogado, $dataHora, $codDemanda, $mensagem){
 		$pdo = Database::connect();
 
 		try {
@@ -202,7 +237,8 @@ $to = $_POST['emailDestino']; // email enviado para
 	}
 
 	//Essa é a função responsável por deletar a pessoa da lista.
-	public static function deletaCad($id)	{
+	public static function deletaCad($id)
+	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$stmt = $pdo->prepare("DELETE FROM usuarios WHERE id=:id");
@@ -211,7 +247,8 @@ $to = $_POST['emailDestino']; // email enviado para
 		return true;
 	}
 
-	public static function criaUsr($nome, $email, $nivel, $dep, $status, $pass)	{
+	public static function criaUsr($nome, $email, $nivel, $dep, $status, $pass)
+	{
 		$pdo = Database::connect();
 		$pwd = sha1($pass);
 		try {
@@ -232,7 +269,8 @@ $to = $_POST['emailDestino']; // email enviado para
 		}
 	}
 
-	public static function criarCliente($nomeCliente)	{
+	public static function criarCliente($nomeCliente)
+	{
 
 		$pdo = Database::connect();
 
@@ -248,7 +286,8 @@ $to = $_POST['emailDestino']; // email enviado para
 		}
 	}
 
-	public static function deleteCliente($idCliente)	{
+	public static function deleteCliente($idCliente)
+	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
@@ -262,7 +301,8 @@ $to = $_POST['emailDestino']; // email enviado para
 		}
 	}
 
-	public static function edtUsr($id, $nome, $email, $nivel, $dep, $status, $pass)	{
+	public static function edtUsr($id, $nome, $email, $nivel, $dep, $status, $pass)
+	{
 
 		$pdo = Database::connect();
 		$pwd = sha1($pass);
@@ -286,7 +326,8 @@ $to = $_POST['emailDestino']; // email enviado para
 		}
 	}
 
-	public static function deleteUser($id){
+	public static function deleteUser($id)
+	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$stmt = $pdo->prepare("DELETE FROM usuarios WHERE id=:id");
@@ -295,7 +336,8 @@ $to = $_POST['emailDestino']; // email enviado para
 		return true;
 	}
 
-	public static function criaDep($nomeDep)	{
+	public static function criaDep($nomeDep)
+	{
 		$pdo = Database::connect();
 		try {
 			$stmt = $pdo->prepare("INSERT INTO departamentos(nome) VALUES(:nomeDep)");
@@ -311,7 +353,8 @@ $to = $_POST['emailDestino']; // email enviado para
 		}
 	}
 
-	public static function criaUsuario($emailUser, $senhalUser, $dicalUser, $ativo, $valida){
+	public static function criaUsuario($emailUser, $senhalUser, $dicalUser, $ativo, $valida)
+	{
 		$pdo = Database::connect();
 		try {
 			$stmt = $pdo->prepare("INSERT INTO usuario(email,senha,dica,ativo,valida) 
@@ -324,20 +367,21 @@ $to = $_POST['emailDestino']; // email enviado para
 
 			$stmt->execute();
 
-			$to = $emailUser;			
+			$to = $emailUser;
 			$valida = md5("$to");
-					
-			$subject = "Cadastro no Sistema de Ocorrencias";// assunto
-			$message="Validacao de cadastro "."\r\n";
-			$message .="<a href=http://sistemaocorrencia.devnogueira.online/main/valida_cadastro.php?v=$valida&v2=$to> SO - Click aqui para validar seu cadastro </a>";
-			$headers = 'MIME-Version: 1.0'. "\r\n";
-			$headers .= 'content-type: text/html; charset=iso-8859-1'."\r\n";//formato
-			$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>'."\r\n";//
-			$headers .= 'From:< contato@sistemaocorrencia.com.br>'."\r\n";//email de envio
-			$headers .= 'CC:< programadorfsaba@gmail.com>'."\r\n";// email de copia
-			$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";//email para resposta
-			
-			mail($to,$subject,$message,$headers);
+
+			$subject = "Cadastro no Sistema de Ocorrencias"; // assunto
+			$message = "Validacao de cadastro " . "\r\n";
+			$message .= "<a href=http://sistemaocorrencia.devnogueira.online/main/valida_cadastro.php?v=$valida&v2=$to> SO - Click aqui para validar seu cadastro </a>";
+			$headers = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n"; //formato
+			$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>' . "\r\n"; //
+			$headers .= 'From:< contato@sistemaocorrencia.com.br>' . "\r\n"; //email de envio
+			$headers .= 'CC:< programadorfsaba@gmail.com>' . "\r\n"; // email de copia
+			$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>' . "\r\n"; //email para resposta
+
+			mail($to, $subject, $message, $headers);
+
 			return true;
 		} catch (PDOException $e) {
 
@@ -346,10 +390,11 @@ $to = $_POST['emailDestino']; // email enviado para
 		}
 	}
 
-	public static function ativarUsuario($ativo, $valida){
+	public static function ativarUsuario($ativo, $valida)
+	{
 		$pdo = Database::connect();
 		try {
-			$stmt = $pdo->prepare("UPDATE usuario SET ativo=:ativo WHERE valida=:valida");		
+			$stmt = $pdo->prepare("UPDATE usuario SET ativo=:ativo WHERE valida=:valida");
 			$stmt->bindparam(":ativo", $ativo);
 			$stmt->bindparam(":valida", $valida);
 
@@ -363,9 +408,10 @@ $to = $_POST['emailDestino']; // email enviado para
 		}
 	}
 
-	public static function mostraUsuario($valor, $valor2){
+	public static function mostraUsuario($valor, $valor2)
+	{
 		$pdo = Database::connect();
-		$sql = "SELECT * FROM usuario WHERE valida='" . $valor . "' AND email='".$valor2."'";
+		$sql = "SELECT * FROM usuario WHERE valida='" . $valor . "' AND email='" . $valor2 . "'";
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
 			$q = $pdo->prepare($sql);
@@ -378,9 +424,10 @@ $to = $_POST['emailDestino']; // email enviado para
 		}
 	}
 
-	public static function VericaEmailUser( $emailUser2){
+	public static function VericaEmailUser($emailUser2)
+	{
 		$pdo = Database::connect();
-		$sql = "SELECT email FROM usuario WHERE email='" .$emailUser2. "'   ";
+		$sql = "SELECT email FROM usuario WHERE email='" . $emailUser2 . "'   ";
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
 			$q = $pdo->prepare($sql);
@@ -392,7 +439,8 @@ $to = $_POST['emailDestino']; // email enviado para
 			return false;
 		}
 	}
-	public static function mostrarCliente()	{
+	public static function mostrarCliente()
+	{
 		$query = "SELECT * FROM cliente ORDER BY nomecliente ASC";
 
 		$pdo = Database::connect();
@@ -404,7 +452,8 @@ $to = $_POST['emailDestino']; // email enviado para
 	}
 
 	//Nessa função, fazemos a montagem da tabela de dados.
-	public static function mostraDep()	{
+	public static function mostraDep()
+	{
 		$query = "SELECT * FROM departamentos";
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

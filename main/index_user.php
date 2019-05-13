@@ -92,7 +92,7 @@ $queryCliente = "SELECT * FROM cliente";
                                 <?php
                             }
                         } else {
-                            echo "<p class='text-danger'>Sem demandas abertas</p>";               
+                            echo "<p class='text-danger'>Sem demandas abertas</p>";
                         }
                         ?>
                         </tbody>
@@ -190,10 +190,30 @@ include_once "modais.php";
                 },
                 success: function(data) {
                     /*$('#loading').hide();
-                    $("#message").html(data);*/
-                    alert("Salvo com Sucesso! "); //Redireciona
-                    $('#modalCriaDemanda').modal('hide');
-                    location.reload(table);
+                    $("#message").html(data);*/                                    
+                    if (data == 1) {
+                      //  alert(data); //Redireciona
+                       
+                        swal({
+                                title: "OK!",
+                                text: "Cadastrado com Sucesso!",
+                                type: "success",
+                                confirmButtonText: "Fechar",
+                                closeOnConfirm: false
+                            },
+                            function(isConfirm) {
+                                if (isConfirm) {
+                                    $('#modalCriaDemanda').modal('hide');
+                                    location.reload(table);
+                                    //      window.location = "cadastro.php";
+                                }
+                            });
+                    }else{
+                        alert("Erro ao salvar "); 
+                        $('#modalCriaDemanda').modal('hide');
+                                    location.reload(table);
+                    }
+
                 }
             });
         }));

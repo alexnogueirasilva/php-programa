@@ -12,7 +12,7 @@ $idLogado = $_SESSION['usuarioID'];
 
 $queryDepart = "SELECT * FROM departamentos";
 //SQL QUE VAI MOSTRAR A LISTA DE CHAMADOS DE CADA USUÁRIO UNINDO TRÊS TABELAS - (DEMANDAS, USUÁRIOS E DEPARTAMENTOS)
-$queryDemandas = 'SELECT d.id,d.mensagem,d.titulo,d.prioridade, d.ordem_servico, d.data_criacao, d.status,d.anexo, u.nome, dep.nome as nome_dep FROM demanda AS d INNER JOIN usuarios AS u ON d.id_usr_criador = u.id AND d.status<>"Fechada" and d.id_usr_destino = '.$_SESSION['usuarioID'].' INNER JOIN departamentos AS dep ON u.id_dep = dep.id ORDER BY data_criacao ASC';
+$queryDemandas = 'SELECT d.id,d.mensagem,d.titulo,d.prioridade, d.ordem_servico, d.data_criacao, d.status,d.anexo, u.nome,u.email dep.nome as nome_dep FROM demanda AS d INNER JOIN usuarios AS u ON d.id_usr_criador = u.id AND d.status<>"Fechada" and d.id_usr_destino = '.$_SESSION['usuarioID'].' INNER JOIN departamentos AS dep ON u.id_dep = dep.id ORDER BY data_criacao ASC';
 
 $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_mensagens as hst INNER JOIN demanda as dem ON hst.cod_demanda = dem.id INNER JOIN usuarios as us ON hst.cod_usr_msg=us.id AND hst.cod_demanda = 31");
 
@@ -107,7 +107,7 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
                                             data-datacriacao="<?php print($row['data_criacao']); ?>"
                                             data-mensagem="<?php print($row['mensagem']); ?>">Detalhes</a></td>
                                            
-                                            <td><a class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#modalConfirmacaoAtend" data-whatever="@getbootstrap" id="btnAtender" data-codigo="<?php print($row['id']); ?>" data-statusatual="<?php print($row['status']); ?>">Atender</a></td>
+                                            <td><a class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#modalConfirmacaoAtend" data-whatever="@getbootstrap" id="btnAtender" data-codigo="<?php print($row['id']); ?>" data-statusatual="<?php print($row['status']);  ?>"  data-emailsolicitante="<?php print($row['email']);  ?> ">Atender</a></td>
                                             <td><a class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#modalConfirmacaoFecha" data-whatever="@getbootstrap" id="btnFechar" class="btn btn-danger waves-effect waves-light" data-codigo="<?php print($row['id']); ?>" data-statusatual="<?php print($row['status']); ?>">Fechar</a></td>
                                            
                                             
@@ -206,6 +206,7 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
                     <div class="row">
                         <input type="hidden" name="codigoDemanda" id="codigoDemanda">
                         <input type="hidden" name="statusAtual" id="statusAtual">
+                        <input type="hidden" name="emailsolicitante" id="emailsolicitante">
                         <div class="col-md-12">
                             <div id="contextoModal">
                                 <h2>Você vai colocar a demanda em atendimento?</h2>
@@ -215,7 +216,7 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
                 </div>
                 <div class="modal-footer">              
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" id="btnMudaStatus" class="btn btn-primary" >Confirmar</button
+                    <button type="submit" id="btnMudaStatus" class="btn btn-primary" >Confirmar</button>
                     </div>
                 </div>
             </div>
@@ -234,6 +235,7 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
                     <div class="row">
                         <input type="hidden" name="codigoDemanda" id="codigoDemanda">
                         <input type="hidden" name="statusAtual" id="statusAtual">
+                        <input type="hidden" name="emailsolicitante" id="emailsolicitante">
                         <input type="hidden" value="<?php echo $data; ?>" name="dataAtual" id="dataAtual">
                         <div class="col-md-12">
                             <div id="contextoModal">
@@ -244,7 +246,7 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
                 </div>
                 <div class="modal-footer">              
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" id="btnFechaDemanda" class="btn btn-primary" >Confirmar</button
+                    <button type="submit" id="btnFechaDemanda" class="btn btn-primary" >Confirmar</button>
                     </div>
                 </div>
             </div>
@@ -343,9 +345,11 @@ include_once "modais.php";
         $(document).on("click", "#btnAtender", function () {
             var codigo = $(this).data('codigo');
             var statusAtual = $(this).data('statusatual');
+            var emailSolicitante = $(this).data('emailsolicitante');
 
             $('#codigoDemanda').val(codigo);   
             $('#statusAtual').val(statusAtual);
+            $('#emailsolicitante').val(emailSolicitante);
             $('#contextoModal').empty().append("<h2>Você colocará a demanda EM ATENDIMENTO?</h2>");
 
         }); //SETA O CÓDIGO NO MODAL PARA ATUALIZAR O STATUS ------------------------------------------

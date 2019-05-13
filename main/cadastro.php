@@ -188,7 +188,7 @@ require_once "rodape.php";
                                 }
                             });
                     } else {
-                        alert("Erro ao salvar " + result); //Informa o erro
+                        alert("Erro ao salvar "); //Informa o erro
                     }
                 }
             });
