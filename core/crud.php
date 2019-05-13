@@ -66,7 +66,7 @@ class crud
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n"; //formato
 			$headers .= 'From: <contato@sistemaocorrencia.com.br>' . "\r\n"; //email de envio
-			$headers .= 'CC: <' . $emailSolicitante . '>' . "\r\n"; //email de copia
+			$headers .= 'CC: <' . $emailLogado . '>' . "\r\n"; //email de copia
 			$emailLogado =  $_POST['emaillogado']; //recuperando o e-mail do usuario logado
 			//$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";//email para resposta
 			$to = $_POST['emailDestino']; // recuperando email do destinatario e envia notificacao da demanda
@@ -145,7 +145,13 @@ class crud
 			$stmt->bindparam(":data_fechamento", $dataFechamento);
 
 			$stmt->execute();
+/*
+			$headers .= 'CC: <' . $emailLogado . '>' . "\r\n"; //email de copia
+			$emailLogado =  $_POST['emaillogado']; //recuperando o e-mail do usuario logado
+			//$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";//email para resposta
+			$to = $_POST['emailDestino']; // recuperando email do destinatario e envia notificacao da demanda
 
+			mail($to, $subject, $message, $headers); */
 		
 			$emailSolicitante = $_POST['emailsolicitante'];
 			$subject = "Cadastro de Ocorrencia"; // assunto
@@ -155,7 +161,7 @@ class crud
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n"; //formato
 			$headers .= 'From: <contato@sistemaocorrencia.com.br>' . "\r\n"; //email de envio
-			$headers .= 'CC: <' . $emailSolicitante . '>' . "\r\n"; //email de copia
+			$headers .= 'CC: <' . $emailLogado . '>' . "\r\n"; //email de copia
 			$emailLogado =  $_POST['emaillogado']; //recuperando o e-mail do usuario logado
 			//$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";//email para resposta
 			$to = $_POST['emailDestino']; // recuperando email do destinatario e envia notificacao da demanda
@@ -207,7 +213,7 @@ class crud
 			$to = $_POST['emailDestino']; // recuperando email do destinatario e envia notificacao da demanda
 
 			mail($to, $subject, $message, $headers);
-			
+
 			return true;
 
 		} catch (PDOException $e) {
