@@ -118,7 +118,6 @@ switch ($value) {
 		}
 		break;
 
-
 		case 'deletacad':
 		$id = $_POST['id'];
 		$del = crud::deletaCad($id);

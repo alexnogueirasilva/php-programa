@@ -395,8 +395,6 @@ include_once "modais.php";
                 });
         }); //MUDA STATUS DA DEMANDA SE ELA ESTIVER ABERTA ------------------------------------------------
 
-
-
         //ADICIONA MENSAGEM À DEMANDA -----------------------------------------------------------
         $('#frmAddMensagem').submit(function(){
             var tipo = "adicionaMensagem";
@@ -431,8 +429,6 @@ include_once "modais.php";
             return false;//Evita que a página seja atualizada
         });//ADICIONA MENSAGEM À DEMANDA -----------------------------------------------------------
       
-
-
     //SETA O CÓDIGO NO MODAL PARA ATUALIZAR O STATUS -------------------------------------------------
     $(document).on("click", "#btnFechar", function () {
         var codigo = $(this).data('codigo');
@@ -445,7 +441,6 @@ include_once "modais.php";
         $('#contextoModal').empty().append("<h2>Você pretende fechar a demanda agora?</h2>");
 
     });//SETA O CÓDIGO NO MODAL PARA ATUALIZAR O STATUS ------------------------------------------------
-
 
     $('#btnFechaDemanda').click(function(){
         var tipo = "fechaDemanda";
@@ -493,8 +488,6 @@ include_once "modais.php";
         }
     });//BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME -------------------------------------
 
-
-
      });
 
 
@@ -513,8 +506,4 @@ include_once "modais.php";
                 }
             });
             }//FUNÇÃO QUE ATUALIZA AS MENSAGENS NOS DETALHES APÓS SUBMETE-LA -------------------------
-
-
-
-
  </script>
