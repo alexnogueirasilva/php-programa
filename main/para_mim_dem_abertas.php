@@ -12,7 +12,7 @@ $idLogado = $_SESSION['usuarioID'];
 
 $queryDepart = "SELECT * FROM departamentos";
 //SQL QUE VAI MOSTRAR A LISTA DE CHAMADOS DE CADA USUÁRIO UNINDO TRÊS TABELAS - (DEMANDAS, USUÁRIOS E DEPARTAMENTOS)
-$queryDemandas = 'SELECT d.id,d.mensagem,d.titulo,d.prioridade, d.ordem_servico, d.data_criacao, d.status,d.anexo, u.nome,u.email dep.nome as nome_dep FROM demanda AS d INNER JOIN usuarios AS u ON d.id_usr_criador = u.id AND d.status<>"Fechada" and d.id_usr_destino = '.$_SESSION['usuarioID'].' INNER JOIN departamentos AS dep ON u.id_dep = dep.id ORDER BY data_criacao ASC';
+$queryDemandas = 'SELECT d.id,d.mensagem,d.titulo,d.prioridade, d.ordem_servico, d.data_criacao, d.status,d.anexo, u.nome,u.email, dep.nome as nome_dep FROM demanda AS d INNER JOIN usuarios AS u ON d.id_usr_criador = u.id AND d.status<>"Fechada" and d.id_usr_destino = '.$_SESSION['usuarioID'].' INNER JOIN departamentos AS dep ON u.id_dep = dep.id ORDER BY data_criacao ASC';
 
 $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_mensagens as hst INNER JOIN demanda as dem ON hst.cod_demanda = dem.id INNER JOIN usuarios as us ON hst.cod_usr_msg=us.id AND hst.cod_demanda = 31");
 
