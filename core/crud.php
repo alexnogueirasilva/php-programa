@@ -192,10 +192,7 @@ class crud
 			$stmt->bindparam(":anexo", $nomeAnexo);
 
 			$stmt->execute();
-
 		//	$id = mysql_insert_id($pdo->$stmt);	
-
-			return true;
 
 			$subject = "Cadastro de Ocorrencia"; // assunto
 			$message = "Uma demanda cadastrada para você, " . "\r\n"; //mensagem
@@ -210,6 +207,8 @@ class crud
 			$to = $_POST['emailDestino']; // recuperando email do destinatario e envia notificacao da demanda
 
 			mail($to, $subject, $message, $headers);
+			
+			return true;
 
 		} catch (PDOException $e) {
 			echo $e->getMessage();
