@@ -164,7 +164,7 @@ class crud
 		//	$headers .= 'CC: <' . $emailLogado . '>' . "\r\n"; //email de copia
 			$emailLogado =  $_POST['emaillogado']; //recuperando o e-mail do usuario logado
 			//$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";//email para resposta
-			$to = $_POST['emaillogado']; // recuperando email do destinatario e envia notificacao da demanda
+			$to = $_POST['emailSolicitante']; // recuperando email do destinatario e envia notificacao da demanda
 
 			mail($to, $subject, $message, $headers);
 			return true;
