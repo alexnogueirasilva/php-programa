@@ -58,7 +58,7 @@ class crud
 			$stmt->bindparam(":status", $status);
 
 			$stmt->execute();
-			$emailSolicitante = $_POST['emailsolicitante'];
+			$emailSolicitante = $_POST['emailSolicitante'];
 			$subject = "Cadastro de Ocorrencia"; // assunto
 			$message = "Sua demanda esta em atendimento, para você visualisar " . "\r\n"; //mensagem
 			$message .= "acesse com seu login " . "\r\n"; //mensagem
@@ -69,7 +69,7 @@ class crud
 		//	$headers .= 'CC: <' . $emailLogado . '>' . "\r\n"; //email de copia
 			$emailLogado =  $_POST['emaillogado']; //recuperando o e-mail do usuario logado
 			//$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";//email para resposta
-			$to = $_POST['emaillogado']; // recuperando email do destinatario e envia notificacao da demanda
+			$to = $_POST['emailSolicitante']; // recuperando email do destinatario e envia notificacao da demanda
 
 			mail($to, $subject, $message, $headers);
 			return true;
@@ -176,7 +176,6 @@ class crud
 
 	//Essa é a função responsável pela criação das demandas
 	public static function criaDemanda($dataAbertura, $departamento, $idLogado, $usuarioDestino, $titulo, $nomeSolicitante, $prioridade, $ordemServico, $mensagem, $status, $nomeAnexo){
-
 		if ($ordemServico == "") {
 			$ordemServico = 0;
 		}

@@ -18,7 +18,7 @@
 		$_SESSION['usuarioID']=$vf['id'];
 		$_SESSION['nomeUsuario']=$vf['nome'];
 		$_SESSION['nivel']=$vf['nivel'];
-		$_SESSION['nome']=$vf['email'];
+		$_SESSION['emailUsuario']=$vf['email'];
 		exit;	
 	}
 

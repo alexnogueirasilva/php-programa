@@ -6,7 +6,7 @@ include_once '../core/crud.php';
 date_default_timezone_set('America/Sao_Paulo');
 
 $logado = $_SESSION['nomeUsuario'];
-$emailLogado = $_SESSION['nome'];
+$emailLogado = $_SESSION['emailUsuario'];
 
 $queryDepart = "SELECT * FROM departamentos";
 $queryCliente = "SELECT * FROM cliente";

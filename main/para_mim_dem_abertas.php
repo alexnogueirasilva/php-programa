@@ -90,7 +90,7 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
                                         <td><?php print($row['titulo']); ?></td>
                                         <td id="status"><?php print($row['status']); ?></td>  
                                         <td style="text-transform: uppercase;"><?php print($row['ordem_servico']); ?></td>     
-                                        <td><?php print($row['nome']); ?></td>       
+                                        <td><?php print($row['nome']); ?></td>                                                     
                                         <td><?php print($row['nome_dep']); ?></td>       
                                        
                                         <td><?php print($row['data_criacao']); ?></td>
@@ -108,7 +108,13 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
                                             data-datacriacao="<?php print($row['data_criacao']); ?>"
                                             data-mensagem="<?php print($row['mensagem']); ?>">Detalhes</a></td>
                                            
-                                            <td><a class="btn btn-success waves-effect waves-light" data-toggle="modal" data-target="#modalConfirmacaoAtend" data-whatever="@getbootstrap" id="btnAtender" data-codigo="<?php print($row['id']); ?>" data-statusatual="<?php print($row['status']);  ?>"  data-emailsolicitante="<?php print($row['email']);  ?> ">Atender</a></td>
+                                            <td><a class="btn btn-success waves-effect waves-light" 
+                                            data-toggle="modal" data-target="#modalConfirmacaoAtend" data-whatever="@getbootstrap" 
+                                            id="btnAtender" 
+                                            data-codigo="<?php print($row['id']); ?>" 
+                                            data-statusatual="<?php print($row['status']);  ?>"  
+                                            data-emailsolicitante="<?php print($row['email']); ?> ">Atender</a></td>
+                                            
                                             <td><a class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#modalConfirmacaoFecha" data-whatever="@getbootstrap" id="btnFechar" class="btn btn-danger waves-effect waves-light" data-codigo="<?php print($row['id']); ?>" data-statusatual="<?php print($row['status']); ?>" data-emailsolicitante="<?php print($row['email']);  ?> " >Fechar</a></td>
                                            
                                             
@@ -207,7 +213,7 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
                     <div class="row">
                         <input type="hidden" name="codigoDemanda" id="codigoDemanda">
                         <input type="hidden" name="statusAtual" id="statusAtual">
-                        <input type="hidden" name="emailsolicitante" id="emailsolicitante">
+                        <input type="hidden" name="emailSolicitante" id="emailSolicitante">
                         <div class="col-md-12">
                             <div id="contextoModal">
                                 <h2>Você vai colocar a demanda em atendimento?</h2>
@@ -354,8 +360,6 @@ include_once "modais.php";
             $('#contextoModal').empty().append("<h2>Você colocará a demanda EM ATENDIMENTO?</h2>");
 
         }); //SETA O CÓDIGO NO MODAL PARA ATUALIZAR O STATUS ------------------------------------------
-
-
 
         //MUDA STATUS DA DEMANDA SE ELA ESTIVER ABERTA ------------------------------------------------
         $('#btnMudaStatus').click(function(){
