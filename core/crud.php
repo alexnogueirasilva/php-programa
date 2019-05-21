@@ -111,7 +111,7 @@ class crud
 			$stmt->bindparam(":status", $status);
 
 			$stmt->execute();
-						/*
+						
 			$subject = "Cadastro de Ocorrencia"; // assunto
 			$message = "Sua demanda esta em atendimento, para você visualisar " . "\r\n"; //mensagem
 			$message .= "acesse com seu login " . "\r\n"; //mensagem
@@ -125,7 +125,7 @@ class crud
 			$to = $_POST['emailSolicitante']; // recuperando email do destinatario e envia notificacao da demanda
 
 			mail($to, $subject, $message, $headers);
-			*/
+			
 			return true;
 	
 
@@ -192,7 +192,7 @@ class crud
 
 			$stmt->execute();
 		//	$id = mysql_insert_id($pdo->$stmt);	
-/*
+
 			$subject = "Cadastro de Ocorrencia"; // assunto
 			$message = "Uma demanda cadastrada para você, " . "\r\n"; //mensagem
 			$message .= "acesse com seu login para da tratamento " . "\r\n"; //mensagem
@@ -206,7 +206,7 @@ class crud
 			$to = $_POST['emailDestino']; // recuperando email do destinatario e envia notificacao da demanda
 
 			mail($to, $subject, $message, $headers);
-*/
+
 			return true;
 
 		} catch (PDOException $e) {
