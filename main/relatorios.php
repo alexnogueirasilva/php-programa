@@ -9,19 +9,18 @@ $id = $_SESSION['usuarioID'];
 $queryDepartamentos = "SELECT * FROM departamentos ORDER BY nome ASC";
 $queryUsuarios = "SELECT id, nome FROM usuarios where status='Ativo' ORDER BY nome ASC";
 
-//DEMANDAS FECHADAS
+//Ocorrencia FECHADAS
 $totalFechada = crud::dataview("SELECT COUNT(*) as total from demanda where status='Fechada'");
 $arrayFechada = $totalFechada->fetchAll(PDO::FETCH_ASSOC);
-//DEMANDAS EM ATENDIMENTO
+//Ocorrencia EM ATENDIMENTO
 $totalEmAtendimento = crud::dataview("SELECT COUNT(*) as total from demanda where status='Em atendimento'");
 $arrayEmAtendimento = $totalEmAtendimento->fetchAll(PDO::FETCH_ASSOC);
-//DEMANTAS ABERTAS
+//Ocorrencia ABERTAS
 $totalAberto = crud::dataview("SELECT COUNT(*) as total from demanda where status='Aberto'");
 $arrayAberto = $totalAberto->fetchAll(PDO::FETCH_ASSOC);
 
 //$totalAberto = crud::dataview("SELECT COUNT(*) as total from demanda where id_dep=2");
 //$arrayAberto = $totalAberto->fetchAll(PDO::FETCH_ASSOC);
-
 ?>
 
 <div class="col-lg-12">
@@ -184,10 +183,6 @@ $arrayAberto = $totalAberto->fetchAll(PDO::FETCH_ASSOC);
       <!-- /.col-lg-12 -->
     </div>
   </div>
-
-
-
-
 </div>
 <!-- /.container-fluid -->
 </div>
@@ -196,7 +191,6 @@ $arrayAberto = $totalAberto->fetchAll(PDO::FETCH_ASSOC);
 <?php
 require_once "rodape.php";
 ?>
-
 
 <script type="text/javascript">
   $(document).ready(function() {
@@ -297,7 +291,7 @@ require_once "rodape.php";
     ]);
 
     var options = {
-      title: 'Total Status Demandas'
+      title: 'Total Status Ocorrencias'
     };
 
     var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -335,8 +329,9 @@ require_once "rodape.php";
     var emAtendimento = $('#emAtendimentoUsuarios').text();
     //alert(fechadas);
 
-    var data = google.visualization.arrayToDataTable([
+    var data = google.visualization.arrayToDataTable([     
       ['Task', 'Hours per Day'],
+      //['Element', 'Density',{role: "style"}],
       ['Fechados', parseInt(fechadas)],
       ['Abertos', parseInt(abertas)],
       ['Em atendimento', parseInt(emAtendimento)],
@@ -344,10 +339,15 @@ require_once "rodape.php";
     ]);
 
     var options = {
-      title: 'Por Usuários'
+      title: 'Por Usuários',
+      width: 300,
+      height: 300,
+      bar: {groupWidth: "100%"},
+      legend:{position: "none"}
     };
 
-    var chart = new google.visualization.PieChart(document.getElementById('graficoUser'));
+    var chart = new google.visualization.LineChart(document.getElementById('graficoUser'));
+    
 
     chart.draw(data, options);
   }

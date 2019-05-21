@@ -5,14 +5,22 @@ include_once '../core/crud.php';
 
 date_default_timezone_set('America/Sao_Paulo');
 
-$logado = $_SESSION['nomeUsuario'];
-$emailLogado = $_SESSION['emailUsuario'];
+$logado         = $_SESSION['nomeUsuario'];
+$emailLogado    = $_SESSION['emailUsuario'];
+$instituicao    = $_SESSION['instituicaoUsuario'];
+$queryDepart    = "SELECT * FROM departamentos";
+$queryCliente   = "SELECT * FROM cliente";
 
-$queryDepart = "SELECT * FROM departamentos";
-$queryCliente = "SELECT * FROM cliente";
+echo " Andre  $andre<br/> ";
+
+echo " segundos  $segundos<br/> ";
+echo " registro $registro<br/> ";
+echo " limite $limite<br/> ";
+if($logado != 1){$logado2 = 20;
+    echo "<meta HTTP-EQUIV='refresh' CONTENT='$logado2;'>";
+}
 
 ?>
-
 
 <div class="container-fluid">
     <div class="row bg-title">
@@ -20,7 +28,10 @@ $queryCliente = "SELECT * FROM cliente";
 
         </div>
         <!-- /.col-lg-12 -->
-    </div>
+        </div><div class="container">
+        <h3>tESTE andre</h3>
+        <div id="andre"></div>
+        </div>
     <!-- row -->
     <div class="row">
         <div class="col-md-12">
@@ -51,6 +62,7 @@ $queryCliente = "SELECT * FROM cliente";
                         </thead>
                         <tbody>
                             <?php
+
                             $dados = crud::mostraDemandas($_SESSION['usuarioID']);
                             //print_r($dados);
                             if ($dados->rowCount() > 0) {
@@ -77,18 +89,27 @@ $queryCliente = "SELECT * FROM cliente";
                                     <tr>
                                         <td><?php print($row['titulo']); ?></td>
                                         <td id="status"><?php print($row['status']); ?></td>
-                                        <td style="text-transform: uppercase;"> <?php print($row['ordem_servico']); ?></td>
+                                        <td style="text-transform: uppercase;"> 
+                                        <?php print($row['ordem_servico']); ?></td>
                                         <td><?php print($row['nome']); ?></td>
                                         <td><?php print($row['nomecliente']); ?></td>
                                         <td><?php print($row['nome_dep']); ?></td>
-                                        <td><?php print($row['data_criacao']); ?></td>
-                                        <td><?php
-                                            print($horas . ' Horas' . ' e ' . $minutos . " Minutos"); ?></td>
+                                        <td><?php print(crud::formataData($row['data_criacao']));?></td>
+                                        <td><?php print($horas . ' Horas' . ' e ' . $minutos . " Minutos"); ?></td>
 
                                         <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']); ?>">Anexo</a></td>
 
-                                        <td><a class="btn btn-success waves-effect waves-light" type="button" id="idDemanda2" data-toggle="modal" data-target="#modalDetDemanda" data-whatever="@getbootstrap" data-codigodet="<?php print($row['id']); ?>" data-titulodet="<?php print($row['titulo']); ?>" data-nomesolicitante="<?php print($row['nomecliente']); ?>" data-status="<?php print($row['status']); ?>" data-datacriacao="<?php print($row['data_criacao']); ?>" data-mensagem="<?php print($row['mensagem']); ?>">Detalhes</a></td>
-                                    </tr>
+                                        <td><a class="btn btn-success waves-effect waves-light" type="button" id="idDemanda2" 
+                                        data-toggle="modal" data-target="#modalDetDemanda" data-whatever="@getbootstrap" 
+                                        data-codigodet="<?php print($row['id']); ?>" 
+                                        data-titulodet="<?php print($row['titulo']); ?>" 
+                                        data-nomesolicitante="<?php print($row['nomecliente']); ?>" 
+                                        data-status="<?php print($row['status']); ?>" 
+                                        data-datacriacao="<?php print(crud::formataData($row['data_criacao'])); ?>" 
+                                        data-datafechamento="<?php print(crud::formataData($row['data_fechamento'])); ?>" 
+                                        data-mensagem="<?php print($row['mensagem']); ?>" 
+                                        data-dataidinstituicao="<?php print($row['idInstituicao']) ?>" >Detalhes</a></td>
+                                    </tr>                                    
                                 <?php
                             }
                         } else {
@@ -122,20 +143,24 @@ $queryCliente = "SELECT * FROM cliente";
                                 <td><span id="codigoDetalhes"></span></td>
                             </tr>
                             <tr>
+                                <td>Reg. Empresa</td>
+                                <td><span id="idInstituicaoDetalhes"></span></td>
+                            </tr>
+                            <tr>
                                 <td>Título</td>
                                 <td><span id="tituloDetalhes"></span></td>
                             </tr>
                             <tr>
                                 <td>Solicitante</td>
-                                <td><span id="nomeSolicitanteDetalhes"></span></td>
+                                <td><span id="nomeSolicitanteDetalhes"></span></td>                              
+                            </tr>                            
+                            <tr>
+                                <td>Criado em:</td>
+                                <td><span id="dataCriacaoDet"></span></td>
                             </tr>
                             <tr>
                                 <td>Status</td>
                                 <td id="statusDet"></td>
-                            </tr>
-                            <tr>
-                                <td>Criado em:</td>
-                                <td id="dataCriacaoDet"></td>
                             </tr>
                             <tr>
                                 <td>Mensagem</td>
@@ -174,7 +199,6 @@ include_once "modais.php";
 
         $("#frmCriaDemanda").on('submit', (function(e) {
             e.preventDefault();
-
             var table = $("#tabela").val();
 
             $.ajax({
@@ -190,10 +214,9 @@ include_once "modais.php";
                 },
                 success: function(data) {
                     /*$('#loading').hide();
-                    $("#message").html(data);*/                                    
-                    if (data == 1) {
-                      //  alert(data); //Redireciona
-                       
+                    $("#message").html(data);*/ 
+                   // alert(data);                                                 
+                    if (data == 1) {                       
                         swal({
                                 title: "OK!",
                                 text: "Cadastrado com Sucesso!",
@@ -284,12 +307,17 @@ include_once "modais.php";
             var nomeSolicitante = $(this).data('nomesolicitante');
             var status = $(this).data('status');
             var dataCriacao = $(this).data('datacriacao');
+            var dataFechamento = $(this).data('datafechamento');
             var mensagem = $(this).data('mensagem');
-
+            var idInstituicao = $(this).data('dataidinstituicao');            
+            if(status == "Fechada"){
+            status = status +" - Em: " + dataFechamento;
+            }
             $('#codigoDetalhes').html(id);
             $('#tituloDetalhes').html(titulo);
             $('#nomeSolicitanteDetalhes').html(nomeSolicitante);
             $('#statusDet').html(status);
+            $('#idInstituicaoDetalhes').html(idInstituicao);
             $('#dataCriacaoDet').html(dataCriacao);
             $('#mensagemDet').html(mensagem);
 
@@ -297,6 +325,7 @@ include_once "modais.php";
             $.ajax({
                 url: 'busca_mensagens.php',
                 type: "POST",
+                tipo: "busca_mensagens",
                 data: {
                     id: id
                 },
@@ -307,7 +336,7 @@ include_once "modais.php";
                 }
             });
         });
-
+ 
         //VERIFICA SE DEMANDA TEM ANEXO --------------------------------------------------------------
         $(document).on("click", "#btnAnexo", function(e) {
             var link = $(this).attr("href");
@@ -317,22 +346,43 @@ include_once "modais.php";
                 e.preventDefault();
             }
 
-        }); //VERIFICA SE DEMANDA TEM ANEXO ------------------------------------------------------------
-
-
-        //BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
-        $("tr #status").each(function(i) {
+        }); //VERIFICA SE DEMANDA TEM ANEXO ------------------------------------------------------------      
+    });
+     //BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
+     $("tr #status").each(function(i) {
             if ($(this).text() == "Em atendimento") {
                 //$(status).css("color", "red");
-                this.style.color = "blue";
+                this.style.background = "blue";//cor do fundo
+                this.style.color = "White";//cor da fonte
             } else if ($(this).text() == "Aberto") {
-                this.style.color = "green";
+                this.style.color = "White";//cor da fonte
+                this.style.background = "green";//cor do fundo
             } else if ($(this).text() == "Fechada") {
-                this.style.color = "red";
+                this.style.color = "White";//cor da fonte
+                this.style.background = "red";//cor do fundo
             } else {
                 this.style.color = "";
             }
         });
+        // Função responsável por atualizar as frases        
+        function atualizar(){                       
+            $.ajax({url: 'busca_mensagens.php',
+                type: "POST", 
+                
+                success:function (andre) {  
+                    alert (andre);      
+                    $('#andre').html('<i>' + andre['mensagem'] + '</i><br />');               
+                }
+                });
+        }
+ 
+// Definindo intervalo que a função será chamada
+setInterval("atualizar()", 100000);
 
-    });
+// Quando carregar a página
+$(function() {
+    // Faz a primeira atualização
+    atualizar();
+});
+
 </script>

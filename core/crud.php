@@ -3,12 +3,11 @@ include_once 'conex.php';
 class crud
 {
 	//Aqui fazemos a verificação do login do usuário e do seu nível de acesso
-	public static function pesquisaLoginUsr($nome, $senha)
-	{
+	public static function pesquisaLoginUsr($instituicao,$nome, $senha){
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$pwd = sha1($senha);
-		$sql = "SELECT * FROM usuarios where email ='" . $nome . "' AND senha ='" . $pwd . "'";
+		$sql = "SELECT u.id as idUsuario,u.nome,u.email,u.nivel,u.senha, u.status, u.id_dep, i.id,u.id_instituicao, i.nome as nomeInstituicao FROM usuarios AS u INNER JOIN instituicao AS i on i.id = u.id_instituicao where id_instituicao ='" . $instituicao . "' AND email ='" . $nome . "' AND senha ='" . $pwd . "'";
 		$q = $pdo->prepare($sql);
 		$q->execute();
 		$data = $q->fetch(PDO::FETCH_ASSOC);
@@ -16,8 +15,7 @@ class crud
 	}
 
 	//Nessa função, fazemos a montagem da tabela de dados.
-	public static function dataview($query)
-	{
+	public static function dataview($query)	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$stmt = $pdo->prepare($query);
@@ -25,11 +23,10 @@ class crud
 		return $stmt;
 	}
 
-	public static function mostraDemandas($usuarioSessao)
-	{
+	public static function mostraDemandas($usuarioSessao)	{
 		//SQL QUE VAI MOSTRAR A LISTA DE CHAMADOS DE CADA USUÁRIO UNINDO TRÊS TABELAS - (DEMANDAS, USUÁRIOS E DEPARTAMENTOS)
 
-		$query = 'SELECT d.id, d.mensagem, cli.nomecliente, d.titulo, d.prioridade, d.ordem_servico, d.data_criacao, d.status,d.anexo, u.nome, dep.nome as nome_dep FROM demanda AS d INNER JOIN usuarios AS u ON d.id_usr_destino = u.id AND id_usr_criador = ' . $usuarioSessao . ' INNER JOIN departamentos AS dep ON u.id_dep = dep.id INNER JOIN cliente AS cli ON cli.codCliente = d.codCliente_dem ORDER BY data_criacao ASC';
+		$query = 'SELECT d.id, d.mensagem, cli.nomecliente, d.titulo,d.id_Instituicao as idInstituicao, d.prioridade, d.ordem_servico, d.data_criacao,d.data_fechamento, d.status,d.anexo, u.nome, dep.nome as nome_dep FROM demanda AS d INNER JOIN usuarios AS u ON d.id_usr_destino = u.id AND id_usr_criador = ' . $usuarioSessao . ' INNER JOIN departamentos AS dep ON u.id_dep = dep.id INNER JOIN cliente AS cli ON cli.codCliente = d.codCliente_dem ORDER BY data_criacao ASC';
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$stmt = $pdo->prepare($query);
@@ -49,37 +46,7 @@ class crud
 	}
 
 	//Esta é a função que atualiza o cadastro com os dados vindos da edição.
-	public static function atualizaStatus($codigoDemanda, $status){
-		$pdo = Database::connect();
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		try {
-			$stmt = $pdo->prepare("UPDATE demanda SET status=:status WHERE id=:codigoDemanda ");
-			$stmt->bindparam(":codigoDemanda", $codigoDemanda);
-			$stmt->bindparam(":status", $status);
-
-			$stmt->execute();
-						
-			$subject = "Cadastro de Ocorrencia"; // assunto
-			$message = "Sua demanda esta em atendimento, para você visualisar " . "\r\n"; //mensagem
-			$message .= "acesse com seu login " . "\r\n"; //mensagem
-			$message .= "<a href=http://sistemaocorrencia.devnogueira.online/index.php> SO - Click aqui para fazer o login </a>"; //menssagem com link
-			$headers = 'MIME-Version: 1.0' . "\r\n";
-			$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n"; //formato
-			$headers .= 'From: <contato@sistemaocorrencia.com.br>' . "\r\n"; //email de envio
-			$headers .= 'CC: <' . $emailLogado . '>' . "\r\n"; //email de copia
-			$emailLogado =  $_POST['emaillogado']; //recuperando o e-mail do usuario logado
-			//$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";//email para resposta
-			$to = $_POST['emailSolicitante']; // recuperando email do destinatario e envia notificacao da demanda
-
-			mail($to, $subject, $message, $headers);
-			return true;
 	
-
-		} catch (PDOException $e) {
-			echo $e->getMessage();
-			return false;
-		}
-	}
 
 	public static function atualizaStatusUsuario($id, $status)
 	{
@@ -135,6 +102,39 @@ class crud
 		}
 	}
 
+	public static function atualizaStatus($codigoDemanda, $status){
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		try {
+			$stmt = $pdo->prepare("UPDATE demanda SET status=:status WHERE id=:codigoDemanda ");
+			$stmt->bindparam(":codigoDemanda", $codigoDemanda);
+			$stmt->bindparam(":status", $status);
+
+			$stmt->execute();
+						/*
+			$subject = "Cadastro de Ocorrencia"; // assunto
+			$message = "Sua demanda esta em atendimento, para você visualisar " . "\r\n"; //mensagem
+			$message .= "acesse com seu login " . "\r\n"; //mensagem
+			$message .= "<a href=http://sistemaocorrencia.devnogueira.online/index.php> SO - Click aqui para fazer o login </a>"; //menssagem com link
+			$headers = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n"; //formato
+			$headers .= 'From: <contato@sistemaocorrencia.com.br>' . "\r\n"; //email de envio
+			$headers .= 'CC: <' . $emailLogado . '>' . "\r\n"; //email de copia
+			$emailLogado =  $_POST['emaillogado']; //recuperando o e-mail do usuario logado
+			//$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";//email para resposta
+			$to = $_POST['emailSolicitante']; // recuperando email do destinatario e envia notificacao da demanda
+
+			mail($to, $subject, $message, $headers);
+			*/
+			return true;
+	
+
+		} catch (PDOException $e) {
+			echo $e->getMessage();
+			return false;
+		}
+	}
+
 	public static function fechaDemanda($codigoDemanda, $status, $dataFechamento){
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -145,7 +145,8 @@ class crud
 			$stmt->bindparam(":data_fechamento", $dataFechamento);
 
 			$stmt->execute();
-
+			return true;
+			
 			$subject = "Cadastro de Ocorrencia"; // assunto
 			$message = "Sua demanda foi fechada com sucesso, para você visualisar " . "\r\n"; //mensagem
 			$message .= "acesse com seu login " . "\r\n"; //mensagem
@@ -159,7 +160,7 @@ class crud
 			$to = $_POST['emailSolicitante']; // recuperando email do destinatario e envia notificacao da demanda
 
 			mail($to, $subject, $message, $headers);
-			return true;
+
 		} catch (PDOException $e) {
 			echo $e->getMessage();
 			return false;
@@ -167,18 +168,19 @@ class crud
 	}
 
 	//Essa é a função responsável pela criação das demandas
-	public static function criaDemanda($dataAbertura, $departamento, $idLogado, $usuarioDestino, $titulo, $nomeSolicitante, $prioridade, $ordemServico, $mensagem, $status, $nomeAnexo){
+	public static function criaDemanda($dataAbertura, $departamento, $idLogado,$idInstituicao, $usuarioDestino, $titulo, $nomeSolicitante, $prioridade, $ordemServico, $mensagem, $status, $nomeAnexo){
 		if ($ordemServico == "") {
 			$ordemServico = 0;
 		}
 
 		$pdo = Database::connect();
 		try {
-			$stmt = $pdo->prepare("INSERT INTO demanda(data_criacao, id_dep, id_usr_criador, id_usr_destino, titulo, codCliente_dem, prioridade, ordem_servico, mensagem, status, anexo) 
-											VALUES(:data_criacao, :id_dep, :id_usr_criador, :id_usr_destino, :titulo, :codCliente_dem, :prioridade, :ordem_servico, :mensagem, :status, :anexo)");
+			$stmt = $pdo->prepare("INSERT INTO demanda(data_criacao, id_dep, id_usr_criador,id_instituicao, id_usr_destino, titulo, codCliente_dem, prioridade, ordem_servico, mensagem, status, anexo) 
+												VALUES(:data_criacao, :id_dep, :id_usr_criador,:id_instituicao, :id_usr_destino, :titulo, :codCliente_dem, :prioridade, :ordem_servico, :mensagem, :status, :anexo)");
 			$stmt->bindparam(":data_criacao", $dataAbertura);
 			$stmt->bindparam(":id_dep", $departamento);
 			$stmt->bindparam(":id_usr_criador", $idLogado);
+			$stmt->bindparam(":id_instituicao", $idInstituicao);
 			$stmt->bindparam(":id_usr_destino", $usuarioDestino);
 			$stmt->bindparam(":titulo", $titulo);
 			$stmt->bindparam(":codCliente_dem", $nomeSolicitante);
@@ -190,7 +192,7 @@ class crud
 
 			$stmt->execute();
 		//	$id = mysql_insert_id($pdo->$stmt);	
-
+/*
 			$subject = "Cadastro de Ocorrencia"; // assunto
 			$message = "Uma demanda cadastrada para você, " . "\r\n"; //mensagem
 			$message .= "acesse com seu login para da tratamento " . "\r\n"; //mensagem
@@ -204,7 +206,7 @@ class crud
 			$to = $_POST['emailDestino']; // recuperando email do destinatario e envia notificacao da demanda
 
 			mail($to, $subject, $message, $headers);
-
+*/
 			return true;
 
 		} catch (PDOException $e) {
@@ -349,8 +351,7 @@ class crud
 		}
 	}
 
-	public static function criaUsuario($emailUser, $senhalUser, $dicalUser, $ativo, $valida)
-	{
+	public static function criaUsuario($emailUser, $senhalUser, $dicalUser, $ativo, $valida){
 		$pdo = Database::connect();
 		try {
 			$stmt = $pdo->prepare("INSERT INTO usuario(email,senha,dica,ativo,valida) 
@@ -362,8 +363,9 @@ class crud
 			$stmt->bindparam(":valida", $valida);
 
 			$stmt->execute();
-
+			
 			$to = $emailUser;
+
 			$valida = md5("$to");
 
 			$subject = "Cadastro no Sistema de Ocorrencias"; // assunto
@@ -487,8 +489,7 @@ class crud
 	}
 
 	//MANAGER SLA --------------------------------------------
-	public static function cadSla($descricao, $tempo, $uniTempo)
-	{
+	public static function cadSla($descricao, $tempo, $uniTempo){
 		$pdo = Database::connect();
 
 		try {
@@ -546,4 +547,18 @@ class crud
 		$stmt->execute();
 		return $stmt;
 	}
+	public static function formataData($data){
+		$qtde = strlen($data);
+		$data1 = new DateTime($data);
+		if ( $qtde > 10) {
+			$dataFormatada = $data1->format('d/m/Y h:i:s');  
+		} else {
+			$dataFormatada = $data1->format('d/m/Y');  
+		}
+		
+		
+
+		return $dataFormatada;
+	}
+
 }

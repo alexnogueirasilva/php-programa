@@ -9,14 +9,13 @@ $dataMsg = date('d/m/Y - H:i');
 
 $logado = $_SESSION['nomeUsuario'];
 $idLogado = $_SESSION['usuarioID'];
-$emailLogado = $_SESSION['nome'];
+$emailLogado = $_SESSION['emailUsuario'];
 
 $queryDepart = "SELECT * FROM departamentos";
-//SQL QUE VAI MOSTRAR A LISTA DE CHAMADOS DE CADA USUÁRIO UNINDO TRÊS TABELAS - (DEMANDAS, USUÁRIOS E DEPARTAMENTOS)
+//SQL QUE VAI MOSTRAR A LISTA DE CHAMADOS DE CADA USUÁRIO UNINDO TRÊS TABELAS - (Ocorrencia, USUÁRIOS E DEPARTAMENTOS)
 $queryDemandas = 'SELECT d.id,d.mensagem,d.titulo,d.prioridade, d.ordem_servico, d.data_criacao, d.status,d.anexo, u.nome,u.email, dep.nome as nome_dep FROM demanda AS d INNER JOIN usuarios AS u ON d.id_usr_criador = u.id AND d.status<>"Fechada" and d.id_usr_destino = '.$_SESSION['usuarioID'].' INNER JOIN departamentos AS dep ON u.id_dep = dep.id ORDER BY data_criacao ASC';
 
 $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_mensagens as hst INNER JOIN demanda as dem ON hst.cod_demanda = dem.id INNER JOIN usuarios as us ON hst.cod_usr_msg=us.id AND hst.cod_demanda = 31");
-
 
 ?>
 
@@ -37,7 +36,7 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
 
                 <div class="white-box">
                     <div class="col-sm-6"> 
-                        <h3>Demandas Abertas de <?php echo $logado ?>  </h3>
+                        <h3>Ocorrencias Abertas de <?php echo $logado ?>  </h3>
                     </div>
                     <div class="col-sm-6"> 
                         <a href="" id="atualizar"> <i class="fa fa-refresh"></i> Atualizar</a>
@@ -73,10 +72,9 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
                                     $datatime1 = new DateTime($row['data_criacao']);
                                     $datatime2 = new DateTime($dataAtual);
 
-                                    $data1  = $datatime1->format('Y-m-d H:i');
-                                    $data2  = $datatime2->format('Y-m-d H:i');
-                                    
-
+                                    $data1  = $datatime1->format('Y-m-d H:i');                                  
+                                    $data2  = $datatime2->format('Y-m-d H:i');                                                                                                              
+                                                                       
                                     $criada = strtotime( $data1 );
                                     $atual = strtotime( $data2 );
                                  
@@ -84,16 +82,14 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
                                     
                                     $horas = (int)($intervalo / 60);                                 
                                     $minutos = $intervalo%60;
-
                                     ?> 
                                     <tr>
                                         <td><?php print($row['titulo']); ?></td>
                                         <td id="status"><?php print($row['status']); ?></td>  
                                         <td style="text-transform: uppercase;"><?php print($row['ordem_servico']); ?></td>     
                                         <td><?php print($row['nome']); ?></td>                                                     
-                                        <td><?php print($row['nome_dep']); ?></td>       
-                                       
-                                        <td><?php print($row['data_criacao']); ?></td>
+                                        <td><?php print($row['nome_dep']); ?></td>
+                                        <td><?php print(crud::formataData($row['data_criacao']));?></td>
                                         <td><?php print($horas .' Horas'. ' e ' .$minutos." Minutos"); ?></td>
                                         <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']);?>">Anexo</a></td>
 
@@ -106,16 +102,21 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
                                             data-titulodet="<?php print($row['titulo']);?>"
                                             data-status="<?php print($row['status']); ?>"
                                             data-datacriacao="<?php print($row['data_criacao']); ?>"
-                                            data-mensagem="<?php print($row['mensagem']); ?>">Detalhes</a></td>
-                                           
+                                            data-mensagem="<?php print($row['mensagem']); ?>">Detalhes</a></td>                                          
+                                            
                                             <td><a class="btn btn-success waves-effect waves-light" 
                                             data-toggle="modal" data-target="#modalConfirmacaoAtend" data-whatever="@getbootstrap" 
                                             id="btnAtender" 
                                             data-codigo="<?php print($row['id']); ?>" 
                                             data-statusatual="<?php print($row['status']);  ?>"  
                                             data-emailsolicitante="<?php print($row['email']); ?> ">Atender</a></td>
-                                            
-                                            <td><a class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#modalConfirmacaoFecha" data-whatever="@getbootstrap" id="btnFechar" class="btn btn-danger waves-effect waves-light" data-codigo="<?php print($row['id']); ?>" data-statusatual="<?php print($row['status']); ?>" data-emailsolicitante="<?php print($row['email']);  ?> " >Fechar</a></td>
+                                          
+                                            <td><a class="btn btn-danger waves-effect waves-light" 
+                                            data-toggle="modal" data-target="#modalConfirmacaoFecha" 
+                                            data-whatever="@getbootstrap" id="btnFechar" class="btn btn-danger waves-effect waves-light" 
+                                            data-codigo="<?php print($row['id']); ?>" 
+                                            data-statusatual="<?php print($row['status']); ?>" 
+                                            data-emailsolicitante="<?php print($row['email']);  ?> " >Fechar</a></td>
                                            
                                             
                                     </tr>
@@ -200,7 +201,7 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
             </div>
         </div>
     </div>
-
+   
     <!-- MODAL CONFIRMAÇÃO DE ATENDIMENTO DE DEMANDA -->
     <div class="modal fade" id="modalConfirmacaoAtend" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
         <div class="modal-dialog" role="document">
@@ -229,7 +230,7 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
             </div>
         </div>
     </div>
-
+    
     <!-- MODAL CONFIRMAÇÃO DE ATENDIMENTO DE DEMANDA -->
     <div class="modal fade" id="modalConfirmacaoFecha" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
         <div class="modal-dialog" role="document">
@@ -363,6 +364,7 @@ include_once "modais.php";
 
         //MUDA STATUS DA DEMANDA SE ELA ESTIVER ABERTA ------------------------------------------------
         $('#btnMudaStatus').click(function(){
+              
             var tipo = "atualizaStatus";
             var codigoDemanda = $("#codigoDemanda").val();
             var status = "Em atendimento";
@@ -371,28 +373,29 @@ include_once "modais.php";
             //alert(statusAtual);
             if (statusAtual == "Em atendimento") {
                 alert("Demanda já está Em atendimento!");
+                $('#modalConfirmacaoAtend').modal('hide');
                 die();
-            }       
-
+            }
             $.ajax({
+                
                 url: '../core/save.php',
                 type: "POST",
                 data: {tipo : tipo, codigoDemanda : codigoDemanda, status : status, emailSolicitante: emailSolicitante},
                 success: function(result) {
-                    //alert(data);
+                 //   alert(data);
+                   // alert(result);
                     if(result==1){
                             //alert(result);
                             alert("Atualizado com Sucesso!");
                             //$('#contextoModal').empty().append("<h2>Atualizado</h2>");
                             $('#modalConfirmacaoAtend').modal('hide');
-                            window.location.reload();
-                            
+                            window.location.reload();                            
                         }else{                           
                             alert("Erro ao salvar");                            
                         }
-
                     }
                 });
+           
         }); //MUDA STATUS DA DEMANDA SE ELA ESTIVER ABERTA ------------------------------------------------
 
         //ADICIONA MENSAGEM À DEMANDA -----------------------------------------------------------
@@ -448,7 +451,6 @@ include_once "modais.php";
         var emailSolicitante = $("#emailSolicitante").val();
         var status = "Fechada";
         var dataFechamento = $("#dataAtual").val();
-
         $.ajax({
             url: '../core/save.php',
             type: "POST",
@@ -460,36 +462,32 @@ include_once "modais.php";
                             alert("Fechado com Sucesso!");
                             //$('#contextoModal').empty().append("<h2>Atualizado</h2>");
                             $('#modalConfirmacaoFecha').modal('hide');
-                            window.location.reload();
-                            
+                            window.location.reload();                            
                         }else{
                             //alert(result);
                             alert("Erro ao salvar");                            
                         }
-
                     }
                 });
-
     });
 
-
-
-         //BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME -----------------------------------
-         $( "tr #status" ).each(function( i ) {            
-            if ( $(this).text() == "Em atendimento" ) {
-                //$(status).css("color", "red");
-                this.style.color = "blue";
-            } else if($(this).text() == "Aberto"){
-              this.style.color = "green";
-          }else if($(this).text() == "Fechada"){
-            this.style.color = "red";
-        }else{
-            this.style.color = "";
-        }
-    });//BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME -------------------------------------
-
      });
-
+         //BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME ---------------------------
+         $("tr #status").each(function(i) {
+            if ($(this).text() == "Em atendimento") {
+                this.style.background = "blue";//cor do fundo
+                this.style.color = "White";//cor da fonte
+            } else if ($(this).text() == "Aberto") {
+                this.style.color = "White";//cor da fonte
+                this.style.background = "green";//cor do fundo
+            } else if ($(this).text() == "Fechada") {
+                this.style.color = "White";//cor da fonte
+                this.style.background = "red";//cor do fundo
+            } else {
+                this.style.color = "";
+            }
+        });
+    //BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME -------------------------------------
 
         //FUNÇÃO QUE ATUALIZA AS MENSAGENS NOS DETALHES APÓS SUBMETE-LA -------------------------
         function atualizaMsg(){
@@ -506,4 +504,7 @@ include_once "modais.php";
                 }
             });
             }//FUNÇÃO QUE ATUALIZA AS MENSAGENS NOS DETALHES APÓS SUBMETE-LA -------------------------
+ 
+
+
  </script>

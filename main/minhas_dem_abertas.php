@@ -89,7 +89,7 @@ $queryDemandas = 'SELECT d.id,d.mensagem,d.titulo,d.prioridade, d.ordem_servico,
                                         <td><?php print($row['nome']); ?></td>       
                                         <td><?php print($row['nome_dep']); ?></td>
                                         
-                                        <td><?php print($row['data_criacao']); ?></td>
+                                        <td><?php print(crud::formataData($row['data_criacao']));?></td>
                                         <td><?php print($horas .' Horas'. ' e ' .$minutos." Minutos"); ?></td>
 
                                         <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']);?>">Anexo</a></td>
@@ -257,20 +257,6 @@ include_once "modais.php";
 
         });
 
-     //BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
-     $( "tr #status" ).each(function( i ) {            
-        if ( $(this).text() == "Em atendimento" ) {
-                //$(status).css("color", "red");
-                this.style.color = "blue";
-            } else if($(this).text() == "Aberto"){
-              this.style.color = "green";
-          }else if($(this).text() == "Fechada"){
-            this.style.color = "red";
-        }else{
-            this.style.color = "";
-        }
-    });
-
     //VERIFICA SE DEMANDA TEM ANEXO --------------------------------------------------------------
         $(document).on("click", "#btnAnexo", function (e) {               
             var link = $(this).attr("href");
@@ -318,8 +304,9 @@ include_once "modais.php";
 
     });
      //FUNÇÃO QUE ATUALIZA AS MENSAGENS NOS DETALHES APÓS SUBMETE-LA -------------------------
+ 
      function atualizaMsg(){
-
+         
         var id = $("#codigoDetalhes").text();    
             //MONTA OS COMENTÁRIOS NO MODAL
             $.ajax({
@@ -332,9 +319,6 @@ include_once "modais.php";
                     } 
                 }
             });
-
-
-       
            
                 /*if( $('.barralateral').is(':visible') ) {
                     alert("OK");
@@ -347,17 +331,24 @@ include_once "modais.php";
                     $('.sidebar').show();
                     $('.sidebar').animate({ 'width': '210px' }, 'slow');
                     $('#main-content').animate({ 'margin-left': '210px' }, 'slow');
-                }*/
-           
-        
-
-
-
-
-
-
-            }//FUNÇÃO QUE ATUALIZA AS MENSAGENS NOS DETALHES APÓS SUBMETE-LA -------------------------
-
-    
+                }*/        
+            }
+            //FUNÇÃO QUE ATUALIZA AS MENSAGENS NOS DETALHES APÓS SUBMETE-LA -------------------------
+  //BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
+  $("tr #status").each(function(i) {
+            if ($(this).text() == "Em atendimento") {
+                //$(status).css("color", "red");
+                this.style.background = "blue";//cor do fundo
+                this.style.color = "White";//cor da fonte
+            } else if ($(this).text() == "Aberto") {
+                this.style.color = "White";//cor da fonte
+                this.style.background = "green";//cor do fundo
+            } else if ($(this).text() == "Fechada") {
+                this.style.color = "White";//cor da fonte
+                this.style.background = "red";//cor do fundo
+            } else {
+                this.style.color = "";
+            }
+        });
  </script>
       

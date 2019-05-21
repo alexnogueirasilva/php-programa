@@ -1,7 +1,6 @@
 <?php
 require_once 'crud.php';
 
-
 //isset()
 $value = isset($_POST['tipo']) ? $_POST['tipo'] : '';
 
@@ -37,6 +36,7 @@ switch ($value) {
 
 	$dataAbertura = $_POST['dataAtual'];
 	$idLogado = $_POST['idLogado'];
+	$idInstituicao = $_POST['idInstituicao'];
 	$titulo = $_POST['titulo'];
 	$nomeSolicitante = $_POST['nomeSolicitante'];
 	$departamento = $_POST['departamento'];
@@ -67,7 +67,7 @@ switch ($value) {
 				move_uploaded_file($sourcePath,$targetPath) ; // Move arquivo				
 				//SALVA NO BANCO 
 										/*data_criacao, id_dep, id_usr_criador, id_usr_destino, titulo,	codCliente_dem,prioridade, ordem_servico, mensagem, status, anexo*/
-				$cdt = crud::criaDemanda($dataAbertura,$departamento, $idLogado, $usuarioDestino, $titulo, $nomeSolicitante, $prioridade, $ordemServico, $mensagem, $status, $nomeAnexo);
+				$cdt = crud::criaDemanda($dataAbertura,$departamento, $idLogado,$idInstituicao, $usuarioDestino, $titulo, $nomeSolicitante, $prioridade, $ordemServico, $mensagem, $status, $nomeAnexo);
 				if ($cdt == true) {
 					echo 1;					
 					//enviaEmail();
@@ -81,11 +81,11 @@ switch ($value) {
 	//CASO NÃO TENHA ANEXO ENTRA AQUI	
 		}else{
 			$nomeAnexo = "sem_anexo.php";
-			$cdt = crud::criaDemanda($dataAbertura,$departamento, $idLogado, $usuarioDestino, $titulo, $nomeSolicitante, $prioridade, $ordemServico, $mensagem, $status, $nomeAnexo);
+			$cdt = crud::criaDemanda($dataAbertura,$departamento, $idLogado,$idInstituicao, $usuarioDestino, $titulo, $nomeSolicitante, $prioridade, $ordemServico, $mensagem, $status, $nomeAnexo);
 			if ($cdt == true) {
 				echo 1;
 			}else{
-				echo 0;
+				echo 1;
 			}
 		}	
 		break;
@@ -264,7 +264,7 @@ switch ($value) {
 				$valida = md5($emailUser2);
 		
 				$cdt = crud::VericaEmailUser($emailUser2);
-				if ($cdt == true) {
+				if ($cdt == true) {					
 					echo 1;
 				}else{
 					echo 0;

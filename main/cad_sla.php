@@ -1,5 +1,6 @@
 <?php
 require_once 'cabecalho.php';
+require_once '../vendor/autoload.php';
 include_once 'vrf_lgin.php';
 include_once '../core/crud.php';
 
@@ -234,7 +235,7 @@ require_once "rodape.php";
                 	cache: false,            
                 	processData:false,
 					success: function (result){	
-		   				//alert(result)
+		   				alert(result)
 		   				if(result==1){	
 		   					swal({
 								title: "OK!",

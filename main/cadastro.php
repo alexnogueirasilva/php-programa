@@ -105,7 +105,7 @@ $queryUsuarios = "SELECT usr.id, usr.nome, usr.email, usr.nivel,usr.status,usr.i
                             <?php
                         }
                     } else {
-                        echo "<p class='text-danger'>Sem demandas abertas</p>";
+                        echo "<p class='text-danger'>Sem Ocorrencias abertas</p>";
                     }
                     ?>
 
@@ -122,6 +122,7 @@ require_once "rodape.php";
 ?>
 <script type="text/javascript">
     $(document).ready(function() {
+       
         permissaoNivel();
         $('#frmCadastro').submit(function() {
             var tipo = "CadastroUsuario";
@@ -174,7 +175,8 @@ require_once "rodape.php";
                 }, //Dados
 
                 success: function(result) {
-                    if (result == 1) {
+                    if (result ==1 ) {
+                       // alert (" REsultado cadastro02 " + result);
                         swal({
                                 title: "OK!",
                                 text: "Cadastrado com Sucesso!",

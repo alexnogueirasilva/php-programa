@@ -81,8 +81,8 @@ $queryDemandas = 'SELECT d.id, d.mensagem, d.titulo, d.prioridade, d.ordem_servi
                                         <td style="text-transform: uppercase;"><?php print($row['ordem_servico']); ?></td>  
                                         <td><?php print($row['nome']); ?></td>
                                         <td><?php print($row['nome_dep']); ?></td>                                        
-                                        <td><?php print($row['data_criacao']); ?></td>
-                                        <td><?php print($row['data_fechamento']); ?></td>
+                                        <td><?php print(crud::formataData($row['data_criacao']));?></td>
+                                        <td><?php print(crud::formataData($row['data_fechamento']));?></td>
                                         <td><?php print($horas .' Horas'. ' e ' .$minutos." Minutos");?></td>
 
                                         <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']);?>">Anexo</a></td>

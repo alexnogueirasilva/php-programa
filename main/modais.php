@@ -11,6 +11,7 @@ $novoNomeAnexo = md5($nomeAnexo);
 
 $idLogado = $_SESSION['usuarioID'];
 $emailLogado = $_SESSION['nome'];
+$idInstituicao    = $_SESSION['instituicaoUsuario'];
 
 ?>
 
@@ -27,6 +28,7 @@ $emailLogado = $_SESSION['nome'];
                     <input type="hidden" value="criaDemanda" name="tipo" id="tipo">
                     <input type="hidden" value="<?php echo $data; ?>" name="dataAtual" id="dataAtual">
                     <input type="hidden" value="<?php echo $idLogado; ?>" name="idLogado" id="idLogado">
+                    <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicao" id="idInstituicao">
                     <input type="hidden" value="" name="emailDestino" id="emailDestino">
                     <input type="hidden" value="<?php echo $emailLogado; ?>" name="emaillogado" id="emaillogado">                                      
                     <div class="form-inline">                       
@@ -52,7 +54,7 @@ $emailLogado = $_SESSION['nome'];
                         <div class="form-group">
                             <select class="form-control" name="usuarioDestino" id="usuarioDestino" required>
                             
-                        </select>
+                            </select>
                         </div>
                     </div>
                     <br>
@@ -85,7 +87,9 @@ $emailLogado = $_SESSION['nome'];
                                     {
                                         while($row=$selectCliente->fetch(PDO::FETCH_ASSOC)){
                                             ?>
-                                            <option value="<?php print($row['codCliente']);?>"><?php print($row['nomeCliente']); ?></option>
+                                            <option value="<?php print($row['codCliente']);?>">
+                                            <?php print($row['nomeCliente']); ?>
+                                            </option>
                                             <?php
                                         }
                                     }
