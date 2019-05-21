@@ -10,16 +10,16 @@ $emailLogado    = $_SESSION['emailUsuario'];
 $instituicao    = $_SESSION['instituicaoUsuario'];
 $queryDepart    = "SELECT * FROM departamentos";
 $queryCliente   = "SELECT * FROM cliente";
-
+/*
 echo " Andre  $andre<br/> ";
 
 echo " segundos  $segundos<br/> ";
 echo " registro $registro<br/> ";
 echo " limite $limite<br/> ";
-if($logado != 1){$logado2 = 20;
-    echo "<meta HTTP-EQUIV='refresh' CONTENT='$logado2;'>";
+if($logado != 1){$logado2 = 600;
+    echo "<meta HTTP-EQUIV='refresh' CONTENT='$logado2;'>";//atualizacao automatica
 }
-
+*/
 ?>
 
 <div class="container-fluid">

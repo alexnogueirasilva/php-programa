@@ -69,7 +69,7 @@
     <script src="assets/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- MODAL RECUPERAR SENHA -->
+<!-- MODAL RECUPERAR SENHA --><!--
 <div class="modal fade bs-example-modal-lg" id="modalCriaDemanda" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -101,7 +101,7 @@
         </div>
     </div>
 </div>
-
+-->
 <script type="text/javascript">    
     $(document).ready(function(){
         //alert('Você não tem acesso ao sistema!');
