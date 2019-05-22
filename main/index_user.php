@@ -28,8 +28,7 @@ if($logado != 1){$logado2 = 600;
 
         </div>
         <!-- /.col-lg-12 -->
-        </div><div class="container">
-        <h3>tESTE andre</h3>
+        </div><div class="container">        
         <div id="andre"></div>
         </div>
     <!-- row -->
