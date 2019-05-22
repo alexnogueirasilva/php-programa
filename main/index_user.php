@@ -365,12 +365,12 @@ include_once "modais.php";
             }
         });
         // Função responsável por atualizar as frases        
-        function atualizar(){                       
+       /* function atualizar(){                       
             $.ajax({url: 'busca_mensagens.php',
                 type: "POST", 
                 
                 success:function (andre) {  
-                    alert (andre);      
+                  //  alert (andre);      
                     $('#andre').html('<i>' + andre['mensagem'] + '</i><br />');               
                 }
                 });
@@ -383,6 +383,6 @@ setInterval("atualizar()", 100000);
 $(function() {
     // Faz a primeira atualização
     atualizar();
-});
+});*/
 
 </script>
