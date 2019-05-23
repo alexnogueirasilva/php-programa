@@ -1,7 +1,9 @@
 <?php
+use main\Controller\PedidoController\PedidoController;
+
 include_once 'vrf_lgin.php';
 require_once 'cabecalho.php';
-include_once '../core/crud.php';
+include_once '/Controller/PedidoController.php';
 
 date_default_timezone_set('America/Sao_Paulo');
 
@@ -61,7 +63,7 @@ if($logado != 1){$logado2 = 600;
                         <tbody>
                             <?php
 
-                            $dados = crud::mostraDemandas($_SESSION['usuarioID']);
+                            $dados = PedidoController::listar();
                             //print_r($dados);
                             if ($dados->rowCount() > 0) {
                                 while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
