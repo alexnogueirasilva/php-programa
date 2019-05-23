@@ -28,8 +28,7 @@ if($logado != 1){$logado2 = 600;
 
         </div>
         <!-- /.col-lg-12 -->
-        </div><div class="container">
-        <h3>tESTE andre</h3>
+        </div><div class="container">        
         <div id="andre"></div>
         </div>
     <!-- row -->
@@ -365,12 +364,12 @@ include_once "modais.php";
             }
         });
         // Função responsável por atualizar as frases        
-        function atualizar(){                       
+       /* function atualizar(){                       
             $.ajax({url: 'busca_mensagens.php',
                 type: "POST", 
                 
                 success:function (andre) {  
-                    alert (andre);      
+                  //  alert (andre);      
                     $('#andre').html('<i>' + andre['mensagem'] + '</i><br />');               
                 }
                 });
@@ -383,6 +382,6 @@ setInterval("atualizar()", 100000);
 $(function() {
     // Faz a primeira atualização
     atualizar();
-});
+});*/
 
 </script>

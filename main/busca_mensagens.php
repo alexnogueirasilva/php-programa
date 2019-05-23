@@ -4,7 +4,7 @@ include_once '../core/crud.php';
 
 
 $value = isset($_POST['tipo']) ? $_POST['tipo']   : '';
-
+/*
 if($value ==""){
 	$comentarios = crud::dataview("SELECT * FROM hst_mensagens WHERE id_mensagem= 3");
 		$andre = $comentarios->fetchObject();
@@ -12,7 +12,7 @@ if($value ==""){
 echo json_encode($andre);
 
 }
-
+*/
 switch ($value) {
 	case 'busca_mensagens':
 

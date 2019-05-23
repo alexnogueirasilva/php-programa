@@ -48,7 +48,7 @@
                         </div>                       
                     </div>
                         <label class="rec-senha">esqueceu a senha ?<br><a  href="/index.php">clique aqui.</a></label>                                                
-                        <button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalCriaDemanda" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-plus"></i></span>esqueceu a senha</button>
+                       <!-- <button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalCriaDemanda" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-plus"></i></span>esqueceu a senha</button> -->
                      <div class="alert alert-danger" id="errolog">Usuario ou senha incorreto</div>
                     <div class="form-group text-center m-t-40">
                         <div class="col-xs-12">
