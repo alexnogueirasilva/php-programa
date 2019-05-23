@@ -1,6 +1,6 @@
 <?php 
 
-namespace main\Entidade\Pedido;
+namespace main\Models\Entidade;
 
 use DateTime;
 
