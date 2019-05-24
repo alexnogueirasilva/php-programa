@@ -34,6 +34,17 @@ class crud
 		return $stmt;
 	}
 
+	public static function listarPedido()	{
+		//SQL QUE VAI MOSTRAR A LISTA DE CHAMADOS DE CADA USUÁRIO UNINDO TRÊS TABELAS - (DEMANDAS, USUÁRIOS E DEPARTAMENTOS)
+
+		$query = 'SELECT con.dataCadastro,con.numeroPregao, con.numeroAf, con.statusControle, con.valorPedido, cli.nomeCliente FROM controlePedido as con inner join cliente as cli on cli.codCliente = con.codCliente';
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare($query);
+		$stmt->execute();
+		return $stmt;
+	}
+
 	public static function mostraTodasDemandas()
 	{
 		//SQL QUE VAI MOSTRAR A LISTA DE CHAMADOS DE CADA USUÁRIO UNINDO TRÊS TABELAS - (DEMANDAS, USUÁRIOS E DEPARTAMENTOS)

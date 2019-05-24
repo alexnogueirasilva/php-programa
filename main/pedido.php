@@ -1,9 +1,10 @@
 <?php
-use main\Controller\PedidoController\PedidoController;
+
+use main\Controller\PedidoController;
 
 include_once 'vrf_lgin.php';
 require_once 'cabecalho.php';
-include_once '/Controller/PedidoController.php';
+include_once '../core/crud.php';
 
 date_default_timezone_set('America/Sao_Paulo');
 
@@ -30,9 +31,10 @@ if($logado != 1){$logado2 = 600;
 
         </div>
         <!-- /.col-lg-12 -->
-        </div><div class="container">        
+    </div>
+    <div class="container">
         <div id="andre"></div>
-        </div>
+    </div>
     <!-- row -->
     <div class="row">
         <div class="col-md-12">
@@ -54,7 +56,7 @@ if($logado != 1){$logado2 = 600;
                                 <th>Pedido</th>
                                 <th>Valor</th>
                                 <th>Data</th>
-                                <th>Status</th>                                
+                                <th>Status</th>
                                 <th>Decorridos</th>
                                 <th>Anexo</th>
                                 <th>Detalhes</th>
@@ -63,15 +65,15 @@ if($logado != 1){$logado2 = 600;
                         <tbody>
                             <?php
 
-                            $dados = PedidoController::listar();
+                            $dados = crud::listarPedido();
                             //print_r($dados);
                             if ($dados->rowCount() > 0) {
                                 while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
 
-                                    $dataCriada = $row['data_criacao'];
+                                    $dataCriada = $row['dataCadastro'];
                                     $dataAtual = date('Y-m-d H:i:s');
 
-                                    $datatime1 = new DateTime($row['data_criacao']);
+                                    $datatime1 = new DateTime($row['dataCadastro']);
                                     $datatime2 = new DateTime($dataAtual);
 
                                     $data1  = $datatime1->format('Y-m-d H:i');
@@ -88,27 +90,18 @@ if($logado != 1){$logado2 = 600;
                                     ?>
                                     <tr>
                                         <td style="text-transform: uppercase;">
-                                        <?php print($row['nomeCliente']); ?></td>
+                                            <?php print($row['nomeCliente']); ?></td>
                                         <td><?php print($row['numeroPregao']); ?></td>
-                                        <td><?php print($row['numeroAF']); ?></td>
-                                        <td> <?php print($row['valorPedido']); ?></td>                                        
-                                        <td id="statusControle"><?php print($row['statusControle']); ?></td>                                    
-                                        <td><?php print(crud::formataData($row['dataCadastro']));?></td>
+                                        <td><?php print($row['numeroAf']); ?></td>
+                                        <td> <?php print($row['valorPedido']); ?></td>
+                                        <td><?php print(crud::formataData($row['dataCadastro'])); ?></td>
+                                        <td id="statusControle"><?php print($row['statusControle']); ?></td>
                                         <td><?php print($horas . ' Horas' . ' e ' . $minutos . " Minutos"); ?></td>
-                                        
+
                                         <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']); ?>">Anexo</a></td>
 
-                                        <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" 
-                                        data-toggle="modal" data-target="#modalDetDemanda" data-whatever="@getbootstrap" 
-                                        data-codigocontroledet="<?php print($row['codControle']); ?>" 
-                                        data-nomeclientedet="<?php print($row['nomecliente']); ?>" 
-                                        data-numeropregaodet="<?php print($row['numeroPregao']); ?>" 
-                                        data-numeropedidodet="<?php print($row['numeroAF']); ?>" 
-                                        data-valorpedidodet="<?php print($row['valorPedido']); ?>" 
-                                        data-statuscontroledet="<?php print($row['statusControle']); ?>" 
-                                        data-datacadastrodet="<?php print(crud::formataData($row['dataCadastro'])); ?>" 
-                                        data-mensagem="<?php print($row['mensagem']); ?>" >Detalhes</a></td>
-                                    </tr>                                    
+                                        <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" data-toggle="modal" data-target="#modalDetDemanda" data-whatever="@getbootstrap" data-codigocontroledet="<?php print($row['codControle']); ?>" data-nomeclientedet="<?php print($row['nomecliente']); ?>" data-numeropregaodet="<?php print($row['numeroPregao']); ?>" data-numeropedidodet="<?php print($row['numeroAF']); ?>" data-valorpedidodet="<?php print($row['valorPedido']); ?>" data-statuscontroledet="<?php print($row['statusControle']); ?>" data-datacadastrodet="<?php print(crud::formataData($row['dataCadastro'])); ?>" data-mensagem="<?php print($row['mensagem']); ?>">Detalhes</a></td>
+                                    </tr>
                                 <?php
                             }
                         } else {
@@ -125,7 +118,7 @@ if($logado != 1){$logado2 = 600;
     <!-- /.row -->
 </div>
 
-<!-- MODAL CRIA PEDIDO -->
+<!-- MODAL CADASTRAR PEDIDO -->
 <div class="modal fade bs-example-modal-lg" id="modalCadastrarPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -134,55 +127,78 @@ if($logado != 1){$logado2 = 600;
                 <h4 class="modal-title" id="exampleModalLabel1">Cadastro de Pedido</h4>
             </div>
             <div class="modal-body">
-                <form id="frmCadastroPedido" action="" method="post" enctype="multipart/form-data" >                    
+                <form id="frmCadastroPedido" action="" method="post" enctype="multipart/form-data">
                     <input type="hidden" value="cadastroPedido" name="tipo" id="tipo">
-                    <input type="hidden" value="<?php echo $data; ?>" name="dataCadastro" id="dataCadastro">                    
-                    
+                    <input type="hidden" value="<?php echo $data; ?>" name="dataCadastro" id="dataCadastro">
+
                     <div class="form-inline">
-                    <div class="form-group">
+                        <div class="form-group">
                             <select class="form-control" name="nomeCliente" id="nomeCliente" required>
                                 <option value="" selected disabled>Selecione o Cliente</option>
                                 <?php
-                                    $selectCliente = crud::mostrarCliente();
-                                    if($selectCliente->rowCount()>0)
-                                    {
-                                        while($row=$selectCliente->fetch(PDO::FETCH_ASSOC)){
-                                            ?>
-                                            <option value="<?php print($row['codCliente']);?>">
+                                $selectCliente = crud::mostrarCliente();
+                                if ($selectCliente->rowCount() > 0) {
+                                    while ($row = $selectCliente->fetch(PDO::FETCH_ASSOC)) {
+                                        ?>
+                                        <option value="<?php print($row['codCliente']); ?>">
                                             <?php print($row['nomeCliente']); ?>
-                                            </option>
-                                            <?php
-                                        }
-                                    }
-                                ?>
+                                        </option>
+                                    <?php
+                                }
+                            }
+                            ?>
                             </select>
                         </div>
                         <div class="form-group">
-                        <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroAF" id="numeroAF" placeholder="Numero da AF" required> 
-                     </div>
-                    </div>
-                    <br>
-                    <div class="form-inline">                       
-                        <div class="form-group">
-                    
-                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroPregao" id="numeroPregao" placeholder="Numero Licitação" required>
+                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroAF" id="numeroAF" placeholder="Numero da AF" required>
                         </div>
-                            <div class="form-group">
-                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="valorPedido" id="valorPedido" placeholder="Valor do Pedido">                            
-                        </div>                                                                            
                     </div>
                     <br>
+                    <div class="form-inline">
                         <div class="form-group">
-                            <label for="message-text" class="control-label">Observação:</label>
-                            <textarea name="mensagem"  class="form-control" rows="3" id="mensagem" required></textarea>          
-                        </div>                    
-                    <input type="file" name="file" id="file">                    
-            </div>
-                    <div class="modal-footer">
-                        <button type="submit" id="salvaPedido" class="btn btn-primary" >Enviar</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+
+                            <input type="text" size="33" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroPregao" id="numeroPregao" placeholder="Numero Licitação" required>
+                        </div>
+                       
+                        <div class="form-group">
+                            <input type="text" size="33" style="text-transform: uppercase;" maxlength="40" class="form-control" name="valorPedido" id="valorPedido" placeholder="Valor do Pedido">
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="statusPedido" id="statusPedido" required>
+                                <option value="" selected disabled>Selecione o Status</option>
+                                <option value="Recepcionado">Recepcionado</option> 
+                                <option value="Pendente">Pendente</option> 
+                                <option value="Autorizado">Autorizado</option> 
+                                <option value="Parcial">Parcial</option> 
+
+                               <!--
+                               < ?php
+                                $selectStatus = crud::mostrarStatus();
+                                if ($selectStatus->rowCount() > 0) {
+                                    while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
+                                        ?>
+                                        <option value="< ?php print($row['codStatus']); ?>">
+                                            < ?php print($row['nomeStatus']); ?>
+                                        </option>
+                                    < ?php
+                                }
+                            }
+                            ? > -->
+                            </select>
+                        </div>
                     </div>
-                </form>
+                    <br>
+                    <div class="form-group">
+                        <label for="message-text" class="control-label">Observação:</label>
+                        <textarea name="mensagem" class="form-control" rows="3" id="mensagem" required></textarea>
+                    </div>
+                    <input type="file" name="file" id="file">
+            </div>
+            <div class="modal-footer">
+                <button type="submit" id="salvaPedido" class="btn btn-primary">Enviar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -215,8 +231,8 @@ if($logado != 1){$logado2 = 600;
                             </tr>
                             <tr>
                                 <td>Pedido</td>
-                                <td><span id="pedidoDetalhes"></span></td>                              
-                            </tr>                            
+                                <td><span id="pedidoDetalhes"></span></td>
+                            </tr>
                             <tr>
                                 <td>Valor</td>
                                 <td><span id="valorDetathes"></span></td>
@@ -224,13 +240,13 @@ if($logado != 1){$logado2 = 600;
                             <tr>
                                 <td>Cadastrado em:</td>
                                 <td><span id="dataCriacaoDetalhes"></span></td>
-                            </tr>                                                                              
+                            </tr>
                             <tr>
                                 <td>Status</td>
                                 <td id="statusDetalhes"></td>
                             </tr>
                             <tr>
-                            <th>Decorridos</th>
+                                <th>Decorridos</th>
                                 <td id="tempoDetalhes"></td>
                             </tr>
                             <tr>
@@ -255,7 +271,7 @@ if($logado != 1){$logado2 = 600;
         </div>
     </div>
 </div>
-!-- MODAL detalhe do Pedido-->
+<!-- MODAL detalhe do Pedido-->
 </div>
 <!-- /#page-wrapper -->
 
@@ -286,9 +302,9 @@ include_once "modais.php";
                 },
                 success: function(data) {
                     /*$('#loading').hide();
-                    $("#message").html(data);*/ 
-                   // alert(data);                                                 
-                    if (data == 1) {                       
+                    $("#message").html(data);*/
+                    // alert(data);                                                 
+                    if (data == 1) {
                         swal({
                                 title: "OK!",
                                 text: "Cadastrado com Sucesso!",
@@ -303,10 +319,10 @@ include_once "modais.php";
                                     //      window.location = "cadastro.php";
                                 }
                             });
-                    }else{
-                        alert("Erro ao salvar "); 
+                    } else {
+                        alert("Erro ao salvar ");
                         $('#modalCriaDemanda').modal('hide');
-                                    location.reload(table);
+                        location.reload(table);
                     }
 
                 }
@@ -353,7 +369,7 @@ include_once "modais.php";
 
         });
 
-       
+
         //Click no botao detalhas do pedido
         $(document).on("click", "#btnPedidoDetalhes", function() {
             //pegando valor das colunas da tabela e atribuindo as variaveis
@@ -365,11 +381,11 @@ include_once "modais.php";
             var statusControle = $(this).data('statuscontroledet');
             var dataCadastro = $(this).data('datacadastrodet');
             var mensagem = $(this).data('mensagem');
-           
-            if(status == "Fechada"){
-            status = status +" - Em: " + dataFechamento;
+
+            if (status == "Fechada") {
+                status = status + " - Em: " + dataFechamento;
             }
-            
+
             //pegando valor das variaveis vindo da tabela e atribuindo aos id dos campos do modal para exibir
             $('#codigoDetalhes').html(idControle);
             $('#nomeClienteDetalhes').html(nomeCliente);
@@ -395,7 +411,7 @@ include_once "modais.php";
                 }
             });
         });
- 
+
         //VERIFICA SE DEMANDA TEM ANEXO --------------------------------------------------------------
         $(document).on("click", "#btnAnexo", function(e) {
             var link = $(this).attr("href");
@@ -407,21 +423,20 @@ include_once "modais.php";
 
         }); //VERIFICA SE DEMANDA TEM ANEXO ------------------------------------------------------------      
     });
-     //BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
-     $("tr #status").each(function(i) {
-            if ($(this).text() == "Em atendimento") {
-                //$(status).css("color", "red");
-                this.style.background = "blue";//cor do fundo
-                this.style.color = "White";//cor da fonte
-            } else if ($(this).text() == "Aberto") {
-                this.style.color = "White";//cor da fonte
-                this.style.background = "green";//cor do fundo
-            } else if ($(this).text() == "Fechada") {
-                this.style.color = "White";//cor da fonte
-                this.style.background = "red";//cor do fundo
-            } else {
-                this.style.color = "";
-            }
-      });
-
+    //BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
+    $("tr #status").each(function(i) {
+        if ($(this).text() == "Em atendimento") {
+            //$(status).css("color", "red");
+            this.style.background = "blue"; //cor do fundo
+            this.style.color = "White"; //cor da fonte
+        } else if ($(this).text() == "Aberto") {
+            this.style.color = "White"; //cor da fonte
+            this.style.background = "green"; //cor do fundo
+        } else if ($(this).text() == "Fechada") {
+            this.style.color = "White"; //cor da fonte
+            this.style.background = "red"; //cor do fundo
+        } else {
+            this.style.color = "";
+        }
+    });
 </script>

@@ -2,9 +2,10 @@
 
 namespace main\Controller\PedidoController;
 
-Use App\Models\Entidades\Pedido;
+Use main\Models\Entidade\Pedido;
+use main\Models\DAO\BaseDAO;
 
-class PedidoController{
+class PedidoController extends BaseDAO{
 
     public  function listar($id = null)    {
         if($id) {
@@ -15,7 +16,7 @@ class PedidoController{
             return $resultado->fetchObject(Pedido::class);
         }else{
             $resultado = $this->select(
-                'SELECT * FROM controlePedido'
+                "SELECT * FROM controlePedido"
             );
             return $resultado->fetchAll(\PDO::FETCH_CLASS, Pedido::class);
         }

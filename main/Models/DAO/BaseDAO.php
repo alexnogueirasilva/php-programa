@@ -1,8 +1,8 @@
 <?php
 
-include_once '../../core/conex.php';
+namespace main\Models\DAO;
 
-//namespace main\Models\DAO;
+include_once '../../core/conex.php';
 
 
 abstract class BaseDAO
