@@ -93,14 +93,22 @@ if($logado != 1){$logado2 = 600;
                                             <?php print($row['nomeCliente']); ?></td>
                                         <td><?php print($row['numeroPregao']); ?></td>
                                         <td><?php print($row['numeroAf']); ?></td>
-                                        <td> <?php print($row['valorPedido']); ?></td>
+                                        <td> R$<?php print($row['valorPedido']); ?></td>
                                         <td><?php print(crud::formataData($row['dataCadastro'])); ?></td>
                                         <td id="statusControle"><?php print($row['statusControle']); ?></td>
                                         <td><?php print($horas . ' Horas' . ' e ' . $minutos . " Minutos"); ?></td>
 
                                         <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']); ?>">Anexo</a></td>
 
-                                        <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" data-toggle="modal" data-target="#modalDetDemanda" data-whatever="@getbootstrap" data-codigocontroledet="<?php print($row['codControle']); ?>" data-nomeclientedet="<?php print($row['nomecliente']); ?>" data-numeropregaodet="<?php print($row['numeroPregao']); ?>" data-numeropedidodet="<?php print($row['numeroAF']); ?>" data-valorpedidodet="<?php print($row['valorPedido']); ?>" data-statuscontroledet="<?php print($row['statusControle']); ?>" data-datacadastrodet="<?php print(crud::formataData($row['dataCadastro'])); ?>" data-mensagem="<?php print($row['mensagem']); ?>">Detalhes</a></td>
+                                        <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" data-toggle="modal" data-target="#modalDetPedido" data-whatever="@getbootstrap" 
+                                        data-codigocontroledet="<?php print($row['codControle']); ?>" 
+                                        data-nomeclientedet="<?php print($row['nomeCliente']); ?>" 
+                                        data-numeropregaodet="<?php print($row['numeroPregao']); ?>" 
+                                        data-numeropedidodet="<?php print($row['numeroAf']); ?>" 
+                                        data-valorpedidodet="<?php print($row['valorPedido']); ?>" 
+                                        data-statuscontroledet="<?php print($row['statusControle']); ?>" 
+                                        data-datacadastrodet="<?php print(crud::formataData($row['dataCadastro'])); ?>" 
+                                        data-mensagem="<?php print($row['observacao']); ?>">Detalhes</a></td>
                                     </tr>
                                 <?php
                             }
@@ -272,6 +280,34 @@ if($logado != 1){$logado2 = 600;
     </div>
 </div>
 <!-- MODAL detalhe do Pedido-->
+
+<!-- MODAL anexo do Pedido-->
+<div class="modal fade" id="modalPedidoSemAnexo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" id="headerModalAlerta">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="headermodal">Alerta</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">                       
+                        <div class="col-md-12">
+                            <div id="contextoModal">
+                                <h2>Este pedido não possui anexo!</h2>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+                <div class="modal-footer">              
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- MODAL anexo do Pedido-->
+
+
 </div>
 <!-- /#page-wrapper -->
 
@@ -314,14 +350,14 @@ include_once "modais.php";
                             },
                             function(isConfirm) {
                                 if (isConfirm) {
-                                    $('#modalCriaDemanda').modal('hide');
+                                    $('#modalCadastrarPedido').modal('hide');
                                     location.reload(table);
                                     //      window.location = "cadastro.php";
                                 }
                             });
                     } else {
                         alert("Erro ao salvar ");
-                        $('#modalCriaDemanda').modal('hide');
+                        $('#modalCadastrarPedido').modal('hide');
                         location.reload(table);
                     }
 
@@ -381,9 +417,13 @@ include_once "modais.php";
             var statusControle = $(this).data('statuscontroledet');
             var dataCadastro = $(this).data('datacadastrodet');
             var mensagem = $(this).data('mensagem');
+            var tempoPedido = "testes";// $horas . ' Horas' . ' e ' . $minutos . " Minutos";
 
             if (status == "Fechada") {
                 status = status + " - Em: " + dataFechamento;
+            }
+            if (mensagem == "") {
+                mensagem = " Nenhuma Obserção não encontrado ";
             }
 
             //pegando valor das variaveis vindo da tabela e atribuindo aos id dos campos do modal para exibir
@@ -391,6 +431,7 @@ include_once "modais.php";
             $('#nomeClienteDetalhes').html(nomeCliente);
             $('#licitacaoDetalhes').html(numeroPregao);
             $('#pedidoDetalhes').html(numeroPedido);
+            $('#tempoDetalhes').html(tempoPedido);
             $('#valorDetathes').html(valorPedido);
             $('#statusDetalhes').html(statusControle);
             $('#dataCriacaoDetalhes').html(dataCadastro);
@@ -417,7 +458,7 @@ include_once "modais.php";
             var link = $(this).attr("href");
             if (link == '../anexos/sem_anexo.php') {
                 //alert('Demanda não possui anexo!');
-                $('#modalSemAnexo').modal('show');
+                $('#modalPedidoSemAnexo').modal('show');
                 e.preventDefault();
             }
 
