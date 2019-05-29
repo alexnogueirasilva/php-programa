@@ -37,7 +37,7 @@ class crud
 	public static function listarPedido()	{
 		//SQL QUE VAI MOSTRAR A LISTA DE CHAMADOS DE CADA USUÁRIO UNINDO TRÊS TABELAS - (DEMANDAS, USUÁRIOS E DEPARTAMENTOS)
 
-		$query = 'SELECT con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.statusControle, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente FROM controlePedido as con inner join cliente as cli on cli.codCliente = con.codCliente';
+		$query = 'SELECT con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, sta.nome as nomeStatus FROM controlePedido as con inner join cliente as cli on cli.codCliente = con.codCliente inner join statusPedido as sta on sta.codStatus = con.codStatus';
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$stmt = $pdo->prepare($query);
