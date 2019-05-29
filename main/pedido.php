@@ -1,10 +1,12 @@
 <?php
 
-use main\Controller\PedidoController;
+//use main\Controller\PedidoController;
 
 include_once 'vrf_lgin.php';
 require_once 'cabecalho.php';
 include_once '../core/crud.php';
+include_once 'Models/DAO/StatusDAO.php';
+include_once 'Models/DAO/PedidoDAO.php';
 
 date_default_timezone_set('America/Sao_Paulo');
 
@@ -13,7 +15,7 @@ $emailLogado    = $_SESSION['emailUsuario'];
 $instituicao    = $_SESSION['instituicaoUsuario'];
 $queryDepart    = "SELECT * FROM departamentos";
 $queryCliente   = "SELECT * FROM cliente";
-/*
+
 echo " Andre  $andre<br/> ";
 
 echo " segundos  $segundos<br/> ";
@@ -22,7 +24,7 @@ echo " limite $limite<br/> ";
 if($logado != 1){$logado2 = 600;
     echo "<meta HTTP-EQUIV='refresh' CONTENT='$logado2;'>";//atualizacao automatica
 }
-*/
+
 ?>
 
 <div class="container-fluid">
@@ -65,7 +67,8 @@ if($logado != 1){$logado2 = 600;
                         <tbody>
                             <?php
 
-                            $dados = crud::listarPedido();
+                            //$dados = crud::listarPedido();
+                            $dados = PedidoDAO::listar();
                             //print_r($dados);
                             if ($dados->rowCount() > 0) {
                                 while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
@@ -95,7 +98,7 @@ if($logado != 1){$logado2 = 600;
                                         <td><?php print($row['numeroAf']); ?></td>
                                         <td> R$<?php print($row['valorPedido']); ?></td>
                                         <td><?php print(crud::formataData($row['dataCadastro'])); ?></td>
-                                        <td id="statusControle"><?php print($row['statusControle']); ?></td>
+                                        <td id="statusControle"><?php print($row['nomeStatus']); ?></td>
                                         <td><?php print($horas . ' Horas' . ' e ' . $minutos . " Minutos"); ?></td>
 
                                         <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']); ?>">Anexo</a></td>
@@ -106,7 +109,7 @@ if($logado != 1){$logado2 = 600;
                                         data-numeropregaodet="<?php print($row['numeroPregao']); ?>" 
                                         data-numeropedidodet="<?php print($row['numeroAf']); ?>" 
                                         data-valorpedidodet="<?php print($row['valorPedido']); ?>" 
-                                        data-statuscontroledet="<?php print($row['statusControle']); ?>" 
+                                        data-statuscontroledet="<?php print($row['nomeStatus']); ?>" 
                                         data-datacadastrodet="<?php print(crud::formataData($row['dataCadastro'])); ?>" 
                                         data-mensagem="<?php print($row['observacao']); ?>">Detalhes</a></td>
                                     </tr>
@@ -173,25 +176,24 @@ if($logado != 1){$logado2 = 600;
                         </div>
                         <div class="form-group">
                             <select class="form-control" name="statusPedido" id="statusPedido" required>
-                                <option value="" selected disabled>Selecione o Status</option>
-                                <option value="Recepcionado">Recepcionado</option> 
+                              <option value="" selected disabled>Selecione o Status</option>
+                              <!--    <option value="Recepcionado">Recepcionado</option> 
                                 <option value="Pendente">Pendente</option> 
                                 <option value="Autorizado">Autorizado</option> 
-                                <option value="Parcial">Parcial</option> 
-
-                               <!--
-                               < ?php
-                                $selectStatus = crud::mostrarStatus();
+                                <option value="Parcial">Parcial</option> -->
+                               
+                               <?php
+                                 $selectStatus = StatusDAO::listar();
                                 if ($selectStatus->rowCount() > 0) {
                                     while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
                                         ?>
-                                        <option value="< ?php print($row['codStatus']); ?>">
-                                            < ?php print($row['nomeStatus']); ?>
+                                        <option value="<?php print($row['codStatus']); ?>">
+                                            <?php print($row['nome']); ?>
                                         </option>
-                                    < ?php
+                                    <?php
                                 }
                             }
-                            ? > -->
+                            ?>
                             </select>
                         </div>
                     </div>
@@ -204,7 +206,6 @@ if($logado != 1){$logado2 = 600;
             </div>
             <div class="modal-footer">
                 <button type="submit" id="salvaPedido" class="btn btn-primary">Enviar</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
             </div>
             </form>
         </div>
@@ -274,7 +275,8 @@ if($logado != 1){$logado2 = 600;
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>                
+                <button type="button" class="btn btn-default" data-target="#modalCadastrarPedido" data-dismiss="modal">Alterar</button>
             </div>
         </div>
     </div>
