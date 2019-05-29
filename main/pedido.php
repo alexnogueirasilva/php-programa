@@ -6,7 +6,7 @@ include_once 'vrf_lgin.php';
 require_once 'cabecalho.php';
 include_once '../core/crud.php';
 
-date_default_timezone_set('America/Sao_Paulo');
+date_default_timezone_set('America/Bahia');
 
 $logado         = $_SESSION['nomeUsuario'];
 $emailLogado    = $_SESSION['emailUsuario'];
@@ -52,7 +52,7 @@ if($logado != 1){$logado2 = 600;
                         <thead>
                             <tr>
                                 <th>Cliente</th>
-                                <th>Licitacao</th>
+                                <th>Licitação</th>
                                 <th>Pedido</th>
                                 <th>Valor</th>
                                 <th>Data</th>
