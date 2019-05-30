@@ -15,7 +15,7 @@ $emailLogado    = $_SESSION['emailUsuario'];
 $instituicao    = $_SESSION['instituicaoUsuario'];
 $queryDepart    = "SELECT * FROM departamentos";
 $queryCliente   = "SELECT * FROM cliente";
-
+/*
 echo " Andre  $andre<br/> ";
 
 echo " segundos  $segundos<br/> ";
@@ -24,7 +24,7 @@ echo " limite $limite<br/> ";
 if($logado != 1){$logado2 = 600;
     echo "<meta HTTP-EQUIV='refresh' CONTENT='$logado2;'>";//atualizacao automatica
 }
-
+*/
 ?>
 
 <div class="container-fluid">
@@ -103,7 +103,8 @@ if($logado != 1){$logado2 = 600;
 
                                         <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']); ?>">Anexo</a></td>
 
-                                        <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" data-toggle="modal" data-target="#modalDetPedido" data-whatever="@getbootstrap" 
+                                        <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" data-toggle="modal" 
+                                        data-target="#modalDetPedido" data-whatever="@getbootstrap" 
                                         data-codigocontroledet="<?php print($row['codControle']); ?>" 
                                         data-nomeclientedet="<?php print($row['nomeCliente']); ?>" 
                                         data-numeropregaodet="<?php print($row['numeroPregao']); ?>" 
@@ -262,7 +263,7 @@ if($logado != 1){$logado2 = 600;
                                 <td>Mensagem</td>
                                 <td id="mensagemDetatalhes"></td>
                             </tr>
-                        </table>
+                            </table>
                     </div>
                     <div class="col-md-12">
                         <h4><strong>Comentários:</strong></h4>

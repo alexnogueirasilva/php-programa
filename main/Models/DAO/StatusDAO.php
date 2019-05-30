@@ -90,7 +90,7 @@ class StatusDAO
     public static function deleteStatus($id){
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$stmt = $pdo->prepare("DELETE FROM status WHERE codStatus=:id");
+		$stmt = $pdo->prepare("DELETE FROM statusPedido WHERE codStatus=:id");
 		$stmt->bindparam(":id", $id);
 		$stmt->execute();
 		return true;

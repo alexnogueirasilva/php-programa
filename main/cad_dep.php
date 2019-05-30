@@ -1,5 +1,6 @@
 <?php
 require_once 'cabecalho.php';
+require_once '../vendor/autoload.php';
 include_once 'vrf_lgin.php';
 include_once '../core/crud.php';
 
