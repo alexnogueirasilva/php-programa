@@ -10,6 +10,11 @@ include_once 'Models/DAO/PedidoDAO.php';
 
 date_default_timezone_set('America/Bahia');
 
+//DEFINIÇÃO DO NOME DO ANEXO
+$nomeAnexo = date('Y-m-d-H:i');
+$novoNomeAnexo = md5($nomeAnexo);
+
+$idLogado = $_SESSION['usuarioID'];
 $logado         = $_SESSION['nomeUsuario'];
 $emailLogado    = $_SESSION['emailUsuario'];
 $instituicao    = $_SESSION['instituicaoUsuario'];
@@ -68,7 +73,7 @@ if($logado != 1){$logado2 = 600;
                             <?php
 
                             //$dados = crud::listarPedido();
-                            $dados = PedidoDAO::listar();
+                            $dados = crud::listarPedido();
                             //print_r($dados);
                             if ($dados->rowCount() > 0) {
                                 while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
@@ -140,9 +145,8 @@ if($logado != 1){$logado2 = 600;
             </div>
             <div class="modal-body">
                 <form id="frmCadastroPedido" action="" method="post" enctype="multipart/form-data">
-                    <input type="hidden" value="cadastroPedido" name="tipo" id="tipo">
-                    <input type="hidden" value="<?php echo $data; ?>" name="dataCadastro" id="dataCadastro">
-
+                    <input type="hidden" value="CadastroPedido" name="tipo" id="tipo">     
+                    <input type="hidden" value="<?php echo $nomeAnexo; ?>" name="dataAtual" id="dataAtual">               
                     <div class="form-inline">
                         <div class="form-group">
                             <select class="form-control" name="nomeCliente" id="nomeCliente" required>
@@ -162,29 +166,25 @@ if($logado != 1){$logado2 = 600;
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroAF" id="numeroAF" placeholder="Numero da AF" required>
+                            <input type="text" size="50" style="text-transform: uppercase;" 
+                            maxlength="40" class="form-control" name="numeroAf" id="numeroAf" placeholder="Numero da AF" required>
                         </div>
                     </div>
                     <br>
                     <div class="form-inline">
                         <div class="form-group">
-
-                            <input type="text" size="33" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroPregao" id="numeroPregao" placeholder="Numero Licitação" required>
-                        </div>
-                       
+                            <input type="text" size="33" style="text-transform: uppercase;" maxlength="40"
+                             class="form-control" name="numeroPregao" id="numeroPregao" placeholder="Numero Licitação" required>
+                        </div>                       
                         <div class="form-group">
-                            <input type="text" size="33" style="text-transform: uppercase;" maxlength="40" class="form-control" name="valorPedido" id="valorPedido" placeholder="Valor do Pedido">
+                            <input type="text" size="33" style="text-transform: uppercase;" maxlength="40" 
+                            class="form-control" name="valorPedido" id="valorPedido" placeholder="Valor do Pedido">
                         </div>
                         <div class="form-group">
                             <select class="form-control" name="statusPedido" id="statusPedido" required>
-                              <option value="" selected disabled>Selecione o Status</option>
-                              <!--    <option value="Recepcionado">Recepcionado</option> 
-                                <option value="Pendente">Pendente</option> 
-                                <option value="Autorizado">Autorizado</option> 
-                                <option value="Parcial">Parcial</option> -->
-                               
+                              <option value="" selected disabled>Selecione o Status</option>                               
                                <?php
-                                 $selectStatus = StatusDAO::listar();
+                                 $selectStatus = crud::listarStatus();
                                 if ($selectStatus->rowCount() > 0) {
                                     while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
                                         ?>
@@ -212,7 +212,7 @@ if($logado != 1){$logado2 = 600;
         </div>
     </div>
 </div>
-<!-- MODAL CRIA PEDIDO -->
+/<!-- MODAL CRIA PEDIDO -->
 
 <!-- MODAL detalhe do Pedido-->
 <div class="modal fade bs-example-modal-lg" id="modalDetPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
@@ -324,10 +324,15 @@ include_once "modais.php";
 
         permissaoNivel();
 
-        $("#frmCriaDemanda").on('submit', (function(e) {
+        $("#frmCadastroPedido").on('submit', (function(e) {
             e.preventDefault();
             var table = $("#tabela").val();
-
+            var nomeCliente = $("#nomeCliente").val();
+            var valorPedido = $("#valorPedido").val();
+            var statusPedido = $("#statusPedido").val();
+            var numeroAF = $("#numeroAf").val();
+            var mensagem = $("#mensagem").val();
+            var numeroPregao = $("#numeroPregao").val();
             $.ajax({
                 url: "../core/save.php",
                 type: "POST",
@@ -335,15 +340,16 @@ include_once "modais.php";
                 contentType: false,
                 cache: false,
                 processData: false,
-                beforeSend: function() {
-                    $("#salvaDemanda").html("<i class='fa fa-spinner fa-spin'></i> Enviando, aguarde...");
-                    $("#salvaDemanda").prop("disabled", true);
-                },
+                beforeSend: function() {                    
+                    $("#salvaPedido").html("<i class='fa fa-spinner fa-spin'></i> Enviando, aguarde...");
+                    $("#salvaPedido").prop("disabled", true);
+                },                
                 success: function(data) {
                     /*$('#loading').hide();
                     $("#message").html(data);*/
-                    // alert(data);                                                 
-                    if (data == 1) {
+                    //alert ("resultado data " + data);                                              
+                    //alert ("campos " + nomeCliente +" " + valorPedido +" " + statusPedido + " "+ numeroAF + " " + mensagem+ " " + numeroPregao);                                              
+                    if (data == 1) {                       
                         swal({
                                 title: "OK!",
                                 text: "Cadastrado com Sucesso!",
@@ -363,7 +369,6 @@ include_once "modais.php";
                         $('#modalCadastrarPedido').modal('hide');
                         location.reload(table);
                     }
-
                 }
             });
         }));

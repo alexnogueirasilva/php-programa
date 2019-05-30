@@ -26,7 +26,7 @@
 		$_SESSION['instituicaoNome']=$vf['nomeInstituicao'];
 
 		date_default_timezone_set("Brazil/East");
-		$tempolimite = 600;
+		$tempolimite = 6000;
 		$_SESSION['registro'] = time(); // armazena o momento em que autenticado ou atualiza a pagina//
  		$_SESSION['limite'] = $tempolimite;
 

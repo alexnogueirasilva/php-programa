@@ -55,7 +55,7 @@ include_once '../core/crud.php';
 					<tbody>
 						<?php
 
-						$dados = crud::listar();
+						$dados = crud::listarStatus();
 						if ($dados->rowCount() > 0) {
 							while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
 								?>
@@ -272,8 +272,7 @@ require_once "rodape.php";
 					tipo: tipo,
 					id: id
 				},
-				success: function(result) {
-					alert(result)
+				success: function(result) {				
 					if (result == 1) {
 						swal({
 								title: "OK!",

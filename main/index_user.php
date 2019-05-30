@@ -225,7 +225,7 @@ include_once "modais.php";
                             },
                             function(isConfirm) {
                                 if (isConfirm) {
-                                    $('#modalCriaDemanda').modal('hide');
+                                    $('#modalCriaPedido').modal('hide');
                                     location.reload(table);
                                     //      window.location = "cadastro.php";
                                 }

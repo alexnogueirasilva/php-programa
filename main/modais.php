@@ -52,15 +52,12 @@ $idInstituicao    = $_SESSION['instituicaoUsuario'];
                             </select>
                         </div>           
                         <div class="form-group">
-                            <select class="form-control" name="usuarioDestino" id="usuarioDestino" required>
-                            
+                            <select class="form-control" name="usuarioDestino" id="usuarioDestino" required>                            
                             </select>
                         </div>
                     </div>
-                    <br>
-                    
-                    <div class="form-inline">
-                        
+                    <br>                    
+                    <div class="form-inline">                        
                         <div class="form-group">
                             <select class="form-control" name="prioridade" id="prioridade" required>
                                 <option value="" selected disabled>Prioridade</option>
