@@ -5,10 +5,35 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "extensionHost",
+            "request": "launch",
+            "name": "Executar Extensão",
+            "runtimeExecutable": "${execPath}",
+            "args": [
+                "--extensionDevelopmentPath=${workspaceFolder}"
+            ],
+            "outFiles": [
+                "${workspaceFolder}/out/**/*.js"
+            ],
+            "preLaunchTask": "npm"
+        },
+
+    {
+        "name": "Advpl Debug",
+        "type": "advpl",
+        "request": "launch",
+        "args": [],
+        "cwd": "",
+        "programRun": "${command:AskForProgramName}",
+        "stopOnEntry": false,
+        "enviromentInfo": "${command:GetEnvInfos}",
+        "workspace": "${workspaceFolder}/"
+    },
+        {
             "name": "Listen for XDebug",
             "type": "php",
             "request": "launch",
-            "port": 9000
+            "port": 80
         },
         {
             "name": "Launch currently open script",
@@ -16,7 +41,7 @@
             "request": "launch",
             "program": "${file}",
             "cwd": "${fileDirname}",
-            "port": 9000
+            "port": 80
         }
     ]
 }
