@@ -399,10 +399,39 @@ switch ($value) {
 			echo 0;
 		}
 		break;
+		
+		//statuspedido
+		case 'CadastroStatus':
+        $descricao = $_POST['descricao'];		
+		$cad = crud::CadastroStatus($descricao);
+		if ($cad == true) {
+			echo 1;
+		}else{
+			echo 0;
+		}
+    break;
+
+    case 'editarStatus':
+        
+        $descricao  = $_POST['edtDescricao'];		
+        $edtId         = $_POST['edtId'];		
+		$cad = crud::editarStatus($edtId,$descricao);
+		if ($cad == true) {
+			echo 1;
+		}else{
+			echo 0;
+		}
+    break;
+    case 'excluirStatus':
+        $id         = $_POST['id'];		
+		$cad = crud::deleteStatus($id);
+		if ($cad == true) {
+			echo 1;
+		}else{
+			echo 0;
+		}
+    break;
+
+		//statuspedido
 
 	}
-
-
-	?>
-
-

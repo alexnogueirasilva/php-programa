@@ -55,7 +55,7 @@ include_once '../core/crud.php';
 					<tbody>
 						<?php
 
-						$dados = StatusDAO::listar();
+						$dados = crud::listar();
 						if ($dados->rowCount() > 0) {
 							while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
 								?>
@@ -156,7 +156,7 @@ require_once "rodape.php";
 		$("#frmCadastroStatus").submit(function(e) {
 			e.preventDefault();
 			$.ajax({ //Função AJAX
-				url: "Controller/StatusController.php", //Arquivo php
+				url: "../core/save.php", //Arquivo php
 				type: "POST", //Método de envio
 				data: new FormData(this),
 				contentType: false,
@@ -211,7 +211,7 @@ require_once "rodape.php";
 			e.preventDefault();
 
 			$.ajax({ //Função AJAX
-				url: "Controller/StatusController.php", //Arquivo php
+				url: "../core/save.php", //Arquivo php
 				type: "POST", //Método de envio
 				data: new FormData(this),
 				contentType: false,
@@ -265,7 +265,7 @@ require_once "rodape.php";
 			var id = $('#idStatus').val();
 
 			$.ajax({ //Função AJAX
-				url: "Controller/StatusController.php", //Arquivo php
+				url: "../core/save.php", //Arquivo php
 				type: "POST", //Método de envio
 				tipo: "excluirStatus",
 				data: {
