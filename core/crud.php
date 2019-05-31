@@ -698,12 +698,29 @@ public static function editarPedido($codControle, $numeroPregao, $numeroAf, $val
 		return false;
 	}
 }
+public static function AlterarPedido($codControle, $statusPedido, $mensagemAlterar){
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	try {
+		$stmt = $pdo->prepare("UPDATE controlePedido SET codStatus=:statusPedido, observacao=:mensagemAlterar WHERE codControle=:codControle ");
+		$stmt->bindparam(":codControle", $codControle);
+		$stmt->bindparam(":statusPedido", $statusPedido);
+		$stmt->bindparam(":mensagemAlterar", $mensagemAlterar);
+
+		$stmt->execute();
+
+		return true;
+	} catch (PDOException $e) {
+		echo $e->getMessage();
+		return false;
+	}
+}
 
 public static function deletePedido($codControle){
 	$pdo = Database::connect();
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$stmt = $pdo->prepare("DELETE FROM controlepedido WHERE codControle=:codControle");
-	$stmt->bindparam(":id", $codControle);
+	$stmt->bindparam(":codControle", $codControle);
 	$stmt->execute();
 	return true;
 }
