@@ -65,8 +65,7 @@ switch ($value) {
 				$sourcePath = $_FILES['file']['tmp_name'];
 				$targetPath = "../anexos/" . md5($dataAbertura) . "." . $file_extension;
 				move_uploaded_file($sourcePath, $targetPath); // Move arquivo				
-				//SALVA NO BANCO 
-				/*data_criacao, id_dep, id_usr_criador, id_usr_destino, titulo,	codCliente_dem,prioridade, ordem_servico, mensagem, status, anexo*/
+				//SALVA NO BANCO 				
 				$cdt = crud::criaDemanda($dataAbertura, $departamento, $idLogado, $idInstituicao, $usuarioDestino, $titulo, $nomeSolicitante, $prioridade, $ordemServico, $mensagem, $status, $nomeAnexo);
 				if ($cdt == true) {
 					echo 1;
@@ -85,7 +84,7 @@ switch ($value) {
 			if ($cdt == true) {
 				echo 1;
 			} else {
-				echo 1;
+				echo 0;
 			}
 		}
 		break;
@@ -433,6 +432,7 @@ switch ($value) {
 
 		//controlepedido
 		case 'CadastroPedido':
+		
 		$dataAbertura = $_POST['dataAtual'];
 		$numeroPregao = $_POST['numeroPregao'];
 		//$idLogado = $_POST['idLogado'];
@@ -453,8 +453,7 @@ switch ($value) {
 					$sourcePath = $_FILES['file']['tmp_name'];
 					$targetPath = "../anexos/" . md5($dataAbertura) . "." . $file_extension;
 					move_uploaded_file($sourcePath, $targetPath); // Move arquivo				
-					//SALVA NO BANCO 
-					/*data_criacao, id_dep, id_usr_criador, id_usr_destino, titulo,	codCliente_dem,prioridade, ordem_servico, mensagem, status, anexo*/
+					//SALVA NO BANCO
 					$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao);
 					if ($cdt == true) {
 						echo 1;
@@ -475,11 +474,7 @@ switch ($value) {
 					echo 0;
 				}
 			}
-		if ($cdt == true) {
-			echo 1;
-		} else {
-			echo 0;
-		}
+		
 		break;
 
 	case 'editarPedido':
@@ -487,6 +482,20 @@ switch ($value) {
 		$descricao  = $_POST['edtDescricao'];
 		$edtId         = $_POST['edtId'];
 		$cad = crud::editarPedido($codControle, $numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao);
+		if ($cad == true) {
+			echo 1;
+		} else {
+			echo 0;
+		}
+		break;
+
+	case 'AlterarPedido':
+
+		$statusPedido  = $_POST['statusPedido'];
+		$codControle         = $_POST['codigoControleAlterar'];
+		$mensagemAlterar         = $_POST['mensagemAlterar'];
+		
+		$cad = crud::AlterarPedido($codControle, $statusPedido,$mensagemAlterar);
 		if ($cad == true) {
 			echo 1;
 		} else {

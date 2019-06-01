@@ -256,14 +256,34 @@ require_once "rodape.php";
 					nomeCliente: nomeCliente
 				}, //Dados
 				success: function(result) {
-					//alert(result)
+					//alert(result)					
 					if (result == 1) {
-						alert("Cadastrado com Sucesso!");
 						$("#cdtnomeCliente").val('');
-
-						//location.href('index_usr.php')
+						swal({
+								title: "OK!",
+								text: " Cadastrado com Sucesso!",
+								type: "success",
+								confirmButtonText: "Fechar",
+								closeOnConfirm: false
+							},
+							function(isConfirm) {
+								if (isConfirm) {
+									window.location = "cad_cliente.php";
+								}
+							});
 					} else {
-						alert("Erro ao salvar"); //Informa o erro
+						swal({
+								title: "Ops!",
+								text: "Algo deu errado!",
+								type: "error",
+								confirmButtonText: "Fechar",
+								closeOnConfirm: false
+							},
+							function(isConfirm) {
+								if (isConfirm) {
+									window.location = "cad_cliente.php";
+								}
+							});
 					}
 				}
 			});

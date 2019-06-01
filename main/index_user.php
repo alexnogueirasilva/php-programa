@@ -211,9 +211,7 @@ include_once "modais.php";
                     $("#salvaDemanda").html("<i class='fa fa-spinner fa-spin'></i> Enviando, aguarde...");
                     $("#salvaDemanda").prop("disabled", true);
                 },
-                success: function(data) {
-                    /*$('#loading').hide();
-                    $("#message").html(data);*/ 
+                success: function(data) { 
                    // alert(data);                                                 
                     if (data == 1) {                       
                         swal({
