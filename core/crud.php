@@ -710,4 +710,62 @@ public static function deletePedido($codControle){
 //controlepedido
 
 
+//CADASTRO DE REPRESENTANTE
+
+public static function criarRepresentante($cadRepresentante){
+
+	$pdo = Database::connect();
+
+	try{
+		$stmt = $pdo->prepare("INSERT INTO cadRepresentante(nomeRepresentante) VALUE (:nomeRepresentante)");
+		$stmt->bindParam(":nomeRepresentante", $nomeRepresentante);
+		$stmt->execute();
+
+		return true;
+	}catch(PDOException $e){
+		echo $e->getMessage();
+		return false;
+	}
+
+}
+
+public static function deleteRepresentante($codRepresentante){
+
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+	try{
+		$stmt = $pdo->prepare("DELETE FROM codRepresentante = :codRepresentante");
+		$stmt->bindParam(":codRepresentate", $codRepresentante);
+		$stmt->execute();
+
+		return true;
+	}catch (PDOException $e){
+			echo $e->getMessage();
+			return false;
+	}
+}
+
+public static function editarRepresentante($codRepresentante, $nomeRepresentante){
+
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	try{
+
+		$stmt = $pdo->prepare("UPDATE cadRepresentante SET nomeRepresentante=:nomeRepresentante WHERE codRepresentante = :codRepresentante");
+		$stmt->bindParam(":codRepresentante", $codRepresentante);
+		$stmt->bindParam(":nomeRepresentante", $nomeRepresentante);
+		$stmt->execute();
+
+		return true;
+
+	}catch(PDOException $e){
+		echo $e->getMessage();
+		
+		return false;
+	}
+
+
+}
+
 }
