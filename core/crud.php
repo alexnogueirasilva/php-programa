@@ -729,7 +729,7 @@ public static function deletePedido($codControle){
 
 //CADASTRO DE REPRESENTANTE
 
-public static function criarRepresentante($cadRepresentante){
+public static function criarRepresentante($nomeRepresentante){
 
 	$pdo = Database::connect();
 
@@ -763,15 +763,16 @@ public static function deleteRepresentante($codRepresentante){
 	}
 }
 
-public static function editarRepresentante($codRepresentante, $nomeRepresentante){
+public static function editarRepresentante($codRepresentante, $nomeRepresentante, $statusRepresentante){
 
 	$pdo = Database::connect();
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	try{
 
-		$stmt = $pdo->prepare("UPDATE cadRepresentante SET nomeRepresentante=:nomeRepresentante WHERE codRepresentante = :codRepresentante");
+		$stmt = $pdo->prepare("UPDATE cadRepresentante SET nomeRepresentante=:nomeRepresentante, statusRepresentante = :statusRepresentante WHERE codRepresentante = :codRepresentante");
 		$stmt->bindParam(":codRepresentante", $codRepresentante);
 		$stmt->bindParam(":nomeRepresentante", $nomeRepresentante);
+		$stmt->bindParam(':statusRepresentante', $statusRepresentante);
 		$stmt->execute();
 
 		return true;

@@ -513,4 +513,18 @@ switch ($value) {
 		}
 		break;
 		//controlepedido
+
+		//REPRESENTANTE
+
+	case 'cadRepresentante':
+			$nomeRepresentante = $_POST['nomeRepresentante'];
+			$cad = crud::criarRepresentante($nomeRepresentante);
+
+			if ($cad == true){
+				echo 1;
+			}else {
+				echo 0;
+			}
+
+		break;
 }
