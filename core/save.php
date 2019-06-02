@@ -527,4 +527,13 @@ switch ($value) {
 			}
 
 		break;
+
+	case 'editarRepresentante':
+			
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ER, PDO::ERRMODE_EXCEPTION);
+		try{
+			$stmt = $pdo->prepare("UPDATE cadRepresentante SET ")
+		}
+	
 }

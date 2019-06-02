@@ -94,7 +94,8 @@ $queryRepresentante = "SELECT * FROM cadRepresentante";
 
 </div>
 
-<!-- MODAL desativar cliente-->
+<!-- MODAL desativar Representante
+-->
 <div class="modal fade" id="modalConfirmacaoDesativa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -108,14 +109,14 @@ $queryRepresentante = "SELECT * FROM cadRepresentante";
 					<input type="hidden" name="statusAtualDes" id="statusAtualDes">
 					<div class="col-md-12">
 						<div id="contextoModal">
-							<h2>Você vai DESATIVAR o Cliente: <span id="nomeRepresentanteDes"></span>?</h2>
+							<h2>Você vai DESATIVAR o Representante: <span id="nomeRepresentanteDes"></span>?</h2>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				<button type="submit" id="btnDesativaCliente" class="btn btn-primary">Confirmar</button>
+				<button type="submit" id="btnDesativaRepresentante" class="btn btn-primary">Confirmar</button>
 			</div>
 		</div>
 	</div>
@@ -132,18 +133,18 @@ $queryRepresentante = "SELECT * FROM cadRepresentante";
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<input type="hidden" name="codigoClienteAt" id="codigoClienteAt">
+					<input type="hidden" name="codigoRepresentanteAt" id="codigoRepresentanteAt">
 					<input type="hidden" name="statusAtualAt" id="statusAtualAt">
 					<div class="col-md-12">
 						<div id="contextoModal">
-							<h2>Você vai ATIVAR o cliente: <span id="nomeClienteAt"></span>?</h2>
+							<h2>Você vai ATIVAR o Representante: <span id="nomeRepresentanteAt"></span>?</h2>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				<button type="submit" id="btnAtivaCliente" class="btn btn-primary">Confirmar</button>
+				<button type="submit" id="btnAtivaRepresentante" class="btn btn-primary">Confirmar</button>
 			</div>
 		</div>
 	</div>
@@ -173,7 +174,7 @@ $queryRepresentante = "SELECT * FROM cadRepresentante";
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				<button type="submit" id="btnExcluirCliente" class="btn btn-primary">Confirmar</button>
+				<button type="submit" id="btnExcluirRepresentante" class="btn btn-primary">Confirmar</button>
 			</div>
 		</div>
 	</div>
@@ -309,7 +310,7 @@ require_once "rodape.php";
 			var nome = $(this).data('nome');
 			
 			if (status == "D") {
-				alert("Cliente já está Desativado!");				
+				alert("Representante já está Desativado!");				
 			}else{
 				$('#modalConfirmacaoDesativa').modal('show');
 			}
@@ -319,7 +320,7 @@ require_once "rodape.php";
 			
 		});
 
-		$(document).on("click", "#btnExcluiCliente", function() {
+		$(document).on("click", "#btnExcluiRepresentante", function() {
 			var id = $(this).data('codigo');
 			var nome = $(this).data('nome');
 			var nome1 = $(this).data('nome');
@@ -336,15 +337,15 @@ require_once "rodape.php";
 			var nome = $(this).data('nome');
 			var status = $(this).data('statusatual');
 
-			$('#idcliente').val(id);
+			$('#idRepresentante').val(id);
 			$('#edtnome').val(nome);
 			$('#edtstatus').val(status);			
-			$('#modalEditaCliente').modal('show');
+			$('#modalEditaRepresentante').modal('show');
 		});
 
 		$('#btnExcluirRepresentante').click(function() {		
 			var tipo = "excluirRepresentante";
-			var idCliente = $('#excIdRepresentante').val();
+			var idRepresentante = $('#excIdRepresentante').val();
 			var status = $('#excStatusRepresentante').val();		
 			$.ajax({
 				url: '../core/save.php',
@@ -357,14 +358,14 @@ require_once "rodape.php";
 					if (result == 1) {
 						swal({
 								title: "OK!",
-								text: "Cliente Excluído com Sucesso!",
+								text: "Representante Excluído com Sucesso!",
 								type: "success",
 								confirmButtonText: "Fechar",
 								closeOnConfirm: false
 							},
 							function(isConfirm) {
 								if (isConfirm) {
-									window.location = "cad_cliente.php";
+									window.location = "cad_Representante.php";
 								}
 							});
 					} else {
@@ -377,7 +378,7 @@ require_once "rodape.php";
 							},
 							function(isConfirm){
 								if (isConfirm) {
-									window.location = "cad_cliente.php";
+									window.location = "cad_Representante.php";
 									}
 							});
 					}
@@ -408,20 +409,20 @@ require_once "rodape.php";
 							function(isConfirm){
 								if (isConfirm) {
 								//	$('#modalConfirmacaoDesativa').modal('hide');
-										window.location = "cad_cliente.php";
+										window.location = "cad_Representante.php";
 									}
 							});						
 					} else {
 						swal({
 								title: "Ops!",
-								text: "Algo deu errado ao desativar o cliente!",
+								text: "Algo deu errado ao desativar o Representante!",
 								type: "error",
 								confirmButtonText: "Fechar",
 								closeOnConfirm: false
 							},
 							function(isConfirm){
 								if (isConfirm) {
-									window.location = "cad_cliente.php";
+									window.location = "cad_Representante.php";
 									}
 							});
 						//	alert(result);
@@ -431,7 +432,7 @@ require_once "rodape.php";
 			});
 		});
 
-		$('#btnAtivaCliente').click(function() {
+		$('#btnAtivaRepresentante').click(function() {
 			var tipo = "ativaRepresentante";
 			var id = $('#codigoRepresentanteAt').val();
 			var status = $('#statusAtualAt').val();
@@ -461,7 +462,7 @@ require_once "rodape.php";
 					} else {
 						swal({
 								title: "Ops!",
-								text: "Algo deu errado ao ativar o cliente!",
+								text: "Algo deu errado ao ativar o Representante !",
 								type: "error",
 								confirmButtonText: "Fechar",
 								closeOnConfirm: false
@@ -480,7 +481,7 @@ require_once "rodape.php";
 
 		});
 
-		$('#edtcliente').submit(function() {
+		$('#edtRepresentante').submit(function() {
 			$.ajax({ //Função AJAX
 				url: "../core/save.php",
 				type: "POST",

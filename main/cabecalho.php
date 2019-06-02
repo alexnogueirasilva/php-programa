@@ -137,10 +137,11 @@ $idAndre = $_SESSION['usuarioID'];
                             <ul class="nav nav-second-level">
                                 <li><a href="andre.php">Dashboard</a></li>
                                 <li><a href="cadastro.php">Cadastros Usuários</a></li>
+                                <li><a href="cad_Representante.php">Cadastros Representante</a></li>
                                 <li><a href="pedido.php">Cadastros Pedidos  </a></li>
                                 <li><a href="cad_status.php">Cadastros Status  </a></li>
                                 <li><a href="e-mail.php">E-mail</a></li>
-                                <li><a href="valida_cadastro.php">Validacação de Cadastros</a></li>
+                                <li><a href="valida_cadastro.php">Validação de Cadastros</a></li>
                                 <li><a href="teste_dem_fechada.php">Demandas fechadas</a></li>
                             </ul>
                             <!-- /.nav-second-level -->
