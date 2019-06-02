@@ -529,11 +529,30 @@ switch ($value) {
 		break;
 
 	case 'editarRepresentante':
-			
-		$pdo = Database::connect();
-		$pdo->setAttribute(PDO::ATTR_ER, PDO::ERRMODE_EXCEPTION);
-		try{
-			$stmt = $pdo->prepare("UPDATE cadRepresentante SET ")
-		}
+			$codRepresentante = $_POST['codRepresentante'];
+			$nomeRepresentante = $_POST['nomeRepresentante'];
+			$statusRepresentante = $_POST['statusRepresentante'];
+			$cad = crud::editarRepresentante($codRepresentante, $nomeRepresentante, $statusRepresentante);
+
+			if($cad == true){
+				echo 1;
+
+			}else{
+				echo 0;
+			}
+
+		break;
+
+	case 'excluirRepresentante':
 	
+		$codRepresentante = $_POST['codRepresentante'];
+		$cad = crud::deleteRepresentante($codRepresentante);
+
+		if($cad == true){
+			echo 1;
+		}else{
+			echo 0; 
+		}
+
+		break;
 }

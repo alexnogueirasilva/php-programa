@@ -752,8 +752,8 @@ public static function deleteRepresentante($codRepresentante){
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 	try{
-		$stmt = $pdo->prepare("DELETE FROM codRepresentante = :codRepresentante");
-		$stmt->bindParam(":codRepresentate", $codRepresentante);
+		$stmt = $pdo->prepare("DELETE FROM cadRepresentante  WHERE codRepresentante = :codRepresentante");
+		$stmt->bindParam(":codRepresentante", $codRepresentante);
 		$stmt->execute();
 
 		return true;

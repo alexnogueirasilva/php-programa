@@ -74,7 +74,7 @@ $queryRepresentante = "SELECT * FROM cadRepresentante";
 								data-codigo="<?php print($row['codRepresentante']); ?>" 
                                 data-nome="<?php print($row['nomeRepresentante']); ?>" 
                                 data-statusatual="<?php print($row['statusRepresentante']); ?>">Editar</a></td>
-								<td><a class="btn btn-danger waves-effect waves-light"  data-target="#modalExluirRepresentante" data-whatever="@getbootstrap" id="btnExcluiRepresentante" data-codigo="<?php print($row['codRepresentante']); ?>" data-nome="<?php print($row['nomeRepresentante']); ?>" data-statusatual="<?php print($row['status']); ?>">Excluir</a></td>
+								<td><a class="btn btn-danger waves-effect waves-light"  data-target="#modalExluirRepresentante" data-whatever="@getbootstrap" id="btnExcluiRepresentante" data-codigo="<?php print($row['codRepresentante']); ?>" data-nome="<?php print($row['nomeRepresentante']); ?>" data-statusatual="<?php print($row['statusRepresentante']); ?>">Excluir</a></td>
 								<td><a class="btn btn-danger waves-effect waves-light" data-target="#modalConfirmacaoDesativa" data-whatever="@getbootstrap" id="btnDesativa" data-codigo="<?php print($row['codRepresentante']); ?>" data-statusatual="<?php print($row['statusRepresentante']); ?>" data-nome="<?php print($row['nomeRepresentante']); ?>">Desativar</a></td>
 
 								<td><a class="btn btn-info waves-effect waves-light"  data-target="#modalConfirmacaoAtiva" data-whatever="@getbootstrap" id="btnAtiva" data-codigo="<?php print($row['codRepresentante']); ?>" data-statusatual="<?php print($row['statusstatusRepresentante']); ?>" data-nome="<?php print($row['nomeRepresentante']); ?>">Ativa</a></td>
@@ -162,7 +162,7 @@ $queryRepresentante = "SELECT * FROM cadRepresentante";
 			<div class="modal-body">
 				<div class="row">
 					
-				<input type="hidden" name="excIdRepresentante" id="excIdRepresentante">
+				<input type="hidden" name="excCodRepresentante" id="excCodRepresentante">
 					<input type="hidden" name="excStatusRepresentante" id="excStatusRepresentante">
 
 					<div class="col-md-12">
@@ -197,7 +197,7 @@ $queryRepresentante = "SELECT * FROM cadRepresentante";
 
 							<form id="edtRepresentante">
 								<input type="text" hidden name="tipo" value="editaRepresentante">
-								<input type="hidden" name="idRepresentante" id="idRepresentante">
+								<input type="hidden" name="codRepresentante" id="codRepresentante">
 								<div class="row">
 									<div class="col-lg-12">
 
@@ -256,7 +256,7 @@ require_once "rodape.php";
 					nomeRepresentante: nomeRepresentante
 				}, //Dados
 				success: function(result) {
-					//alert(result)					
+					alert(result)					
 					if (result == 1) {
 						$("#cdtnomeRepresentante").val('');
 						swal({
@@ -306,8 +306,8 @@ require_once "rodape.php";
 
 		$(document).on("click", "#btnDesativa", function() {
 			var id = $(this).data('codigo');
-			var status = $(this).data('statusatual');
-			var nome = $(this).data('nome');
+			var status = $(this).data('statusRepresentante');
+			var nome = $(this).data('nomeRepresentante');
 			
 			if (status == "D") {
 				alert("Representante já está Desativado!");				
@@ -321,12 +321,11 @@ require_once "rodape.php";
 		});
 
 		$(document).on("click", "#btnExcluiRepresentante", function() {
-			var id = $(this).data('codigo');
-			var nome = $(this).data('nome');
-			var nome1 = $(this).data('nome');
-			var status = $(this).data('statusatual');
+			var id = $(this).data('codRepresentante');
+			var nome = $(this).data('nomeRepresentante');
+			var status = $(this).data('statusRepresentante');
 
-			$('#excIdRepresentante').val(id);
+			$('#excCodRepresentante').val(id);
 			$('#ExcNomeRepresentante').html(nome);			
 			$('#excStatusRepresentante').val(status);
 			$('#modalExluirRepresentante').modal('show');
@@ -337,7 +336,7 @@ require_once "rodape.php";
 			var nome = $(this).data('nome');
 			var status = $(this).data('statusatual');
 
-			$('#idRepresentante').val(id);
+			$('#codRepresentante').val(id);
 			$('#edtnome').val(nome);
 			$('#edtstatus').val(status);			
 			$('#modalEditaRepresentante').modal('show');
@@ -345,14 +344,15 @@ require_once "rodape.php";
 
 		$('#btnExcluirRepresentante').click(function() {		
 			var tipo = "excluirRepresentante";
-			var idRepresentante = $('#excIdRepresentante').val();
+			var codRepresentante = $('#excCodRepresentante').val();
+			var codRepresentante = $('#ExcNomeRepresentante').val();
 			var status = $('#excStatusRepresentante').val();		
 			$.ajax({
 				url: '../core/save.php',
 				type: "POST",
 				data: {
 					tipo: tipo,
-					codRepresentante: idRepresentante
+					codRepresentante: codRepresentante
 				},
 				success: function(result) { //alert(result);			
 					if (result == 1) {
