@@ -571,7 +571,7 @@ switch ($value) {
 
 	case 'excluirRepresentante':
 			
-	$codRepresentante = $_POST['codRepresentante'];
+	$codRepresentante = $_POST['idRepresentante'];
 	
 	$cad = crud::deleteRepresentante($codRepresentante );		
 		if ($cad == true){
@@ -582,15 +582,4 @@ switch ($value) {
 
 	break;
 
-	
-		$codRepresentante = $_POST['codRepresentante'];
-		$cad = crud::deleteRepresentante($codRepresentante);
-
-		if($cad == true){
-			echo 1;
-		}else{
-			echo 0; 
-		}
-
-		break;
 }

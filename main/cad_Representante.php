@@ -339,7 +339,7 @@ require_once "rodape.php";
 			var nome = $(this).data('nome');
 			var status = $(this).data('statusatual');
 
-			$('#codRepresentante').val(id);
+			$('#idRepresentante').val(id);
 			$('#edtnome').val(nome);
 			$('#edtstatus').val(status);
 			$('#modalEditaRepresentante').modal('show');
@@ -355,9 +355,10 @@ require_once "rodape.php";
 				type: "POST",
 				data: {
 					tipo: tipo,
-					codRepresentante: codRepresentante
+					idRepresentante: idRepresentante
 				},
 				success: function(result) {
+					//alert("resultado " + result);
 					if (result == 1) {
 						swal({
 								title: "OK!",
@@ -494,7 +495,9 @@ require_once "rodape.php";
 				cache: false,
 				processData: false,
 				success: function(result) {
+				//	alert("resultado "+result);
 					if (result == 1) {
+						
 						swal({
 								title: "OK!",
 								text: "Dados Editados com Sucesso!",
@@ -530,16 +533,6 @@ require_once "rodape.php";
 			return false;
 		});
 
-
-		$(document).on("click", "#btnExcluir", function() {
-			var id = $(this).data('codigo');
-			var desc = $(this).data('desc');
-
-
-			$('#idSla').val(id);
-			$('#labelSla').html("Você vai excluir o SLA <strong>" + desc + "?</strong>");
-
-		});
 
 		//BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
 		$("tr #statusRepresentante").each(function(i) {
