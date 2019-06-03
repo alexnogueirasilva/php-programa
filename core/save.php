@@ -525,15 +525,62 @@ switch ($value) {
 			}else {
 				echo 0;
 			}
-
 		break;
 
 	case 'editarRepresentante':
-			
-		$pdo = Database::connect();
-		$pdo->setAttribute(PDO::ATTR_ER, PDO::ERRMODE_EXCEPTION);
-		try{
-			$stmt = $pdo->prepare("UPDATE cadRepresentante SET ")
+	
+	$nomeRepresentante = $_POST['edtnome'];
+	$codRepresentante = $_POST['idRepresentante'];
+	$statusRepresentante =  $_POST['edtstatus'];
+	$cad = crud::editarRepresentante($nomeRepresentante,$codRepresentante,$statusRepresentante );
+		
+		if ($cad == true){
+			echo 1;
+		}else {
+			echo 0;
 		}
+
+	break;
+	
+	case 'ativaRepresentante':
+	
+	$codRepresentante = $_POST['idRepresentante'];
+	$statusRepresentante =  'A';
+	$cad = crud::ativaRepresentante($codRepresentante,$statusRepresentante );
+		
+		if ($cad == true){
+			echo 1;
+		}else {
+			echo 0;
+		}
+
+	break;
+	case 'desativaRepresentante':
+	
+	$codRepresentante = $_POST['idRepresentante'];
+	$statusRepresentante =  'D';
+	$cad = crud::ativaRepresentante($codRepresentante,$statusRepresentante );
+		
+		if ($cad == true){
+			echo 1;
+		}else {
+			echo 0;
+		}
+
+	break;
+
+	case 'excluirRepresentante':
+			
+	$codRepresentante = $_POST['codRepresentante'];
+	
+	$cad = crud::deleteRepresentante($codRepresentante );		
+		if ($cad == true){
+			echo 1;
+		}else {
+			echo 0;
+		}
+
+	break;
+
 	
 }

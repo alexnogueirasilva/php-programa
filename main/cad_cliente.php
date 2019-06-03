@@ -35,9 +35,9 @@ $queryCliente = "SELECT * FROM cliente ";
 			<button type="submit" class="btn btn-info btn-lg btn-block" id="submit"><span class="fa fa-save"></span> Salvar</button>
 		</div>
 
-</div>
-</form>
 
+</form>
+</div>
 
 <!-- LISTAGEM USUÁRIOS -->
 
@@ -93,7 +93,7 @@ $queryCliente = "SELECT * FROM cliente ";
 	</div>
 </div>
 
-</div>
+
 
 <!-- MODAL desativar cliente-->
 <div class="modal fade" id="modalConfirmacaoDesativa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
@@ -232,7 +232,6 @@ $queryCliente = "SELECT * FROM cliente ";
 			</div>
 		</div>
 	</div>
-</div>
 </div>
 <!-- MODAL editar cliente-->
 
@@ -525,9 +524,11 @@ require_once "rodape.php";
 		//BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
 		$("tr #status").each(function(i) {
 			if ($(this).text() == "D") {
-				this.style.color = "red";
-			} else {				
-				this.style.color = "green";
+				this.style.color = "white";
+				this.style.background = "red";
+			} else {
+				this.style.color = "white";
+				this.style.background = "green";
 			}
 		});
 

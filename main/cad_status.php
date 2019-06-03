@@ -304,5 +304,17 @@ require_once "rodape.php";
 			});
 			return false;
 		});
+			//BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
+			$("tr #status").each(function(i) {
+			if ($(this).text() == "D") {
+				this.style.color = "white";
+				this.style.background = "red";
+			} else {
+				this.style.color = "white";
+				this.style.background = "green";
+			}
+		});
+
 	});
+
 </script>

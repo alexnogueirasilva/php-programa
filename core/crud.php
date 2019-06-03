@@ -726,16 +726,13 @@ public static function deletePedido($codControle){
 }
 //controlepedido
 
-
 //CADASTRO DE REPRESENTANTE
 
 public static function criarRepresentante($nomeRepresentante){
-
 	$pdo = Database::connect();
-
 	try{
 		$stmt = $pdo->prepare("INSERT INTO cadRepresentante(nomeRepresentante) VALUE (:nomeRepresentante)");
-		$stmt->bindParam(":nomeRepresentante", $nomeRepresentante);
+		$stmt->bindparam(":nomeRepresentante", $nomeRepresentante);
 		$stmt->execute();
 
 		return true;
@@ -743,17 +740,15 @@ public static function criarRepresentante($nomeRepresentante){
 		echo $e->getMessage();
 		return false;
 	}
-
 }
-
 public static function deleteRepresentante($codRepresentante){
 
 	$pdo = Database::connect();
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 	try{
-		$stmt = $pdo->prepare("DELETE FROM codRepresentante = :codRepresentante");
-		$stmt->bindParam(":codRepresentate", $codRepresentante);
+		$stmt = $pdo->prepare("DELETE FROM cadRepresentante WHERE codRepresentante =:codRepresentante");
+		$stmt->bindParam(":codRepresentante", $codRepresentante);
 		$stmt->execute();
 
 		return true;
@@ -763,27 +758,40 @@ public static function deleteRepresentante($codRepresentante){
 	}
 }
 
-public static function editarRepresentante($codRepresentante, $nomeRepresentante, $statusRepresentante){
 
+public static function editarRepresentante($nomeRepresentante,$codRepresentante,$statusRepresentante){
 	$pdo = Database::connect();
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	try{
-
-		$stmt = $pdo->prepare("UPDATE cadRepresentante SET nomeRepresentante=:nomeRepresentante, statusRepresentante = :statusRepresentante WHERE codRepresentante = :codRepresentante");
+		$stmt = $pdo->prepare("UPDATE cadRepresentante SET nomeRepresentante=:nomeRepresentante, statusRepresentante=:statusRepresentante 
+		WHERE codRepresentante=:codRepresentante");
 		$stmt->bindParam(":codRepresentante", $codRepresentante);
 		$stmt->bindParam(":nomeRepresentante", $nomeRepresentante);
-		$stmt->bindParam(':statusRepresentante', $statusRepresentante);
+		$stmt->bindParam(":statusRepresentante", $statusRepresentante);
 		$stmt->execute();
 
 		return true;
-
 	}catch(PDOException $e){
-		echo $e->getMessage();
-		
+		echo $e->getMessage();		
 		return false;
 	}
+}
 
+public static function ativaRepresentante($codRepresentante,$statusRepresentante){
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	try{
+		$stmt = $pdo->prepare("UPDATE cadRepresentante SET statusRepresentante=:statusRepresentante 
+		WHERE codRepresentante=:codRepresentante");
+		$stmt->bindParam(":codRepresentante", $codRepresentante);
+		$stmt->bindParam(":statusRepresentante", $statusRepresentante);
+		$stmt->execute();
 
+		return true;
+	}catch(PDOException $e){
+		echo $e->getMessage();		
+		return false;
+	}
 }
 
 }

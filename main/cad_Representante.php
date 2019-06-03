@@ -6,6 +6,7 @@ include_once '../core/crud.php';
 $queryRepresentante = "SELECT * FROM cadRepresentante";
 
 ?>
+
 <div class="container-fluid">
 	<div class="row bg-title">
 		<div class="col-lg-12">
@@ -16,29 +17,24 @@ $queryRepresentante = "SELECT * FROM cadRepresentante";
 
 	<h1>Cadastra Representante</h1>
 	<h4>Insira os dados do novo Representante</h4>
-	<form id="cdt">
+	<form id="frmCadRepresentante">
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="form-inline">
 					<div class="form-group">
-						<input type="text" hidden id="tipo" value="cadRepresentante">
 						<div class="input-group">
-
-							<input type="text" class="form-control" size="70" name="cdtnomeRepresentante" id="cdtnomeRepresentante" placeholder="Nome Representante" required value="">
-							<span class="input-group-addon"><span class="fa fa-user"></span></span>
+							<input type="text" class="form-control" size="200" name="nomeRepresentante" id="nomeRepresentante" placeholder="Nome do departamento" required>
+							<span class="input-group-addon"><span class="fa fa-cubes"></span></span>
 						</div>
 					</div>
 				</div>
-				<br>
+				<br><br>
+				<button type="submit" class="btn btn-info btn-lg btn-block" id="submit"><span class="fa fa-save"></span> Salvar</button>
 			</div>
-			<br><br>
-			<button type="submit" class="btn btn-info btn-lg btn-block" id="submit"><span class="fa fa-save"></span> Salvar</button>
+
 		</div>
-
+	</form>
 </div>
-</form>
-
-
 <!-- LISTAGEM REPRESENTANTE -->
 
 <div class="row">
@@ -68,16 +64,13 @@ $queryRepresentante = "SELECT * FROM cadRepresentante";
 							?>
 							<tr>
 								<td><?php print($row['codRepresentante']); ?></td>
-                                <td><?php print($row['nomeRepresentante']); ?></td>
-                                <td id="statusRepresentante"><?php print($row['statusRepresentante']); ?></td>
-								<td><a class="btn btn-info waves-effect waves-light" id="btnEdita" data-toggle="modal"  data-target="#modalEditaRepresentante" data-whatever="@getbootstrap" 
-								data-codigo="<?php print($row['codRepresentante']); ?>" 
-                                data-nome="<?php print($row['nomeRepresentante']); ?>" 
-                                data-statusatual="<?php print($row['statusRepresentante']); ?>">Editar</a></td>
-								<td><a class="btn btn-danger waves-effect waves-light"  data-target="#modalExluirRepresentante" data-whatever="@getbootstrap" id="btnExcluiRepresentante" data-codigo="<?php print($row['codRepresentante']); ?>" data-nome="<?php print($row['nomeRepresentante']); ?>" data-statusatual="<?php print($row['status']); ?>">Excluir</a></td>
+								<td><?php print($row['nomeRepresentante']); ?></td>
+								<td id="statusRepresentante"><?php print($row['statusRepresentante']); ?></td>
+								<td><a class="btn btn-info waves-effect waves-light" id="btnEdita" data-toggle="modal" data-target="#modalEditaRepresentante" data-whatever="@getbootstrap" data-codigo="<?php print($row['codRepresentante']); ?>" data-nome="<?php print($row['nomeRepresentante']); ?>" data-statusatual="<?php print($row['statusRepresentante']); ?>">Editar</a></td>
+								<td><a class="btn btn-danger waves-effect waves-light" data-target="#modalExluirRepresentante" data-whatever="@getbootstrap" id="btnExcluiRepresentante" data-codigo="<?php print($row['codRepresentante']); ?>" data-statusatual="<?php print($row['statusRepresentante']); ?>" data-nome="<?php print($row['nomeRepresentante']); ?>">Excluir</a></td>
 								<td><a class="btn btn-danger waves-effect waves-light" data-target="#modalConfirmacaoDesativa" data-whatever="@getbootstrap" id="btnDesativa" data-codigo="<?php print($row['codRepresentante']); ?>" data-statusatual="<?php print($row['statusRepresentante']); ?>" data-nome="<?php print($row['nomeRepresentante']); ?>">Desativar</a></td>
 
-								<td><a class="btn btn-info waves-effect waves-light"  data-target="#modalConfirmacaoAtiva" data-whatever="@getbootstrap" id="btnAtiva" data-codigo="<?php print($row['codRepresentante']); ?>" data-statusatual="<?php print($row['statusstatusRepresentante']); ?>" data-nome="<?php print($row['nomeRepresentante']); ?>">Ativa</a></td>
+								<td><a class="btn btn-info waves-effect waves-light" data-target="#modalConfirmacaoAtiva" data-whatever="@getbootstrap" id="btnAtiva" data-codigo="<?php print($row['codRepresentante']); ?>" data-statusatual="<?php print($row['statusRepresentante']); ?>" data-nome="<?php print($row['nomeRepresentante']); ?>">Ativa</a></td>
 							</tr>
 						<?php
 					}
@@ -92,7 +85,7 @@ $queryRepresentante = "SELECT * FROM cadRepresentante";
 	</div>
 </div>
 
-</div>
+
 
 <!-- MODAL desativar Representante
 -->
@@ -161,8 +154,8 @@ $queryRepresentante = "SELECT * FROM cadRepresentante";
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					
-				<input type="hidden" name="excIdRepresentante" id="excIdRepresentante">
+
+					<input type="hidden" name="excIdRepresentante" id="excIdRepresentante">
 					<input type="hidden" name="excStatusRepresentante" id="excStatusRepresentante">
 
 					<div class="col-md-12">
@@ -195,8 +188,8 @@ $queryRepresentante = "SELECT * FROM cadRepresentante";
 					<div class="col-md-12">
 						<div id="contextoModal">
 
-							<form id="edtRepresentante">
-								<input type="text" hidden name="tipo" value="editaRepresentante">
+							<form id="frmEdtRepresentante">
+								<input type="hidden" hidden name="tipo" value="editarRepresentante">
 								<input type="hidden" name="idRepresentante" id="idRepresentante">
 								<div class="row">
 									<div class="col-lg-12">
@@ -217,8 +210,7 @@ $queryRepresentante = "SELECT * FROM cadRepresentante";
 												<span class="input-group-addon"><span class="fa fa-signal"></span></span>
 											</div>
 										</div>
-										<button type="submit" class="btn btn-info btn-md btn-block" id="submit"><span class="fa fa-save"></span> Salvar</button>
-										
+										<button type="submit" class="btn btn-info btn-md btn-block" id="alterarRepresentante"><span class="fa fa-save"></span> Salvar</button>
 									</div>
 									<br><br>
 								</div>
@@ -233,7 +225,6 @@ $queryRepresentante = "SELECT * FROM cadRepresentante";
 		</div>
 	</div>
 </div>
-</div>
 <!-- MODAL editar Representante-->
 
 <?php
@@ -244,10 +235,9 @@ require_once "rodape.php";
 	$(document).ready(function() {
 		permissaoNivel();
 
-		$('#cdt').submit(function() {
+		$('#frmCadRepresentante').submit(function() {
 			var tipo = "cadRepresentante";
-			var nomeRepresentante = $("#cdtnomeRepresentante").val();
-
+			var nomeRepresentante = $("#nomeRepresentante").val();
 			$.ajax({ //Função AJAX
 				url: "../core/save.php", //Arquivo php
 				type: "post", //Método de envio
@@ -256,37 +246,38 @@ require_once "rodape.php";
 					nomeRepresentante: nomeRepresentante
 				}, //Dados
 				success: function(result) {
-					//alert(result)					
+					//alert(result)
 					if (result == 1) {
-						$("#cdtnomeRepresentante").val('');
 						swal({
 								title: "OK!",
-								text: " Cadastrado com Sucesso!",
+								text: "Cadastrado com Sucesso!",
 								type: "success",
 								confirmButtonText: "Fechar",
 								closeOnConfirm: false
 							},
 							function(isConfirm) {
 								if (isConfirm) {
-									window.location = "cad_Representante.php";
+									window.location = "cad_representante.php";
 								}
 							});
+						$("#nomeRepresentante").val('');
 					} else {
 						swal({
 								title: "Ops!",
-								text: "Algo deu errado!",
+								text: "Erro ao Cadastradar!",
 								type: "error",
 								confirmButtonText: "Fechar",
 								closeOnConfirm: false
 							},
 							function(isConfirm) {
 								if (isConfirm) {
-									window.location = "cad_Representante.php";
+									window.location = "cad_representante.php";
 								}
 							});
 					}
 				}
 			});
+			return false; //Evita que a página seja atualizada
 		});
 
 		$(document).on("click", "#btnAtiva", function() {
@@ -299,35 +290,33 @@ require_once "rodape.php";
 				$('#modalConfirmacaoAtiva').modal('show');
 			}
 			$('#codigoRepresentanteAt').val(id);
-			//$('#statusAtualAt').val(status);
+			$('#statusAtualAt').val(status);
 			$('#nomeRepresentanteAt').html(nome);
-
 		});
 
 		$(document).on("click", "#btnDesativa", function() {
 			var id = $(this).data('codigo');
 			var status = $(this).data('statusatual');
 			var nome = $(this).data('nome');
-			
+
 			if (status == "D") {
-				alert("Representante já está Desativado!");				
-			}else{
+				alert("Representante já está Desativado!");
+			} else {
 				$('#modalConfirmacaoDesativa').modal('show');
 			}
 			$('#codigoRepresentanteDes').val(id);
 			$('#statusAtualDes').val(status);
 			$('#nomeRepresentanteDes').html(nome);
-			
+
 		});
 
 		$(document).on("click", "#btnExcluiRepresentante", function() {
 			var id = $(this).data('codigo');
 			var nome = $(this).data('nome');
-			var nome1 = $(this).data('nome');
 			var status = $(this).data('statusatual');
 
 			$('#excIdRepresentante').val(id);
-			$('#ExcNomeRepresentante').html(nome);			
+			$('#ExcNomeRepresentante').html(" Codigo: " + id + " - Nome: " + nome);
 			$('#excStatusRepresentante').val(status);
 			$('#modalExluirRepresentante').modal('show');
 		});
@@ -339,14 +328,15 @@ require_once "rodape.php";
 
 			$('#idRepresentante').val(id);
 			$('#edtnome').val(nome);
-			$('#edtstatus').val(status);			
+			$('#edtstatus').val(status);
 			$('#modalEditaRepresentante').modal('show');
 		});
 
-		$('#btnExcluirRepresentante').click(function() {		
+		$('#btnExcluirRepresentante').click(function() {
 			var tipo = "excluirRepresentante";
 			var idRepresentante = $('#excIdRepresentante').val();
-			var status = $('#excStatusRepresentante').val();		
+			var status = $('#excStatusRepresentante').val();
+
 			$.ajax({
 				url: '../core/save.php',
 				type: "POST",
@@ -354,7 +344,7 @@ require_once "rodape.php";
 					tipo: tipo,
 					codRepresentante: idRepresentante
 				},
-				success: function(result) { //alert(result);			
+				success: function(result) {
 					if (result == 1) {
 						swal({
 								title: "OK!",
@@ -365,7 +355,7 @@ require_once "rodape.php";
 							},
 							function(isConfirm) {
 								if (isConfirm) {
-									window.location = "cad_Representante.php";
+									window.location = "cad_representante.php";
 								}
 							});
 					} else {
@@ -376,10 +366,10 @@ require_once "rodape.php";
 								confirmButtonText: "Fechar",
 								closeOnConfirm: false
 							},
-							function(isConfirm){
+							function(isConfirm) {
 								if (isConfirm) {
-									window.location = "cad_Representante.php";
-									}
+									window.location = "cad_representante.php";
+								}
 							});
 					}
 				}
@@ -388,42 +378,42 @@ require_once "rodape.php";
 
 		$('#btnDesativaRepresentante').click(function() {
 			var tipo = "desativaRepresentante";
-			var id = $('#codigoRepresentanteDes').val();
+			var idRepresentante = $('#codigoRepresentanteDes').val();
 			var status = $('#statusAtualDes').val();
-			$.ajax({			
+			$.ajax({
 				url: '../core/save.php',
 				type: "POST",
 				data: {
 					tipo: tipo,
-					id: id
-				},				
+					idRepresentante: idRepresentante
+				},
 				success: function(result) {
 					if (result == 1) {
 						swal({
 								title: "OK!",
-								text: "Clinte desativado com Sucesso!",
+								text: "Cadastro desativado com Sucesso!",
 								type: "success",
 								confirmButtonText: "Fechar",
 								closeOnConfirm: false
 							},
-							function(isConfirm){
+							function(isConfirm) {
 								if (isConfirm) {
-								//	$('#modalConfirmacaoDesativa').modal('hide');
-										window.location = "cad_Representante.php";
-									}
-							});						
+									//	$('#modalConfirmacaoDesativa').modal('hide');
+									window.location = "cad_Representante.php";
+								}
+							});
 					} else {
 						swal({
 								title: "Ops!",
-								text: "Algo deu errado ao desativar o Representante!",
+								text: "Algo deu errado ao desativar o cadastro!",
 								type: "error",
 								confirmButtonText: "Fechar",
 								closeOnConfirm: false
 							},
-							function(isConfirm){
+							function(isConfirm) {
 								if (isConfirm) {
 									window.location = "cad_Representante.php";
-									}
+								}
 							});
 						//	alert(result);
 						//alert("Erro ao salvar");
@@ -434,43 +424,43 @@ require_once "rodape.php";
 
 		$('#btnAtivaRepresentante').click(function() {
 			var tipo = "ativaRepresentante";
-			var id = $('#codigoRepresentanteAt').val();
-			var status = $('#statusAtualAt').val();
-			
+			var idRepresentante = $('#codigoRepresentanteAt').val();
+			var statusRepresentante = $('#statusAtualAt').val();
+						
 			$.ajax({
 				url: '../core/save.php',
 				type: "POST",
 				data: {
 					tipo: tipo,
-					id: id
+					idRepresentante: idRepresentante
 				},
 				success: function(result) {
 					if (result == 1) {
 						swal({
 								title: "OK!",
-								text: "Clinte ativado com Sucesso!",
+								text: "Cadastro ativado com Sucesso!",
 								type: "success",
 								confirmButtonText: "Fechar",
 								closeOnConfirm: false
 							},
-							function(isConfirm){
+							function(isConfirm) {
 								if (isConfirm) {
-								//	$('#modalConfirmacaoDesativa').modal('hide');
-										window.location = "cad_Representante.php";
-									}
-							});						
+									//	$('#modalConfirmacaoDesativa').modal('hide');
+									window.location = "cad_Representante.php";
+								}
+							});
 					} else {
 						swal({
 								title: "Ops!",
-								text: "Algo deu errado ao ativar o Representante !",
+								text: "Algo deu errado ao ativar o cadastro !",
 								type: "error",
 								confirmButtonText: "Fechar",
 								closeOnConfirm: false
 							},
-							function(isConfirm){
+							function(isConfirm) {
 								if (isConfirm) {
 									window.location = "cad_Representante.php";
-									}
+								}
 							});
 						//	alert(result);
 						//alert("Erro ao salvar");
@@ -481,10 +471,11 @@ require_once "rodape.php";
 
 		});
 
-		$('#edtRepresentante').submit(function() {
+		$("#frmEdtRepresentante").submit(function(e) {
+			//e.preventDefault();			
 			$.ajax({ //Função AJAX
-				url: "../core/save.php",
-				type: "POST",
+				url: "../core/save.php", //Arquivo php
+				type: "POST", //Método de envio
 				data: new FormData(this),
 				contentType: false,
 				cache: false,
@@ -493,41 +484,58 @@ require_once "rodape.php";
 					if (result == 1) {
 						swal({
 								title: "OK!",
-								text: "Representante editado com Sucesso!",
+								text: "Dados Editados com Sucesso!",
 								type: "success",
 								confirmButtonText: "Fechar",
 								closeOnConfirm: false
 							},
+
 							function(isConfirm) {
 								if (isConfirm) {
-									window.location = "cad_Representante.php";
+									window.location = "cad_representante.php";
 								}
 							});
+
 					} else {
 						swal({
 								title: "Ops!",
-								text: "Algo deu errado ao editar Representante!",
+								text: "Algo deu errado!",
 								type: "error",
 								confirmButtonText: "Fechar",
 								closeOnConfirm: false
 							},
-							function(isConfirm){
+
+							function(isConfirm) {
 								if (isConfirm) {
-									window.location = "cad_Representante.php";
-									}
+									window.location = "cad_representante.php";
+								}
 							});
 					}
 				}
 			});
-				return false;//Evita que a página seja atualizada
+
+			return false;
 		});
-		
+
+
+		$(document).on("click", "#btnExcluir", function() {
+			var id = $(this).data('codigo');
+			var desc = $(this).data('desc');
+
+
+			$('#idSla').val(id);
+			$('#labelSla').html("Você vai excluir o SLA <strong>" + desc + "?</strong>");
+
+		});
+
 		//BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
-		$("tr #status").each(function(i) {
+		$("tr #statusRepresentante").each(function(i) {
 			if ($(this).text() == "D") {
-				this.style.color = "red";
-			} else {				
-				this.style.color = "green";
+				this.style.color = "white";
+				this.style.background = "red";
+			} else {
+				this.style.color = "white";
+				this.style.background = "green";
 			}
 		});
 
