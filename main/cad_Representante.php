@@ -339,7 +339,7 @@ require_once "rodape.php";
 			var nome = $(this).data('nome');
 			var status = $(this).data('statusatual');
 
-			$('#idRepresentante').val(id);
+			$('#codRepresentante').val(id);
 			$('#edtnome').val(nome);
 			$('#edtstatus').val(status);
 			$('#modalEditaRepresentante').modal('show');
@@ -355,7 +355,7 @@ require_once "rodape.php";
 				type: "POST",
 				data: {
 					tipo: tipo,
-					codRepresentante: idRepresentante
+					codRepresentante: codRepresentante
 				},
 				success: function(result) {
 					if (result == 1) {

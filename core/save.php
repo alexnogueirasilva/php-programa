@@ -583,4 +583,14 @@ switch ($value) {
 	break;
 
 	
+		$codRepresentante = $_POST['codRepresentante'];
+		$cad = crud::deleteRepresentante($codRepresentante);
+
+		if($cad == true){
+			echo 1;
+		}else{
+			echo 0; 
+		}
+
+		break;
 }

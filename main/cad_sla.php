@@ -74,6 +74,7 @@ include_once '../core/crud.php';
 							<th>Editar</th>                    
 							<th>Excluir</th>                    
 						</tr>
+						
 						<tfoot>
 						<tr>
 							<th>Código</th>
