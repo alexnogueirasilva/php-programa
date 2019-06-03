@@ -727,6 +727,24 @@ public static function deletePedido($codControle){
 //controlepedido
 
 //CADASTRO DE REPRESENTANTE
+public static function listarRepresentante(){
+	$sql = "SELECT * FROM cadRepresentante ORDER BY nomeRepresentante desc";
+
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	return $stmt;
+}
+public static function listarRepresentanteId($id){
+	$sql = "SELECT * FROM cadRepresentante WHERE codRepresentante = $id ORDER BY nomeRepresentante desc";
+
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	return $stmt;
+}
 
 public static function criarRepresentante($nomeRepresentante){
 	$pdo = Database::connect();
@@ -757,7 +775,6 @@ public static function deleteRepresentante($codRepresentante){
 			return false;
 	}
 }
-
 
 public static function editarRepresentante($nomeRepresentante,$codRepresentante,$statusRepresentante){
 	$pdo = Database::connect();
@@ -793,5 +810,5 @@ public static function ativaRepresentante($codRepresentante,$statusRepresentante
 		return false;
 	}
 }
-
+//CADASTRO DE REPRESENTANTE
 }

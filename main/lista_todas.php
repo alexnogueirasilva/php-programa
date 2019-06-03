@@ -47,6 +47,18 @@ $logado = $_SESSION['nomeUsuario'];
                                 <th>Anexo</th>
                                 <th>Detalhes</th>
                             </tr>
+                            <tfoot>
+                            <tr>
+                                <th>Status</th>
+                                <th>OS</th>
+                                <th>Criador</th>
+                                <th>Para Dep.</th>
+                                <th>Prioridade</th>
+                                <th>Data Criação</th>
+                                <th>Anexo</th>
+                                <th>Detalhes</th>
+                            </tr>
+                            </tfoot>
                         </thead>
                         <tbody>
                             <?php

@@ -51,6 +51,15 @@ include_once '../core/crud.php';
 							<th>Editar</th>
 							<th>Excluir</th>
 						</tr>
+						<tfoot>
+						<tr>
+							<th>Código</th>
+							<th>Descrição</th>
+							<th>Data Cadastro</th>
+							<th>Editar</th>
+							<th>Excluir</th>
+						</tr>
+						</tfoot>
 					</thead>
 					<tbody>
 						<?php

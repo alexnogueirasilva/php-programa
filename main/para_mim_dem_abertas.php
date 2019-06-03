@@ -57,6 +57,22 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
                                 <th>Fechar</th> 
                                 
                             </tr>
+                            <tfoot>
+                            <tr>
+                                <th>Título</th>
+                                <th>Status</th>
+                                <th>OS</th>
+                                <th>Solicitante</th>
+                                <th>Depart.</th>                                
+                                <th>Data Criação</th>
+                                <th>Decorridos</th>
+                                <th>Anexo</th>
+                                <th>Detalhes</th>
+                                <th>Atender</th> 
+                                <th>Fechar</th> 
+                                
+                            </tr>
+                            </tfoot>
                         </thead>
                         <tbody>
 

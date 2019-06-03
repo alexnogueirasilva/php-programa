@@ -57,6 +57,14 @@ $queryCliente = "SELECT * FROM cliente ";
 						<th>Nome</th>
 						<th>Status</th>
 					</tr>
+					<tfoot>
+						<tr>
+						<th>Código</th>
+						<th>Nome</th>
+						<th>Status</th>
+</tr>
+</tfoot>
+						
 				</thead>
 				<tbody>
 

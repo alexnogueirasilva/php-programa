@@ -3,8 +3,6 @@ require_once 'cabecalho.php';
 include_once 'vrf_lgin.php';
 include_once '../core/crud.php';
 
-$queryRepresentante = "SELECT * FROM cadRepresentante";
-
 ?>
 
 <div class="container-fluid">
@@ -52,12 +50,27 @@ $queryRepresentante = "SELECT * FROM cadRepresentante";
 						<th>Código</th>
 						<th>Nome</th>
 						<th>Status</th>
+						<th>Editar</th>
+						<th>Excluir</th>
+						<th>Desativar</th>
+						<th>Ativar</th>
 					</tr>
+					<tfoot>
+						<tr>
+						<th>Código</th>
+						<th>Nome</th>
+						<th>Status</th>
+						<th>Editar</th>
+						<th>Excluir</th>
+						<th>Desativar</th>
+						<th>Ativar</th>
+						</tr>
+					</tfoot>
 				</thead>
 				<tbody>
 
 					<?php
-					$dados = crud::dataview($queryRepresentante);
+					$dados = crud::listarRepresentante();
 
 					if ($dados->rowCount() > 0) {
 						while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {

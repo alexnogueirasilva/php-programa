@@ -69,6 +69,20 @@ if($logado != 1){$logado2 = 600;
                                 <th>Alterar</th>
                                 <th>Detalhes</th>
                             </tr>
+                            <tfoot>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Licitação</th>
+                                <th>Pedido</th>
+                                <th>Valor</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                                <th>Decorridos</th>
+                                <th>Anexo</th>
+                                <th>Alterar</th>
+                                <th>Detalhes</th>
+                            </tr>
+                            </tfoot>
                         </thead>
                         <tbody>
                             <?php

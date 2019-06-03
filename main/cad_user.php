@@ -115,6 +115,20 @@ $queryUsuarios = "SELECT usr.id, usr.nome, usr.email, usr.nivel,usr.status,usr.i
 							<th>Desativar</th>                    
 							<th>Ativar</th>                    
 						</tr>
+						<tfoot>
+						<tr>
+							<th>Código</th>
+							<th>Nome</th>
+							<th>E-mail</th>
+							<th>Nível</th>                                
+							<th>status</th>                                
+							<th>Departamento</th>                                
+							<th>Editar</th>                                
+							<th>Excluir</th>                                
+							<th>Desativar</th>                    
+							<th>Ativar</th>                    
+						</tr>
+						</tfoot>
 					</thead>
 					<tbody>
 

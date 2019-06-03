@@ -52,6 +52,19 @@ $queryDemandas = 'SELECT d.id,d.mensagem,d.titulo,d.prioridade, d.ordem_servico,
                                 <th>Anexo</th>
                                 <th>Detalhes</th>
                             </tr>
+                            <tfoot>
+                            <tr>
+                                <th>Título</th>
+                                <th>Status</th>
+                                <th>OS</th>
+                                <th>Destinatário</th>
+                                <th>Departamento</th>                                
+                                <th>Data Criação</th>
+                                <th>Decorridos</th>
+                                <th>Anexo</th>
+                                <th>Detalhes</th>
+                            </tr>
+                            </tfoot>
                         </thead>
                         <tbody>
 
