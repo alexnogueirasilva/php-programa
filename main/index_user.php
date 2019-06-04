@@ -34,7 +34,8 @@ if($logado != 1){$logado2 = 600;
     <!-- row -->
     <div class="row">
         <div class="col-md-12">
-            <button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalCriaDemanda" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-plus"></i></span>Criar Ocorrencia</button>
+            <button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalCriaDemanda" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-plus"></i></span>Criar Ocorrencia</button>           
+            <a class="btn btn-success waves-effect waves-light" href="pedido.php" ><span class="btn-label"><i class="fa fa-plus"></i></span>Cadastro de Pedidos</a>        
         </div>
 
         <div class="row">

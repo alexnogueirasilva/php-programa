@@ -120,7 +120,7 @@ if($logado != 1){$logado2 = 600;
                                         <td><?php print($horas . ' Horas' . ' e ' . $minutos . " Minutos"); ?></td>
 
                                         <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']); ?>">Anexo</a></td>
-                                        <td><a class="btn btn-primary waves-effect waves-light" type="button" id="btnPedidoAlterar" data-toggle="modal" data-target="#modalPedidoAlterar" data-whatever="@getbootstrap" target="_blank" data-codigocontrolealterar="<?php print($row['codControle']); ?>">Alterar</a></td>
+                                        <td><a class="btn btn-primary waves-effect waves-light" type="button" id="btnPedidoAlterar" data-toggle="modal" data-target="#modalPedidoAlterar" data-whatever="@getbootstrap" target="_blank" data-statusalterar="<?php print($row['nomeStatus']); ?>" data-codigocontrolealterar="<?php print($row['codControle']); ?>">Alterar</a></td>
                                         <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" data-toggle="modal" data-target="#modalDetPedido" data-whatever="@getbootstrap" 
                                         data-codigocontroledet="<?php print($row['codControle']); ?>" data-nomeclientedet="<?php print($row['nomeCliente']); ?>" 
                                         data-numeropregaodet="<?php print($row['numeroPregao']); ?>" data-numeropedidodet="<?php print($row['numeroAf']); ?>" 
@@ -396,7 +396,7 @@ include_once "modais.php";
                     $("#salvaPedido").prop("disabled", true);
                 },
                 success: function(data) {
-                    //   alert ("resultado data " + data);
+                       //alert ("resultado data " + data);
                     if (data == 1) {
                         swal({
                                 title: "OK!",
@@ -433,16 +433,17 @@ include_once "modais.php";
 
         $(document).on("click", "#btnPedidoAlterar", function () {
             var codigoControle = $(this).data('codigocontrolealterar');
+            var statusSlterar = $(this).data('statusalterar');
            // var statusAtual = $(this).data('statusatual');
           //  var emailSolicitante = $(this).data('emailsolicitante');
 
             $('#codigoControleAlterar').val(codigoControle);   
+            $('#statusPedido').html(codigoControle);   
         //    $('#statusAtual').val(statusAtual);
     //        $('#emailSolicitante').val(emailSolicitante);
           //  $('#contextoModal').empty().append("<h2>Você colocará a demanda EM ATENDIMENTO?</h2>");
 
         }); //SETA O CÓDIGO NO MODAL PARA ATUALIZAR O STATUS ------------------------------------------
-
 
         $("#frmAlterarPedido").on('submit', (function(e) {
             e.preventDefault();
@@ -466,7 +467,7 @@ include_once "modais.php";
                     $("#alteraPedido").prop("disabled", true);
                 },
                 success: function(data) {
-                   //    alert ("resultado data " + data);
+                   // alert ("resultado data " + data);
                     if (data == 1) {
                         swal({
                                 title: "OK!",

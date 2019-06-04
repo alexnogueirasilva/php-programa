@@ -122,12 +122,16 @@ $idAndre = $_SESSION['usuarioID'];
                     </li>
                     <li id="cadLogin"> <a href="#" class="waves-effect"><i class="icon-graph fa-fw"></i> Gerência<span class="fa arrow"></span> </a>
                         <ul class="nav nav-second-level">
-                            <li><a href="relatorios.php">Relatórios</a></li>
+                           
                             <li><a href="cad_user.php">Cadastros Usuários</a></li>
                             <li><a href="cad_cliente.php">Cadastros Clientes</a></li>
                             <li><a href="cad_dep.php">Cadastros Departamentos</a></li>
                             <li><a href="cad_sla.php">Cadastros SLAs</a></li>
+                            <li><a href="cad_representante.php">Cadastros Representante</a></li>                              
+                            <li><a href="pedido.php">Cadastros Pedidos  </a></li>
+                            <li><a href="cad_status.php">Cadastros Status  </a></li>
                             <li><a href="lista_todas.php">Listar Todas Demandas</a></li>
+                            <li><a href="relatorios.php">Relatórios</a></li>
 
                         </ul>
                         <!-- /.nav-second-level -->
@@ -136,10 +140,7 @@ $idAndre = $_SESSION['usuarioID'];
                         <?php if ($nivel == 1) { ?>
                             <ul class="nav nav-second-level">
                                 <li><a href="andre.php">Dashboard</a></li>
-                                <li><a href="cadastro.php">Cadastros Usuários</a></li>
-                                <li><a href="cad_Representante.php">Cadastros Representante</a></li>
-                                <li><a href="pedido.php">Cadastros Pedidos  </a></li>
-                                <li><a href="cad_status.php">Cadastros Status  </a></li>
+                                <li><a href="cadastro.php">Cadastros Usuários</a></li>  
                                 <li><a href="e-mail.php">E-mail</a></li>
                                 <li><a href="valida_cadastro.php">Validação de Cadastros</a></li>
                                 <li><a href="teste_dem_fechada.php">Demandas fechadas</a></li>
