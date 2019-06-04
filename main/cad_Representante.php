@@ -413,7 +413,7 @@ require_once "rodape.php";
 							function(isConfirm) {
 								if (isConfirm) {
 									//	$('#modalConfirmacaoDesativa').modal('hide');
-									window.location = "cad_Representante.php";
+									window.location = "cad_representante.php";
 								}
 							});
 					} else {
@@ -426,7 +426,7 @@ require_once "rodape.php";
 							},
 							function(isConfirm) {
 								if (isConfirm) {
-									window.location = "cad_Representante.php";
+									window.location = "cad_representante.php";
 								}
 							});
 						//	alert(result);
@@ -460,7 +460,7 @@ require_once "rodape.php";
 							function(isConfirm) {
 								if (isConfirm) {
 									//	$('#modalConfirmacaoDesativa').modal('hide');
-									window.location = "cad_Representante.php";
+									window.location = "cad_representante.php";
 								}
 							});
 					} else {
@@ -473,7 +473,7 @@ require_once "rodape.php";
 							},
 							function(isConfirm) {
 								if (isConfirm) {
-									window.location = "cad_Representante.php";
+									window.location = "cad_representante.php";
 								}
 							});
 						//	alert(result);
