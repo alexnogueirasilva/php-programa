@@ -5,8 +5,6 @@
 include_once 'vrf_lgin.php';
 require_once 'cabecalho.php';
 include_once '../core/crud.php';
-include_once 'Models/DAO/StatusDAO.php';
-include_once 'Models/DAO/PedidoDAO.php';
 
 date_default_timezone_set('America/Bahia');
 
