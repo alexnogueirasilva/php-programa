@@ -7,7 +7,7 @@ require_once 'cabecalho.php';
 include_once '../core/crud.php';
 
 date_default_timezone_set('America/Bahia');
-
+$data = date('Y-m-d H:i:s');
 //DEFINIÇÃO DO NOME DO ANEXO
 $nomeAnexo = date('Y-m-d-H:i');
 $novoNomeAnexo = md5($nomeAnexo);
@@ -88,11 +88,15 @@ if($logado != 1){$logado2 = 600;
                             //$dados = crud::listarPedido();
                             $dados = crud::listarPedido();
                             //print_r($dados);
+                            $totalPedido = '';
                             if ($dados->rowCount() > 0) {
                                 while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
 
                                     $dataCriada = $row['dataCadastro'];
                                     $dataAtual = date('Y-m-d H:i:s');
+                                    $valorPedido = $row['valorPedido'];
+                                    
+                                    $totalPedido  += $valorPedido;
 
                                     $datatime1 = new DateTime($row['dataCadastro']);
                                     $datatime2 = new DateTime($dataAtual);
@@ -114,7 +118,7 @@ if($logado != 1){$logado2 = 600;
                                             <?php print($row['nomeCliente']); ?></td>
                                         <td><?php print($row['numeroPregao']); ?></td>
                                         <td><?php print($row['numeroAf']); ?></td>
-                                        <td> R$<?php print($row['valorPedido']); ?></td>
+                                        <td> R$<?php print(number_format($row['valorPedido'],2,',','.')); ?></td>
                                         <td><?php print(crud::formataData($row['dataCadastro'])); ?></td>
                                         <td id="statusControle"><?php print($row['nomeStatus']); ?></td>
                                         <td><?php print($horas . ' Horas' . ' e ' . $minutos . " Minutos"); ?></td>
@@ -128,7 +132,9 @@ if($logado != 1){$logado2 = 600;
                                         data-datacadastrodet="<?php print(crud::formataData($row['dataCadastro'])); ?>" data-mensagem="<?php print($row['observacao']); ?>">Detalhes</a></td>
                                     </tr>
                                 <?php
+                                
                             }
+                            echo "Valor Total Pedido R$" . number_format($totalPedido,2,',','.');
                         } else {
                             echo "<p class='text-danger'>Sem Pedidos Cadastrados</p>";
                         }
