@@ -2,7 +2,7 @@
 <head>
    <title>Multiple Upload Ajax</title>
 </head>
-<body>
+<body> 
  
    <form id="formImage" method="POST" enctype="multipart/form-data" >
       <input type="file" name="fileUpload">

@@ -261,14 +261,16 @@ class crud
 		}
 	}
 
-	public static function criarCliente($nomeCliente)
+	public static function criarCliente($nomeCliente,$tipoCliente,$nomeFantasiaCliente)
 	{
 
 		$pdo = Database::connect();
 
 		try {
-			$stmt = $pdo->prepare("INSERT INTO cliente(nomeCliente) VALUES (:nomeCliente)");
+			$stmt = $pdo->prepare("INSERT INTO cliente(nomeCliente, tipoCliente, nomeFantasiaCliente) VALUES (:nomeCliente, :tipoCliente, :nomeFantasiaCliente)");
 			$stmt->bindparam(":nomeCliente", $nomeCliente);
+			$stmt->bindparam(":tipoCliente", $tipoCliente);
+			$stmt->bindparam(":nomeFantasiaCliente", $nomeFantasiaCliente);
 			$stmt->execute();
 
 			return true;
@@ -623,6 +625,50 @@ class crud
 //statuspedido
 
 //controlepedido
+public static function totalPedidoPendetes(){
+
+	$sql = "SELECT count(con.codControle) as totalPedidosPendetes
+	FROM controlePedido as con 
+	inner join cliente as cli on cli.codCliente = con.codCliente 
+	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE cli.tipoCliente = 'E' AND con.codStatus = 4
+	ORDER BY con.dataCadastro desc";
+
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	return $stmt;
+}
+
+public static function totalPedidoCancelados(){
+
+	$sql = "SELECT count(con.codControle) as totalPedidoCancelados
+	FROM controlePedido as con 
+	inner join cliente as cli on cli.codCliente = con.codCliente 
+	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE cli.tipoCliente = 'E' AND con.codStatus = 4
+	ORDER BY con.dataCadastro desc";
+
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	return $stmt;
+}
+public static function totalPedidoAtendidos(){
+
+	$sql = "SELECT count(con.codControle) as totalPedidoAtendidos
+	FROM controlePedido as con 
+	inner join cliente as cli on cli.codCliente = con.codCliente 
+	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE cli.tipoCliente = 'E' AND con.codStatus = 16
+	ORDER BY con.dataCadastro desc";
+
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	return $stmt;
+}
+
 public static function listarPedido(){
 	$sql = "SELECT con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, sta.nome as nomeStatus 
 	FROM controlePedido as con 
@@ -637,12 +683,40 @@ public static function listarPedido(){
 	return $stmt;
 }
 
-public static function listarPedidoId($id) {
-
-	$sql = "SELECT SELECT con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codControle, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, sta.staNome as nomeStatus 
+public static function listarPedidoNaoAtendCanc(){
+	$sql = "SELECT con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, sta.nome as nomeStatus 
 	FROM controlePedido as con 
 	inner join cliente as cli on cli.codCliente = con.codCliente 
-	inner join status as sta on sta.idStatus = con.codStatus WHERE codControle = $id";
+	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE sta.nome not in ('ATENDIDO','CANCELADO')
+	ORDER BY con.dataCadastro desc"; 
+
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	return $stmt;
+}
+
+public static function listarPedidoId($id) {
+	
+	$sql = "SELECT con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, sta.nome as nomeStatus 
+	FROM controlePedido as con 
+	inner join cliente as cli on cli.codCliente = con.codCliente 
+	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE con.codControle = $id ";
+
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	return $stmt;
+}
+
+public static function listarPedidoTipo() {
+	
+	$sql = "SELECT con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, sta.nome as nomeStatus, cli.tipoCliente
+	FROM controlePedido as con 
+	inner join cliente as cli on cli.codCliente = con.codCliente 
+	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE cli.tipoCliente = 'E' ";
 
 	$pdo = Database::connect();
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -652,12 +726,12 @@ public static function listarPedidoId($id) {
 }
 
 
-public static function CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao) {
+public static function CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao,$dataCadastro) {
 	$pdo = Database::connect();
 
 	try {
-		$stmt = $pdo->prepare("INSERT INTO controlePedido (numeroPregao, numeroAf,valorPedido,codStatus,codCliente,anexo,observacao) 
-													VALUES(:numeroPregao, :numeroAf, :valorPedido, :codStatus, :codCliente, :anexo, :observacao)");
+		$stmt = $pdo->prepare("INSERT INTO controlePedido (numeroPregao, numeroAf,valorPedido,codStatus,codCliente,anexo,observacao, dataCadastro) 
+													VALUES(:numeroPregao, :numeroAf, :valorPedido, :codStatus, :codCliente, :anexo, :observacao,:dataCadastro)");
 									   					   //numeroPregao,numeroAf,valorPedido,codStatus,codCliente,anexo, observacao
 		$stmt->bindparam(":numeroPregao", $numeroPregao);
 		$stmt->bindparam(":numeroAf", $numeroAf);
@@ -666,6 +740,7 @@ public static function CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $c
 		$stmt->bindparam(":codCliente", $codCliente);
 		$stmt->bindparam(":anexo", $anexo);
 		$stmt->bindparam(":observacao", $observacao);
+		$stmt->bindparam(":dataCadastro", $dataCadastro);
 		$stmt->execute();
 
 		return true;

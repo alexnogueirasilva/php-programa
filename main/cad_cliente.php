@@ -22,11 +22,29 @@ $queryCliente = "SELECT * FROM cliente ";
 				<div class="form-inline">
 					<div class="form-group">
 						<input type="text" hidden id="tipo" value="criarCliente">
-						<div class="input-group">
-
-							<input type="text" class="form-control" size="70" name="cdtnomeCliente" id="cdtnomeCliente" placeholder="Nome Cliente" required value="">
+						<div class="input-group">					
+							<input type="text" class="form-control" size="70" name="cdtnomeFantasiaCliente" id="cdtnomeFantasiaCliente" placeholder="Nome fantasia Cliente" required value="">
 							<span class="input-group-addon"><span class="fa fa-user"></span></span>
 						</div>
+						<div class="form-group">
+						<div class="input-group">
+						<input type="text" class="form-control" size="70" name="cdtnomeCliente" id="cdtnomeCliente" placeholder="Nome Cliente" required value=""> <br/>
+							<span class="input-group-addon"><span class="fa fa-user"></span></span>
+						</div>
+					</div>
+						<div class="form-group">
+						<div class="input-group">
+							<select class="form-control" name="cdtTipoCliente" id="cdtTipoCliente" required="true">
+								<option value="">Tipo Cliente</option>
+								<option value="E">1 - Estadual</option>
+								<option value="M">2 - Municipal</option>
+								<option value="F">3 - Federal</option>
+							</select>
+							<span class="input-group-addon"><span class="fa fa-signal"></span></span>
+						</div>
+					</div>
+					
+					
 					</div>
 				</div>
 				<br>
@@ -254,18 +272,24 @@ require_once "rodape.php";
 		$('#cdt').submit(function() {
 			var tipo = "criarCliente";
 			var nomeCliente = $("#cdtnomeCliente").val();
+			var nomeFantasiaCliente = $("#cdtnomeFantasiaCliente").val();
+			var tipoCliente = $("#cdtTipoCliente").val();
 
 			$.ajax({ //Função AJAX
 				url: "../core/save.php", //Arquivo php
 				type: "post", //Método de envio
 				data: {
 					tipo: tipo,
-					nomeCliente: nomeCliente
+					nomeCliente: nomeCliente,
+					nomeFantasiaCliente: nomeFantasiaCliente,
+					tipoCliente: tipoCliente
 				}, //Dados
 				success: function(result) {
 					//alert(result)					
 					if (result == 1) {
 						$("#cdtnomeCliente").val('');
+						$("#cdtnomeFantasiaCliente").val('');
+						$("#cdtTipoCliente").val('');
 						swal({
 								title: "OK!",
 								text: " Cadastrado com Sucesso!",

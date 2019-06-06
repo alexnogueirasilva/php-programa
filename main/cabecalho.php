@@ -112,7 +112,7 @@ $idAndre = $_SESSION['usuarioID'];
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
-                    <li> <a href="para_mim_demandas.php" class="waves-effect"><i class="icon-envelope fa-fw"></i> Demandas para mim<span class="fa arrow"></span> </a>
+                    <li> <a href="#" class="waves-effect"><i class="icon-envelope fa-fw"></i> Demandas para mim<span class="fa arrow"></span> </a>
                         <ul class="nav nav-second-level">
                             <li><a href="para_mim_dem_abertas.php">Abertas</a></li>
                             <li><a href="para_mim_dem_fechadas.php">Fechadas</a></li>

@@ -168,9 +168,11 @@ switch ($value) {
 	case 'criarCliente':
 
 		$nomeCliente = $_POST['nomeCliente'];
-		//$statusCliente = $_POST['statusCliente'];
+		$nomeFantasiaCliente = $_POST['nomeFantasiaCliente'];
+		$tipoCliente = $_POST['tipoCliente'];
+		
 
-		$cdt = crud::criarCliente($nomeCliente);
+		$cdt = crud::criarCliente($nomeCliente,$tipoCliente,$nomeFantasiaCliente);
 		if ($cdt == true) {
 			echo 1;
 		} else {
@@ -433,6 +435,7 @@ switch ($value) {
 		//controlepedido
 		case 'CadastroPedido':
 		
+		$dataCadastro = $_POST['dataCadastro'];
 		$dataAbertura = $_POST['dataAtual'];
 		$numeroPregao = $_POST['numeroPregao'];
 		//$idLogado = $_POST['idLogado'];
@@ -454,7 +457,7 @@ switch ($value) {
 					$targetPath = "../anexos/" . md5($dataAbertura) . "." . $file_extension;
 					move_uploaded_file($sourcePath, $targetPath); // Move arquivo				
 					//SALVA NO BANCO
-					$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao);
+					$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao,$dataCadastro);
 					if ($cdt == true) {
 						echo 1;
 						//enviaEmail();
@@ -467,7 +470,7 @@ switch ($value) {
 				//CASO NÃO TENHA ANEXO ENTRA AQUI	
 			} else {
 				$anexo = "sem_anexo.php";
-					$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao);
+					$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao,$dataCadastro);
 				if ($cdt == true) {
 					echo 1;
 				} else {

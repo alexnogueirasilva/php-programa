@@ -7,7 +7,7 @@ require_once 'cabecalho.php';
 include_once '../core/crud.php';
 
 date_default_timezone_set('America/Bahia');
-
+$data = date('Y-m-d H:i:s');
 //DEFINIÇÃO DO NOME DO ANEXO
 $nomeAnexo = date('Y-m-d-H:i');
 $novoNomeAnexo = md5($nomeAnexo);
@@ -44,8 +44,9 @@ if($logado != 1){$logado2 = 600;
     <div class="row">
         <div class="col-md-12">
             <button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalCadastrarPedido" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-plus"></i></span>Cadastrar Pedido</button>
+            
         </div>
-
+<form id="frmIndex" method="post">
         <div class="row">
             <div class="col-sm-12">
                 <div id="dado"></div>
@@ -53,6 +54,7 @@ if($logado != 1){$logado2 = 600;
                     <div class="col-sm-6">
                         <h3>Pedidos Cadastrados</h3>
                     </div>
+                                                   
                     <table id="tabela" class="table table-striped">
                         <thead>
                             <tr>
@@ -84,15 +86,39 @@ if($logado != 1){$logado2 = 600;
                         </thead>
                         <tbody>
                             <?php
+                            $totalPedidoPendetes = crud::totalPedidoPendetes();                     
+                            $totalPedidoCancelados = crud::totalPedidoCancelados();                     
+                            $totalPedidoAtendidos = crud::totalPedidoAtendidos();  
 
-                            //$dados = crud::listarPedido();
-                            $dados = crud::listarPedido();
-                            //print_r($dados);
+                          /*  if(isset($_POST['scales'])){
+                            $dados = crud::listarPedido(); 
+                            echo "Todos pedidos! <br/>";
+                            
+                         }else {                            
+                           
+                            echo "Pedido Estaduais! <br/>";
+                            //echo "Todos pedidos!";
+                           // echo "Todos pedidos totalPedidoPendetes! ". $totalPedidoPendetes;   
+                           // echo "Valor Total Pedido R$" . $totalPedidoPendetes;
+                            
+                           // echo "Todos pedidos totalPedidoCancelados! ". $totalPedidoCancelados;                     
+                           // echo "Todos pedidos totalPedidoAtendidos! " . $totalPedidoAtendidos; 
+                        }      */                                                      
+                        $dados = crud::listarPedidoNaoAtendCanc(); 
+                        $totalPedido = '';
+                        $qtdePedido = 0;
                             if ($dados->rowCount() > 0) {
                                 while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
 
                                     $dataCriada = $row['dataCadastro'];
-                                    $dataAtual = date('Y-m-d H:i:s');
+                                    $dataAtual = date('Y-m-d H:i:s');  
+                                    
+
+                                    $valorPedido = $row['valorPedido'];
+                                    
+                                    $totalPedido  += $valorPedido;
+                                    
+                                    $qtdePedido = $qtdePedido + 1;
 
                                     $datatime1 = new DateTime($row['dataCadastro']);
                                     $datatime2 = new DateTime($dataAtual);
@@ -107,17 +133,16 @@ if($logado != 1){$logado2 = 600;
 
                                     $horas = (int)($intervalo / 60);
                                     $minutos = $intervalo % 60;
-
                                     ?>
                                     <tr>
                                         <td style="text-transform: uppercase;">
                                             <?php print($row['nomeCliente']); ?></td>
                                         <td><?php print($row['numeroPregao']); ?></td>
                                         <td><?php print($row['numeroAf']); ?></td>
-                                        <td> R$<?php print($row['valorPedido']); ?></td>
+                                        <td> R$<?php print(number_format($row['valorPedido'],2,',','.')); ?></td>
                                         <td><?php print(crud::formataData($row['dataCadastro'])); ?></td>
                                         <td id="statusControle"><?php print($row['nomeStatus']); ?></td>
-                                        <td><?php print($horas . ' Horas' . ' e ' . $minutos . " Minutos"); ?></td>
+                                        <td><?php print($horas . ' Hs' . ' e ' . $minutos . " M"); ?></td>
 
                                         <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']); ?>">Anexo</a></td>
                                         <td><a class="btn btn-primary waves-effect waves-light" type="button" id="btnPedidoAlterar" data-toggle="modal" data-target="#modalPedidoAlterar" data-whatever="@getbootstrap" target="_blank" data-statusalterar="<?php print($row['nomeStatus']); ?>" data-codigocontrolealterar="<?php print($row['codControle']); ?>">Alterar</a></td>
@@ -127,8 +152,9 @@ if($logado != 1){$logado2 = 600;
                                         data-valorpedidodet="<?php print($row['valorPedido']); ?>" data-statuscontroledet="<?php print($row['nomeStatus']); ?>" 
                                         data-datacadastrodet="<?php print(crud::formataData($row['dataCadastro'])); ?>" data-mensagem="<?php print($row['observacao']); ?>">Detalhes</a></td>
                                     </tr>
-                                <?php
+                                <?php                               
                             }
+                            echo "<p class='text-danger'> " . " Valor Total Pedido R$" . number_format($totalPedido,2,',','.') . " - " ."Quantidade Pedidos " . $qtdePedido ."</p>";
                         } else {
                             echo "<p class='text-danger'>Sem Pedidos Cadastrados</p>";
                         }
@@ -139,6 +165,7 @@ if($logado != 1){$logado2 = 600;
             </div>
 
         </div>
+        </form>
     </div>
     <!-- /.row -->
 </div>
@@ -155,6 +182,7 @@ if($logado != 1){$logado2 = 600;
                 <form id="frmCadastroPedido" action="" method="post" enctype="multipart/form-data">
                     <input type="hidden" value="CadastroPedido" name="tipo" id="tipo">
                     <input type="hidden" value="<?php echo $nomeAnexo; ?>" name="dataAtual" id="dataAtual">
+                    <input type="hidden" value="<?php echo $data; ?>" name="dataCadastro" id="dataCadastro">
                     <div class="form-inline">
                         <div class="form-group">
                             <select class="form-control" name="nomeCliente" id="nomeCliente" required>
@@ -384,6 +412,7 @@ include_once "modais.php";
             var numeroAF = $("#numeroAf").val();
             var mensagem = $("#mensagem").val();
             var numeroPregao = $("#numeroPregao").val();
+            var dataCadastro = $("#dataCadastro").val();
             $.ajax({
                 url: "../core/save.php",
                 type: "POST",
@@ -396,7 +425,7 @@ include_once "modais.php";
                     $("#salvaPedido").prop("disabled", true);
                 },
                 success: function(data) {
-                       //alert ("resultado data " + data);
+                       alert ("resultado data " + data);
                     if (data == 1) {
                         swal({
                                 title: "OK!",
@@ -430,6 +459,14 @@ include_once "modais.php";
                 }
             });
         }));
+        
+        $("#frmIndex").on('submit', (function(e) {
+            e.preventDefault();
+            var table = $("#tabela").val();
+            
+            location.reload(table);
+        }));
+
 
         $(document).on("click", "#btnPedidoAlterar", function () {
             var codigoControle = $(this).data('codigocontrolealterar');
@@ -596,15 +633,15 @@ include_once "modais.php";
         }); //VERIFICA SE DEMANDA TEM ANEXO ------------------------------------------------------------      
     });
     //BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
-    $("tr #status").each(function(i) {
-        if ($(this).text() == "Em atendimento") {
+    $("tr #statusControle").each(function(i) {
+        if ($(this).text() == "RECEPCIONADO" || $(this).text() == "LIBERADO PARCIALMENTE") {
             //$(status).css("color", "red");
             this.style.background = "blue"; //cor do fundo
             this.style.color = "White"; //cor da fonte
-        } else if ($(this).text() == "Aberto") {
+        } else if ($(this).text() == "ATENDIDO") {
             this.style.color = "White"; //cor da fonte
             this.style.background = "green"; //cor do fundo
-        } else if ($(this).text() == "Fechada") {
+        } else if ($(this).text() == "PENDENTE") {
             this.style.color = "White"; //cor da fonte
             this.style.background = "red"; //cor do fundo
         } else {
