@@ -86,6 +86,7 @@ if($logado != 1){$logado2 = 600;
                         </thead>
                         <tbody>
                             <?php
+<<<<<<< HEAD
                             $totalPedidoPendetes = crud::totalPedidoPendetes();                     
                             $totalPedidoCancelados = crud::totalPedidoCancelados();                     
                             $totalPedidoAtendidos = crud::totalPedidoAtendidos();  
@@ -107,10 +108,18 @@ if($logado != 1){$logado2 = 600;
                         $dados = crud::listarPedidoNaoAtendCanc(); 
                         $totalPedido = '';
                         $qtdePedido = 0;
+=======
+
+                            //$dados = crud::listarPedido();
+                            $dados = crud::listarPedido();
+                            //print_r($dados);
+                            $totalPedido = '';
+>>>>>>> 8491205c5a37a2b81da1cc78c9fc44386febbf57
                             if ($dados->rowCount() > 0) {
                                 while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
 
                                     $dataCriada = $row['dataCadastro'];
+<<<<<<< HEAD
                                     $dataAtual = date('Y-m-d H:i:s');  
                                     
 
@@ -119,6 +128,12 @@ if($logado != 1){$logado2 = 600;
                                     $totalPedido  += $valorPedido;
                                     
                                     $qtdePedido = $qtdePedido + 1;
+=======
+                                    $dataAtual = date('Y-m-d H:i:s');
+                                    $valorPedido = $row['valorPedido'];
+                                    
+                                    $totalPedido  += $valorPedido;
+>>>>>>> 8491205c5a37a2b81da1cc78c9fc44386febbf57
 
                                     $datatime1 = new DateTime($row['dataCadastro']);
                                     $datatime2 = new DateTime($dataAtual);
@@ -152,9 +167,16 @@ if($logado != 1){$logado2 = 600;
                                         data-valorpedidodet="<?php print($row['valorPedido']); ?>" data-statuscontroledet="<?php print($row['nomeStatus']); ?>" 
                                         data-datacadastrodet="<?php print(crud::formataData($row['dataCadastro'])); ?>" data-mensagem="<?php print($row['observacao']); ?>">Detalhes</a></td>
                                     </tr>
+<<<<<<< HEAD
                                 <?php                               
                             }
                             echo "<p class='text-danger'> " . " Valor Total Pedido R$" . number_format($totalPedido,2,',','.') . " - " ."Quantidade Pedidos " . $qtdePedido ."</p>";
+=======
+                                <?php
+                                
+                            }
+                            echo "Valor Total Pedido R$" . number_format($totalPedido,2,',','.');
+>>>>>>> 8491205c5a37a2b81da1cc78c9fc44386febbf57
                         } else {
                             echo "<p class='text-danger'>Sem Pedidos Cadastrados</p>";
                         }
