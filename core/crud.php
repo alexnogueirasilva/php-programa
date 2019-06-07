@@ -62,13 +62,14 @@ class crud
 		}
 	}
 
-	public static function atualizaCliente($id, $nome, $status)	{
+	public static function atualizaCliente($id, $nome, $status,$tipoCliente)	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
-			$stmt = $pdo->prepare("UPDATE cliente SET nomecliente=:nome, status=:status WHERE codCliente=:id ");
+			$stmt = $pdo->prepare("UPDATE cliente SET nomecliente=:nome, status=:status, tipoCliente=:tipoCliente WHERE codCliente=:id ");
 			$stmt->bindparam(":id", $id);
 			$stmt->bindparam(":status", $status);
+			$stmt->bindparam(":tipoCliente", $tipoCliente);
 			$stmt->bindparam(":nome", $nome);
 
 			$stmt->execute();

@@ -60,7 +60,7 @@ $idAndre = $_SESSION['usuarioID'];
         <nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0">
             <div class="navbar-header"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
                 <div class="top-left-part">
-                    <a class="logo" href="index_user.php"><b><img src="../assets/images/logo2.png" alt="Home"></b><span class="hidden-xs"><img src="../assets/images/logo-topo2.png" alt="Home"></span>
+                    <a class="logo" href="inicio.php"><b><img src="../assets/images/logo2.png" alt="Home"></b><span class="hidden-xs"><img src="../assets/images/logo-topo2.png" alt="Home"></span>
                     </a>
                 </div>
                 <ul class="nav navbar-top-links navbar-left">
@@ -103,7 +103,7 @@ $idAndre = $_SESSION['usuarioID'];
                 <ul class="nav" id="side-menu">
 
                     <li class="nav-small-cap">Menu Principal</li>
-                    <li> <a href="index_user.php" class="waves-effect"><i class="icon-speedometer fa-fw"></i> Início</a>
+                    <li> <a href="inicio.php" class="waves-effect"><i class="icon-speedometer fa-fw"></i> Início</a>
                     </li>
                     <li> <a href="#" id="menuMinhasDemandas" class="waves-effect"><i class="icon-star fa-fw"></i> Demandas criadas<span class="fa arrow"></span> </a>
                         <ul class="nav nav-second-level">
@@ -140,7 +140,7 @@ $idAndre = $_SESSION['usuarioID'];
                         <li id="Desenvolvimento"> <a href="#" class="waves-effect"><i class="icon-graph fa-fw"></i> Em Desenvolvimento<span class="fa arrow"></span> </a>
                         <?php if ($nivel == 1) { ?>
                             <ul class="nav nav-second-level">
-                                <li><a href="andre.php">Dashboard</a></li>
+                                <li><a href="inicio.php">Dashboard</a></li>
                                 <li><a href="cadastro.php">Cadastros Usuários</a></li>  
                                 <li><a href="e-mail.php">E-mail</a></li>
                                 <li><a href="valida_cadastro.php">Validação de Cadastros</a></li>
