@@ -46,6 +46,7 @@ $idAndre = $_SESSION['usuarioID'];
 
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/stylenew.css" rel="stylesheet">
     <!--  ATUALIZA A PÁGINA A CADA 5 MINUTOS -->
     <!--  <meta http-equiv="refresh" content="300"> -->
 
