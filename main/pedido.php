@@ -88,25 +88,8 @@ if($logado != 1){$logado2 = 600;
                         </thead>
                         <tbody>
                             <?php
-                            $totalPedidoPendetes = crud::totalPedidoPendetes();                     
-                            $totalPedidoCancelados = crud::totalPedidoCancelados();                     
-                            $totalPedidoAtendidos = crud::totalPedidoAtendidos();  
-
-                          /*  if(isset($_POST['scales'])){
-                            $dados = crud::listarPedido(); 
-                            echo "Todos pedidos! <br/>";
-                            
-                         }else {                            
-                           
-                            echo "Pedido Estaduais! <br/>";
-                            //echo "Todos pedidos!";
-                           // echo "Todos pedidos totalPedidoPendetes! ". $totalPedidoPendetes;   
-                           // echo "Valor Total Pedido R$" . $totalPedidoPendetes;
-                            
-                           // echo "Todos pedidos totalPedidoCancelados! ". $totalPedidoCancelados;                     
-                           // echo "Todos pedidos totalPedidoAtendidos! " . $totalPedidoAtendidos; 
-                        }      */                                                      
-                        $dados = crud::listarPedidoNaoAtendCanc(); 
+                                                                          
+                        $dados = crud::listarPedido(); 
                         $totalPedido = '';
                         $qtdePedido = 0;
                             if ($dados->rowCount() > 0) {
