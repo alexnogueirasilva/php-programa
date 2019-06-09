@@ -55,7 +55,7 @@ $arrayPedidoAberto = $totalPedidoAberto->fetchAll(PDO::FETCH_ASSOC);
 							<div class="panel-heading">
 								<h3 class="panel-title">Atendidos</h3>
 							</div>
-							<div class="panel-body" onclick="window.location.href = 'pedido.php'" style="cursor:pointer" >
+							<div class="panel-body" onclick="window.location.href = 'pedidoAtendido.php'" style="cursor:pointer" >
 								<h3><?php print($arrayPedidoAtendimento[0]['total']); ?></h3>							
 							</div>
 						</div>
@@ -65,7 +65,7 @@ $arrayPedidoAberto = $totalPedidoAberto->fetchAll(PDO::FETCH_ASSOC);
 							<div class="panel-heading">
 								<h3 class="panel-title">Negadas</h3>
 							</div>
-							<div class="panel-body" onclick="window.location.href = 'pedido.php'" style="cursor:pointer">
+							<div class="panel-body" onclick="window.location.href = 'pedidoCancelado.php'" style="cursor:pointer">
 								<h3><?php print($arrayPedidoCancelados[0]['total']); ?></h3>
 								</div>
 						</div>
@@ -75,7 +75,7 @@ $arrayPedidoAberto = $totalPedidoAberto->fetchAll(PDO::FETCH_ASSOC);
 							<div class="panel-heading">
 								<h3 class="panel-title">Pendentes</h3>
 							</div>
-							<div class="panel-body" onclick="window.location.href = 'pedido.php'" style="cursor:pointer">
+							<div class="panel-body" onclick="window.location.href = 'pedidoPendente.php'" style="cursor:pointer">
 								<h3><?php print($arrayPedidoAberto[0]['total']); ?></h3>
 								</div>
 						</div>
