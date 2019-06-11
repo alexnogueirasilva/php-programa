@@ -1,6 +1,6 @@
 <?php
 
-include_once '/../../../core/conex.php';
+include_once '../core/conex.php';
 
 class StatusDAO
 {

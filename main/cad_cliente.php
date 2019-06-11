@@ -1,5 +1,6 @@
 <?php
 require_once 'cabecalho.php';
+require_once '../vendor/autoload.php';
 include_once 'vrf_lgin.php';
 include_once '../core/crud.php';
 
@@ -8,12 +9,12 @@ $queryCliente = "SELECT * FROM cliente ";
 ?>
 <div class="container-fluid">
 	<div class="row bg-title">
-		<div class="col-lg-12">
+		<div class="col-lg-12">                   
 
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>
-
+	
 	<h1>Cadastra Cliente</h1>
 	<h4>Insira os dados do novo cliente</h4>
 	<form id="cdt">
@@ -21,105 +22,105 @@ $queryCliente = "SELECT * FROM cliente ";
 			<div class="col-lg-12">
 				<div class="form-inline">
 					<div class="form-group">
-						<input type="text" hidden id="tipo" value="criarCliente">
-						<div class="input-group">					
-							<input type="text" class="form-control" size="70" name="cdtnomeFantasiaCliente" id="cdtnomeFantasiaCliente" placeholder="Nome fantasia Cliente" required value="">
-							<span class="input-group-addon"><span class="fa fa-user"></span></span>
-						</div>
-						<div class="form-group">
+                         <input type="text" hidden id="tipo" value="criarCliente">				
 						<div class="input-group">
-						<input type="text" class="form-control" size="70" name="cdtnomeCliente" id="cdtnomeCliente" placeholder="Nome Cliente" required value=""> <br/>
+                        <input type="text" class="form-control" size="70" name="cdtnomeCliente" id="cdtnomeCliente" placeholder="Nome Cliente" required value="">
 							<span class="input-group-addon"><span class="fa fa-user"></span></span>
 						</div>
 					</div>
-						<div class="form-group">
+					<div class="form-group">
+						<div class="input-group">
+                        <input type="text" class="form-control" size="37" name="cdtnomeFantasiaCliente" id="cdtnomeFantasiaCliente" placeholder="Nome fantasia Cliente" required value="">
+							<span class="input-group-addon"><span class="fa fa-user"></span></span>
+						</div>
+					</div>
+					<div class="form-group">
 						<div class="input-group">
 							<select class="form-control" name="cdtTipoCliente" id="cdtTipoCliente" required="true">
 								<option value="">Tipo Cliente</option>
 								<option value="E">1 - Estadual</option>
-								<option value="M">2 - Municipal</option>
-								<option value="F">3 - Federal</option>
+								<option value="F">2 - Federal</option>
+								<option value="M">3 - Municipal</option>
 							</select>
-							<span class="input-group-addon"><span class="fa fa-signal"></span></span>
 						</div>
 					</div>
-					
-					
-					</div>
-				</div>
-				<br>
+				</div>		
+				<br><br>
+				<button type="submit" class="btn btn-info btn-lg btn-block" id="btnSalvaSla"><span class="fa fa-save"></span> Salvar</button>
 			</div>
-			<br><br>
-			<button type="submit" class="btn btn-info btn-lg btn-block" id="submit"><span class="fa fa-save"></span> Salvar</button>
+
 		</div>
+	</form>
 
+<!-- LISTAR cliente-->
+	<div class="row">
+		<div class="col-sm-12"> 
+			<div class="white-box">
+				<hr>
 
-</form>
-</div>
+				<div class="col-sm-6"> 
+					<h3>Lista de SLAs</h3>
+				</div>
 
-<!-- LISTAGEM USUÁRIOS -->
-
-<div class="row">
-	<div class="col-sm-12">
-		<div class="white-box">
-			<hr>
-
-			<div class="col-sm-6">
-				<h3>Lista de Clientes</h3>
-			</div>
-
-			<table id="tbl-user" class="table table-striped">
-				<thead>
+				<table id="tabela" class="table table-striped">
+					<thead><tr>
+						<th>Código</th>
+                        <th>Nome</th>
+                        <th>Tipo</th>
+                        <th>Status</th>
+                        <th>Alterar</th>
+						<th>Excluir</th>
+						<th>Desativar</th>
+						<th>Ativar</th>
+					</tr>
+				<tfoot>
 					<tr>
 						<th>Código</th>
 						<th>Nome</th>
-						<th>Status</th>
+						<th>Tipo</th>
+                        <th>Status</th>
+                        <th>Alterar</th>
+						<th>Excluir</th>
+						<th>Desativar</th>
+						<th>Ativar</th>
 					</tr>
-					<tfoot>
-						<tr>
-						<th>Código</th>
-						<th>Nome</th>
-						<th>Status</th>
-</tr>
-</tfoot>
-						
-				</thead>
-				<tbody>
+				</tfoot>
+					</thead>
+					<tbody>
 
-					<?php
-					$dados = crud::dataview($queryCliente);
-
-					if ($dados->rowCount() > 0) {
-						while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
-							?>
-							<tr>
-								<td><?php print($row['codCliente']); ?></td>
-								<td><?php print($row['nomeCliente']); ?></td>
-								<td id="status"><?php print($row['status']); ?></td>
-								<td><a class="btn btn-info waves-effect waves-light" id="btnEdita" data-toggle="modal"  data-target="#modalEditaCliente" data-whatever="@getbootstrap" 
-								data-codigo="<?php print($row['codCliente']); ?>" 
-								data-nome="<?php print($row['nomeCliente']); ?>" 
-								data-statusatual="<?php print($row['status']); ?>">Editar</a></td>
-								  
-								<td><a class="btn btn-danger waves-effect waves-light"  data-target="#modalExluirCliente" data-whatever="@getbootstrap" id="btnExcluiCliente" data-codigo="<?php print($row['codCliente']); ?>" data-nome="<?php print($row['nomeCliente']); ?>" data-statusatual="<?php print($row['status']); ?>">Excluir</a></td>
-								<td><a class="btn btn-danger waves-effect waves-light" data-target="#modalConfirmacaoDesativa" data-whatever="@getbootstrap" id="btnDesativa" data-codigo="<?php print($row['codCliente']); ?>" data-statusatual="<?php print($row['status']); ?>" data-nome="<?php print($row['nomeCliente']); ?>">Desativar</a></td>
-
-								<td><a class="btn btn-info waves-effect waves-light"  data-target="#modalConfirmacaoAtiva" data-whatever="@getbootstrap" id="btnAtiva" data-codigo="<?php print($row['codCliente']); ?>" data-statusatual="<?php print($row['status']); ?>" data-nome="<?php print($row['nomeCliente']); ?>">Ativa</a></td>
-							</tr>
 						<?php
-					}
-				} else {
-					echo "<p class='text-danger'>Sem demandas abertas</p>";
-				}
-				?>
+							$dados = crud::dataview($queryCliente);
 
-				</tbody>
-			</table>
+                            if ($dados->rowCount() > 0) {
+                                while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
+                                    ?>
+                                    <tr>
+                                        <td><?php print($row['codCliente']); ?></td>
+                                        <td><?php print($row['nomeCliente']); ?></td>
+                                        <td><?php print($row['tipoCliente']); ?></td>
+                                        <td id="status"><?php print($row['status']); ?></td>
+                                        <td><a class="btn btn-info waves-effect waves-light" id="btnEdita" data-toggle="modal" data-target="#modalEditaCliente" data-whatever="@getbootstrap" data-codigo="<?php print($row['codCliente']); ?>" data-nome="<?php print($row['nomeCliente']); ?>" data-statusatual="<?php print($row['status']); ?>" data-tipoatual="<?php print($row['tipoCliente']); ?>">Editar</a></td>
+        
+                                        <td><a class="btn btn-danger waves-effect waves-light" data-target="#modalExluirCliente" data-whatever="@getbootstrap" id="btnExcluiCliente" data-codigo="<?php print($row['codCliente']); ?>" data-nome="<?php print($row['nomeCliente']); ?>" data-statusatual="<?php print($row['status']); ?>">Excluir</a></td>
+                                        <td><a class="btn btn-danger waves-effect waves-light" data-target="#modalConfirmacaoDesativa" data-whatever="@getbootstrap" id="btnDesativa" data-codigo="<?php print($row['codCliente']); ?>" data-statusatual="<?php print($row['status']); ?>" data-nome="<?php print($row['nomeCliente']); ?>">Desativar</a></td>
+        
+                                        <td><a class="btn btn-info waves-effect waves-light" data-target="#modalConfirmacaoAtiva" data-whatever="@getbootstrap" id="btnAtiva" data-codigo="<?php print($row['codCliente']); ?>" data-statusatual="<?php print($row['status']); ?>" data-nome="<?php print($row['nomeCliente']); ?>">Ativa</a></td>
+                                    </tr>
+                                <?php
+                            }
+                        } else {
+                            echo "<p class='text-danger'>Sem informacoes cadastradas</p>";
+                        }
+						?>
+
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
+<!-- LISTAR cliente-->
 </div>
-
-
+</div>
 
 <!-- MODAL desativar cliente-->
 <div class="modal fade" id="modalConfirmacaoDesativa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
@@ -148,6 +149,7 @@ $queryCliente = "SELECT * FROM cliente ";
 	</div>
 </div>
 <!-- MODAL desativar cliente-->
+
 
 <!-- MODAL ativar cliete -->
 <div class="modal fade" id="modalConfirmacaoAtiva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
@@ -187,8 +189,8 @@ $queryCliente = "SELECT * FROM cliente ";
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					
-				<input type="hidden" name="excIdCliente" id="excIdCliente">
+
+					<input type="hidden" name="excIdCliente" id="excIdCliente">
 					<input type="hidden" name="excStatusCliente" id="excStatusCliente">
 
 					<div class="col-md-12">
@@ -220,7 +222,6 @@ $queryCliente = "SELECT * FROM cliente ";
 
 					<div class="col-md-12">
 						<div id="contextoModal">
-
 							<form id="edtcliente">
 								<input type="text" hidden name="tipo" value="editaCliente">
 								<input type="hidden" name="idcliente" id="idcliente">
@@ -232,8 +233,8 @@ $queryCliente = "SELECT * FROM cliente ";
 												<input type="text" class="form-control" size="50" name="edtnome" id="edtnome">
 												<span class="input-group-addon"><span class="fa fa-user"></span></span>
 											</div>
-										</div>
-										<div class="form-group">
+                                        </div>
+                                        <div class="form-group">
 											<div class="input-group">
 												<select class="form-control" name="edtstatus" id="edtstatus" required="true">
 													<option value="">Status</option>
@@ -243,8 +244,20 @@ $queryCliente = "SELECT * FROM cliente ";
 												<span class="input-group-addon"><span class="fa fa-signal"></span></span>
 											</div>
 										</div>
-										<button type="submit" class="btn btn-info btn-md btn-block" id="submit"><span class="fa fa-save"></span> Salvar</button>
+										<div class="form-group">
+											<div class="input-group">
+												<select class="form-control" name="edttipo" id="edttipo" required="true">
+													<option value="">Tipo Cliente</option>
+													<option value="E">1 - Estadual</option>
+													<option value="F">2 - Federal</option>
+													<option value="M">3 - Municipal</option>
+												</select>
+												<span class="input-group-addon"><span class="fa fa-signal"></span></span>
+											</div>
+										</div>
 										
+										<button type="submit" class="btn btn-info btn-md btn-block" id="submit"><span class="fa fa-save"></span> Salvar</button>
+
 									</div>
 									<br><br>
 								</div>
@@ -261,10 +274,11 @@ $queryCliente = "SELECT * FROM cliente ";
 </div>
 <!-- MODAL editar cliente-->
 
+
 <?php
+
 require_once "rodape.php";
 ?>
-
 <script type="text/javascript">
 	$(document).ready(function() {
 		permissaoNivel();
@@ -367,10 +381,12 @@ require_once "rodape.php";
 			var id = $(this).data('codigo');
 			var nome = $(this).data('nome');
 			var status = $(this).data('statusatual');
+			var tipoCliente = $(this).data('tipoatual');
 
 			$('#idcliente').val(id);
 			$('#edtnome').val(nome);
 			$('#edtstatus').val(status);			
+			$('#edttipo').val(tipoCliente);			
 			$('#modalEditaCliente').modal('show');
 		});
 
@@ -553,17 +569,7 @@ require_once "rodape.php";
 				return false;//Evita que a página seja atualizada
 		});
 		
-		//BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
-		$("tr #status").each(function(i) {
-			if ($(this).text() == "D") {
-				this.style.color = "white";
-				this.style.background = "red";
-			} else {
-				this.style.color = "white";
-				this.style.background = "green";
-			}
-		});
-
+		
 		$("#tbl-user").DataTable({
 			//TRADUÇÃO DATATABLE
 			"oLanguage": {
@@ -585,4 +591,15 @@ require_once "rodape.php";
 			}
 		});
 	});
+    //BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
+		$("tr #status").each(function(i) {
+			if ($(this).text() == "D") {
+				this.style.color = "white";
+				this.style.background = "red";
+			} else {
+				this.style.color = "white";
+				this.style.background = "green";
+			}
+		});
+
 </script>

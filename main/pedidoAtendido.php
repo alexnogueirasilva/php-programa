@@ -5,9 +5,11 @@
 include_once 'vrf_lgin.php';
 require_once 'cabecalho.php';
 include_once '../core/crud.php';
+include_once 'Models/DAO/StatusDAO.php';
+include_once './Models/DAO/PedidoDAO.php';
 
 date_default_timezone_set('America/Bahia');
-$data = date('Y-m-d H:i:s');
+
 //DEFINIÇÃO DO NOME DO ANEXO
 $nomeAnexo = date('Y-m-d-H:i');
 $novoNomeAnexo = md5($nomeAnexo);
@@ -16,8 +18,10 @@ $idLogado = $_SESSION['usuarioID'];
 $logado         = $_SESSION['nomeUsuario'];
 $emailLogado    = $_SESSION['emailUsuario'];
 $instituicao    = $_SESSION['instituicaoUsuario'];
+
 $queryDepart    = "SELECT * FROM departamentos";
 $queryCliente   = "SELECT * FROM cliente";
+$queryStatus   = "SELECT * FROM status";
 /*
 echo " Andre  $andre<br/> ";
 
@@ -28,6 +32,7 @@ if($logado != 1){$logado2 = 600;
     echo "<meta HTTP-EQUIV='refresh' CONTENT='$logado2;'>";//atualizacao automatica
 }
 */
+
 ?>
 
 <div class="container-fluid">
@@ -38,28 +43,27 @@ if($logado != 1){$logado2 = 600;
         <!-- /.col-lg-12 -->
     </div>
     <div class="container">
-        <div id="andre"></div>
+    <div id="andre"></div>
     </div>
     <!-- row -->
     <div class="row">
         <div class="col-md-12">
             <button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalCadastrarPedido" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-plus"></i></span>Cadastrar Pedido</button>
-            
         </div>
-<form id="frmIndex" method="post">
+        <form id="frmIndex" method="post">
         <div class="row">
             <div class="col-sm-12">
                 <div id="dado"></div>
                 <div class="white-box">
                     <div class="col-sm-6">
-                        <h3>Pedidos Cadastrados</h3>
+                        <h3>Pedidos Atendidos</h3>
                     </div>
-                                                   
+                    
                     <table id="tabela" class="table table-striped">
                         <thead>
                             <tr>
                                 <th>Cliente</th>
-                                <th>Tipo</th>
+                                <th>Tipo</th>                               
                                 <th>Licitação</th>
                                 <th>Pedido</th>
                                 <th>Valor</th>
@@ -70,11 +74,12 @@ if($logado != 1){$logado2 = 600;
                                 <th>Alterar</th>
                                 <th>Detalhes</th>
                             </tr>
-                            <tfoot>
+                        <tfoot>
                             <tr>
                                 <th>Cliente</th>
                                 <th>Tipo</th>
                                 <th>Licitação</th>
+                                
                                 <th>Pedido</th>
                                 <th>Valor</th>
                                 <th>Data</th>
@@ -84,43 +89,22 @@ if($logado != 1){$logado2 = 600;
                                 <th>Alterar</th>
                                 <th>Detalhes</th>
                             </tr>
-                            </tfoot>
+                        </tfoot>
                         </thead>
                         <tbody>
                             <?php
-                            $totalPedidoPendetes = crud::totalPedidoPendetes();                     
-                            $totalPedidoCancelados = crud::totalPedidoCancelados();                     
-                            $totalPedidoAtendidos = crud::totalPedidoAtendidos();  
-
-                          /*  if(isset($_POST['scales'])){
-                            $dados = crud::listarPedido(); 
-                            echo "Todos pedidos! <br/>";
-                            
-                         }else {                            
-                           
-                            echo "Pedido Estaduais! <br/>";
-                            //echo "Todos pedidos!";
-                           // echo "Todos pedidos totalPedidoPendetes! ". $totalPedidoPendetes;   
-                           // echo "Valor Total Pedido R$" . $totalPedidoPendetes;
-                            
-                           // echo "Todos pedidos totalPedidoCancelados! ". $totalPedidoCancelados;                     
-                           // echo "Todos pedidos totalPedidoAtendidos! " . $totalPedidoAtendidos; 
-                        }      */                                                      
-                        $dados = crud::listarPedidoNaoAtendCanc(); 
-                        $totalPedido = '';
-                        $qtdePedido = 0;
+                            $dados = PedidoDAO::listarPedidoAtendidos();
+                            $totalPedido = '';
+                            $teste = 0;
                             if ($dados->rowCount() > 0) {
                                 while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
+                                    $valorPedido = $row['valorPedido'];
+
+                                    $totalPedido  += $valorPedido;
+                                    $teste = $teste + 1;
 
                                     $dataCriada = $row['dataCadastro'];
-                                    $dataAtual = date('Y-m-d H:i:s');  
-                                    
-
-                                    $valorPedido = $row['valorPedido'];
-                                    
-                                    $totalPedido  += $valorPedido;
-                                    
-                                    $qtdePedido = $qtdePedido + 1;
+                                    $dataAtual = date('Y-m-d H:i:s');
 
                                     $datatime1 = new DateTime($row['dataCadastro']);
                                     $datatime2 = new DateTime($dataAtual);
@@ -135,6 +119,7 @@ if($logado != 1){$logado2 = 600;
 
                                     $horas = (int)($intervalo / 60);
                                     $minutos = $intervalo % 60;
+
                                     ?>
                                     <tr>
                                         <td style="text-transform: uppercase;">
@@ -142,31 +127,29 @@ if($logado != 1){$logado2 = 600;
                                         <td><?php print($row['tipoCliente']); ?></td>
                                         <td><?php print($row['numeroPregao']); ?></td>
                                         <td><?php print($row['numeroAf']); ?></td>
-                                        <td> R$<?php print(number_format($row['valorPedido'],2,',','.')); ?></td>
+                                        <td> R$<?php print($row['valorPedido']); ?></td>
                                         <td><?php print(crud::formataData($row['dataCadastro'])); ?></td>
                                         <td id="statusControle"><?php print($row['nomeStatus']); ?></td>
-                                        <td><?php print($horas . ' Hs' . ' e ' . $minutos . " M"); ?></td>
+                                        <td><?php print($horas .   'hs ' . 'e ' .  $minutos . 'm'); ?></td>
 
                                         <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']); ?>">Anexo</a></td>
-                                        <td><a class="btn btn-primary waves-effect waves-light" type="button" id="btnPedidoAlterar" data-toggle="modal" data-target="#modalPedidoAlterar" data-whatever="@getbootstrap" target="_blank" data-statusalterar="<?php print($row['nomeStatus']); ?>" data-codigocontrolealterar="<?php print($row['codControle']); ?>">Alterar</a></td>
-                                        <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" data-toggle="modal" data-target="#modalDetPedido" data-whatever="@getbootstrap" 
-                                        data-codigocontroledet="<?php print($row['codControle']); ?>" data-nomeclientedet="<?php print($row['nomeCliente']); ?>"  data-tipoclientedet="<?php print($row['tipoCliente']); ?>"
-                                        data-numeropregaodet="<?php print($row['numeroPregao']); ?>" data-numeropedidodet="<?php print($row['numeroAf']); ?>" 
-                                        data-valorpedidodet="<?php print($row['valorPedido']); ?>" data-statuscontroledet="<?php print($row['nomeStatus']); ?>" 
-                                        data-datacadastrodet="<?php print(crud::formataData($row['dataCadastro'])); ?>" data-mensagem="<?php print($row['observacao']); ?>">Detalhes</a></td>
+                                        <td><a class="btn btn-primary waves-effect waves-light" type="button" id="btnPedidoAlterar" data-toggle="modal" data-target="#modalPedidoAlterar" data-whatever="@getbootstrap" target="_blank" data-statusatual="<?php print($row['nomeStatus']); ?>" data-tipoclientealterar="<?php print($row['tipoCliente']); ?>" data-codigocontrolealterar="<?php print($row['codControle']); ?>"><i>Alterar</a></td>
+                                        <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" data-toggle="modal" data-target="#modalDetPedido" data-whatever="@getbootstrap" data-codigocontroledet="<?php print($row['codControle']); ?>" data-nomeclientedet="<?php print($row['nomeCliente']); ?>" data-tipoclientedet="<?php print($row['tipoCliente']); ?>" data-numeropregaodet="<?php print($row['numeroPregao']); ?>" data-numeropedidodet="<?php print($row['numeroAf']); ?>" data-valorpedidodet="<?php print($row['valorPedido']); ?>" data-statuscontroledet="<?php print($row['nomeStatus']); ?>" data-datacadastrodet="<?php print(crud::formataData($row['dataCadastro'])); ?>" data-mensagem="<?php print($row['observacao']); ?>">Detalhes</a></td>
                                     </tr>
-                                <?php                               
+                                <?php
                             }
-                            echo "<p class='text-danger'> " . " Valor Total Pedido R$" . number_format($totalPedido,2,',','.') . " - " ."Quantidade Pedidos " . $qtdePedido ."</p>";
+                            echo "Qtde pedidos nao atendidos:  " . $teste . " - ";
+                            echo "Valor Total Pedido R$" . number_format($totalPedido, 2, ',', '.');
                         } else {
                             echo "<p class='text-danger'>Sem Pedidos Cadastrados</p>";
                         }
                         ?>
                         </tbody>
                     </table>
+               
                 </div>
             </div>
-
+         
         </div>
         </form>
     </div>
@@ -185,7 +168,6 @@ if($logado != 1){$logado2 = 600;
                 <form id="frmCadastroPedido" action="" method="post" enctype="multipart/form-data">
                     <input type="hidden" value="CadastroPedido" name="tipo" id="tipo">
                     <input type="hidden" value="<?php echo $nomeAnexo; ?>" name="dataAtual" id="dataAtual">
-                    <input type="hidden" value="<?php echo $data; ?>" name="dataCadastro" id="dataCadastro">
                     <div class="form-inline">
                         <div class="form-group">
                             <select class="form-control" name="nomeCliente" id="nomeCliente" required>
@@ -317,6 +299,7 @@ if($logado != 1){$logado2 = 600;
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <td><a class="btn btn-primary waves-effect waves-light" type="button" id="btnPedidoAlterar2" data-toggle="modal" data-target="#modalPedidoAlterar" data-whatever="@getbootstrap" value="<?php echo $idControle; ?>" target="_blank" data-codigocontrolealterar="<?php print($row['codControle']); ?>">Alterar</a></td>
             </div>
         </div>
     </div>
@@ -360,8 +343,8 @@ if($logado != 1){$logado2 = 600;
             <div class="modal-body">
                 <form id="frmAlterarPedido" action="" method="post" enctype="multipart/form-data">
                     <input type="hidden" value="AlterarPedido" name="tipo" id="tipo">
-                  <input type="hidden" id="codigoControleAlterar" name="codigoControleAlterar"> 
-                   <!--   <input type="text" id="codigoControleAlterar" name="codigoControleAlterar"size="33" style="text-transform: uppercase;" maxlength="40" class="form-control"  placeholder="Valor do Pedido"> -->
+                    <input type="hidden" id="codigoControleAlterar" name="codigoControleAlterar">
+                    <!--   <input type="text" id="codigoControleAlterar" name="codigoControleAlterar"size="33" style="text-transform: uppercase;" maxlength="40" class="form-control"  placeholder="Valor do Pedido"> -->
                     <div class="form-group">
                         <select class="form-control" name="statusPedido" id="statusPedido" required>
                             <option value="" selected disabled>Selecione o Status</option>
@@ -408,7 +391,7 @@ include_once "modais.php";
     $(document).ready(function(e) {
 
         permissaoNivel();
-
+      
         $("#frmCadastroPedido").on('submit', (function(e) {
             e.preventDefault();
             var table = $("#tabela").val();
@@ -418,7 +401,6 @@ include_once "modais.php";
             var numeroAF = $("#numeroAf").val();
             var mensagem = $("#mensagem").val();
             var numeroPregao = $("#numeroPregao").val();
-            var dataCadastro = $("#dataCadastro").val();
             $.ajax({
                 url: "../core/save.php",
                 type: "POST",
@@ -431,7 +413,7 @@ include_once "modais.php";
                     $("#salvaPedido").prop("disabled", true);
                 },
                 success: function(data) {
-                       alert ("resultado data " + data);
+                    //   alert ("resultado data " + data);
                     if (data == 1) {
                         swal({
                                 title: "OK!",
@@ -465,39 +447,37 @@ include_once "modais.php";
                 }
             });
         }));
-        
-        $("#frmIndex").on('submit', (function(e) {
-            e.preventDefault();
-            var table = $("#tabela").val();
-            
-            location.reload(table);
-        }));
 
-
-        $(document).on("click", "#btnPedidoAlterar", function () {
+        $(document).on("click", "#btnPedidoAlterar", function() {
             var codigoControle = $(this).data('codigocontrolealterar');
-            var statusSlterar = $(this).data('statusalterar');
-           // var statusAtual = $(this).data('statusatual');
-          //  var emailSolicitante = $(this).data('emailsolicitante');
-
-            $('#codigoControleAlterar').val(codigoControle);   
-            $('#statusPedido').html(codigoControle);   
-        //    $('#statusAtual').val(statusAtual);
-    //        $('#emailSolicitante').val(emailSolicitante);
-          //  $('#contextoModal').empty().append("<h2>Você colocará a demanda EM ATENDIMENTO?</h2>");
+            // var statusAtual = $(this).data('statusatual');
+            //  var emailSolicitante = $(this).data('emailsolicitante');
+            var status = $(this).data('statusatual');
+            $('#statusPedido').html(status);
+            $('#codigoControleAlterar').val(codigoControle);
+            //    $('#statusAtual').val(statusAtual);
+            //        $('#emailSolicitante').val(emailSolicitante);
+            //  $('#contextoModal').empty().append("<h2>Você colocará a demanda EM ATENDIMENTO?</h2>");
 
         }); //SETA O CÓDIGO NO MODAL PARA ATUALIZAR O STATUS ------------------------------------------
+
 
         $("#frmAlterarPedido").on('submit', (function(e) {
             e.preventDefault();
             var table = $("#tabela").val();
             var codigoControle = $("#codigoControleAlterar").val();
+            var codigoControle = $("#codigoControleAlterar").val();
+
+            if (codigoControle == "") {
+                codigoControle = $("#codigoControleAlterar").val();
+            }
+            alert("codigo: " + codigoControle + " status do pedido " + statusPedido + " mensagem" + mensagemAlterar);
             var mensagemAlterar = $("#mensagemAlterar").val();
-           // var codigoControle = $(this).data('codigocontrolealterar');
+            // var codigoControle = $(this).data('codigocontrolealterar');
             var statusPedido = $("#statusPedido").val();
             //   var mensagem = $("#mensagem").val();
-          //  $('#codigoControleAlterar').html(codigoControle);
-           //alert("codigo: " + codigoControle + " status do pedido " + statusPedido+" mensagem" + mensagemAlterar);
+            //  $('#codigoControleAlterar').html(codigoControle);
+            //alert("codigo: " + codigoControle + " status do pedido " + statusPedido+" mensagem" + mensagemAlterar);
             $.ajax({
                 url: "../core/save.php",
                 type: "POST",
@@ -510,7 +490,7 @@ include_once "modais.php";
                     $("#alteraPedido").prop("disabled", true);
                 },
                 success: function(data) {
-                   // alert ("resultado data " + data);
+                    //    alert ("resultado data " + data);
                     if (data == 1) {
                         swal({
                                 title: "OK!",
@@ -521,7 +501,7 @@ include_once "modais.php";
                             },
                             function(isConfirm) {
                                 if (isConfirm) {
-                                 $('#modalPedidoAlterar').modal('hide');
+                                    $('#modalPedidoAlterar').modal('hide');
                                     location.reload(table);
                                     //window.location = "cadastro.php";
                                 }
@@ -580,7 +560,6 @@ include_once "modais.php";
             });
         });
 
-
         //Click no botao detalhas do pedido
         $(document).on("click", "#btnPedidoDetalhes", function() {
             //pegando valor das colunas da tabela e atribuindo as variaveis
@@ -634,7 +613,7 @@ include_once "modais.php";
                     }
                 }
             });
-        });       
+        });
 
         //VERIFICA SE DEMANDA TEM ANEXO --------------------------------------------------------------
         $(document).on("click", "#btnAnexo", function(e) {
@@ -647,6 +626,30 @@ include_once "modais.php";
 
         }); //VERIFICA SE DEMANDA TEM ANEXO ------------------------------------------------------------      
     });
+
+    //BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
+    /*$("tr #statusControle").each(function(i) {
+        //    var corFundo = $("#statusControle").data('cortexto1'); // var idControle = $(this).data('codigocontroledet');
+        var corFundo = "";
+        var corTexto = "";
+        var statusAtual1 = "";
+        corTexto = "<?php echo $corTexto; ?>";
+        corFundo = "<?php echo $corFundo; ?>";
+        statusAtual1 = "<?php echo $statusAtual1; ?>";
+        // alert ( " statusAtual1 = " + statusAtual1 + " corFundo = " + corFundo + " status = " + corTexto);
+
+        if ($(this).text() == "ATENDIDO") {
+            //$(status).css("color", "red");
+            this.style.background = "blue"; //cor do fundo
+            this.style.color = "White"; //cor da fonte
+        } else if ($(this).text() == "Pendente") {
+            this.style.color = "White"; //cor da fonte
+            this.style.background = "red"; //cor do fundo
+        }
+        escape {
+            this.style.color = "";
+        }
+    }*/
     //BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
     $("tr #statusControle").each(function(i) {
         if ($(this).text() == "RECEPCIONADO" || $(this).text() == "LIBERADO PARCIALMENTE") {
@@ -667,4 +670,5 @@ include_once "modais.php";
             this.style.color = "";
         }
     });
+    
 </script>

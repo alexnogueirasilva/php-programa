@@ -123,7 +123,7 @@
                     //alert(result)                 
                 if(result==1){  
                     $("#errolog").fadeOut();                    
-                            location.href='main/index_user.php'   //Redireciona                          
+                            location.href='main/Home.php'   //Redireciona                          
                         }else{
                             
                             $('#errolog').fadeIn();     //Informa o erro

@@ -22,8 +22,9 @@ switch ($value) {
 		$id = $_POST['idcliente'];
 		$nome = $_POST['edtnome'];
 		$status = $_POST['edtstatus'];
+		$tipoCliente = $_POST['edttipo'];
 
-		$edt = crud::atualizaCliente($id, $nome, $status);
+		$edt = crud::atualizaCliente($id, $nome, $status,$tipoCliente);
 		if ($edt == true) {
 			echo 1;
 		} else {
