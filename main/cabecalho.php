@@ -1,4 +1,6 @@
 <?php
+
+date_default_timezone_set('America/Bahia');
 include_once 'vrf_lgin.php';
 $logado = $_SESSION['nomeUsuario'];
 $instituicao = $_SESSION['instituicaoUsuario'];
