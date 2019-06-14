@@ -473,11 +473,8 @@
                 var table = $("#tabela").val();
                 var codigoControle = $("#codigoControleAlterar").val();
                 var mensagemAlterar = $("#mensagemAlterar").val();
-            // var codigoControle = $(this).data('codigocontrolealterar');
+            
                 var statusPedido = $("#statusPedido").val();
-                //   var mensagem = $("#mensagem").val();
-            //  $('#codigoControleAlterar').html(codigoControle);
-            //alert("codigo: " + codigoControle + " status do pedido " + statusPedido+" mensagem" + mensagemAlterar);
                 $.ajax({
                     url: "../core/save.php",
                     type: "POST",

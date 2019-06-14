@@ -12,6 +12,7 @@ date_default_timezone_set('America/Bahia');
 
 //DEFINIÇÃO DO NOME DO ANEXO
 $nomeAnexo = date('Y-m-d-H:i');
+$dataMsg = date('d/m/Y - H:i');
 $novoNomeAnexo = md5($nomeAnexo);
 
 $idLogado = $_SESSION['usuarioID'];
@@ -133,7 +134,7 @@ if($logado != 1){$logado2 = 600;
                                         <td><?php print($horas .   'hs ' . 'e ' .  $minutos . 'm'); ?></td>
 
                                         <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']); ?>">Anexo</a></td>
-                                        <td><a class="btn btn-primary waves-effect waves-light" type="button" id="btnPedidoAlterar" data-toggle="modal" data-target="#modalPedidoAlterar" data-whatever="@getbootstrap" target="_blank" data-statusatual="<?php print($row['nomeStatus']); ?>" data-tipoclientealterar="<?php print($row['tipoCliente']); ?>" data-codigocontrolealterar="<?php print($row['codControle']); ?>"><i>Alterar</a></td>
+                                        <td><a class="btn btn-primary waves-effect waves-light" type="button" id="btnPedidoAlterar" data-toggle="modal" data-target="#modalPedidoAlterar" data-whatever="@getbootstrap" target="_blank" data-statuspedidoalterar="<?php print($row['codStatus']); ?>" data-mensagemalterar="<?php print($row['observacao']); ?>" data-tipoclientealterar="<?php print($row['tipoCliente']); ?>" data-codigocontrolealterar="<?php print($row['codControle']); ?>"><i>Alterar</a></td>
                                         <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" data-toggle="modal" data-target="#modalDetPedido" data-whatever="@getbootstrap" data-codigocontroledet="<?php print($row['codControle']); ?>" data-nomeclientedet="<?php print($row['nomeCliente']); ?>" data-tipoclientedet="<?php print($row['tipoCliente']); ?>" data-numeropregaodet="<?php print($row['numeroPregao']); ?>" data-numeropedidodet="<?php print($row['numeroAf']); ?>" data-valorpedidodet="<?php print($row['valorPedido']); ?>" data-statuscontroledet="<?php print($row['nomeStatus']); ?>" data-datacadastrodet="<?php print(crud::formataData($row['dataCadastro'])); ?>" data-mensagem="<?php print($row['observacao']); ?>">Detalhes</a></td>
                                     </tr>
                                 <?php
@@ -288,12 +289,26 @@ if($logado != 1){$logado2 = 600;
                         </table>
                     </div>
                     <div class="col-md-12">
-                        <h4><strong>Comentários:</strong></h4>
-                        <table class="table table-striped">
-                            <tbody id="comentariosDemand">
-                            </tbody>
-                        </table>
-                    </div>
+                            <h4><strong>Comentários:</strong></h4>
+                            <table class="table table-striped">
+                                <tbody id="comentariosPedido" >
+                                
+                                
+                                </tbody>
+                            </table>
+                        </div>   
+                         
+                    <div class="col-md-12">                       
+                            <form id="frmAddMensagem">
+                                <input type="hidden" value="<?php echo $idLogado; ?>" name="idLogado" id="idLogado">
+                                <input type="hidden" value="<?php echo $dataMsg; ?>" name="datahora" id="datahora">                          
+                                <div class="form-group">
+                                    <label for="message-text" class="control-label">Adicionar Comentário</label>
+                                    <textarea name="mensagemComentario" class="form-control" rows="2" id="mensagemComentario" required></textarea>          
+                                </div>
+                                <button type="submit" id="addMensagem" class="btn btn-primary" >Enviar</button>
+                            </form>
+                        </div>                 
 
                 </div>
             </div>
@@ -346,7 +361,7 @@ if($logado != 1){$logado2 = 600;
                     <input type="hidden" id="codigoControleAlterar" name="codigoControleAlterar">
                     <!--   <input type="text" id="codigoControleAlterar" name="codigoControleAlterar"size="33" style="text-transform: uppercase;" maxlength="40" class="form-control"  placeholder="Valor do Pedido"> -->
                     <div class="form-group">
-                        <select class="form-control" name="statusPedido" id="statusPedido" required>
+                        <select class="form-control" name="statusPedidoAlterar" id="statusPedidoAlterar" required>
                             <option value="" selected disabled>Selecione o Status</option>
                             <?php
                             $selectStatus = crud::listarStatus();
@@ -366,11 +381,13 @@ if($logado != 1){$logado2 = 600;
                         <label for="message-text" class="control-label">Observação:</label>
                         <textarea name="mensagemAlterar" class="form-control" rows="3" id="mensagemAlterar"></textarea>
                     </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                         <button type="submit" id="alteraPedido" class="btn btn-primary">Enviar</button>
                     </div>
                 </form>
+              
             </div>
 
         </div>
@@ -448,17 +465,62 @@ include_once "modais.php";
             });
         }));
 
-        $(document).on("click", "#btnPedidoAlterar", function() {
-            var codigoControle = $(this).data('codigocontrolealterar');
-            // var statusAtual = $(this).data('statusatual');
-            //  var emailSolicitante = $(this).data('emailsolicitante');
-            var status = $(this).data('statusatual');
-            $('#statusPedido').html(status);
-            $('#codigoControleAlterar').val(codigoControle);
-            //    $('#statusAtual').val(statusAtual);
-            //        $('#emailSolicitante').val(emailSolicitante);
-            //  $('#contextoModal').empty().append("<h2>Você colocará a demanda EM ATENDIMENTO?</h2>");
+    //ADICIONA MENSAGEM À DEMANDA -----------------------------------------------------------
+        $('#frmAddMensagem').submit(function(){
+            var tipo = "adicionaMensagemPedido";
+            var idLogado = $("#idLogado").val();
+            var datahora = $("#datahora").val();
+            var codPedido = $('#codigoDetalhes').text();
+            var mensagem = $("#mensagemComentario").val();
+           
+            $.ajax({
+                url: '../core/save.php',
+                type: "POST",
+                data: {tipo : tipo, idLogado : idLogado, datahora:datahora, codPedido : codPedido, mensagem : mensagem},
+                success: function(result) {
+                    //alert(result);
+                    if(result==1){                        
+                        alert("Mensagem adicionada com Sucesso!");
+                            atualizaMsg();
+                            $("#mensagemComentario").val('');
+                            //location.reload();
+                        }else{                           
+                            alert("Erro ao salvar");                            
+                        }
 
+                    }
+                });
+            return false;//Evita que a página seja atualizada
+        });//ADICIONA MENSAGEM À DEMANDA -----------------------------------------------------------
+      
+        //FUNÇÃO QUE ATUALIZA AS MENSAGENS NOS DETALHES APÓS SUBMETE-LA -------------------------
+        function atualizaMsg(){
+            var idControle = $("#codigoDetalhes").text();    
+            var tipo = 'busca_mensagensPedido';
+            //MONTA OS COMENTÁRIOS NO MODAL
+            $.ajax({
+                url: 'busca_mensagens.php',
+                type: "POST",
+                data: {tipo: tipo, idControle : idControle},
+                success: function(data) {                   
+                    if (data) {                            
+                        $('#comentariosPedido').html(data);
+                    } 
+                }
+            });
+            }//FUNÇÃO QUE ATUALIZA AS MENSAGENS NOS DETALHES APÓS SUBMETE-LA -------------------------
+ 
+
+       
+       
+        $(document).on("click", "#btnPedidoAlterar", function() {
+            var codigoControle = $(this).data('codigocontrolealterar');            
+            var status = $(this).data('statuspedidoalterar');
+            var mensagemAlterar = $(this).data('mensagemalterar');
+            $('#statusPedidoAlterar').val(status);
+            $('#codigoControleAlterar').val(codigoControle);
+            $('#mensagemAlterar').val(mensagemAlterar);
+           
         }); //SETA O CÓDIGO NO MODAL PARA ATUALIZAR O STATUS ------------------------------------------
 
 
@@ -600,17 +662,16 @@ include_once "modais.php";
             $('#mensagemDetatalhes').html(mensagem);
 
             //MONTA OS COMENTÁRIOS NO MODAL
-            $.ajax({
+            var tipo = 'busca_mensagensPedido';
+             $.ajax({
                 url: 'busca_mensagens.php',
-                type: "POST",
-                tipo: "busca_mensagens",
-                data: {
-                    id: id
-                },
-                success: function(data) {
-                    if (data) {
-                        $('#comentariosDemand').html(data);
-                    }
+                type: "POST",                  
+                data: {idControle : idControle , tipo : tipo},
+                success: function(data) { 
+                  //  alert(idControle);  
+                    if (idControle) {                            
+                        $('#comentariosPedido').html(data);
+                    } 
                 }
             });
         });

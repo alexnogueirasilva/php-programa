@@ -135,8 +135,6 @@ switch ($value) {
 		$codDemanda = $_POST['codDemanda'];
 		$mensagem = $_POST['mensagem'];
 
-
-
 		$cdt = crud::addMensagem($idLogado, $dataHora, $codDemanda, $mensagem);
 		if ($cdt == true) {
 			$mudaStatus = crud::dataview("UPDATE demanda SET status='Em atendimento' WHERE id=" . $codDemanda);
@@ -516,6 +514,24 @@ switch ($value) {
 			echo 0;
 		}
 		break;
+
+		case 'adicionaMensagemPedido':
+
+		$idLogado = $_POST['idLogado'];
+		$dataHora = $_POST['datahora'];
+		$codDemanda = $_POST['codPedido'];
+		$mensagem = $_POST['mensagem'];
+
+		$cdt = crud::addMensagem($idLogado, $dataHora, $codDemanda, $mensagem);
+		if ($cdt == true) {
+				echo 1;
+		} else {
+			echo 0;
+		}
+
+		break;
+
+
 		//controlepedido
 
 		//REPRESENTANTE
