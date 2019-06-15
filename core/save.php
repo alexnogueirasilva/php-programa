@@ -493,9 +493,9 @@ switch ($value) {
 
 	case 'AlterarPedido':
 
-		$statusPedido  = $_POST['statusPedido'];
+		$statusPedido  = $_POST['statusPedidoAlterar'];
 		$codControle         = $_POST['codigoControleAlterar'];
-		$mensagemAlterar         = $_POST['mensagemAlterar'];
+		$mensagemAlterar         = $_POST['mensagemPedidoAlterar'];
 		
 		$cad = crud::AlterarPedido($codControle, $statusPedido,$mensagemAlterar);
 		if ($cad == true) {
@@ -506,7 +506,8 @@ switch ($value) {
 		break;
 
 	case 'deletePedido':
-		$id         = $_POST['id'];
+
+		$id         = $_POST['idPedido'];
 		$cad = crud::deletePedido($id);
 		if ($cad == true) {
 			echo 1;

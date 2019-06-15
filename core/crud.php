@@ -688,7 +688,7 @@ public static function listarPedidoNaoAtendCanc(){
 	$sql = "SELECT con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
 	FROM controlePedido as con 
 	inner join cliente as cli on cli.codCliente = con.codCliente 
-	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE sta.nome not in ('ATENDIDO','CANCELADO')
+	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE sta.nome in ('NEGADO','CANCELADO')
 	ORDER BY con.dataCadastro desc"; 
 
 	$pdo = Database::connect();
@@ -792,11 +792,11 @@ public static function AlterarPedido($codControle, $statusPedido, $mensagemAlter
 	}
 }
 
-public static function deletePedido($codControle){
+public static function deletePedido($id){
 	$pdo = Database::connect();
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$stmt = $pdo->prepare("DELETE FROM controlepedido WHERE codControle=:codControle");
-	$stmt->bindparam(":codControle", $codControle);
+	$stmt->bindparam(":codControle", $id);
 	$stmt->execute();
 	return true;
 }
