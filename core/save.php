@@ -491,6 +491,55 @@ switch ($value) {
 		}
 		break;
 
+	case 'AlterarPedido2':	
+		$codControle        = $_POST['codigoControleAlterar2'];
+		$statusPedido		= $_POST['statusPedidoAlterar2'];
+		$mensagemAlterar    = $_POST['mensagemPedidoAlterar2'];
+		$nomeCliente  		= $_POST['nomeClienteAlterar2'];
+		$numeroAf         	= $_POST['numeroAfAlterar2'];
+		$valorPedidoAtual    = $_POST['valorPedidoAlterar2'];
+		$valorPedido = str_replace(",",".",$valorPedidoAtual);
+		//$valorPedido =	number_format ($valorPedidoAtual, 2, '.', ',');
+		$numeroLicitacao    = $_POST['numeroLicitacaoPedidoAlterar2'];
+		$anexoAlterar       = $_POST['anexoAlterar'];
+		$dataAbertura = $_POST['dataAtual2'];	
+//ENTRA AQUI SE TIVER ANEXO
+if (!empty($_FILES["file"]["name"])) {
+	
+	$validextensions = array("jpeg", "jpg", "png", "PNG", "JPG", "JPEG", "pdf", "PDF", "docx");
+	$temporary = explode(".", $_FILES["file"]["name"]);
+	$file_extension = end($temporary);
+	$anexoAlterar = md5($dataAbertura) . "." . $file_extension;
+
+	if (in_array($file_extension, $validextensions)) {
+		$sourcePath = $_FILES['file']['tmp_name'];
+		$targetPath = "../anexos/" . md5($dataAbertura) . "." . $file_extension;
+		move_uploaded_file($sourcePath, $targetPath); // Move arquivo				
+		//SALVA NO BANCO
+		$cad = crud::AlterarPedido2($codControle, $statusPedido,$mensagemAlterar,$nomeCliente ,
+		$numeroAf,$valorPedido,$numeroLicitacao,$anexoAlterar  );
+		
+		if ($cad == true) {
+			echo 1;
+			//enviaEmail();
+		} else {
+			echo 0;
+		}
+	} else {
+		echo 0;
+	}
+}else{
+	//CASO NÃO TENHA ANEXO ENTRA AQUI
+	$cad = crud::AlterarPedido2($codControle, $statusPedido,$mensagemAlterar,$nomeCliente ,	$numeroAf,$valorPedido,$numeroLicitacao,$anexoAlterar  );
+	
+		if ($cad == true) {
+			echo 1;
+		} else {
+			echo 0;
+		}	
+	}
+	break;
+
 	case 'AlterarPedido':
 
 		$statusPedido  = $_POST['statusPedidoAlterar'];

@@ -558,7 +558,7 @@ class crud
 	public static function listarStatus()
     {
 
-        $sql = " SELECT * FROM statusPedido ";
+        $sql = " SELECT * FROM statusPedido order by nome ";
 
         $pdo = Database::connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -570,7 +570,7 @@ class crud
     public static function listarSatusId($id)
     {
 
-        $sql = "SELECT * FROM statusPedido WHERE codStatus = $id";
+        $sql = "SELECT * FROM statusPedido WHERE codStatus = $id order by nome";
 
         $pdo = Database::connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -671,7 +671,7 @@ public static function totalPedidoAtendidos(){
 }
 
 public static function listarPedido(){
-	$sql = "SELECT con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
+	$sql = "SELECT con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.codCliente, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
 	FROM controlePedido as con 
 	inner join cliente as cli on cli.codCliente = con.codCliente 
 	inner join statusPedido as sta on sta.codStatus = con.codStatus
@@ -688,7 +688,7 @@ public static function listarPedidoNaoAtendCanc(){
 	$sql = "SELECT con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
 	FROM controlePedido as con 
 	inner join cliente as cli on cli.codCliente = con.codCliente 
-	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE sta.nome in ('NEGADO','CANCELADO')
+	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE sta.nome not in ('ATENDIDO','CANCELADO')
 	ORDER BY con.dataCadastro desc"; 
 
 	$pdo = Database::connect();
@@ -728,6 +728,7 @@ public static function listarPedidoTipo() {
 
 
 public static function CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao,$dataCadastro) {
+	echo $valorPedido;
 	$pdo = Database::connect();
 
 	try {
@@ -782,6 +783,30 @@ public static function AlterarPedido($codControle, $statusPedido, $mensagemAlter
 		$stmt->bindparam(":codControle", $codControle);
 		$stmt->bindparam(":statusPedido", $statusPedido);
 		$stmt->bindparam(":mensagemAlterar", $mensagemAlterar);
+
+		$stmt->execute();
+
+		return true;
+	} catch (PDOException $e) {
+		echo $e->getMessage();
+		return false;
+	}
+}
+public static function AlterarPedido2($codControle, $statusPedido,$mensagemAlterar,$nomeCliente ,$numeroAf,$valorPedido,$numeroLicitacao,$anexoAlterar){
+			
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	try {
+		$stmt = $pdo->prepare("UPDATE controlePedido SET codStatus=:statusPedido, observacao=:mensagemAlterar, 
+		codCliente=:nomeCliente, numeroAf=:numeroAf, valorPedido=:valorPedido, numeroPregao=:numeroLicitacao, anexo=:anexoAlterar WHERE codControle=:codControle ");
+		$stmt->bindparam(":codControle", $codControle);
+		$stmt->bindparam(":statusPedido", $statusPedido);
+		$stmt->bindparam(":mensagemAlterar", $mensagemAlterar);
+		$stmt->bindparam(":nomeCliente", $nomeCliente);
+		$stmt->bindparam(":numeroAf", $numeroAf);
+		$stmt->bindparam(":valorPedido", $valorPedido);
+		$stmt->bindparam(":numeroLicitacao", $numeroLicitacao);
+		$stmt->bindparam(":anexoAlterar", $anexoAlterar);
 
 		$stmt->execute();
 
