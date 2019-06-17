@@ -23,6 +23,7 @@ require_once '../vendor/autoload.php';
 					<div class="form-group">
 						<div class="input-group">
 							<input type="text" class="form-control" size="200" name="nomeRepresentante" id="nomeRepresentante" placeholder="Nome do departamento" required>
+							<input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicao" id="idInstituicao">
 							<span class="input-group-addon"><span class="fa fa-cubes"></span></span>
 						</div>
 					</div>
@@ -71,7 +72,7 @@ require_once '../vendor/autoload.php';
 				<tbody>
 
 					<?php
-					$dados = crud::listarRepresentante();
+					$dados = crud::listarRepresentante($idInstituicao);
 
 					if ($dados->rowCount() > 0) {
 						while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
@@ -89,7 +90,7 @@ require_once '../vendor/autoload.php';
 						<?php
 					}
 				} else {
-					echo "<p class='text-danger'>Sem demandas abertas</p>";
+					echo "<p class='text-danger'>Nenhum cadastro encontrado</p>";
 				}
 				?>
 
@@ -114,6 +115,7 @@ require_once '../vendor/autoload.php';
 				<div class="row">
 					<input type="hidden" name="codigoRepresentanteDes" id="codigoRepresentanteDes">
 					<input type="hidden" name="statusAtualDes" id="statusAtualDes">
+					<input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoDes" id="idInstituicaoDes">					
 					<div class="col-md-12">
 						<div id="contextoModal">
 							<h2>Você vai DESATIVAR o Representante: <span id="nomeRepresentanteDes"></span>?</h2>
@@ -142,6 +144,7 @@ require_once '../vendor/autoload.php';
 				<div class="row">
 					<input type="hidden" name="codigoRepresentanteAt" id="codigoRepresentanteAt">
 					<input type="hidden" name="statusAtualAt" id="statusAtualAt">
+					<input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoAt" id="idInstituicaoAt">
 					<div class="col-md-12">
 						<div id="contextoModal">
 							<h2>Você vai ATIVAR o Representante: <span id="nomeRepresentanteAt"></span>?</h2>
@@ -171,7 +174,7 @@ require_once '../vendor/autoload.php';
 
 					<input type="hidden" name="excIdRepresentante" id="excIdRepresentante">
 					<input type="hidden" name="excStatusRepresentante" id="excStatusRepresentante">
-
+					<input type="hidden" value="<?php echo $idInstituicao; ?>" name="excidInstituicao" id="excidInstituicao">
 					<div class="col-md-12">
 						<div id="contextoModal">
 							<h2>Você vai EXCLUIR o Representante: <span id="ExcNomeRepresentante"></span>?</h2>
@@ -198,13 +201,13 @@ require_once '../vendor/autoload.php';
 			</div>
 			<div class="modal-body">
 				<div class="row">
-
 					<div class="col-md-12">
 						<div id="contextoModal">
 
 							<form id="frmEdtRepresentante">
 								<input type="hidden" hidden name="tipo" value="editarRepresentante">
 								<input type="hidden" name="idRepresentante" id="idRepresentante">
+								<input type="hidden" value="<?php echo $idInstituicao; ?>" name="editaridInstituicao" id="editaridInstituicao">
 								<div class="row">
 									<div class="col-lg-12">
 
@@ -252,12 +255,13 @@ require_once "rodape.php";
 		$('#frmCadRepresentante').submit(function() {
 			var tipo = "cadRepresentante";
 			var nomeRepresentante = $("#nomeRepresentante").val();
+			var idInstituicao = $("#idInstituicao").val();
 			$.ajax({ //Função AJAX
 				url: "../core/save.php", //Arquivo php
 				type: "post", //Método de envio
 				data: {
 					tipo: tipo,
-					nomeRepresentante: nomeRepresentante
+					nomeRepresentante: nomeRepresentante, idInstituicao:idInstituicao
 				}, //Dados
 				success: function(result) {
 					//alert(result)
@@ -298,6 +302,7 @@ require_once "rodape.php";
 			var id = $(this).data('codigo');
 			var status = $(this).data('statusatual');
 			var nome = $(this).data('nome');
+			var idInstituicao = $("#idInstituicaoAt").val();
 			if (status == "A") {
 				alert("Representante já está Ativo!");				
 			}else{
@@ -312,7 +317,7 @@ require_once "rodape.php";
 			var id = $(this).data('codigo');
 			var status = $(this).data('statusatual');
 			var nome = $(this).data('nome');
-
+			var idInstituicao = $("#idInstituicaoDes").val();
 			if (status == "D") {
 				alert("Representante já está Desativado!");
 			} else {
@@ -328,7 +333,7 @@ require_once "rodape.php";
 			var id = $(this).data('codigo');
 			var nome = $(this).data('nome');
 			var status = $(this).data('statusatual');
-
+			var idInstituicao = $("#excidInstituicao").val();
 			$('#excIdRepresentante').val(id);
 			$('#ExcNomeRepresentante').html(" Codigo: " + id + " - Nome: " + nome);
 			$('#excStatusRepresentante').val(status);
@@ -339,7 +344,7 @@ require_once "rodape.php";
 			var id = $(this).data('codigo');
 			var nome = $(this).data('nome');
 			var status = $(this).data('statusatual');
-
+			var idInstituicao = $("#editaridInstituicao").val();
 			$('#idRepresentante').val(id);
 			$('#edtnome').val(nome);
 			$('#edtstatus').val(status);
@@ -350,13 +355,14 @@ require_once "rodape.php";
 			var tipo = "excluirRepresentante";
 			var idRepresentante = $('#excIdRepresentante').val();
 			var status = $('#excStatusRepresentante').val();
+			var idInstituicao = $("#excidInstituicao").val();
 
 			$.ajax({
 				url: '../core/save.php',
 				type: "POST",
 				data: {
 					tipo: tipo,
-					idRepresentante: idRepresentante
+					idRepresentante: idRepresentante, idInstituicao:idInstituicao
 				},
 				success: function(result) {
 					//alert("resultado " + result);
@@ -394,13 +400,14 @@ require_once "rodape.php";
 		$('#btnDesativaRepresentante').click(function() {
 			var tipo = "desativaRepresentante";
 			var idRepresentante = $('#codigoRepresentanteDes').val();
+			var idInstituicao = $("#InstituicaoDes").val();
 			var status = $('#statusAtualDes').val();
 			$.ajax({
 				url: '../core/save.php',
 				type: "POST",
 				data: {
 					tipo: tipo,
-					idRepresentante: idRepresentante
+					idRepresentante: idRepresentante, idInstituicao:idInstituicao
 				},
 				success: function(result) {
 					if (result == 1) {
@@ -441,13 +448,13 @@ require_once "rodape.php";
 			var tipo = "ativaRepresentante";
 			var idRepresentante = $('#codigoRepresentanteAt').val();
 			var statusRepresentante = $('#statusAtualAt').val();
-						
+			var idInstituicao = $("#idInstituicaoAt").val();
 			$.ajax({
 				url: '../core/save.php',
 				type: "POST",
 				data: {
 					tipo: tipo,
-					idRepresentante: idRepresentante
+					idRepresentante: idRepresentante, idInstituicao: idInstituicao
 				},
 				success: function(result) {
 					if (result == 1) {

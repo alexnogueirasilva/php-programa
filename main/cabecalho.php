@@ -2,11 +2,12 @@
 
 date_default_timezone_set('America/Bahia');
 include_once 'vrf_lgin.php';
-$logado = $_SESSION['nomeUsuario'];
-$instituicao = $_SESSION['instituicaoUsuario'];
+
+$idInstituicao = $_SESSION['instituicaoUsuario'];
 $nomeInstituicao = $_SESSION['instituicaoNome'];
 $nivel = $_SESSION['nivel'];
-$idAndre = $_SESSION['usuarioID'];
+$idUsuario = $_SESSION['usuarioID'];
+$nomeUsuario = $_SESSION['nomeUsuario'];
 
 ?>
 
@@ -86,7 +87,7 @@ $idAndre = $_SESSION['usuarioID'];
 
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> <img src="../assets/images/users/avatar2.png" alt="user-img" width="36" class="img-circle"><b class="hidden-xs"><?php echo $idAndre . " - " . $logado . " - " . $nomeInstituicao; ?> </b> </a>
+                        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> <img src="../assets/images/users/avatar2.png" alt="user-img" width="36" class="img-circle"><b class="hidden-xs"><?php echo $idUsuario . " - " . $nomeUsuario . " - " . $nomeInstituicao; ?> </b> </a>
                         <ul class="dropdown-menu dropdown-user">
                             <li><a href="#"><i class="ti-email"></i> Mensagens</a></li>
                             <li role="separator" class="divider"></li>
@@ -145,6 +146,7 @@ $idAndre = $_SESSION['usuarioID'];
                                
                                 <li><a href="cadastro.php">Cadastros Usuários</a></li>  
                                 <li><a href="e-mail.php">E-mail</a></li>
+                                <li><a href="cad_instituicao.php">Cadastro Instituicao</a></li>
                                 <li><a href="valida_cadastro.php">Validação de Cadastros</a></li>
                                 <li><a href="teste_dem_fechada.php">Demandas fechadas</a></li>
                             </ul>

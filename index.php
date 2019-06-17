@@ -11,9 +11,6 @@
     <link href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="main/css/style.css" rel="stylesheet" type="text/css" />   
 </head>
-
-
-
 <body>
     <section id="wrapper" class="login-register">
         <div class="login-box">
@@ -23,12 +20,7 @@
                         <div class="col-xs-12">
                             <h3>Login</h3>                           
                         </div>
-                    </div>
-                    <div class="form-group ">
-                        <div class="col-xs-12">
-                            <input class="form-control" type="text" required="" placeholder="codigo da registro" id="instituicao">
-                        </div>
-                    </div>
+                    </div>                   
                     <div class="form-group ">
                         <div class="col-xs-12">
                             <input class="form-control" type="email" required="" placeholder="E-mail" id="user">
@@ -108,8 +100,7 @@
         $('#errolog').hide(); //Esconde o elemento com id errolog
         $('#login').submit(function(){  //Ao submeter formulário
       
-        var user=$('#user').val();  //Pega valor do campo email
-        var instituicao=$('#instituicao').val();  //Pega valor do campo insituicao
+        var user=$('#user').val();  //Pega valor do campo email       
         var senha=$('#senha').val();    //Pega valor do campo senha
         /*alert(user);
         alert(senha);
@@ -118,7 +109,7 @@
         $.ajax({            //Função AJAX
             url:"main/login.php",            //Arquivo php
             type:"post",                //Método de envio
-            data: "instituicao="+instituicao+"&user="+user+"&senha="+senha, //Dados
+            data: "user="+user+"&senha="+senha, //Dados
             success: function (result){         //Sucesso no AJAX
                     //alert(result)                 
                 if(result==1){  
@@ -131,7 +122,6 @@
                         $('#myModal').on('hidden.bs.modal', function () {
                             $('#user').val('');
                             $('#senha').val('');
-                            $('#instituicao').val('');
                             $("#errolog").fadeOut();
                         })
                     }

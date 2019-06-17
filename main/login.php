@@ -3,9 +3,9 @@
   
   $nome=$_POST['user'];	//Pegando dados passados por AJAX
   $senha=$_POST['senha'];
-  $instituicao=$_POST['instituicao'];
 
-  $vf = crud::pesquisaLoginUsr($instituicao,$nome,$senha);
+
+  $vf = crud::pesquisaLoginUsr($nome, $senha);
   
 
 	if ($vf == 0){
@@ -15,14 +15,13 @@
 		echo 1;	//Responde sucesso
 		if(!isset($_SESSION)) 	//verifica se há sessão aberta		
 		session_start();		//Inicia seção
-
-		
+				
 		//Abrindo seções
 		$_SESSION['usuarioID']=$vf['idUsuario'];
 		$_SESSION['nomeUsuario']=$vf['nome'];
 		$_SESSION['nivel']=$vf['nivel'];
 		$_SESSION['emailUsuario']=$vf['email'];
-		$_SESSION['instituicaoUsuario']=$vf['id_instituicao'];
+		$_SESSION['instituicaoUsuario']=$vf['fk_idInstituicao'];
 		$_SESSION['instituicaoNome']=$vf['nomeInstituicao'];
 
 		date_default_timezone_set("Brazil/East");

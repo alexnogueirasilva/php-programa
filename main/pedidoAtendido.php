@@ -129,7 +129,7 @@ if($logado != 1){$logado2 = 600;
                                         <td><?php print($row['tipoCliente']); ?></td>
                                         <td><?php print($row['numeroPregao']); ?></td>
                                         <td><?php print($row['numeroAf']); ?></td>
-                                        <td> R$<?php print($row['valorPedido']); ?></td>
+                                        <td> R$<?php print(number_format($row['valorPedido'], 2, ',', '.')); ?></td>
                                         <td><?php print(crud::formataData($row['dataCadastro'])); ?></td>
                                         <td id="statusControle"><?php print($row['nomeStatus']); ?></td>
                                         <td><?php print($horas .   'hs ' . 'e ' .  $minutos . 'm'); ?></td>

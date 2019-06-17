@@ -135,9 +135,9 @@ switch ($value) {
 		$codDemanda = $_POST['codDemanda'];
 		$mensagem = $_POST['mensagem'];
 
-		$cdt = crud::addMensagem($idLogado, $dataHora, $codDemanda, $mensagem);
+		$cdt = crud::addMensagem($idLogado, $dataHora, $codDemanda, $mensagem,$idInstituicao);
 		if ($cdt == true) {
-			$mudaStatus = crud::dataview("UPDATE demanda SET status='Em atendimento' WHERE id=" . $codDemanda);
+			$mudaStatus = crud::dataview("UPDATE demanda SET status='Em atendimento' WHERE id=" . $codDemanda."'  AND '".$idInstituicao);
 			echo 1;
 		} else {
 			echo 0;
@@ -437,6 +437,7 @@ switch ($value) {
 		$dataCadastro = $_POST['dataCadastro'];
 		$dataAbertura = $_POST['dataAtual'];
 		$numeroPregao = $_POST['numeroPregao'];
+		$idInstituicao = $_POST['idInstituicao'];
 		//$idLogado = $_POST['idLogado'];
 		$numeroAf = $_POST['numeroAf'];
 		$valorPedido = $_POST['valorPedido'];
@@ -456,7 +457,7 @@ switch ($value) {
 					$targetPath = "../anexos/" . md5($dataAbertura) . "." . $file_extension;
 					move_uploaded_file($sourcePath, $targetPath); // Move arquivo				
 					//SALVA NO BANCO
-					$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao,$dataCadastro);
+					$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao,$dataCadastro,$idInstituicao);
 					if ($cdt == true) {
 						echo 1;
 						//enviaEmail();
@@ -469,7 +470,7 @@ switch ($value) {
 				//CASO NÃO TENHA ANEXO ENTRA AQUI	
 			} else {
 				$anexo = "sem_anexo.php";
-					$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao,$dataCadastro);
+					$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao,$dataCadastro, $idInstituicao);
 				if ($cdt == true) {
 					echo 1;
 				} else {
@@ -483,7 +484,7 @@ switch ($value) {
 
 		$descricao  = $_POST['edtDescricao'];
 		$edtId         = $_POST['edtId'];
-		$cad = crud::editarPedido($codControle, $numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao);
+		$cad = crud::editarPedido($codControle, $numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao,$idInstituicao);
 		if ($cad == true) {
 			echo 1;
 		} else {
@@ -499,6 +500,7 @@ switch ($value) {
 		$numeroAf         	= $_POST['numeroAfAlterar2'];
 		$valorPedidoAtual    = $_POST['valorPedidoAlterar2'];
 		$valorPedido = str_replace(",",".",$valorPedidoAtual);
+		$idInstituicao = $_POST['idInstituicaoAlterar2'];
 		//$valorPedido =	number_format ($valorPedidoAtual, 2, '.', ',');
 		$numeroLicitacao    = $_POST['numeroLicitacaoPedidoAlterar2'];
 		$anexoAlterar       = $_POST['anexoAlterar'];
@@ -517,7 +519,7 @@ if (!empty($_FILES["file"]["name"])) {
 		move_uploaded_file($sourcePath, $targetPath); // Move arquivo				
 		//SALVA NO BANCO
 		$cad = crud::AlterarPedido2($codControle, $statusPedido,$mensagemAlterar,$nomeCliente ,
-		$numeroAf,$valorPedido,$numeroLicitacao,$anexoAlterar  );
+		$numeroAf,$valorPedido,$numeroLicitacao,$anexoAlterar,$idInstituicao );
 		
 		if ($cad == true) {
 			echo 1;
@@ -530,7 +532,7 @@ if (!empty($_FILES["file"]["name"])) {
 	}
 }else{
 	//CASO NÃO TENHA ANEXO ENTRA AQUI
-	$cad = crud::AlterarPedido2($codControle, $statusPedido,$mensagemAlterar,$nomeCliente ,	$numeroAf,$valorPedido,$numeroLicitacao,$anexoAlterar  );
+	$cad = crud::AlterarPedido2($codControle, $statusPedido,$mensagemAlterar,$nomeCliente ,	$numeroAf,$valorPedido,$numeroLicitacao,$anexoAlterar,$idInstituicao );
 	
 		if ($cad == true) {
 			echo 1;
@@ -545,8 +547,8 @@ if (!empty($_FILES["file"]["name"])) {
 		$statusPedido  = $_POST['statusPedidoAlterar'];
 		$codControle         = $_POST['codigoControleAlterar'];
 		$mensagemAlterar         = $_POST['mensagemPedidoAlterar'];
-		
-		$cad = crud::AlterarPedido($codControle, $statusPedido,$mensagemAlterar);
+		$idInstituicao = $_POST['idInstituicaoAlterar'];
+		$cad = crud::AlterarPedido($codControle, $statusPedido,$mensagemAlterar,$idInstituicao);
 		if ($cad == true) {
 			echo 1;
 		} else {
@@ -557,7 +559,8 @@ if (!empty($_FILES["file"]["name"])) {
 	case 'deletePedido':
 
 		$id         = $_POST['idPedido'];
-		$cad = crud::deletePedido($id);
+		$idInstituicao = $_POST['idInstituicao'];
+		$cad = crud::deletePedido($id,$idInstituicao);
 		if ($cad == true) {
 			echo 1;
 		} else {
@@ -571,8 +574,9 @@ if (!empty($_FILES["file"]["name"])) {
 		$dataHora = $_POST['datahora'];
 		$codDemanda = $_POST['codPedido'];
 		$mensagem = $_POST['mensagem'];
+		$idInstituicao = $_POST['idInstituicao'];
 
-		$cdt = crud::addMensagem($idLogado, $dataHora, $codDemanda, $mensagem);
+		$cdt = crud::addMensagem($idLogado, $dataHora, $codDemanda, $mensagem,$idInstituicao);
 		if ($cdt == true) {
 				echo 1;
 		} else {
@@ -588,7 +592,8 @@ if (!empty($_FILES["file"]["name"])) {
 
 	case 'cadRepresentante':
 			$nomeRepresentante = $_POST['nomeRepresentante'];
-			$cad = crud::criarRepresentante($nomeRepresentante);
+			$idInstituicao = $_POST['idInstituicao'];
+			$cad = crud::criarRepresentante($nomeRepresentante,$idInstituicao);
 
 			if ($cad == true){
 				echo 1;
@@ -602,7 +607,8 @@ if (!empty($_FILES["file"]["name"])) {
 	$nomeRepresentante = $_POST['edtnome'];
 	$codRepresentante = $_POST['idRepresentante'];
 	$statusRepresentante =  $_POST['edtstatus'];
-	$cad = crud::editarRepresentante($nomeRepresentante,$codRepresentante,$statusRepresentante );
+	$idInstituicao = $_POST['idInstituicao'];
+	$cad = crud::editarRepresentante($nomeRepresentante,$codRepresentante,$statusRepresentante,$idInstituicao );
 		
 		if ($cad == true){
 			echo 1;
@@ -616,7 +622,8 @@ if (!empty($_FILES["file"]["name"])) {
 	
 	$codRepresentante = $_POST['idRepresentante'];
 	$statusRepresentante =  'A';
-	$cad = crud::ativaRepresentante($codRepresentante,$statusRepresentante );
+	$idInstituicao = $_POST['idInstituicao'];
+	$cad = crud::ativaRepresentante($codRepresentante,$statusRepresentante,$idInstituicao );
 		
 		if ($cad == true){
 			echo 1;
@@ -629,7 +636,8 @@ if (!empty($_FILES["file"]["name"])) {
 	
 	$codRepresentante = $_POST['idRepresentante'];
 	$statusRepresentante =  'D';
-	$cad = crud::ativaRepresentante($codRepresentante,$statusRepresentante );
+	$idInstituicao = $_POST['idInstituicao'];
+	$cad = crud::ativaRepresentante($codRepresentante,$statusRepresentante,$idInstituicao );
 		
 		if ($cad == true){
 			echo 1;
@@ -642,8 +650,8 @@ if (!empty($_FILES["file"]["name"])) {
 	case 'excluirRepresentante':
 			
 	$codRepresentante = $_POST['idRepresentante'];
-	
-	$cad = crud::deleteRepresentante($codRepresentante );		
+	$idInstituicao = $_POST['idInstituicao'];
+	$cad = crud::deleteRepresentante($codRepresentante,$idInstituicao );		
 		if ($cad == true){
 			echo 1;
 		}else {
