@@ -41,7 +41,7 @@ break;
 case 'busca_mensagensPedido':
 	
 $codDemanda = $_POST['idControle'];
-echo $codDemanda;
+
 
 $comentarios = crud::dataview("SELECT hst.mensagem, hst.msg_data, hst.cod_usr_msg, us.nome FROM hst_mensagens as hst INNER JOIN controlePedido as con ON hst.cod_demanda = con.codControle INNER JOIN usuarios as us ON hst.cod_usr_msg=us.id AND hst.cod_demanda ='".$codDemanda."'");		
 $arrayComentarios = $comentarios->fetchAll(PDO::FETCH_ASSOC);

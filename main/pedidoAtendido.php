@@ -95,7 +95,7 @@ if($logado != 1){$logado2 = 600;
                         </thead>
                         <tbody>
                             <?php
-                            $dados = PedidoDAO::listarPedidoAtendidos();
+                            $dados = PedidoDAO::listarPedidoAtendidos($idInstituicao);
                             $totalPedido = '';
                             $teste = 0;
                             if ($dados->rowCount() > 0) {
@@ -175,7 +175,7 @@ if($logado != 1){$logado2 = 600;
                             <select class="form-control" name="nomeCliente" id="nomeCliente" required>
                                 <option value="" selected disabled>Selecione o Cliente</option>
                                 <?php
-                                $selectCliente = crud::mostrarCliente();
+                                $selectCliente = crud::mostrarCliente($idInstituicao);
                                 if ($selectCliente->rowCount() > 0) {
                                     while ($row = $selectCliente->fetch(PDO::FETCH_ASSOC)) {
                                         ?>
@@ -303,6 +303,7 @@ if($logado != 1){$logado2 = 600;
                             <form id="frmAddMensagem">
                                 <input type="hidden" value="<?php echo $idLogado; ?>" name="idLogado" id="idLogado">
                                 <input type="hidden" value="<?php echo $dataMsg; ?>" name="datahora" id="datahora">                          
+                                <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoMensagem" id="idInstituicaoMensagem">
                                 <div class="form-group">
                                     <label for="message-text" class="control-label">Adicionar Comentário</label>
                                     <textarea name="mensagemComentario" class="form-control" rows="2" id="mensagemComentario" required></textarea>          
@@ -360,7 +361,7 @@ if($logado != 1){$logado2 = 600;
                     <form id="frmAlterarPedido" action="" method="post" enctype="multipart/form-data">
                         <input type="hidden" value="AlterarPedido" name="tipo" id="tipo">
                         <input type="hidden" id="codigoControleAlterar" name="codigoControleAlterar">
-                        <!--   <input type="text" id="codigoControleAlterar" name="codigoControleAlterar"size="33" style="text-transform: uppercase;" maxlength="40" class="form-control"  placeholder="Valor do Pedido"> -->
+                        <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoAlterar" id="idInstituicaoAlterar">
                         <div class="form-group">
                             <select class="form-control" name="statusPedidoAlterar" id="statusPedidoAlterar" required>
                                 <option value="" selected disabled>Selecione o Status</option>
@@ -472,11 +473,13 @@ include_once "modais.php";
             var datahora = $("#datahora").val();
             var codPedido = $('#codigoDetalhes').text();
             var mensagem = $("#mensagemComentario").val();
+            var idInstituicao = $("#idInstituicaoMensagem").val();
            
             $.ajax({
                 url: '../core/save.php',
                 type: "POST",
-                data: {tipo : tipo, idLogado : idLogado, datahora:datahora, codPedido : codPedido, mensagem : mensagem},
+                data: {tipo : tipo, idLogado : idLogado, datahora:datahora,
+                     codPedido : codPedido, mensagem : mensagem, idInstituicao:idInstituicao},
                 success: function(result) {
                     //alert(result);
                     if(result==1){                        
@@ -543,6 +546,7 @@ include_once "modais.php";
                         $("#alteraPedido").prop("disabled", true);
                     },
                     success: function(data) {
+                     //   alert(data);
                         if (data == 1) {
                             swal({
                                     title: "OK!",

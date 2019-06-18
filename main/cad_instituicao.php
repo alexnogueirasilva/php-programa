@@ -4,47 +4,46 @@ require_once '../vendor/autoload.php';
 include_once 'vrf_lgin.php';
 include_once '../core/crud.php';
 
-$queryCliente = "SELECT * FROM cliente ";
+$queryInstituicao = "SELECT * FROM instituicao ";
 
 ?>
 <div class="container-fluid">
 	<div class="row bg-title">
-		<div class="col-lg-12">                   
+		<div class="col-lg-12">
 
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>
-	
-	<h1>Cadastra Cliente</h1>
-	<h4>Insira os dados do novo cliente</h4>
+
+	<h1>Cadastro de Instituicao</h1>
+	<h4>Insira os dados do novo Instituicao</h4>
 	<form id="cdt">
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="form-inline">
 					<div class="form-group">
-                         <input type="text" hidden id="tipo" value="criarCliente">				
+						<input type="text" hidden id="tipo" value="criarCliente">
 						<div class="input-group">
-                        <input type="text" class="form-control" size="70" name="cdtnomeCliente" id="cdtnomeCliente" placeholder="Nome Cliente" required value="">
+							<input type="text" class="form-control" size="70" name="cdtnomeCliente" id="cdtnomeCliente" placeholder="Nome Cliente" required value="">
+							<input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicao" id="idInstituicao">
 							<span class="input-group-addon"><span class="fa fa-user"></span></span>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="input-group">
-                        <input type="text" class="form-control" size="37" name="cdtnomeFantasiaCliente" id="cdtnomeFantasiaCliente" placeholder="Nome fantasia Cliente" required value="">
+							<input type="text" class="form-control" size="37" name="cdtnomeFantasiaCliente" id="cdtnomeFantasiaCliente" placeholder="Nome fantasia Cliente" required value="">
 							<span class="input-group-addon"><span class="fa fa-user"></span></span>
 						</div>
 					</div>
+					<br>
+					<br>
 					<div class="form-group">
 						<div class="input-group">
-							<select class="form-control" name="cdtTipoCliente" id="cdtTipoCliente" required="true">
-								<option value="">Tipo Cliente</option>
-								<option value="E">1 - Estadual</option>
-								<option value="F">2 - Federal</option>
-								<option value="M">3 - Municipal</option>
-							</select>
+							<input type="text" class="form-control" size="37" name="cdtCodigo" id="cdtCodigo" placeholder="Nome fantasia Cliente" required value="">
+							<span class="input-group-addon"><span class="fa fa-user"></span></span>
 						</div>
 					</div>
-				</div>		
+				</div>
 				<br><br>
 				<button type="submit" class="btn btn-info btn-lg btn-block" id="btnSalvaSla"><span class="fa fa-save"></span> Salvar</button>
 			</div>
@@ -52,75 +51,163 @@ $queryCliente = "SELECT * FROM cliente ";
 		</div>
 	</form>
 
-<!-- LISTAR cliente-->
+	<!-- LISTAR cliente-->
 	<div class="row">
-		<div class="col-sm-12"> 
+		<div class="col-sm-12">
 			<div class="white-box">
-				<hr>
-
-				<div class="col-sm-6"> 
-					<h3>Lista de SLAs</h3>
+				<div class="col-sm-6">
+					<h2>Lista de Instituicao -
+					<button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalPesquisar" data-whatever="@getbootstrap"><span class="fa fa-search"></span></span>Pesquisar Instituicao</button>
+					</h2>
 				</div>
 
 				<table id="tabela" class="table table-striped">
-					<thead><tr>
-						<th>Código</th>
-                        <th>Nome</th>
-                        <th>Tipo</th>
-                        <th>Status</th>
-                        <th>Alterar</th>
-						<th>Excluir</th>
-						<th>Desativar</th>
-						<th>Ativar</th>
-					</tr>
-				<tfoot>
-					<tr>
-						<th>Código</th>
-						<th>Nome</th>
-						<th>Tipo</th>
-                        <th>Status</th>
-                        <th>Alterar</th>
-						<th>Excluir</th>
-						<th>Desativar</th>
-						<th>Ativar</th>
-					</tr>
-				</tfoot>
+					<thead>
+						<tr>
+							<th>Código</th>
+							<th>Nome</th>
+							<th>Tipo</th>
+							<th>Status</th>
+							<th>Alterar</th>
+							<th>Alterar</th>
+							<th>Excluir</th>
+						</tr>
+					<tfoot>
+						<tr>
+							<th>Código</th>
+							<th>Nome</th>
+							<th>Tipo</th>
+							<th>Status</th>
+							<th>Alterar</th>
+							<th>Alterar</th>
+							<th>Excluir</th>
+						</tr>
+					</tfoot>
 					</thead>
 					<tbody>
 
 						<?php
-							$dados = crud::dataview($queryCliente);
+						$dados = crud::dataview($queryInstituicao);
 
-                            if ($dados->rowCount() > 0) {
-                                while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
-                                    ?>
-                                    <tr>
-                                        <td><?php print($row['codCliente']); ?></td>
-                                        <td><?php print($row['nomeCliente']); ?></td>
-                                        <td><?php print($row['tipoCliente']); ?></td>
-                                        <td id="status"><?php print($row['status']); ?></td>
-                                        <td><a class="btn btn-info waves-effect waves-light" id="btnEdita" data-toggle="modal" data-target="#modalEditaCliente" data-whatever="@getbootstrap" data-codigo="<?php print($row['codCliente']); ?>" data-nome="<?php print($row['nomeCliente']); ?>" data-statusatual="<?php print($row['status']); ?>" data-tipoatual="<?php print($row['tipoCliente']); ?>">Editar</a></td>
-        
-                                        <td><a class="btn btn-danger waves-effect waves-light" data-target="#modalExluirCliente" data-whatever="@getbootstrap" id="btnExcluiCliente" data-codigo="<?php print($row['codCliente']); ?>" data-nome="<?php print($row['nomeCliente']); ?>" data-statusatual="<?php print($row['status']); ?>">Excluir</a></td>
-                                        <td><a class="btn btn-danger waves-effect waves-light" data-target="#modalConfirmacaoDesativa" data-whatever="@getbootstrap" id="btnDesativa" data-codigo="<?php print($row['codCliente']); ?>" data-statusatual="<?php print($row['status']); ?>" data-nome="<?php print($row['nomeCliente']); ?>">Desativar</a></td>
-        
-                                        <td><a class="btn btn-info waves-effect waves-light" data-target="#modalConfirmacaoAtiva" data-whatever="@getbootstrap" id="btnAtiva" data-codigo="<?php print($row['codCliente']); ?>" data-statusatual="<?php print($row['status']); ?>" data-nome="<?php print($row['nomeCliente']); ?>">Ativa</a></td>
-                                    </tr>
-                                <?php
-                            }
-                        } else {
-                            echo "<p class='text-danger'>Sem informacoes cadastradas</p>";
-                        }
-						?>
+						if ($dados->rowCount() > 0) {
+							while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
+								?>
+								<tr>
+									<td><?php print($row['inst_id']); ?></td>
+									<td><?php print($row['inst_nome']); ?></td>
+									<td><?php print($row['inst_nomeFantasia']); ?></td>
+									<td><?php print(crud::formataData($row['inst_dataCadastro'])); ?></td>
+									<td><a class="btn btn-info waves-effect waves-light" id="btnEdita" data-toggle="modal" data-target="#modalEditaCliente" data-whatever="@getbootstrap" data-codigo="<?php print($row['inst_id']); ?>" data-id="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>" data-tipoatual="<?php print($row['tipoCliente']); ?>">Editar</a></td>
+									<td><a class="btn btn-info waves-effect waves-light" id="btnEditar" data-whatever="@getbootstrap" data-codigo="<?php print($row['inst_id']); ?>" data-id="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>" data-tipoatual="<?php print($row['tipoCliente']); ?>">Editar</a></td>
+
+									<td><a class="btn btn-danger waves-effect waves-light" data-target="#modalExluirCliente" data-whatever="@getbootstrap" id="btnExcluiCliente" data-codigo="<?php print($row['inst_id']); ?>" data-id="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>">Excluir</a></td>
+								</tr>
+							<?php
+						}
+					} else {
+						echo "<p class='text-danger'>Sem informacoes cadastradas</p>";
+					}
+					?>
 
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
-<!-- LISTAR cliente-->
+	<!-- LISTAR cliente-->
 </div>
 </div>
+
+<!-- MODAL pesqusiar cliente-->
+<div class="modal fade bs-example-modal-lg" id="modalPesquisar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="headermodal">Confirmação</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<input type="hidden" name="codigoClienteDes" id="codigoClienteDes">
+					<input type="hidden" name="statusAtualDes" id="statusAtualDes">
+					<input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoDes" id="idInstituicaoDes">
+					<div class="col-md-12">
+						<!-- LISTAR cliente-->
+
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="white-box">
+									<hr>
+
+									<div class="col-sm-6">
+										<h3>Lista de Instituicao</h3>
+									</div>
+
+									<table id="tabela" class="table table-striped">
+										<thead>
+											<tr>
+												<th>Código</th>
+												<th>Nome</th>
+												<th>Nome fantasia</th>
+												<th>Data</th>
+												<th>Alterar</th>
+												<th>Excluir</th>
+											</tr>
+										<tfoot>
+											<tr>
+												<th>Código</th>
+												<th>Nome</th>
+												<th>Nome fantasia</th>
+												<th>Data</th>
+												<th>Alterar</th>
+												<th>Excluir</th>
+											</tr>
+										</tfoot>
+										</thead>
+										<tbody>
+
+											<?php
+											$dados = crud::dataview($queryInstituicao);
+
+											if ($dados->rowCount() > 0) {
+												while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
+													?>
+													<tr>
+														<td><?php print($row['inst_id']); ?></td>
+														<td><?php print($row['inst_nome']); ?></td>
+														<td><?php print($row['inst_nomeFantasia']); ?></td>
+														<td><?php print(crud::formataData($row['inst_dataCadastro'])); ?></td>
+														<td><a class="btn btn-info waves-effect waves-light" id="btnEditar" data-whatever="@getbootstrap" data-codigo="<?php print($row['inst_id']); ?>" data-id="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>">Editar</a></td>
+
+														<td><a class="btn btn-danger waves-effect waves-light" data-target="#modalExluirCliente" data-whatever="@getbootstrap" id="btnExcluiCliente2" data-codigo="<?php print($row['inst_id']); ?>" data-id="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>">Excluir</a></td>
+													</tr>
+												<?php
+											}
+										} else {
+											echo "<p class='text-danger'>Sem informacoes cadastradas</p>";
+										}
+										?>
+
+										</tbody>
+									</table>
+
+								</div>
+							</div>
+						</div>
+
+						<!-- LISTAR cliente-->
+
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				<button type="submit" id="btnDesativaCliente" class="btn btn-primary">Confirmar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- MODAL pesqusiar cliente-->
 
 <!-- MODAL desativar cliente-->
 <div class="modal fade" id="modalConfirmacaoDesativa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
@@ -134,6 +221,7 @@ $queryCliente = "SELECT * FROM cliente ";
 				<div class="row">
 					<input type="hidden" name="codigoClienteDes" id="codigoClienteDes">
 					<input type="hidden" name="statusAtualDes" id="statusAtualDes">
+					<input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoDes" id="idInstituicaoDes">
 					<div class="col-md-12">
 						<div id="contextoModal">
 							<h2>Você vai DESATIVAR o Cliente: <span id="nomeClienteDes"></span>?</h2>
@@ -163,6 +251,7 @@ $queryCliente = "SELECT * FROM cliente ";
 				<div class="row">
 					<input type="hidden" name="codigoClienteAt" id="codigoClienteAt">
 					<input type="hidden" name="statusAtualAt" id="statusAtualAt">
+					<input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoAt" id="idInstituicaoAt">
 					<div class="col-md-12">
 						<div id="contextoModal">
 							<h2>Você vai ATIVAR o cliente: <span id="nomeClienteAt"></span>?</h2>
@@ -192,7 +281,7 @@ $queryCliente = "SELECT * FROM cliente ";
 
 					<input type="hidden" name="excIdCliente" id="excIdCliente">
 					<input type="hidden" name="excStatusCliente" id="excStatusCliente">
-
+					<input type="hidden" value="<?php echo $idInstituicao; ?>" name="excidInstituicao" id="excidInstituicao">
 					<div class="col-md-12">
 						<div id="contextoModal">
 							<h2>Você vai EXCLUIR o Cliente: <span id="ExcNomeCliente"></span>?</h2>
@@ -219,12 +308,12 @@ $queryCliente = "SELECT * FROM cliente ";
 			</div>
 			<div class="modal-body">
 				<div class="row">
-
 					<div class="col-md-12">
 						<div id="contextoModal">
 							<form id="edtcliente">
 								<input type="text" hidden name="tipo" value="editaCliente">
 								<input type="hidden" name="idcliente" id="idcliente">
+								<input type="hidden" value="<?php echo $idInstituicao; ?>" name="editaidInstituicao" id="editaidInstituicao">
 								<div class="row">
 									<div class="col-lg-12">
 
@@ -233,29 +322,19 @@ $queryCliente = "SELECT * FROM cliente ";
 												<input type="text" class="form-control" size="50" name="edtnome" id="edtnome">
 												<span class="input-group-addon"><span class="fa fa-user"></span></span>
 											</div>
-                                        </div>
-                                        <div class="form-group">
+										</div>
+										<div class="form-group">
 											<div class="input-group">
-												<select class="form-control" name="edtstatus" id="edtstatus" required="true">
-													<option value="">Status</option>
-													<option value="A">1 - Ativado</option>
-													<option value="D">2 - Desativado</option>
-												</select>
-												<span class="input-group-addon"><span class="fa fa-signal"></span></span>
+												<input type="text" class="form-control" size="50" name="edtnomeFantasia" id="edtnomeFantasia">
+												<span class="input-group-addon"><span class="fa fa-user"></span></span>
 											</div>
 										</div>
 										<div class="form-group">
 											<div class="input-group">
-												<select class="form-control" name="edttipo" id="edttipo" required="true">
-													<option value="">Tipo Cliente</option>
-													<option value="E">1 - Estadual</option>
-													<option value="F">2 - Federal</option>
-													<option value="M">3 - Municipal</option>
-												</select>
-												<span class="input-group-addon"><span class="fa fa-signal"></span></span>
+												<input type="text" class="form-control" size="50" name="codigoInstituicao" id="codigoInstituicao">
+												<span class="input-group-addon"><span class="fa fa-user"></span></span>
 											</div>
 										</div>
-										
 										<button type="submit" class="btn btn-info btn-md btn-block" id="submit"><span class="fa fa-save"></span> Salvar</button>
 
 									</div>
@@ -287,6 +366,7 @@ require_once "rodape.php";
 			var tipo = "criarCliente";
 			var nomeCliente = $("#cdtnomeCliente").val();
 			var nomeFantasiaCliente = $("#cdtnomeFantasiaCliente").val();
+			var idInstituicao = $("#idInstituicao").val();
 			var tipoCliente = $("#cdtTipoCliente").val();
 
 			$.ajax({ //Função AJAX
@@ -296,7 +376,8 @@ require_once "rodape.php";
 					tipo: tipo,
 					nomeCliente: nomeCliente,
 					nomeFantasiaCliente: nomeFantasiaCliente,
-					tipoCliente: tipoCliente
+					tipoCliente: tipoCliente,
+					idInstituicao: idInstituicao
 				}, //Dados
 				success: function(result) {
 					//alert(result)					
@@ -334,18 +415,25 @@ require_once "rodape.php";
 			});
 		});
 
+		function limparCampos() {
+			$("#cdtnomeCliente").val('');
+			$("#cdtnomeFantasiaCliente").val('');
+			$("#cdtTipoCliente").val('');
+			$('#cdtCodigo').val('');
+		}
 		$(document).on("click", "#btnAtiva", function() {
 			var id = $(this).data('codigo');
 			var status = $(this).data('statusatual');
 			var nome = $(this).data('nome');
 			if (status == "A") {
-				alert("Cliente já está Ativo!");				
-			}else{
+				alert("Cliente já está Ativo!");
+			} else {
 				$('#modalConfirmacaoAtiva').modal('show');
 			}
 			$('#codigoClienteAt').val(id);
 			$('#statusAtualAt').val(status);
 			$('#nomeClienteAt').html(nome);
+
 
 		});
 
@@ -353,18 +441,30 @@ require_once "rodape.php";
 			var id = $(this).data('codigo');
 			var status = $(this).data('statusatual');
 			var nome = $(this).data('nome');
-			
+
 			if (status == "D") {
-				alert("Cliente já está Desativado!");				
-			}else{
+				alert("Cliente já está Desativado!");
+			} else {
 				$('#modalConfirmacaoDesativa').modal('show');
 			}
 			$('#codigoClienteDes').val(id);
 			$('#statusAtualDes').val(status);
 			$('#nomeClienteDes').html(nome);
-			
+
 		});
 
+		$(document).on("click", "#btnExcluiCliente2", function() {
+			var id = $(this).data('codigo');
+			var nome = $(this).data('nome');
+			var nome1 = $(this).data('nome');
+			var status = $(this).data('statusatual');
+
+			$('#excIdCliente').val(id);
+			$('#ExcNomeCliente').html(nome);
+			$('#excStatusCliente').val(status);
+			$('#modalPesquisar').modal('hide');
+			$('#modalExluirCliente').modal('show');
+		});
 		$(document).on("click", "#btnExcluiCliente", function() {
 			var id = $(this).data('codigo');
 			var nome = $(this).data('nome');
@@ -372,34 +472,58 @@ require_once "rodape.php";
 			var status = $(this).data('statusatual');
 
 			$('#excIdCliente').val(id);
-			$('#ExcNomeCliente').html(nome);			
+			$('#ExcNomeCliente').html(nome);
 			$('#excStatusCliente').val(status);
 			$('#modalExluirCliente').modal('show');
 		});
 
 		$(document).on("click", "#btnEdita", function() {
+			limparCampos();
 			var id = $(this).data('codigo');
+			var codigo = $(this).data('id');
 			var nome = $(this).data('nome');
+			var nomeFantasia = $(this).data('nomefantasia');
 			var status = $(this).data('statusatual');
 			var tipoCliente = $(this).data('tipoatual');
 
 			$('#idcliente').val(id);
+			$('#codigoInstituicao').val(codigo);
 			$('#edtnome').val(nome);
-			$('#edtstatus').val(status);			
-			$('#edttipo').val(tipoCliente);			
+			$('#edtnomeFantasia').val(nomeFantasia);
+			$('#edtstatus').val(status);
+			$('#edttipo').val(tipoCliente);
 			$('#modalEditaCliente').modal('show');
 		});
+		$(document).on("click", "#btnEditar", function() {			
+			var id = $(this).data('codigo');
+			var codigo = $(this).data('id');
+			var nome = $(this).data('nome');
+			var nomeFantasia = $(this).data('nomefantasia');
+			var status = $(this).data('statusatual');
+			var tipoCliente = $(this).data('tipoatual');
 
-		$('#btnExcluirCliente').click(function() {		
+			$('#idcliente').val(id);
+			$('#cdtCodigo').val(codigo);
+			$('#cdtnomeCliente').val(nome);
+			$('#edtnome').val(nome);
+			$('#cdtnomeFantasiaCliente').val(nomeFantasia);
+			$('#edtstatus').val(status);
+			$('#edttipo').val(tipoCliente);
+			$('#modalPesquisar').modal('hide');
+		});
+
+		$('#btnExcluirCliente').click(function() {
 			var tipo = "excluirCliente";
 			var idCliente = $('#excIdCliente').val();
-			var status = $('#excStatusCliente').val();		
+			var status = $('#excStatusCliente').val();
+			var idInstituicao = $("#excidInstituicao").val();
 			$.ajax({
 				url: '../core/save.php',
 				type: "POST",
 				data: {
 					tipo: tipo,
-					codCliente: idCliente
+					codCliente: idCliente,
+					idInstituicao: idInstituicao
 				},
 				success: function(result) { //alert(result);			
 					if (result == 1) {
@@ -423,10 +547,10 @@ require_once "rodape.php";
 								confirmButtonText: "Fechar",
 								closeOnConfirm: false
 							},
-							function(isConfirm){
+							function(isConfirm) {
 								if (isConfirm) {
 									window.location = "cad_cliente.php";
-									}
+								}
 							});
 					}
 				}
@@ -437,13 +561,15 @@ require_once "rodape.php";
 			var tipo = "desativaCliente";
 			var id = $('#codigoClienteDes').val();
 			var status = $('#statusAtualDes').val();
-			$.ajax({			
+			var idInstituicao = $("#idInstituicaoDes").val();
+			$.ajax({
 				url: '../core/save.php',
 				type: "POST",
 				data: {
 					tipo: tipo,
-					id: id
-				},				
+					id: id,
+					idInstituicao: idInstituicao
+				},
 				success: function(result) {
 					if (result == 1) {
 						swal({
@@ -453,12 +579,12 @@ require_once "rodape.php";
 								confirmButtonText: "Fechar",
 								closeOnConfirm: false
 							},
-							function(isConfirm){
+							function(isConfirm) {
 								if (isConfirm) {
-								//	$('#modalConfirmacaoDesativa').modal('hide');
-										window.location = "cad_cliente.php";
-									}
-							});						
+									//	$('#modalConfirmacaoDesativa').modal('hide');
+									window.location = "cad_cliente.php";
+								}
+							});
 					} else {
 						swal({
 								title: "Ops!",
@@ -467,10 +593,10 @@ require_once "rodape.php";
 								confirmButtonText: "Fechar",
 								closeOnConfirm: false
 							},
-							function(isConfirm){
+							function(isConfirm) {
 								if (isConfirm) {
 									window.location = "cad_cliente.php";
-									}
+								}
 							});
 						//	alert(result);
 						//alert("Erro ao salvar");
@@ -483,13 +609,14 @@ require_once "rodape.php";
 			var tipo = "ativaCliente";
 			var id = $('#codigoClienteAt').val();
 			var status = $('#statusAtualAt').val();
-			
+			var idInstituicao = $("#idInstituicaoAt").val();
 			$.ajax({
 				url: '../core/save.php',
 				type: "POST",
 				data: {
 					tipo: tipo,
-					id: id
+					id: id,
+					idInstituicao: idInstituicao
 				},
 				success: function(result) {
 					if (result == 1) {
@@ -500,12 +627,12 @@ require_once "rodape.php";
 								confirmButtonText: "Fechar",
 								closeOnConfirm: false
 							},
-							function(isConfirm){
+							function(isConfirm) {
 								if (isConfirm) {
-								//	$('#modalConfirmacaoDesativa').modal('hide');
-										window.location = "cad_cliente.php";
-									}
-							});						
+									//	$('#modalConfirmacaoDesativa').modal('hide');
+									window.location = "cad_cliente.php";
+								}
+							});
 					} else {
 						swal({
 								title: "Ops!",
@@ -514,10 +641,10 @@ require_once "rodape.php";
 								confirmButtonText: "Fechar",
 								closeOnConfirm: false
 							},
-							function(isConfirm){
+							function(isConfirm) {
 								if (isConfirm) {
 									window.location = "cad_cliente.php";
-									}
+								}
 							});
 						//	alert(result);
 						//alert("Erro ao salvar");
@@ -558,18 +685,18 @@ require_once "rodape.php";
 								confirmButtonText: "Fechar",
 								closeOnConfirm: false
 							},
-							function(isConfirm){
+							function(isConfirm) {
 								if (isConfirm) {
 									window.location = "cad_cliente.php";
-									}
+								}
 							});
 					}
 				}
 			});
-				return false;//Evita que a página seja atualizada
+			return false; //Evita que a página seja atualizada
 		});
-		
-		
+
+
 		$("#tbl-user").DataTable({
 			//TRADUÇÃO DATATABLE
 			"oLanguage": {
@@ -591,15 +718,14 @@ require_once "rodape.php";
 			}
 		});
 	});
-    //BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
-		$("tr #status").each(function(i) {
-			if ($(this).text() == "D") {
-				this.style.color = "white";
-				this.style.background = "red";
-			} else {
-				this.style.color = "white";
-				this.style.background = "green";
-			}
-		});
-
+	//BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
+	$("tr #status").each(function(i) {
+		if ($(this).text() == "D") {
+			this.style.color = "white";
+			this.style.background = "red";
+		} else {
+			this.style.color = "white";
+			this.style.background = "green";
+		}
+	});
 </script>

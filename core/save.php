@@ -17,22 +17,6 @@ switch ($value) {
 		}
 		break;
 
-	case 'editaCliente':
-
-		$id = $_POST['idcliente'];
-		$nome = $_POST['edtnome'];
-		$status = $_POST['edtstatus'];
-		$tipoCliente = $_POST['edttipo'];
-
-		$edt = crud::atualizaCliente($id, $nome, $status,$tipoCliente);
-		if ($edt == true) {
-			echo 1;
-		} else {
-			echo 0;
-		}
-
-		break;
-
 	case 'criaDemanda':
 
 		$dataAbertura = $_POST['dataAtual'];
@@ -134,10 +118,11 @@ switch ($value) {
 		$dataHora = $_POST['datahora'];
 		$codDemanda = $_POST['codDemanda'];
 		$mensagem = $_POST['mensagem'];
+		$idInstituicao = $_POST['idInstituicaoMensagem'];
 
-		$cdt = crud::addMensagem($idLogado, $dataHora, $codDemanda, $mensagem,$idInstituicao);
+		$cdt = crud::addMensagem($idLogado, $dataHora, $codDemanda, $mensagem, $idInstituicao);
 		if ($cdt == true) {
-			$mudaStatus = crud::dataview("UPDATE demanda SET status='Em atendimento' WHERE id=" . $codDemanda."'  AND '".$idInstituicao);
+			$mudaStatus = crud::dataview("UPDATE demanda SET status='Em atendimento' WHERE id=" . $codDemanda . "'  AND '" . $idInstituicao);
 			echo 1;
 		} else {
 			echo 0;
@@ -162,16 +147,32 @@ switch ($value) {
 			echo 0;
 		}
 		break;
+		//Cliente
+	case 'editaCliente':
 
+		$id = $_POST['idcliente'];
+		$nome = $_POST['edtnome'];
+		$status = $_POST['edtstatus'];
+		$tipoCliente = $_POST['edttipo'];
+		$idInstituicao = $_POST['editaidInstituicao'];
+
+		$edt = crud::atualizaCliente($id, $nome, $status, $tipoCliente, $idInstituicao);
+		if ($edt == true) {
+			echo 1;
+		} else {
+			echo 0;
+		}
+
+		break;
 
 	case 'criarCliente':
 
 		$nomeCliente = $_POST['nomeCliente'];
 		$nomeFantasiaCliente = $_POST['nomeFantasiaCliente'];
 		$tipoCliente = $_POST['tipoCliente'];
-		
+		$idInstituicao = $_POST['idInstituicao'];
 
-		$cdt = crud::criarCliente($nomeCliente,$tipoCliente,$nomeFantasiaCliente);
+		$cdt = crud::criarCliente($nomeCliente, $tipoCliente, $nomeFantasiaCliente,$idInstituicao);
 		if ($cdt == true) {
 			echo 1;
 		} else {
@@ -182,8 +183,9 @@ switch ($value) {
 	case 'excluirCliente':
 
 		$idCliente = $_POST['codCliente'];
+		$idInstituicao = $_POST['excidInstituicao'];
 
-		$cdt = crud::deleteCliente($idCliente);
+		$cdt = crud::deleteCliente($idCliente,$idInstituicao);
 
 		if ($cdt == true) {
 			echo 1;
@@ -192,6 +194,37 @@ switch ($value) {
 		}
 
 		break;
+		//ATUALIZA STATUS DO CLIENTE PARA DESATIVADO
+	case 'desativaCliente':
+
+		$id = $_POST['id'];
+		$status = "D";
+		$idInstituicao = $_POST['idInstituicaoDes'];
+
+		$edt = crud::atualizaStatusCliente($id, $status,$idInstituicao);
+		if ($edt == true) {
+			echo 1;
+		} else {
+
+			echo 0;
+		}
+		break;
+
+		//ATUALIZA STATUS DO CLIENTE PARA DESATIVADO/ ATIVADO
+	case 'ativaCliente':
+
+		$id = $_POST['id'];
+		$status = "A";
+		$idInstituicao = $_POST['idInstituicaoAt'];
+		$edt = crud::atualizaStatusCliente($id, $status,$idInstituicao);
+		if ($edt == true) {
+			echo 1;
+		} else {
+			echo 0;
+		}
+		break;
+		//ATUALIZA STATUS DO CLIENTE PARA ATIVADO
+		//cliente
 
 		//EDITA USUÁRIO
 	case 'editaUsr':
@@ -325,35 +358,7 @@ switch ($value) {
 		}
 		break;
 
-		//ATUALIZA STATUS DO CLIENTE PARA DESATIVADO
-	case 'desativaCliente':
 
-		$id = $_POST['id'];
-		$status = "D";
-
-		$edt = crud::atualizaStatusCliente($id, $status);
-		if ($edt == true) {
-			echo 1;
-		} else {
-
-			echo 0;
-		}
-		break;
-
-		//ATUALIZA STATUS DO CLIENTE PARA DESATIVADO/ ATIVADO
-	case 'ativaCliente':
-
-		$id = $_POST['id'];
-		$status = "A";
-
-		$edt = crud::atualizaStatusCliente($id, $status);
-		if ($edt == true) {
-			echo 1;
-		} else {
-			echo 0;
-		}
-		break;
-		//ATUALIZA STATUS DO CLIENTE PARA ATIVADO
 
 		// MANAGER SLA
 	case 'cadSla':
@@ -432,8 +437,8 @@ switch ($value) {
 		//statuspedido
 
 		//controlepedido
-		case 'CadastroPedido':
-		
+	case 'CadastroPedido':
+
 		$dataCadastro = $_POST['dataCadastro'];
 		$dataAbertura = $_POST['dataAtual'];
 		$numeroPregao = $_POST['numeroPregao'];
@@ -445,46 +450,46 @@ switch ($value) {
 		$codCliente = $_POST['nomeCliente'];
 		$observacao = $_POST['mensagem'];
 
-			//ENTRA AQUI SE TIVER ANEXO
-			if (!empty($_FILES["file"]["name"])) {
-				$validextensions = array("jpeg", "jpg", "png", "PNG", "JPG", "JPEG", "pdf", "PDF", "docx");
-				$temporary = explode(".", $_FILES["file"]["name"]);
-				$file_extension = end($temporary);
-				$anexo = md5($dataAbertura) . "." . $file_extension;
-	
-				if (in_array($file_extension, $validextensions)) {
-					$sourcePath = $_FILES['file']['tmp_name'];
-					$targetPath = "../anexos/" . md5($dataAbertura) . "." . $file_extension;
-					move_uploaded_file($sourcePath, $targetPath); // Move arquivo				
-					//SALVA NO BANCO
-					$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao,$dataCadastro,$idInstituicao);
-					if ($cdt == true) {
-						echo 1;
-						//enviaEmail();
-					} else {
-						echo 0;
-					}
-				} else {
-					echo 0;
-				}
-				//CASO NÃO TENHA ANEXO ENTRA AQUI	
-			} else {
-				$anexo = "sem_anexo.php";
-					$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao,$dataCadastro, $idInstituicao);
+		//ENTRA AQUI SE TIVER ANEXO
+		if (!empty($_FILES["file"]["name"])) {
+			$validextensions = array("jpeg", "jpg", "png", "PNG", "JPG", "JPEG", "pdf", "PDF", "docx");
+			$temporary = explode(".", $_FILES["file"]["name"]);
+			$file_extension = end($temporary);
+			$anexo = md5($dataAbertura) . "." . $file_extension;
+
+			if (in_array($file_extension, $validextensions)) {
+				$sourcePath = $_FILES['file']['tmp_name'];
+				$targetPath = "../anexos/" . md5($dataAbertura) . "." . $file_extension;
+				move_uploaded_file($sourcePath, $targetPath); // Move arquivo				
+				//SALVA NO BANCO
+				$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao);
 				if ($cdt == true) {
 					echo 1;
+					//enviaEmail();
 				} else {
 					echo 0;
 				}
+			} else {
+				echo 0;
 			}
-		
+			//CASO NÃO TENHA ANEXO ENTRA AQUI	
+		} else {
+			$anexo = "sem_anexo.php";
+			$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao);
+			if ($cdt == true) {
+				echo 1;
+			} else {
+				echo 0;
+			}
+		}
+
 		break;
 
 	case 'editarPedido':
 
 		$descricao  = $_POST['edtDescricao'];
 		$edtId         = $_POST['edtId'];
-		$cad = crud::editarPedido($codControle, $numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao,$idInstituicao);
+		$cad = crud::editarPedido($codControle, $numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $idInstituicao);
 		if ($cad == true) {
 			echo 1;
 		} else {
@@ -492,63 +497,72 @@ switch ($value) {
 		}
 		break;
 
-	case 'AlterarPedido2':	
+	case 'AlterarPedido2':
 		$codControle        = $_POST['codigoControleAlterar2'];
 		$statusPedido		= $_POST['statusPedidoAlterar2'];
 		$mensagemAlterar    = $_POST['mensagemPedidoAlterar2'];
 		$nomeCliente  		= $_POST['nomeClienteAlterar2'];
 		$numeroAf         	= $_POST['numeroAfAlterar2'];
 		$valorPedidoAtual    = $_POST['valorPedidoAlterar2'];
-		$valorPedido = str_replace(",",".",$valorPedidoAtual);
+		$valorPedido = str_replace(",", ".", $valorPedidoAtual);
 		$idInstituicao = $_POST['idInstituicaoAlterar2'];
 		//$valorPedido =	number_format ($valorPedidoAtual, 2, '.', ',');
 		$numeroLicitacao    = $_POST['numeroLicitacaoPedidoAlterar2'];
 		$anexoAlterar       = $_POST['anexoAlterar'];
-		$dataAbertura = $_POST['dataAtual2'];	
-//ENTRA AQUI SE TIVER ANEXO
-if (!empty($_FILES["file"]["name"])) {
-	
-	$validextensions = array("jpeg", "jpg", "png", "PNG", "JPG", "JPEG", "pdf", "PDF", "docx");
-	$temporary = explode(".", $_FILES["file"]["name"]);
-	$file_extension = end($temporary);
-	$anexoAlterar = md5($dataAbertura) . "." . $file_extension;
+		$dataAbertura = $_POST['dataAtual2'];
+		//ENTRA AQUI SE TIVER ANEXO
+		if (!empty($_FILES["file"]["name"])) {
 
-	if (in_array($file_extension, $validextensions)) {
-		$sourcePath = $_FILES['file']['tmp_name'];
-		$targetPath = "../anexos/" . md5($dataAbertura) . "." . $file_extension;
-		move_uploaded_file($sourcePath, $targetPath); // Move arquivo				
-		//SALVA NO BANCO
-		$cad = crud::AlterarPedido2($codControle, $statusPedido,$mensagemAlterar,$nomeCliente ,
-		$numeroAf,$valorPedido,$numeroLicitacao,$anexoAlterar,$idInstituicao );
-		
-		if ($cad == true) {
-			echo 1;
-			//enviaEmail();
+			$validextensions = array("jpeg", "jpg", "png", "PNG", "JPG", "JPEG", "pdf", "PDF", "docx");
+			$temporary = explode(".", $_FILES["file"]["name"]);
+			$file_extension = end($temporary);
+			$anexoAlterar = md5($dataAbertura) . "." . $file_extension;
+
+			if (in_array($file_extension, $validextensions)) {
+				$sourcePath = $_FILES['file']['tmp_name'];
+				$targetPath = "../anexos/" . md5($dataAbertura) . "." . $file_extension;
+				move_uploaded_file($sourcePath, $targetPath); // Move arquivo				
+				//SALVA NO BANCO
+				$cad = crud::AlterarPedido2(
+					$codControle,
+					$statusPedido,
+					$mensagemAlterar,
+					$nomeCliente,
+					$numeroAf,
+					$valorPedido,
+					$numeroLicitacao,
+					$anexoAlterar,
+					$idInstituicao
+				);
+
+				if ($cad == true) {
+					echo 1;
+					//enviaEmail();
+				} else {
+					echo 0;
+				}
+			} else {
+				echo 0;
+			}
 		} else {
-			echo 0;
+			//CASO NÃO TENHA ANEXO ENTRA AQUI
+			$cad = crud::AlterarPedido2($codControle, $statusPedido, $mensagemAlterar, $nomeCliente,	$numeroAf, $valorPedido, $numeroLicitacao, $anexoAlterar, $idInstituicao);
+
+			if ($cad == true) {
+				echo 1;
+			} else {
+				echo 0;
+			}
 		}
-	} else {
-		echo 0;
-	}
-}else{
-	//CASO NÃO TENHA ANEXO ENTRA AQUI
-	$cad = crud::AlterarPedido2($codControle, $statusPedido,$mensagemAlterar,$nomeCliente ,	$numeroAf,$valorPedido,$numeroLicitacao,$anexoAlterar,$idInstituicao );
-	
-		if ($cad == true) {
-			echo 1;
-		} else {
-			echo 0;
-		}	
-	}
-	break;
+		break;
 
 	case 'AlterarPedido':
 
-		$statusPedido  = $_POST['statusPedidoAlterar'];
-		$codControle         = $_POST['codigoControleAlterar'];
-		$mensagemAlterar         = $_POST['mensagemPedidoAlterar'];
-		$idInstituicao = $_POST['idInstituicaoAlterar'];
-		$cad = crud::AlterarPedido($codControle, $statusPedido,$mensagemAlterar,$idInstituicao);
+		$statusPedido		= $_POST['statusPedidoAlterar'];
+		$codControle        = $_POST['codigoControleAlterar'];
+		$mensagemAlterar    = $_POST['mensagemPedidoAlterar'];
+		$idInstituicao 		= $_POST['idInstituicaoAlterar'];
+		$cad = crud::AlterarPedido($codControle, $statusPedido, $mensagemAlterar, $idInstituicao);
 		if ($cad == true) {
 			echo 1;
 		} else {
@@ -560,7 +574,7 @@ if (!empty($_FILES["file"]["name"])) {
 
 		$id         = $_POST['idPedido'];
 		$idInstituicao = $_POST['idInstituicao'];
-		$cad = crud::deletePedido($id,$idInstituicao);
+		$cad = crud::deletePedido($id, $idInstituicao);
 		if ($cad == true) {
 			echo 1;
 		} else {
@@ -568,7 +582,7 @@ if (!empty($_FILES["file"]["name"])) {
 		}
 		break;
 
-		case 'adicionaMensagemPedido':
+	case 'adicionaMensagemPedido':
 
 		$idLogado = $_POST['idLogado'];
 		$dataHora = $_POST['datahora'];
@@ -576,9 +590,9 @@ if (!empty($_FILES["file"]["name"])) {
 		$mensagem = $_POST['mensagem'];
 		$idInstituicao = $_POST['idInstituicao'];
 
-		$cdt = crud::addMensagem($idLogado, $dataHora, $codDemanda, $mensagem,$idInstituicao);
+		$cdt = crud::addMensagem($idLogado, $dataHora, $codDemanda, $mensagem, $idInstituicao);
 		if ($cdt == true) {
-				echo 1;
+			echo 1;
 		} else {
 			echo 0;
 		}
@@ -591,73 +605,72 @@ if (!empty($_FILES["file"]["name"])) {
 		//REPRESENTANTE
 
 	case 'cadRepresentante':
-			$nomeRepresentante = $_POST['nomeRepresentante'];
-			$idInstituicao = $_POST['idInstituicao'];
-			$cad = crud::criarRepresentante($nomeRepresentante,$idInstituicao);
+		$nomeRepresentante = $_POST['nomeRepresentante'];
+		$idInstituicao = $_POST['idInstituicao'];
+		$cad = crud::criarRepresentante($nomeRepresentante, $idInstituicao);
 
-			if ($cad == true){
-				echo 1;
-			}else {
-				echo 0;
-			}
+		if ($cad == true) {
+			echo 1;
+		} else {
+			echo 0;
+		}
 		break;
 
 	case 'editarRepresentante':
-	
-	$nomeRepresentante = $_POST['edtnome'];
-	$codRepresentante = $_POST['idRepresentante'];
-	$statusRepresentante =  $_POST['edtstatus'];
-	$idInstituicao = $_POST['idInstituicao'];
-	$cad = crud::editarRepresentante($nomeRepresentante,$codRepresentante,$statusRepresentante,$idInstituicao );
-		
-		if ($cad == true){
+
+		$nomeRepresentante = $_POST['edtnome'];
+		$codRepresentante = $_POST['idRepresentante'];
+		$statusRepresentante =  $_POST['edtstatus'];
+		$idInstituicao = $_POST['idInstituicao'];
+		$cad = crud::editarRepresentante($nomeRepresentante, $codRepresentante, $statusRepresentante, $idInstituicao);
+
+		if ($cad == true) {
 			echo 1;
-		}else {
+		} else {
 			echo 0;
 		}
 
-	break;
-	
+		break;
+
 	case 'ativaRepresentante':
-	
-	$codRepresentante = $_POST['idRepresentante'];
-	$statusRepresentante =  'A';
-	$idInstituicao = $_POST['idInstituicao'];
-	$cad = crud::ativaRepresentante($codRepresentante,$statusRepresentante,$idInstituicao );
-		
-		if ($cad == true){
+
+		$codRepresentante = $_POST['idRepresentante'];
+		$statusRepresentante =  'A';
+		$idInstituicao = $_POST['idInstituicao'];
+		$cad = crud::ativaRepresentante($codRepresentante, $statusRepresentante, $idInstituicao);
+
+		if ($cad == true) {
 			echo 1;
-		}else {
+		} else {
 			echo 0;
 		}
 
-	break;
+		break;
 	case 'desativaRepresentante':
-	
-	$codRepresentante = $_POST['idRepresentante'];
-	$statusRepresentante =  'D';
-	$idInstituicao = $_POST['idInstituicao'];
-	$cad = crud::ativaRepresentante($codRepresentante,$statusRepresentante,$idInstituicao );
-		
-		if ($cad == true){
+
+		$codRepresentante = $_POST['idRepresentante'];
+		$statusRepresentante =  'D';
+		$idInstituicao = $_POST['idInstituicao'];
+		$cad = crud::ativaRepresentante($codRepresentante, $statusRepresentante, $idInstituicao);
+
+		if ($cad == true) {
 			echo 1;
-		}else {
+		} else {
 			echo 0;
 		}
 
-	break;
+		break;
 
 	case 'excluirRepresentante':
-			
-	$codRepresentante = $_POST['idRepresentante'];
-	$idInstituicao = $_POST['idInstituicao'];
-	$cad = crud::deleteRepresentante($codRepresentante,$idInstituicao );		
-		if ($cad == true){
+
+		$codRepresentante = $_POST['idRepresentante'];
+		$idInstituicao = $_POST['idInstituicao'];
+		$cad = crud::deleteRepresentante($codRepresentante, $idInstituicao);
+		if ($cad == true) {
 			echo 1;
-		}else {
+		} else {
 			echo 0;
 		}
 
-	break;
-
+		break;
 }

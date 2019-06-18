@@ -146,12 +146,14 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
 
                             </tbody>
                         </table>
-                    </div>
+                   
+                   
                 </div>
             </div>
         </div>
-        <!-- /.row -->
     </div>
+        <!-- /.row -->
+</div>
 
 
     <!-- MODAL DETALHES -->
@@ -283,7 +285,7 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
 
 
 
-</div>
+
 <!-- /#page-wrapper -->
 
 

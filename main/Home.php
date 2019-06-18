@@ -3,7 +3,7 @@ require_once 'cabecalho.php';
 include_once 'vrf_lgin.php';
 include_once '../core/crud.php';
 //PEDIDOS CANCELADOS
-$totalPedidoCancelado = crud::dataview("SELECT COUNT(*) as total from controlePedido as con inner join statusPedido as sta on sta.codStatus = con.codStatus where sta.nome='CANCELADO'");
+$totalPedidoCancelado = crud::dataview("SELECT COUNT(*) as total from controlePedido as con inner join statusPedido as sta on sta.codStatus = con.codStatus where sta.nome in ('NEGADO','CANCELADO')");
 $arrayPedidoCancelados = $totalPedidoCancelado->fetchAll(PDO::FETCH_ASSOC);
 //PEDIDOS TODOS
 $totalTodos = crud::dataview("SELECT COUNT(*) as total from controlePedido as con inner join statusPedido as sta on sta.codStatus = con.codStatus");
@@ -26,9 +26,6 @@ $andre = crud::dataview("SELECT R.codCliente,R.nomeCliente, R.qtdePedidos FROM (
 	 WHERE R.qtdePedidos > 0
 	 ORDER BY R.qtdePedidos DESC; ");
 $arrayAndre = $andre->fetchAll(PDO::FETCH_ASSOC);
-
-
-
 
 //PEDIDOS EM ATENDIMENTO
 $totalPedidoAtendimento = crud::dataview("SELECT COUNT(*) as total from controlePedido as con inner join statusPedido as sta on sta.codStatus = con.codStatus where sta.nome='ATENDIDO'");

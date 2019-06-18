@@ -15,8 +15,7 @@ $idLogado = $_SESSION['usuarioID'];
 $logado         = $_SESSION['nomeUsuario'];
 $emailLogado    = $_SESSION['emailUsuario'];
 $instituicao    = $_SESSION['instituicaoUsuario'];
-$queryDepart    = "SELECT * FROM departamentos";
-$queryCliente   = "SELECT * FROM cliente";
+
 /*
 echo " Andre  $andre<br/> ";
 
@@ -121,7 +120,7 @@ if($logado != 1){$logado2 = 600;
                                             <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']); ?>">Anexo</a></td>
                                             <td><a class="btn btn-warning waves-effect waves-light" type="button" id="btnPedidoAlterar" data-toggle="modal" data-target="#modalPedidoAlterar2" data-whatever="@getbootstrap" target="_blank" data-statusalterar="<?php print($row['codStatus']); ?>" data-mensagemalterar="<?php print($row['observacao']); ?>" data-codigocontrolealterar="<?php print($row['codControle']); ?>" data-nomeclientealterar="<?php print($row['codCliente']); ?>" data-tipoclientealterar="<?php print($row['tipoCliente']); ?>" data-numeropregaoalterar="<?php print($row['numeroPregao']); ?>" data-numeroafalterar="<?php print($row['numeroAf']); ?>" data-anexoalterar="<?php print($row['anexo']); ?>" data-valorpedidoalterar="<?php print($row['valorPedido']); ?>">Alterar</a></td>
                                             <td> <a class="btn btn-danger waves-effect waves-light" data-target="#modalExluirPedido" data-whatever="@getbootstrap" id="btnExcluiPedido" data-codigoexcluir="<?php print($row['codControle']); ?>" data-nomeexcluir="<?php print($row['nomeCliente']); ?>">Excluir</a></td>
-                                            <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" data-toggle="modal" data-target="#modalDetPedido" data-whatever="@getbootstrap" data-codigocontroledet="<?php print($row['codControle']); ?>" data-nomeclientedet="<?php print($row['nomeCliente']); ?>" data-tipoclientedet="<?php print($row['tipoCliente']); ?>" data-numeropregaodet="<?php print($row['numeroPregao']); ?>" data-numeropedidodet="<?php print($row['numeroAf']); ?>" data-valorpedidodet="<?php print($row['valorPedido']); ?>" data-statuscontroledet="<?php print($row['nomeStatus']); ?>" data-datacadastrodet="<?php print(crud::formataData($row['dataCadastro'])); ?>" data-mensagem="<?php print($row['observacao']); ?>">Detalhe</a></td>
+                                            <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" data-toggle="modal" data-target="#modalDetPedido" data-whatever="@getbootstrap" data-codigocontroledet="<?php print($row['codControle']); ?>" data-nomeclientedet="<?php print($row['nomeCliente']); ?>" data-tipoclientedet="<?php print($row['tipoCliente']); ?>" data-numeropregaodet="<?php print($row['numeroPregao']); ?>" data-numeropedidodet="<?php print($row['numeroAf']); ?>" data-valorpedidodet="<?php print($row['valorPedido']); ?>" data-statuscontroledet="<?php print($row['nomeStatus']); ?>" data-datacadastrodet="<?php print(crud::formataData($row['dataCadastro'])); ?>" data-mensagem="<?php print($row['observacao']); ?>">Detalhes</a></td>
                                         </tr>
                                     <?php
                                 }
@@ -139,91 +138,119 @@ if($logado != 1){$logado2 = 600;
         </form>
     </div>
     <!-- /.row -->
+
+
 </div>
-
-<!-- MODAL CADASTRAR PEDIDO -->
-<div class="modal fade bs-example-modal-lg" id="modalCadastrarPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="exampleModalLabel1">Cadastro de Pedido</h4>
-            </div>
-            <div class="modal-body">
-                <form id="frmCadastroPedido" action="" method="post" enctype="multipart/form-data">
-                    <input type="hidden" value="CadastroPedido" name="tipo" id="tipo">
-                    <input type="hidden" value="<?php echo $nomeAnexo; ?>" name="dataAtual" id="dataAtual">
-                    <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicao" id="idInstituicao">
-                    <input type="hidden" value="<?php echo $data; ?>" name="dataCadastro" id="dataCadastro">
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <select class="form-control" name="nomeCliente" id="nomeCliente" required>
-                                <option value="" selected disabled>Selecione o Cliente</option>
-                                <?php
-                                $selectCliente = crud::mostrarCliente();
-                                if ($selectCliente->rowCount() > 0) {
-                                    while ($row = $selectCliente->fetch(PDO::FETCH_ASSOC)) {
-                                        ?>
-                                        <option value="<?php print($row['codCliente']); ?>">
-                                            <?php print($row['nomeCliente']); ?>
-                                        </option>
-                                    <?php
-                                }
-                            }
-                            ?>
-                            </select>
-                        </div>
-
-                    </div>
-                    <br>
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <select class="form-control" name="statusPedido" id="statusPedido" required>
-                                <option value="" selected disabled>Selecione o Status</option>
-                                <?php
-                                $selectStatus = crud::listarStatus();
-                                if ($selectStatus->rowCount() > 0) {
-                                    while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
-                                        ?>
-                                        <option value="<?php print($row['codStatus']); ?>">
-                                            <?php print($row['nome']); ?>
-                                        </option>
-                                    <?php
-                                }
-                            }
-                            ?>
-                            </select>
-                            <div class="form-group">
-                                <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroAf" id="numeroAf" placeholder="Numero da AF" required>
+<!-- MODAL anexo do Pedido-->
+<div class="modal fade" id="modalPedidoSemAnexo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" id="headerModalAlerta">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="headermodal">Alerta</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="contextoModal">
+                                <h2>Este pedido não possui anexo!</h2>
                             </div>
                         </div>
                     </div>
-                    <br>
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroPregao" id="numeroPregao" placeholder="Numero Licitação" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="valorPedido" id="valorPedido" onkeypress="$(this).mask('#.##0,00', {reverse: true})" placeholder="Valor do Pedido">
-                        </div>
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label for="message-text" class="control-label">Observação:</label>
-                        <textarea name="mensagem" class="form-control" rows="3" id="mensagem"></textarea>
-                    </div>
-                    <input type="file" name="file" id="file">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="submit" id="salvaPedido" class="btn btn-primary">Enviar</button>
+        </div>
+</div>
+    <!-- MODAL anexo do Pedido-->
+  
+    <!-- MODAL CADASTRAR PEDIDO -->
+    <div class="modal fade bs-example-modal-lg" id="modalCadastrarPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel1">Cadastro de Pedido</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="frmCadastroPedido" action="" method="post" enctype="multipart/form-data">
+                        <input type="hidden" value="CadastroPedido" name="tipo" id="tipo">
+                        <input type="hidden" value="<?php echo $nomeAnexo; ?>" name="dataAtual" id="dataAtual">
+                        <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicao" id="idInstituicao">
+                        <input type="hidden" value="<?php echo $data; ?>" name="dataCadastro" id="dataCadastro">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <select class="form-control" name="nomeCliente" id="nomeCliente" required>
+                                    <option value="" selected disabled>Selecione o Cliente</option>
+                                    <?php
+                                    $selectCliente = crud::mostrarCliente($idInstituicao);
+                                    if ($selectCliente->rowCount() > 0) {
+                                        while ($row = $selectCliente->fetch(PDO::FETCH_ASSOC)) {
+                                            ?>
+                                            <option value="<?php print($row['codCliente']); ?>">
+                                                <?php print($row['nomeCliente']); ?>
+                                            </option>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                                </select>
+                            </div>
+
+                        </div>
+                        <br>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <select class="form-control" name="statusPedido" id="statusPedido" required>
+                                    <option value="" selected disabled>Selecione o Status</option>
+                                    <?php
+                                    $selectStatus = crud::listarStatus();
+                                    if ($selectStatus->rowCount() > 0) {
+                                        while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
+                                            ?>
+                                            <option value="<?php print($row['codStatus']); ?>">
+                                                <?php print($row['nome']); ?>
+                                            </option>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                                </select>
+                                <div class="form-group">
+                                    <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroAf" id="numeroAf" placeholder="Numero da AF" required>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroPregao" id="numeroPregao" placeholder="Numero Licitação" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="valorPedido" id="valorPedido" onkeypress="$(this).mask('#.##0,00', {reverse: true})" placeholder="Valor do Pedido">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">Observação:</label>
+                            <textarea name="mensagem" class="form-control" rows="3" id="mensagem"></textarea>
+                        </div>
+                        <input type="file" name="file" id="file">
+
+                        <div class="modal-footer">
+                            <button type="submit" id="salvaPedido" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            </form>
         </div>
     </div>
-</div>
-<!-- MODAL CRIA PEDIDO -->
+    <!-- MODAL CRIA PEDIDO -->
 
-<!-- MODAL detalhe do Pedido-->
+ <!-- MODAL detalhe do Pedido-->
 <div class="modal fade bs-example-modal-lg" id="modalDetPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -232,7 +259,6 @@ if($logado != 1){$logado2 = 600;
                     <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="exampleModalLabel1">Detalhes do Pedido</h4>
             </div>
-            <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoDetalhes" id="idInstituicaoDetalhes">
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
@@ -280,164 +306,83 @@ if($logado != 1){$logado2 = 600;
                         </table>
                     </div>
                     <div class="col-md-12">
-                        <h4><strong>Comentários:</strong></h4>
-                        <table class="table table-striped">
-                            <tbody id="comentariosDemand">
-                            </tbody>
-                        </table>
-                    </div>
+                            <h4><strong>Comentários:</strong></h4>
+                            <table class="table table-striped">
+                                <tbody id="comentariosPedido" >
+                                
+                                
+                                </tbody>
+                            </table>
+                        </div>   
+                         
+                    <div class="col-md-12">                       
+                            <form id="frmAddMensagem">
+                                <input type="hidden" value="<?php echo $idLogado; ?>" name="idLogado" id="idLogado">
+                                <input type="hidden" value="<?php echo $dataMsg; ?>" name="datahora" id="datahora"> 
+                                <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoMensagem" id="idInstituicaoMensagem">                         
+                                <div class="form-group">
+                                    <label for="message-text" class="control-label">Adicionar Comentário</label>
+                                    <textarea name="mensagemComentario" class="form-control" rows="2" id="mensagemComentario" required></textarea>          
+                                </div>
+                                <button type="submit" id="addMensagem" class="btn btn-primary" >Enviar</button>
+                            </form>
+                        </div>                 
 
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-danger waves-effect waves-light" data-target="#modalExluirPedido" data-whatever="@getbootstrap" id="btnExcluiPedido2">Excluir</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <td><a class="btn btn-primary waves-effect waves-light" type="button" id="btnPedidoAlterar2" data-toggle="modal" data-target="#modalPedidoAlterar" data-whatever="@getbootstrap" value="<?php echo $idControle; ?>" target="_blank" data-codigocontrolealterar="<?php print($row['codControle']); ?>">Alterar</a></td>
             </div>
         </div>
     </div>
 </div>
 <!-- MODAL detalhe do Pedido-->
-
-<!-- MODAL anexo do Pedido-->
-<div class="modal fade" id="modalPedidoSemAnexo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header" id="headerModalAlerta">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="headermodal">Alerta</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div id="contextoModal">
-                            <h2>Este pedido não possui anexo!</h2>
+  
+    
+    <!-- MODAL EXCLUIR cliente-->
+    <div class="modal fade" id="modalExluirPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="headermodal">Confirmação</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" value="<?php echo $idInstituicao; ?>" name="excidInstituicao" id="excidInstituicao">
+                        <input type="hidden" name="excIdPedido" id="excIdPedido">
+                        <div class="col-md-12">
+                            <div id="contextoModal">
+                                <h2>Você vai EXCLUIR pedido do Cliente: <span id="ExcNomePedido"></span>?</h2>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-
-            </div>
-        </div>
-    </div>
-</div>
-<!-- MODAL anexo do Pedido-->
-
-<!-- MODAL EXCLUIR cliente-->
-<div class="modal fade" id="modalExluirPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="headermodal">Confirmação</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                <input type="hidden" value="<?php echo $idInstituicao; ?>" name="excidInstituicao" id="excidInstituicao">
-                    <input type="hidden" name="excIdPedido" id="excIdPedido">
-                    <div class="col-md-12">
-                        <div id="contextoModal">
-                            <h2>Você vai EXCLUIR pedido do Cliente: <span id="ExcNomePedido"></span>?</h2>
-                        </div>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" id="btnExcluirPedido" class="btn btn-primary">Confirmar</button>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                <button type="submit" id="btnExcluirPedido" class="btn btn-primary">Confirmar</button>
-            </div>
         </div>
     </div>
-</div>
-<!-- MODAL EXCLUIR cliente-->
+        <!-- MODAL EXCLUIR cliente-->
 
-<!-- MODAL alterar  Pedido-->
-<div class="modal fade" id="modalPedidoAlterar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="exampleModalLabel1">Alterar Status do Pedido</h4>
-            </div>
-            <div class="modal-body">
-                <form id="frmAlterarPedido" action="" method="post" enctype="multipart/form-data">
-                <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoAlterar" id="idInstituicaoAlterar">
-                    <input type="hidden" value="AlterarPedido" name="tipo" id="tipo">
-                    <input type="hidden" id="codigoControleAlterar" name="codigoControleAlterar">
-                    <div class="form-group">
-                        <select class="form-control" name="statusPedidoAlterar" id="statusPedidoAlterar" required>
-                            <option value="" selected disabled>Selecione o Status</option>
-                            <?php
-                            $selectStatus = crud::listarStatus();
-                            if ($selectStatus->rowCount() > 0) {
-                                while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
-                                    ?>
-                                    <option value="<?php print($row['codStatus']); ?>">
-                                        <?php print($row['nome']); ?>
-                                    </option>
-                                <?php
-                            }
-                        }
-                        ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="control-label">Observação:</label>
-                        <textarea name="mensagemPedidoAlterar" class="form-control" rows="3" id="mensagemPedidoAlterar"></textarea>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        <button type="submit" id="alteraPedido" class="btn btn-primary">Enviar</button>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-    </div>
-</div>
-<!-- MODAL altera Pedido-->
-<!-- MODAL altera Pedido2-->
-<div class="modal fade bs-example-modal-lg" id="modalPedidoAlterar2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="exampleModalLabel1">Alteração de Pedido</h4>
-            </div>
-            <div class="modal-body">
-                <form id="frmAlterarPedido2" action="" method="post" enctype="multipart/form-data">
-                    <input type="hidden" value="AlterarPedido2" name="tipo" id="tipo">
-                    <input type="hidden" value="<?php echo $nomeAnexo; ?>" name="dataAtual2" id="dataAtual2">
-                    <input type="hidden" id="codigoControleAlterar2" name="codigoControleAlterar2">
-                    <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoAlterar2" id="idInstituicaoAlterar2">
-                    <div class="form-group">
-                    </div>
-
-                    <div class="form-inline">
+      <!-- MODAL alterar  Pedido-->
+      <div class="modal fade" id="modalPedidoAlterar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel1">Alterar Status do Pedido</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="frmAlterarPedido" action="" method="post" enctype="multipart/form-data">
+                        <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoAlterar" id="idInstituicaoAlterar">
+                        <input type="hidden" value="AlterarPedido" name="tipo" id="tipo">
+                        <input type="hidden" id="codigoControleAlterar" name="codigoControleAlterar">
                         <div class="form-group">
-                            <select class="form-control" name="nomeClienteAlterar2" id="nomeClienteAlterar2" required>
-                                <option value="" selected disabled>Selecione o Cliente</option>
-                                <?php
-                                $selectCliente = crud::mostrarCliente();
-                                if ($selectCliente->rowCount() > 0) {
-                                    while ($row = $selectCliente->fetch(PDO::FETCH_ASSOC)) {
-                                        ?>
-                                        <option value="<?php print($row['codCliente']); ?>">
-                                            <?php print($row['nomeCliente']); ?>
-                                        </option>
-                                    <?php
-                                }
-                            }
-                            ?>
-                            </select>
-                        </div>
-
-                    </div>
-                    <br>
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <select class="form-control" name="statusPedidoAlterar2" id="statusPedidoAlterar2" required>
+                            <select class="form-control" name="statusPedidoAlterar" id="statusPedidoAlterar" required>
                                 <option value="" selected disabled>Selecione o Status</option>
                                 <?php
                                 $selectStatus = crud::listarStatus();
@@ -452,43 +397,103 @@ if($logado != 1){$logado2 = 600;
                             }
                             ?>
                             </select>
-                            <div class="form-group">
-                                <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroAfAlterar2" id="numeroAfAlterar2" placeholder="Numero da AF" required>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroLicitacaoPedidoAlterar2" id="numeroLicitacaoPedidoAlterar2" placeholder="Numero Licitação" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" size="50" style="text-transform: uppercase;" class="form-control" name="valorPedidoAlterar2" id="valorPedidoAlterar2" placeholder="Valor do Pedido">
+                            <label for="message-text" class="control-label">Observação:</label>
+                            <textarea name="mensagemPedidoAlterar" class="form-control" rows="3" id="mensagemPedidoAlterar"></textarea>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="control-label">Observação:</label>
-                        <textarea name="mensagemPedidoAlterar2" class="form-control" rows="3" id="mensagemPedidoAlterar2"></textarea>
-                    </div>
-
-                    <input type="file" name="file" id="file">
-                    <input type="hidden" style="text-transform: uppercase;" class="form-control" name="anexoAlterar" id="anexoAlterar">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                            <button type="submit" id="alteraPedido" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </form>
+                </div>
 
             </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="submit" id="alteraPedido2" class="btn btn-primary">Enviar</button>
-            </div>
-            </form>
         </div>
     </div>
-</div>
-
-<!-- MODAL altera Pedido2-->
+    <!-- MODAL altera Pedido-->
 
 
-</div>
+    <!-- MODAL altera Pedido2-->
+<div class="modal fade bs-example-modal-lg" id="modalPedidoAlterar2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel1">Alteração de Pedido</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="frmAlterarPedido2" action="" method="post" enctype="multipart/form-data">
+                    <input type="hidden" value="AlterarPedido2" name="tipo" id="tipo">
+                        <input type="hidden" value="<?php echo $nomeAnexo; ?>" name="dataAtual2" id="dataAtual2">
+                        <input type="hidden" id="codigoControleAlterar2" name="codigoControleAlterar2">
+                        <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoAlterar2" id="idInstituicaoAlterar2">
+                        
+                        <div class="form-group">                                                
+                                <select class="form-control" name="nomeClienteAlterar2" id="nomeClienteAlterar2" required>
+                                    <option value="" selected disabled>Selecione o Cliente</option>
+                                    <?php
+                                    $selectCliente = crud::mostrarCliente($idInstituicao);
+                                    if ($selectCliente->rowCount() > 0) {
+                                        while ($row = $selectCliente->fetch(PDO::FETCH_ASSOC)) {
+                                            ?>
+                                            <option value="<?php print($row['codCliente']); ?>">
+                                                <?php print($row['nomeCliente']); ?>
+                                            </option>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                                </select>
+                        </div>   
+                        <br>                     
+                        <div class="form-group">
+                                <select class="form-control" name="statusPedidoAlterar2" id="statusPedidoAlterar2" required>
+                                    <option value="" selected disabled>Selecione o Status</option>
+                                    <?php
+                                    $selectStatus = crud::listarStatus();
+                                    if ($selectStatus->rowCount() > 0) {
+                                        while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
+                                            ?>
+                                            <option value="<?php print($row['codStatus']); ?>">
+                                                <?php print($row['nome']); ?>
+                                            </option>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                                </select>                                
+                            </div>
+                            <div class="form-group">
+                                    <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroAfAlterar2" id="numeroAfAlterar2" placeholder="Numero da AF" required>
+                            </div>                       
+                        <br>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroLicitacaoPedidoAlterar2" id="numeroLicitacaoPedidoAlterar2" placeholder="Numero Licitação" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" size="50" style="text-transform: uppercase;" class="form-control" name="valorPedidoAlterar2" id="valorPedidoAlterar2" placeholder="Valor do Pedido">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">Observação:</label>
+                            <textarea name="mensagemPedidoAlterar2" class="form-control" rows="3" id="mensagemPedidoAlterar2"></textarea>
+                        </div>
+                        <input type="file" name="file" id="file">
+                        <input type="hidden" style="text-transform: uppercase;" class="form-control" name="anexoAlterar" id="anexoAlterar">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    <button type="submit" id="alteraPedido2" class="btn btn-primary">Enviar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 <!-- /#page-wrapper -->
 
 <?php
@@ -497,6 +502,7 @@ include_once "modais.php";
 ?>
 
 <script type="text/javascript">
+
     $(document).ready(function(e) {
 
         permissaoNivel();
@@ -524,7 +530,7 @@ include_once "modais.php";
                     $("#salvaPedido").prop("disabled", true);
                 },
                 success: function(data) {
-           //alert(data);
+                    //alert(data);
                     if (data == 1) {
                         swal({
                                 title: "OK!",
@@ -578,6 +584,7 @@ include_once "modais.php";
              }); //SETA O CÓDIGO NO MODAL PARA ATUALIZAR O STATUS ------------------------------------------
              */
         $(document).on("click", "#btnPedidoAlterar", function() {
+           
             var codigoControle = $(this).data('codigocontrolealterar');
             var statusAlterar = $(this).data('statusalterar');
             var mensagemAlterar = $(this).data('mensagemalterar');
@@ -587,6 +594,9 @@ include_once "modais.php";
             var numeroLicitacao = $(this).data('numeropregaoalterar');
             var anexoAlterar = $(this).data('anexoalterar');
             var idInstituicao = $("#idInstituicaoAlterar").val();
+           
+            alert("teste aleterar");
+           
             $('#codigoControleAlterar2').val(codigoControle);
             $('#statusPedidoAlterar2').val(statusAlterar);
             $('#mensagemPedidoAlterar2').val(mensagemAlterar);
@@ -623,7 +633,7 @@ include_once "modais.php";
                     $("#alteraPedido2").prop("disabled", true);
                 },
                 success: function(data) {
-                   // alert(data);
+                    // alert(data);
                     if (data == 1) {
                         swal({
                                 title: "OK!",
@@ -696,7 +706,7 @@ include_once "modais.php";
         $(document).on("click", "#btnExcluiPedido", function() {
             var id = $(this).data('codigoexcluir');
             var nome = $(this).data('nomeexcluir');
-            var idInstituicao = $("#excidInstituicao").val();
+            var idInstituicao = $("#idInstituicaoDetalhes").val();
             $('#excIdPedido').val(id);
             $('#ExcNomePedido').html(nome);
 
@@ -724,7 +734,7 @@ include_once "modais.php";
                 data: {
                     tipo: tipo,
                     idPedido: idPedido,
-                    idInstituicao:idInstituicao
+                    idInstituicao: idInstituicao
                 },
                 success: function(result) {
 
@@ -760,7 +770,6 @@ include_once "modais.php";
         });
 
 
-        //Click no botao detalhas do pedido
         $(document).on("click", "#btnPedidoDetalhes", function() {
             //pegando valor das colunas da tabela e atribuindo as variaveis
             var idControle = $(this).data('codigocontroledet');
@@ -772,7 +781,6 @@ include_once "modais.php";
             var statusControle = $(this).data('statuscontroledet');
             var dataCadastro = $(this).data('datacadastrodet');
             var mensagem = $(this).data('mensagem');
-            var idInstituicao = $("#idInstituicaodet").val();
             var tempoPedido = "testes"; // $horas . ' Horas' . ' e ' . $minutos . " Minutos";
 
             if (status == "Fechada") {
@@ -783,9 +791,9 @@ include_once "modais.php";
             }
             if (tipoCliente == "M") {
                 tipoCliente = "Municipal";
-            } else if (tipoCliente == "E") {
-                tipoCliente = "Estadual";
-            } else if (tipoCliente == "F") {
+            } else  if (tipoCliente == "E") {
+                tipoCliente = "Estadual";            
+            } else  if (tipoCliente == "F") {
                 tipoCliente = "Federal";
             }
             //pegando valor das variaveis vindo da tabela e atribuindo aos id dos campos do modal para exibir
@@ -801,17 +809,16 @@ include_once "modais.php";
             $('#mensagemDetatalhes').html(mensagem);
 
             //MONTA OS COMENTÁRIOS NO MODAL
-            $.ajax({
+            var tipo = 'busca_mensagensPedido';
+             $.ajax({
                 url: 'busca_mensagens.php',
-                type: "POST",
-                tipo: "busca_mensagens",
-                data: {
-                    id: id
-                },
-                success: function(data) {
-                    if (data) {
-                        $('#comentariosDemand').html(data);
-                    }
+                type: "POST",                  
+                data: {idControle : idControle , tipo : tipo},
+                success: function(data) { 
+                  //  alert(idControle);  
+                    if (idControle) {                            
+                        $('#comentariosPedido').html(data);
+                    } 
                 }
             });
         });
@@ -828,6 +835,7 @@ include_once "modais.php";
         }); //VERIFICA SE DEMANDA TEM ANEXO ------------------------------------------------------------      
     });
     //BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
+    //BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
     $("tr #statusControle").each(function(i) {
         if ($(this).text() == "RECEPCIONADO" || $(this).text() == "LIBERADO PARCIALMENTE") {
             //$(status).css("color", "red");
@@ -836,15 +844,14 @@ include_once "modais.php";
         } else if ($(this).text() == "ATENDIDO") {
             this.style.color = "White"; //cor da fonte
             this.style.background = "green"; //cor do fundo
-        } else if ($(this).text() == "PENDENTE") {
+        } else if ($(this).text() == "PENDENTE"|| $(this).text() == "ANALISE FINANCEIRO") {
             this.style.color = "White"; //cor da fonte
             this.style.background = "red"; //cor do fundo
-        } else if ($(this).text() == "CANCELADO" || $(this).text() == "NEGADO") {
-            //$(status).css("color", "red");
+        } else if ($(this).text() == "CANCELADO" || $(this).text() == "NEGADO") {          
             this.style.color = "White"; //cor da fonte
             this.style.background = "red"; //cor do fundo
         } else {
             this.style.color = "";
         }
-    });
+    }); 
 </script>
