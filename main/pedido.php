@@ -177,8 +177,7 @@ if($logado != 1){$logado2 = 600;
                     <input type="hidden" value="<?php echo $nomeAnexo; ?>" name="dataAtual" id="dataAtual">
                     <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicao" id="idInstituicao">
                     <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataCadastro" id="dataCadastro">
-                    <div class="form-inline">
-                        <div class="form-group">
+                    <div class="form-group">
                             <select class="form-control" name="nomeCliente" id="nomeCliente" required>
                                 <option value="" selected disabled>Selecione o Cliente</option>
                                 <?php
@@ -195,17 +194,20 @@ if($logado != 1){$logado2 = 600;
                             ?>
                             </select>
                         </div>
+                    <div class="form-inline">
+                        
                         <div class="form-group">
                             <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroAf" id="numeroAf" placeholder="Numero da AF" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroPregao" id="numeroPregao" placeholder="Numero Licitação" required>
                         </div>
                     </div>
                     <br>
                     <div class="form-inline">
+                        
                         <div class="form-group">
-                            <input type="text" size="33" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroPregao" id="numeroPregao" placeholder="Numero Licitação" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" size="33" style="text-transform: uppercase;" maxlength="40" class="form-control" name="valorPedido" id="valorPedido" placeholder="Valor do Pedido">
+                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="valorPedido" id="valorPedido" placeholder="Valor do Pedido">
                         </div>
                         <div class="form-group">
                             <select class="form-control" name="statusPedido" id="statusPedido" required>
