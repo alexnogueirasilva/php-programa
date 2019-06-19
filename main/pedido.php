@@ -5,10 +5,14 @@
 include_once 'vrf_lgin.php';
 require_once 'cabecalho.php';
 include_once '../core/crud.php';
+include_once 'Models/DAO/StatusDAO.php';
+include_once './Models/DAO/PedidoDAO.php';
 
-$data = date('Y-m-d H:i:s');
+date_default_timezone_set('America/Bahia');
+
 //DEFINIÇÃO DO NOME DO ANEXO
 $nomeAnexo = date('Y-m-d-H:i');
+$dataMsg = date('d/m/Y - H:i');
 $novoNomeAnexo = md5($nomeAnexo);
 
 $idLogado = $_SESSION['usuarioID'];
@@ -16,6 +20,9 @@ $logado         = $_SESSION['nomeUsuario'];
 $emailLogado    = $_SESSION['emailUsuario'];
 $instituicao    = $_SESSION['instituicaoUsuario'];
 
+$queryDepart    = "SELECT * FROM departamentos";
+$queryCliente   = "SELECT * FROM cliente";
+$queryStatus   = "SELECT * FROM status";
 /*
 echo " Andre  $andre<br/> ";
 
@@ -26,6 +33,7 @@ if($logado != 1){$logado2 = 600;
     echo "<meta HTTP-EQUIV='refresh' CONTENT='$logado2;'>";//atualizacao automatica
 }
 */
+
 ?>
 
 <div class="container-fluid">
@@ -36,7 +44,7 @@ if($logado != 1){$logado2 = 600;
         <!-- /.col-lg-12 -->
     </div>
     <div class="container">
-        <div id="andre"></div>
+    <div id="andre"></div>
     </div>
     <!-- row -->
     <div class="row">
@@ -45,212 +53,194 @@ if($logado != 1){$logado2 = 600;
             <button class="btn btn-success waves-effect waves-light" type="button" onclick="window.location.href = 'Home.php'" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-home"></i></span>Home</button>
         </div>
         <form id="frmIndex" method="post">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div id="dado"></div>
-                    <div class="white-box">
-                        <div class="col-sm-6">
-                            <h3>Pedidos Cadastrados</h3>
-                        </div>
-
-                        <table id="tabela" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Cliente</th>
-                                    <th>Licitação</th>
-                                    <th>Pedido</th>
-                                    <th>Valor</th>
-                                    <th>Anexo</th>
-                                    <th>Alterar</th>
-                                    <th>Excluir</th>
-                                    <th>Detalhe</th>
-                                </tr>
-                            <tfoot>
-                                <tr>
-                                    <th>Cliente</th>
-                                    <th>Licitação</th>
-                                    <th>Pedido</th>
-                                    <th>Valor</th>
-                                    <th>Anexo</th>
-                                    <th>Alterar</th>
-                                    <th>Excluir</th>
-                                    <th>Detalhe</th>
-                                </tr>
-                            </tfoot>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $dados = crud::listarPedido($idInstituicao);
-                                $totalPedido = '';
-                                $qtdePedido = 0;
-                                if ($dados->rowCount() > 0) {
-                                    while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
-
-                                        $dataCriada = $row['dataCadastro'];
-                                        $dataAtual = date('Y-m-d H:i:s');
-
-
-                                        $valorPedido = $row['valorPedido'];
-
-                                        $totalPedido  += $valorPedido;
-
-                                        $qtdePedido = $qtdePedido + 1;
-
-                                        $datatime1 = new DateTime($row['dataCadastro']);
-                                        $datatime2 = new DateTime($dataAtual);
-
-                                        $data1  = $datatime1->format('Y-m-d H:i');
-                                        $data2  = $datatime2->format('Y-m-d H:i');
-
-                                        $criada = strtotime($data1);
-                                        $atual = strtotime($data2);
-
-                                        $intervalo = ($atual - $criada) / 60;
-
-                                        $horas = (int)($intervalo / 60);
-                                        $minutos = $intervalo % 60;
-                                        ?>
-                                        <tr>
-                                            <td style="text-transform: uppercase;">
-                                                <?php print($row['nomeCliente']); ?></td>
-                                            <td><?php print($row['numeroPregao']); ?></td>
-                                            <td><?php print($row['numeroAf']); ?></td>
-                                            <td> R$<?php print(number_format($row['valorPedido'], 2, ',', '.')); ?></td>
-
-                                            <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']); ?>">Anexo</a></td>
-                                            <td><a class="btn btn-warning waves-effect waves-light" type="button" id="btnPedidoAlterar" data-toggle="modal" data-target="#modalPedidoAlterar2" data-whatever="@getbootstrap" target="_blank" data-statusalterar="<?php print($row['codStatus']); ?>" data-mensagemalterar="<?php print($row['observacao']); ?>" data-codigocontrolealterar="<?php print($row['codControle']); ?>" data-nomeclientealterar="<?php print($row['codCliente']); ?>" data-tipoclientealterar="<?php print($row['tipoCliente']); ?>" data-numeropregaoalterar="<?php print($row['numeroPregao']); ?>" data-numeroafalterar="<?php print($row['numeroAf']); ?>" data-anexoalterar="<?php print($row['anexo']); ?>" data-valorpedidoalterar="<?php print($row['valorPedido']); ?>">Alterar</a></td>
-                                            <td> <a class="btn btn-danger waves-effect waves-light" data-target="#modalExluirPedido" data-whatever="@getbootstrap" id="btnExcluiPedido" data-codigoexcluir="<?php print($row['codControle']); ?>" data-nomeexcluir="<?php print($row['nomeCliente']); ?>">Excluir</a></td>
-                                            <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" data-toggle="modal" data-target="#modalDetPedido" data-whatever="@getbootstrap" data-codigocontroledet="<?php print($row['codControle']); ?>" data-nomeclientedet="<?php print($row['nomeCliente']); ?>" data-tipoclientedet="<?php print($row['tipoCliente']); ?>" data-numeropregaodet="<?php print($row['numeroPregao']); ?>" data-numeropedidodet="<?php print($row['numeroAf']); ?>" data-valorpedidodet="<?php print($row['valorPedido']); ?>" data-statuscontroledet="<?php print($row['nomeStatus']); ?>" data-datacadastrodet="<?php print(crud::formataData($row['dataCadastro'])); ?>" data-mensagem="<?php print($row['observacao']); ?>">Detalhes</a></td>
-                                        </tr>
-                                    <?php
-                                }
-                                echo "<p class='text-danger'> " . " Valor Total Pedido R$" . number_format($totalPedido, 2, ',', '.') . " - " . "Quantidade Pedidos " . $qtdePedido . "</p>";
-                            } else {
-                                echo "<p class='text-danger'>Sem Pedidos Cadastrados</p>";
-                            }
-                            ?>
-                            </tbody>
-                        </table>
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="dado"></div>
+                <div class="white-box">
+                    <div class="col-sm-6">
+                        <h3>Todos Pedidos</h3>
                     </div>
-                </div>
+                    
+                    <table id="tabela" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Tipo</th>                               
+                                <th>Licitação</th>
+                                <th>Pedido</th>
+                                <th>Valor</th>
+                                <th>Anexo</th>
+                                <th>Alterar</th>
+                                <th>Excluir</th>
+                                <th>Detalhes</th>
+                            </tr>
+                        <tfoot>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Tipo</th>
+                                <th>Licitação</th>                                
+                                <th>Pedido</th>
+                                <th>Valor</th>
+                                <th>Anexo</th>
+                                <th>Alterar</th>
+                                <th>Excluir</th>
+                                <th>Detalhes</th>
+                            </tr>
+                        </tfoot>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $dados = Crud::listarPedido($idInstituicao);
+                            $totalPedido = '';
+                            $teste = 0;
+                            if ($dados->rowCount() > 0) {
+                                while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
+                                    $valorPedido = $row['valorPedido'];
 
+                                    $totalPedido  += $valorPedido;
+                                    $teste = $teste + 1;
+
+                                    $dataCriada = $row['dataCadastro'];
+                                    $dataAtual = date('Y-m-d H:i:s');
+
+                                    $datatime1 = new DateTime($row['dataCadastro']);
+                                    $datatime2 = new DateTime($dataAtual);
+
+                                    $data1  = $datatime1->format('Y-m-d H:i');
+                                    $data2  = $datatime2->format('Y-m-d H:i');
+
+                                    $criada = strtotime($data1);
+                                    $atual = strtotime($data2);
+
+                                    $intervalo = ($atual - $criada) / 60;
+
+                                    $horas = (int)($intervalo / 60);
+                                    $minutos = $intervalo % 60;
+
+                                    ?>
+                                    <tr>
+                                        <td style="text-transform: uppercase;">
+                                            <?php print($row['nomeCliente']); ?></td>
+                                        <td><?php print($row['tipoCliente']); ?></td>
+                                        <td><?php print($row['numeroPregao']); ?></td>
+                                        <td><?php print($row['numeroAf']); ?></td>
+                                        <td> R$<?php print(number_format($row['valorPedido'], 2, ',', '.')); ?></td>
+
+                                        <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']); ?>">Anexo</a></td>
+                                        
+                                        <td><a class="btn btn-warning waves-effect waves-light" type="button" id="btnPedidoAlterar" data-toggle="modal" data-target="#modalPedidoAlterar" data-whatever="@getbootstrap" target="_blank" 
+                                        data-statusalterar="<?php print($row['codStatus']); ?>" 
+                                        data-idclientealterar="<?php print($row['codCliente']); ?>" 
+                                        data-mensagemalterar="<?php print($row['observacao']); ?>" 
+                                        data-codigocontrolealterar="<?php print($row['codControle']); ?>"
+                                        data-numeroafalterar="<?php print($row['numeroAf']); ?>" 
+                                        data-numerolicitacaoalterar="<?php print($row['numeroPregao']); ?>" 
+                                        data-valoralterar="<?php print($row['valorPedido']); ?>"
+                                        data-idinstituicaoalterar="<?php print($row['fk_idInstituicao']); ?>"
+                                        data-anexoalterar="<?php print($row['anexo']); ?>"
+                                        >Alterar</a></td>
+                                        <td> <a class="btn btn-danger waves-effect waves-light" data-target="#modalExluirPedido" data-whatever="@getbootstrap" id="btnExcluiPedido" data-codigoexcluir="<?php print($row['codControle']); ?>" data-nomeexcluir="<?php print($row['nomeCliente']); ?>" data-idinstituicaoexcluir="<?php print($row['fk_idInstituicao']); ?>">Excluir</a></td>
+                                        <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" data-toggle="modal" data-target="#modalDetPedido" data-whatever="@getbootstrap" data-codigocontroledet="<?php print($row['codControle']); ?>" data-nomeclientedet="<?php print($row['nomeCliente']); ?>" data-tipoclientedet="<?php print($row['tipoCliente']); ?>" data-numeropregaodet="<?php print($row['numeroPregao']); ?>" data-numeropedidodet="<?php print($row['numeroAf']); ?>" data-valorpedidodet="<?php print($row['valorPedido']); ?>" data-statuscontroledet="<?php print($row['nomeStatus']); ?>" data-datacadastrodet="<?php print(crud::formataData($row['dataCadastro'])); ?>" data-mensagem="<?php print($row['observacao']); ?>">Detalhes</a></td>
+                                    </tr>
+                                <?php
+                            }
+                            echo "Qtde pedidos nao atendidos:  " . $teste . " - ";
+                            echo "Valor Total Pedido R$" . number_format($totalPedido, 2, ',', '.');
+                        } else {
+                            echo "<p class='text-danger'>Sem Pedidos Cadastrados</p>";
+                        }
+                        ?>
+                        </tbody>
+                    </table>
+               
+                </div>
             </div>
+         
+        </div>
         </form>
     </div>
     <!-- /.row -->
-
-
 </div>
-<!-- MODAL anexo do Pedido-->
-<div class="modal fade" id="modalPedidoSemAnexo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header" id="headerModalAlerta">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="headermodal">Alerta</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div id="contextoModal">
-                                <h2>Este pedido não possui anexo!</h2>
-                            </div>
+
+<!-- MODAL CADASTRAR PEDIDO -->
+<div class="modal fade bs-example-modal-lg" id="modalCadastrarPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel1">Cadastro de Pedido</h4>
+            </div>
+            <div class="modal-body">
+                <form id="frmCadastroPedido" action="" method="post" enctype="multipart/form-data">
+                    <input type="hidden" value="CadastroPedido" name="tipo" id="tipo">
+                    <input type="hidden" value="<?php echo $nomeAnexo; ?>" name="dataAtual" id="dataAtual">
+                    <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicao" id="idInstituicao">
+                    <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataCadastro" id="dataCadastro">
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <select class="form-control" name="nomeCliente" id="nomeCliente" required>
+                                <option value="" selected disabled>Selecione o Cliente</option>
+                                <?php
+                                $selectCliente = crud::mostrarCliente($idInstituicao);
+                                if ($selectCliente->rowCount() > 0) {
+                                    while ($row = $selectCliente->fetch(PDO::FETCH_ASSOC)) {
+                                        ?>
+                                        <option value="<?php print($row['codCliente']); ?>">
+                                            <?php print($row['nomeCliente']); ?>
+                                        </option>
+                                    <?php
+                                }
+                            }
+                            ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroAf" id="numeroAf" placeholder="Numero da AF" required>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-
-                </div>
-            </div>
-        </div>
-</div>
-    <!-- MODAL anexo do Pedido-->
-  
-    <!-- MODAL CADASTRAR PEDIDO -->
-    <div class="modal fade bs-example-modal-lg" id="modalCadastrarPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel1">Cadastro de Pedido</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="frmCadastroPedido" action="" method="post" enctype="multipart/form-data">
-                        <input type="hidden" value="CadastroPedido" name="tipo" id="tipo">
-                        <input type="hidden" value="<?php echo $nomeAnexo; ?>" name="dataAtual" id="dataAtual">
-                        <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicao" id="idInstituicao">
-                        <input type="hidden" value="<?php echo $data; ?>" name="dataCadastro" id="dataCadastro">
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <select class="form-control" name="nomeCliente" id="nomeCliente" required>
-                                    <option value="" selected disabled>Selecione o Cliente</option>
-                                    <?php
-                                    $selectCliente = crud::mostrarCliente($idInstituicao);
-                                    if ($selectCliente->rowCount() > 0) {
-                                        while ($row = $selectCliente->fetch(PDO::FETCH_ASSOC)) {
-                                            ?>
-                                            <option value="<?php print($row['codCliente']); ?>">
-                                                <?php print($row['nomeCliente']); ?>
-                                            </option>
-                                        <?php
-                                    }
-                                }
-                                ?>
-                                </select>
-                            </div>
-
-                        </div>
-                        <br>
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <select class="form-control" name="statusPedido" id="statusPedido" required>
-                                    <option value="" selected disabled>Selecione o Status</option>
-                                    <?php
-                                    $selectStatus = crud::listarStatus();
-                                    if ($selectStatus->rowCount() > 0) {
-                                        while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
-                                            ?>
-                                            <option value="<?php print($row['codStatus']); ?>">
-                                                <?php print($row['nome']); ?>
-                                            </option>
-                                        <?php
-                                    }
-                                }
-                                ?>
-                                </select>
-                                <div class="form-group">
-                                    <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroAf" id="numeroAf" placeholder="Numero da AF" required>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroPregao" id="numeroPregao" placeholder="Numero Licitação" required>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="valorPedido" id="valorPedido" onkeypress="$(this).mask('#.##0,00', {reverse: true})" placeholder="Valor do Pedido">
-                            </div>
-                        </div>
-                        <br>
+                    <br>
+                    <div class="form-inline">
                         <div class="form-group">
-                            <label for="message-text" class="control-label">Observação:</label>
-                            <textarea name="mensagem" class="form-control" rows="3" id="mensagem"></textarea>
+                            <input type="text" size="33" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroPregao" id="numeroPregao" placeholder="Numero Licitação" required>
                         </div>
-                        <input type="file" name="file" id="file">
-
-                        <div class="modal-footer">
-                            <button type="submit" id="salvaPedido" class="btn btn-primary">Enviar</button>
+                        <div class="form-group">
+                            <input type="text" size="33" style="text-transform: uppercase;" maxlength="40" class="form-control" name="valorPedido" id="valorPedido" placeholder="Valor do Pedido">
                         </div>
-                    </form>
-                </div>
+                        <div class="form-group">
+                            <select class="form-control" name="statusPedido" id="statusPedido" required>
+                                <option value="" selected disabled>Selecione o Status</option>
+                                <?php
+                                $selectStatus = crud::listarStatus();
+                                if ($selectStatus->rowCount() > 0) {
+                                    while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
+                                        ?>
+                                        <option value="<?php print($row['codStatus']); ?>">
+                                            <?php print($row['nome']); ?>
+                                        </option>
+                                    <?php
+                                }
+                            }
+                            ?>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="message-text" class="control-label">Observação:</label>
+                        <textarea name="mensagem" class="form-control" rows="3" id="mensagem"></textarea>
+                    </div>
+                    <input type="file" name="file" id="file">
             </div>
+            <div class="modal-footer">
+                <button type="submit" id="salvaPedido" class="btn btn-primary">Enviar</button>
+            </div>
+            </form>
         </div>
     </div>
-    <!-- MODAL CRIA PEDIDO -->
+</div>
+<!-- MODAL CRIA PEDIDO -->
 
- <!-- MODAL detalhe do Pedido-->
+<!-- MODAL detalhe do Pedido-->
 <div class="modal fade bs-example-modal-lg" id="modalDetPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -338,10 +328,34 @@ if($logado != 1){$logado2 = 600;
     </div>
 </div>
 <!-- MODAL detalhe do Pedido-->
-  
-    
-    <!-- MODAL EXCLUIR cliente-->
-    <div class="modal fade" id="modalExluirPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
+
+<!-- MODAL anexo do Pedido-->
+<div class="modal fade" id="modalPedidoSemAnexo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" id="headerModalAlerta">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="headermodal">Alerta</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="contextoModal">
+                            <h2>Este pedido não possui anexo!</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MODAL anexo do Pedido-->
+<!-- MODAL EXCLUIR cliente-->
+<div class="modal fade" id="modalExluirPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -350,7 +364,7 @@ if($logado != 1){$logado2 = 600;
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <input type="hidden" value="<?php echo $idInstituicao; ?>" name="excidInstituicao" id="excidInstituicao">
+                        <input type="hidden"  name="ExcIdInstituicao" id="ExcIdInstituicao">
                         <input type="hidden" name="excIdPedido" id="excIdPedido">
                         <div class="col-md-12">
                             <div id="contextoModal">
@@ -368,9 +382,11 @@ if($logado != 1){$logado2 = 600;
     </div>
         <!-- MODAL EXCLUIR cliente-->
 
-      <!-- MODAL alterar  Pedido-->
-      <div class="modal fade" id="modalPedidoAlterar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-        <div class="modal-dialog" role="document">
+
+
+ <!-- MODAL alterar  Pedido-->
+ <div class="modal fade bs-example-modal-lg" id="modalPedidoAlterar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -378,9 +394,27 @@ if($logado != 1){$logado2 = 600;
                 </div>
                 <div class="modal-body">
                     <form id="frmAlterarPedido" action="" method="post" enctype="multipart/form-data">
-                        <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoAlterar" id="idInstituicaoAlterar">
-                        <input type="hidden" value="AlterarPedido" name="tipo" id="tipo">
+                        <input type="hidden" value="AlterarPedido2" name="tipo" id="tipo">
                         <input type="hidden" id="codigoControleAlterar" name="codigoControleAlterar">
+                        <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataAtual2" id="dataAtual2">
+                        <div class="form-group">
+                            <select class="form-control" name="idClientePedidoAlterar" id="idClientePedidoAlterar" required>
+                                <option value="" selected disabled>Selecione o Cliente</option>
+                                <?php
+                                $selectStatus = crud::mostrarCliente($idInstituicao);
+                                if ($selectStatus->rowCount() > 0) {
+                                    while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
+                                        ?>
+                                        <option value="<?php print($row['codCliente']); ?>">
+                                            <?php print($row['nomeCliente']); ?>
+                                        </option>
+                                    <?php
+                                }
+                            }
+                            ?>
+                            </select>
+                        </div>
+                    <div class="form-inline">
                         <div class="form-group">
                             <select class="form-control" name="statusPedidoAlterar" id="statusPedidoAlterar" required>
                                 <option value="" selected disabled>Selecione o Status</option>
@@ -399,10 +433,33 @@ if($logado != 1){$logado2 = 600;
                             </select>
                         </div>
                         <div class="form-group">
+                            <input type="text" size="36" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroAfPedidoAlterar" id="numeroAfPedidoAlterar" placeholder="Numero da AF" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" size="36" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroLicitacaoPedidoAlterar" id="numeroLicitacaoPedidoAlterar" placeholder="Numero da licitacao" required>
+                        </div>
+                    </div>
+                        <br>
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="valorPedidoAlterar" id="valorPedidoAlterar" placeholder="valor pedido" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="idInstituicaoAlterar" id="idInstituicaoAlterar" placeholder="instituicao" required>
+                        </div>
+                        
+                    </div>
+
+                        <div class="form-group">
                             <label for="message-text" class="control-label">Observação:</label>
                             <textarea name="mensagemPedidoAlterar" class="form-control" rows="3" id="mensagemPedidoAlterar"></textarea>
                         </div>
-                        <div class="modal-footer">
+                        <input type="file" name="file" id="file">
+                        <br>
+                        <div class="form-group">
+                        <input type="text" style="text-transform" class="form-control"  name="anexoAlterar" id="anexoAlterar">
+                        </div>
+                        <div class="modal-footer">                        
                             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                             <button type="submit" id="alteraPedido" class="btn btn-primary">Enviar</button>
                         </div>
@@ -415,85 +472,8 @@ if($logado != 1){$logado2 = 600;
     <!-- MODAL altera Pedido-->
 
 
-    <!-- MODAL altera Pedido2-->
-<div class="modal fade bs-example-modal-lg" id="modalPedidoAlterar2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel1">Alteração de Pedido</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="frmAlterarPedido2" action="" method="post" enctype="multipart/form-data">
-                    <input type="hidden" value="AlterarPedido2" name="tipo" id="tipo">
-                        <input type="hidden" value="<?php echo $nomeAnexo; ?>" name="dataAtual2" id="dataAtual2">
-                        <input type="hidden" id="codigoControleAlterar2" name="codigoControleAlterar2">
-                        <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoAlterar2" id="idInstituicaoAlterar2">
-                        
-                        <div class="form-group">                                                
-                                <select class="form-control" name="nomeClienteAlterar2" id="nomeClienteAlterar2" required>
-                                    <option value="" selected disabled>Selecione o Cliente</option>
-                                    <?php
-                                    $selectCliente = crud::mostrarCliente($idInstituicao);
-                                    if ($selectCliente->rowCount() > 0) {
-                                        while ($row = $selectCliente->fetch(PDO::FETCH_ASSOC)) {
-                                            ?>
-                                            <option value="<?php print($row['codCliente']); ?>">
-                                                <?php print($row['nomeCliente']); ?>
-                                            </option>
-                                        <?php
-                                    }
-                                }
-                                ?>
-                                </select>
-                        </div>   
-                        <br>                     
-                        <div class="form-group">
-                                <select class="form-control" name="statusPedidoAlterar2" id="statusPedidoAlterar2" required>
-                                    <option value="" selected disabled>Selecione o Status</option>
-                                    <?php
-                                    $selectStatus = crud::listarStatus();
-                                    if ($selectStatus->rowCount() > 0) {
-                                        while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
-                                            ?>
-                                            <option value="<?php print($row['codStatus']); ?>">
-                                                <?php print($row['nome']); ?>
-                                            </option>
-                                        <?php
-                                    }
-                                }
-                                ?>
-                                </select>                                
-                            </div>
-                            <div class="form-group">
-                                    <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroAfAlterar2" id="numeroAfAlterar2" placeholder="Numero da AF" required>
-                            </div>                       
-                        <br>
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroLicitacaoPedidoAlterar2" id="numeroLicitacaoPedidoAlterar2" placeholder="Numero Licitação" required>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" size="50" style="text-transform: uppercase;" class="form-control" name="valorPedidoAlterar2" id="valorPedidoAlterar2" placeholder="Valor do Pedido">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="control-label">Observação:</label>
-                            <textarea name="mensagemPedidoAlterar2" class="form-control" rows="3" id="mensagemPedidoAlterar2"></textarea>
-                        </div>
-                        <input type="file" name="file" id="file">
-                        <input type="hidden" style="text-transform: uppercase;" class="form-control" name="anexoAlterar" id="anexoAlterar">
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="submit" id="alteraPedido2" class="btn btn-primary">Enviar</button>
-                </div>
 
-            </div>
-        </div>
-    </div>
-
+</div>
 <!-- /#page-wrapper -->
 
 <?php
@@ -502,11 +482,10 @@ include_once "modais.php";
 ?>
 
 <script type="text/javascript">
-
     $(document).ready(function(e) {
 
         permissaoNivel();
-
+      
         $("#frmCadastroPedido").on('submit', (function(e) {
             e.preventDefault();
             var table = $("#tabela").val();
@@ -516,8 +495,6 @@ include_once "modais.php";
             var numeroAF = $("#numeroAf").val();
             var mensagem = $("#mensagem").val();
             var numeroPregao = $("#numeroPregao").val();
-            var dataCadastro = $("#dataCadastro").val();
-            var idInstituicao = $("#idInstituicao").val();
             $.ajax({
                 url: "../core/save.php",
                 type: "POST",
@@ -530,7 +507,7 @@ include_once "modais.php";
                     $("#salvaPedido").prop("disabled", true);
                 },
                 success: function(data) {
-                    //alert(data);
+                     // alert ("resultado data " + data);
                     if (data == 1) {
                         swal({
                                 title: "OK!",
@@ -565,110 +542,207 @@ include_once "modais.php";
             });
         }));
 
-        $("#frmIndex").on('submit', (function(e) {
-            e.preventDefault();
-            var table = $("#tabela").val();
-
-            location.reload(table);
-        }));
-
-        /*     $(document).on("click", "#btnPedidoAlterar", function() {
-                 var codigoControle = $(this).data('codigocontrolealterar');
-                 var statusAlterar = $(this).data('statusalterar');
-                 var mensagemAlterar = $(this).data('mensagemalterar');
-
-
-                 $('#codigoControleAlterar').val(codigoControle);
-                 $('#statusPedidoAlterar').val(statusAlterar);
-                 $('#mensagemPedidoAlterar').val(mensagemAlterar);
-             }); //SETA O CÓDIGO NO MODAL PARA ATUALIZAR O STATUS ------------------------------------------
-             */
-        $(document).on("click", "#btnPedidoAlterar", function() {
+        $(document).on("click", "#btnExcluiPedido", function() {
+            var id = $(this).data('codigoexcluir');
+            var nome = $(this).data('nomeexcluir');
+            var idInstituicao = $(this).data('idinstituicaoexcluir');
+          
+            $('#excIdPedido').val(id);
+            $('#ExcNomePedido').html(nome);
+            $('#ExcIdInstituicao').val(idInstituicao);
            
-            var codigoControle = $(this).data('codigocontrolealterar');
-            var statusAlterar = $(this).data('statusalterar');
-            var mensagemAlterar = $(this).data('mensagemalterar');
-            var nomeCliente = $(this).data('nomeclientealterar');
-            var numeroAf = $(this).data('numeroafalterar');
-            var valorPedido = $(this).data('valorpedidoalterar');
-            var numeroLicitacao = $(this).data('numeropregaoalterar');
-            var anexoAlterar = $(this).data('anexoalterar');
-            var idInstituicao = $("#idInstituicaoAlterar").val();
-           
-            alert("teste aleterar");
-           
-            $('#codigoControleAlterar2').val(codigoControle);
-            $('#statusPedidoAlterar2').val(statusAlterar);
-            $('#mensagemPedidoAlterar2').val(mensagemAlterar);
-            $('#nomeClienteAlterar2').val(nomeCliente);
-            $('#numeroAfAlterar2').val(numeroAf);
-            $('#valorPedidoAlterar2').val(valorPedido);
-            $('#numeroLicitacaoPedidoAlterar2').val(numeroLicitacao);
-            $('#anexoAlterar').val(anexoAlterar);
-
+            $('#modalExluirPedido').modal('show');
         });
 
-        $("#frmAlterarPedido2").on('submit', (function(e) {
-            e.preventDefault();
-            var table = $("#tabela").val();
-            var codigoControle = $("#codigoControleAlterar2").val();
-            var statusPedido = $("#statusPedidoAlterar2").val();
-            var mensagemAlterar = $("#mensagemPedidoAlterar2").val();
-            var nomeCliente = $("#nomeClienteAlterar2").val();
-            var numeroAf = $("#numeroAfAlterar2").val();
-            var valorPedido = $("#valorPedidoAlterar2").val();
-            var numeroLicitacao = $("#numeroLicitacaoPedidoAlterar2").val();
-            var anexoAlterar = $("#anexoAlterar").val();
-            var dataAbertura = $("#dataAtual2").val();
-            var idInstituicao = $("#idInstituicaoAlterar2").val();
-            $.ajax({
-                url: "../core/save.php",
-                type: "POST",
-                data: new FormData(this),
-                contentType: false,
-                cache: false,
-                processData: false,
-                beforeSend: function() {
-                    $("#alteraPedido2").html("<i class='fa fa-spinner fa-spin'></i> Enviando, aguarde...");
-                    $("#alteraPedido2").prop("disabled", true);
-                },
-                success: function(data) {
-                    // alert(data);
-                    if (data == 1) {
-                        swal({
-                                title: "OK!",
-                                text: "Alterado com Sucesso!",
-                                type: "success",
-                                confirmButtonText: "Fechar",
-                                closeOnConfirm: false
-                            },
-                            function(isConfirm) {
-                                if (isConfirm) {
-                                    $('#modalPedidoAlterar2').modal('hide');
-                                    location.reload(table);
-                                    //window.location = "cadastro.php";
-                                }
-                            });
-                    } else {
-                        swal({
-                                title: "Ops!",
-                                text: "Algo deu errado!",
-                                type: "error",
-                                confirmButtonText: "Fechar",
-                                closeOnConfirm: false
-                            },
-                            function(isConfirm) {
-                                if (isConfirm) {
-                                    $('#modalPedidoAlterar2').modal('hide');
-                                    location.reload(table);
-                                }
-                            });
+        $('#btnExcluirPedido').click(function(){
+			var tipo = "deletePedido";
+			var idPedido = $('#excIdPedido').val();
+			var idInstituicao = $('#ExcNomePedido').val();
+           var idInstituicao = $('#ExcIdInstituicao').val();
+
+
+			$.ajax({
+				url: '../core/save.php',
+				type: "POST",
+				data: {tipo : tipo, 
+                    idPedido : idPedido, 
+                    idInstituicao:idInstituicao
+				},
+				success: function(result) { 
+                    //alert(result);
+                    if(result==1){           
+                    	swal({
+							title: "OK!",
+							text: "Excluído com Sucesso!",
+							type: "success",
+							confirmButtonText: "Fechar",
+							closeOnConfirm: false
+						},
+						function(isConfirm){
+							if (isConfirm) {
+									window.location = "pedido.php";
+								}
+						});  
+	                }elseelse {
+                            swal({
+                                    title: "Ops!",
+                                    text: "Algo deu errado!",
+                                    type: "error",
+                                    confirmButtonText: "Fechar",
+                                    closeOnConfirm: false
+                                },
+                                function(isConfirm) {
+                                    if (isConfirm) {
+                                        $('#modalExluirPedido').modal('hide');
+                                        location.reload(table);
+                                    }
+                                });
+                        }
+
                     }
+                });
+
+		});
+    //ADICIONA MENSAGEM À DEMANDA -----------------------------------------------------------
+        $('#frmAddMensagem').submit(function(){
+            var tipo = "adicionaMensagemPedido";
+            var idLogado = $("#idLogado").val();
+            var datahora = $("#datahora").val();
+            var codPedido = $('#codigoDetalhes').text();
+            var mensagem = $("#mensagemComentario").val();
+            var idInstituicao = $("#idInstituicaoMensagem").val();
+           
+            $.ajax({
+                url: '../core/save.php',
+                type: "POST",
+                data: {tipo : tipo, idLogado : idLogado, 
+                    datahora:datahora, codPedido : codPedido, 
+                    mensagem : mensagem, idInstituicao:idInstituicao},
+                success: function(result) {
+                   // alert(result);
+                    if(result==1){                        
+                        alert("Mensagem adicionada com Sucesso!");
+                            atualizaMsg();
+                            $("#mensagemComentario").val('');
+                            //location.reload();
+                        }else{                           
+                            alert("Erro ao salvar");                            
+                        }
+
+                    }
+                });
+            return false;//Evita que a página seja atualizada
+        });//ADICIONA MENSAGEM À DEMANDA -----------------------------------------------------------
+      
+        //FUNÇÃO QUE ATUALIZA AS MENSAGENS NOS DETALHES APÓS SUBMETE-LA -------------------------
+        function atualizaMsg(){
+            var idControle = $("#codigoDetalhes").text();    
+            var tipo = 'busca_mensagensPedido';
+            //MONTA OS COMENTÁRIOS NO MODAL
+            $.ajax({
+                url: 'busca_mensagens.php',
+                type: "POST",
+                data: {tipo: tipo, idControle : idControle},
+                success: function(data) {                   
+                    if (data) {                            
+                        $('#comentariosPedido').html(data);
+                    } 
                 }
             });
-        }));
+            }//FUNÇÃO QUE ATUALIZA AS MENSAGENS NOS DETALHES APÓS SUBMETE-LA -------------------------
+ 
 
-        $('#departamento').change(function() {
+       
+       
+            $(document).on("click", "#btnPedidoAlterar", function() {
+                var codigoControle = $(this).data('codigocontrolealterar');
+                var statusAlterar = $(this).data('statusalterar');
+                var mensagemAlterar = $(this).data('mensagemalterar');
+                var idClienteAlterar = $(this).data('idclientealterar');
+                var numeroAfAlterar = $(this).data('numeroafalterar');
+                var numeroLicitacaoAlterar = $(this).data('numerolicitacaoalterar');
+                var valorAlterar = $(this).data('valoralterar');
+                var idInstituicao = $(this).data('idinstituicaoalterar');
+                var anexoAlterar = $(this).data('anexoalterar');
+              
+                $('#anexoAlterar').val(anexoAlterar);
+                $('#idInstituicaoAlterar').val(idInstituicao);
+                $('#codigoControleAlterar').val(codigoControle);
+                $('#statusPedidoAlterar').val(statusAlterar);
+                $('#mensagemPedidoAlterar').val(mensagemAlterar);
+                $('#idClientePedidoAlterar').val(idClienteAlterar);
+                $('#numeroAfPedidoAlterar').val(numeroAfAlterar);
+                $('#numeroLicitacaoPedidoAlterar').val(numeroLicitacaoAlterar);
+                $('#valorPedidoAlterar').val(valorAlterar);
+            }); //SETA O CÓDIGO NO MODAL PARA ATUALIZAR O STATUS ------------------------------------------
+       
+
+        $("#frmAlterarPedido").on('submit', (function(e) {
+                e.preventDefault();
+                var table = $("#tabela").val();
+                var codigoControle = $("#codigoControleAlterar").val();
+                var mensagemAlterar = $("#mensagemPedidoAlterar").val();
+                var statusPedido = $("#statusPedidoAlterar").val();                
+                var anexoAlterar = $('#anexoAlterar').val();
+                var idInstituicao =$('#idInstituicaoAlterar').val();
+                var codigoControle = $('#codigoControleAlterar').val();
+                var statusAlterar = $('#statusPedidoAlterar').val();
+                var mensagemAlterar =$('#mensagemPedidoAlterar').val();
+                var idClienteAlterar = $('#idClientePedidoAlterar').val();
+                var numeroAfAlterar = $('#numeroAfPedidoAlterar').val();
+                var numeroLicitacaoAlterar = $('#numeroLicitacaoPedidoAlterar').val();
+                var valorAlterar = $('#valorPedidoAlterar').val();
+                                                
+                $.ajax({
+                    url: "../core/save.php",
+                    type: "POST",
+                    data: new FormData(this),
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    beforeSend: function() {
+                        $("#alteraPedido").html("<i class='fa fa-spinner fa-spin'></i> Enviando, aguarde...");
+                        $("#alteraPedido").prop("disabled", true);
+                    },
+                    success: function(data) {
+                   //   alert(data);
+                        if (data == 1) {
+                            swal({
+                                    title: "OK!",
+                                    text: "Alterado com Sucesso!",
+                                    type: "success",
+                                    confirmButtonText: "Fechar",
+                                    closeOnConfirm: false
+                                },
+                                function(isConfirm) {
+                                    if (isConfirm) {
+                                        $('#modalPedidoAlterar').modal('hide');
+                                        location.reload(table);
+                                        //window.location = "cadastro.php";
+                                    }
+                                });
+                        } else {
+                            swal({
+                                    title: "Ops!",
+                                    text: "Algo deu errado!",
+                                    type: "error",
+                                    confirmButtonText: "Fechar",
+                                    closeOnConfirm: false
+                                },
+                                function(isConfirm) {
+                                    if (isConfirm) {
+                                        $('#modalPedidoAlterar').modal('hide');
+                                        location.reload(table);
+                                    }
+                                });
+                        }
+                    }
+                });
+            }));
+
+
+        
+            $('#departamento').change(function() {
             var codDepart = $("#departamento").val();
             $.ajax({
                 url: 'busca_funcionario.php',
@@ -703,73 +777,7 @@ include_once "modais.php";
             });
         });
 
-        $(document).on("click", "#btnExcluiPedido", function() {
-            var id = $(this).data('codigoexcluir');
-            var nome = $(this).data('nomeexcluir');
-            var idInstituicao = $("#idInstituicaoDetalhes").val();
-            $('#excIdPedido').val(id);
-            $('#ExcNomePedido').html(nome);
-
-            $('#modalExluirPedido').modal('show');
-        });
-
-        $(document).on("click", "#btnExcluiPedido2", function() {
-            var idPedido = $("#codigoDetalhes").text();
-            var nomeCliente = $("#nomeClienteDetalhes").text();
-            var nome = $('#nomeClienteDetalhes').val();
-            var idInstituicao = $("#idInstituicaoDetalhes").val();
-            $('#excIdPedido').val(idPedido);
-            $('#ExcNomePedido').html(nomeCliente);
-
-            $('#modalExluirPedido').modal('show');
-        });
-
-        $('#btnExcluirPedido').click(function() {
-            var tipo = "deletePedido";
-            var idPedido = $('#excIdPedido').val();
-            var idInstituicao = $("#excidInstituicao").val();
-            $.ajax({
-                url: '../core/save.php',
-                type: "POST",
-                data: {
-                    tipo: tipo,
-                    idPedido: idPedido,
-                    idInstituicao: idInstituicao
-                },
-                success: function(result) {
-
-                    if (result == 1) {
-                        swal({
-                                title: "OK!",
-                                text: "Pedido Excluído com Sucesso!",
-                                type: "success",
-                                confirmButtonText: "Fechar",
-                                closeOnConfirm: false
-                            },
-                            function(isConfirm) {
-                                if (isConfirm) {
-                                    window.location = "pedido.php";
-                                }
-                            });
-                    } else {
-                        swal({
-                                title: "Ops!",
-                                text: "Algo deu errado ao excluir! ",
-                                type: "error",
-                                confirmButtonText: "Fechar",
-                                closeOnConfirm: false
-                            },
-                            function(isConfirm) {
-                                if (isConfirm) {
-                                    window.location = "pedido.php";
-                                }
-                            });
-                    }
-                }
-            });
-        });
-
-
+        //Click no botao detalhas do pedido
         $(document).on("click", "#btnPedidoDetalhes", function() {
             //pegando valor das colunas da tabela e atribuindo as variaveis
             var idControle = $(this).data('codigocontroledet');
@@ -834,7 +842,30 @@ include_once "modais.php";
 
         }); //VERIFICA SE DEMANDA TEM ANEXO ------------------------------------------------------------      
     });
+
     //BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
+    /*$("tr #statusControle").each(function(i) {
+        //    var corFundo = $("#statusControle").data('cortexto1'); // var idControle = $(this).data('codigocontroledet');
+        var corFundo = "";
+        var corTexto = "";
+        var statusAtual1 = "";
+        corTexto = "<?php echo $corTexto; ?>";
+        corFundo = "<?php echo $corFundo; ?>";
+        statusAtual1 = "<?php echo $statusAtual1; ?>";
+        // alert ( " statusAtual1 = " + statusAtual1 + " corFundo = " + corFundo + " status = " + corTexto);
+
+        if ($(this).text() == "ATENDIDO") {
+            //$(status).css("color", "red");
+            this.style.background = "blue"; //cor do fundo
+            this.style.color = "White"; //cor da fonte
+        } else if ($(this).text() == "Pendente") {
+            this.style.color = "White"; //cor da fonte
+            this.style.background = "red"; //cor do fundo
+        }
+        escape {
+            this.style.color = "";
+        }
+    }*/
     //BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
     $("tr #statusControle").each(function(i) {
         if ($(this).text() == "RECEPCIONADO" || $(this).text() == "LIBERADO PARCIALMENTE") {
@@ -847,11 +878,13 @@ include_once "modais.php";
         } else if ($(this).text() == "PENDENTE"|| $(this).text() == "ANALISE FINANCEIRO") {
             this.style.color = "White"; //cor da fonte
             this.style.background = "red"; //cor do fundo
-        } else if ($(this).text() == "CANCELADO" || $(this).text() == "NEGADO") {          
+        } else if ($(this).text() == "CANCELADO" || $(this).text() == "NEGADO") {
+            //$(status).css("color", "red");
             this.style.color = "White"; //cor da fonte
             this.style.background = "red"; //cor do fundo
         } else {
             this.style.color = "";
         }
-    }); 
+    });
+    
 </script>

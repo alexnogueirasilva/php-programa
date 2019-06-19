@@ -443,9 +443,9 @@ switch ($value) {
 		$dataAbertura = $_POST['dataAtual'];
 		$numeroPregao = $_POST['numeroPregao'];
 		$idInstituicao = $_POST['idInstituicao'];
-		//$idLogado = $_POST['idLogado'];
 		$numeroAf = $_POST['numeroAf'];
-		$valorPedido = $_POST['valorPedido'];
+		$valorPedidoAtual = $_POST['valorPedido'];
+		$valorPedido 		= str_replace(",", ".", $valorPedidoAtual);
 		$codStatus = $_POST['statusPedido'];
 		$codCliente = $_POST['nomeCliente'];
 		$observacao = $_POST['mensagem'];
@@ -498,16 +498,16 @@ switch ($value) {
 		break;
 
 	case 'AlterarPedido2':
-		$codControle        = $_POST['codigoControleAlterar2'];
-		$statusPedido		= $_POST['statusPedidoAlterar2'];
-		$mensagemAlterar    = $_POST['mensagemPedidoAlterar2'];
-		$nomeCliente  		= $_POST['nomeClienteAlterar2'];
-		$numeroAf         	= $_POST['numeroAfAlterar2'];
-		$valorPedidoAtual    = $_POST['valorPedidoAlterar2'];
-		$valorPedido = str_replace(",", ".", $valorPedidoAtual);
-		$idInstituicao = $_POST['idInstituicaoAlterar2'];
-		//$valorPedido =	number_format ($valorPedidoAtual, 2, '.', ',');
-		$numeroLicitacao    = $_POST['numeroLicitacaoPedidoAlterar2'];
+
+		$codControle        = $_POST['codigoControleAlterar'];
+		$statusPedido		= $_POST['statusPedidoAlterar'];
+		$mensagemAlterar    = $_POST['mensagemPedidoAlterar'];
+		$nomeCliente  		= $_POST['idClientePedidoAlterar'];
+		$numeroAf         	= $_POST['numeroAfPedidoAlterar'];
+		$valorPedidoAtual   = $_POST['valorPedidoAlterar'];
+		$valorPedido 		= str_replace(",", ".", $valorPedidoAtual);
+		$idInstituicao = $_POST['idInstituicaoAlterar'];		
+		$numeroLicitacao    = $_POST['numeroLicitacaoPedidoAlterar'];
 		$anexoAlterar       = $_POST['anexoAlterar'];
 		$dataAbertura = $_POST['dataAtual2'];
 		//ENTRA AQUI SE TIVER ANEXO
