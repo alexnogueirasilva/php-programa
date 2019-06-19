@@ -78,7 +78,8 @@ if($logado != 1){$logado2 = 600;
                             <tr>
                                 <th>Cliente</th>
                                 <th>Tipo</th>
-                                <th>Licitação</th>                                
+                                <th>Licitação</th>
+                                
                                 <th>Pedido</th>
                                 <th>Valor</th>
                                 <th>Anexo</th>
@@ -583,7 +584,7 @@ include_once "modais.php";
 									window.location = "pedido.php";
 								}
 						});  
-	                }elseelse {
+	                }else{
                             swal({
                                     title: "Ops!",
                                     text: "Algo deu errado!",
