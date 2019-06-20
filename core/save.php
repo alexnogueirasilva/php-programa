@@ -4,11 +4,12 @@ require_once 'crud.php';
 //isset()
 $value = isset($_POST['tipo']) ? $_POST['tipo'] : '';
 
-
 switch ($value) {
 	case 'editausr':
 		$id = $_POST['id'];
 		$nome = $_POST['nome'];
+
+
 		$edt = crud::atualizaUsr($id, $nome);
 		if ($edt == true) {
 			echo 1;
@@ -130,33 +131,17 @@ switch ($value) {
 
 		break;
 
-
-
-	case 'cadUsuario':
-
-		$nome = $_POST['nome'];
-		$email = $_POST['email'];
-		$nivel = $_POST['nivel'];
-		$dep = $_POST['dep'];
-		$pass = $_POST['pass'];
-		$status = "Ativo";
-		$cdt = crud::criaUsr($nome, $email, $nivel, $dep, $status, $pass);
-		if ($cdt == true) {
-			echo 1;
-		} else {
-			echo 0;
-		}
-		break;
 		//Cliente
 	case 'editaCliente':
 
 		$id = $_POST['idcliente'];
 		$nome = $_POST['edtnome'];
+		$nomeFantasia = $_POST['edtnomefantasia'];
 		$status = $_POST['edtstatus'];
 		$tipoCliente = $_POST['edttipo'];
-		$idInstituicao = $_POST['editaidInstituicao'];
+		$idInstituicao = $_POST['edtidInstituicao'];
 
-		$edt = crud::atualizaCliente($id, $nome, $status, $tipoCliente, $idInstituicao);
+		$edt = crud::atualizaCliente($id, $nome, $status, $tipoCliente, $nomeFantasia, $idInstituicao);
 		if ($edt == true) {
 			echo 1;
 		} else {
@@ -167,12 +152,17 @@ switch ($value) {
 
 	case 'criarCliente':
 
-		$nomeCliente = $_POST['nomeCliente'];
+		$nomeCliente = $_POST['cdtnomeCliente'];
+		$nomeFantasiaCliente = $_POST['cdtnomeFantasiaCliente'];
+		$tipoCliente = $_POST['cdtTipoCliente'];
+		$idInstituicao = $_POST['idInstituicao'];
+
+		/*	$nomeCliente = $_POST['nomeCliente'];
 		$nomeFantasiaCliente = $_POST['nomeFantasiaCliente'];
 		$tipoCliente = $_POST['tipoCliente'];
 		$idInstituicao = $_POST['idInstituicao'];
-
-		$cdt = crud::criarCliente($nomeCliente, $tipoCliente, $nomeFantasiaCliente,$idInstituicao);
+*/
+		$cdt = crud::criarCliente($nomeCliente, $tipoCliente, $nomeFantasiaCliente, $idInstituicao);
 		if ($cdt == true) {
 			echo 1;
 		} else {
@@ -182,10 +172,10 @@ switch ($value) {
 
 	case 'excluirCliente':
 
-		$idCliente = $_POST['codCliente'];
-		$idInstituicao = $_POST['excidInstituicao'];
+		$codCliente = $_POST['codCliente'];
+		$idInstituicao = $_POST['idInstituicao'];
 
-		$cdt = crud::deleteCliente($idCliente,$idInstituicao);
+		$cdt = crud::deleteCliente($codCliente, $idInstituicao);
 
 		if ($cdt == true) {
 			echo 1;
@@ -199,9 +189,9 @@ switch ($value) {
 
 		$id = $_POST['id'];
 		$status = "D";
-		$idInstituicao = $_POST['idInstituicaoDes'];
+		$idInstituicao = $_POST['idInstituicao'];
 
-		$edt = crud::atualizaStatusCliente($id, $status,$idInstituicao);
+		$edt = crud::atualizaStatusCliente($id, $status, $idInstituicao);
 		if ($edt == true) {
 			echo 1;
 		} else {
@@ -215,8 +205,8 @@ switch ($value) {
 
 		$id = $_POST['id'];
 		$status = "A";
-		$idInstituicao = $_POST['idInstituicaoAt'];
-		$edt = crud::atualizaStatusCliente($id, $status,$idInstituicao);
+		$idInstituicao = $_POST['idInstituicao'];
+		$edt = crud::atualizaStatusCliente($id, $status, $idInstituicao);
 		if ($edt == true) {
 			echo 1;
 		} else {
@@ -226,24 +216,30 @@ switch ($value) {
 		//ATUALIZA STATUS DO CLIENTE PARA ATIVADO
 		//cliente
 
-		//EDITA USUÁRIO
-	case 'editaUsr':
+	case 'cadUsuario':
 
-		$id = $_POST['iduser'];
-		$nome = $_POST['edtnome'];
-		$email = $_POST['edtemail'];
-		$nivel = $_POST['edtnivelUser'];
-		$dep = $_POST['edtdepartamento'];
-		$pass = $_POST['edtPass'];
+		$nome = $_POST['nome'];
+		$dica = $_POST['dica'];
+		$email = $_POST['email'];
+		$nivel = $_POST['nivel'];
+		$dep = $_POST['dep'];
+		$pass = $_POST['pass'];
+		$idInstituicao = $_POST['idInstituicao'];
 		$status = "Ativo";
-
-		$edt = crud::edtUsr($id, $nome, $email, $nivel, $dep, $status, $pass);
-		if ($edt == true) {
-			echo 1;
+		$cdt = crud::VericaEmailUser($email);
+		if ($cdt == false) {
+			$cdt = crud::criaUsr($nome, $email, $nivel, $dep, $status, $pass, $idInstituicao, $dica);
+			if ($cdt == true) {
+				echo 1;
+			crud::enviarEmail($email,$idInstituicao);
+			} else {
+				echo 0;
+			}
 		} else {
-			echo 0;
+			echo 2;
 		}
-		break;
+
+	break;
 
 	case 'excluiUsuario':
 
@@ -258,6 +254,27 @@ switch ($value) {
 		}
 		break;
 
+		//EDITA USUÁRIO
+	case 'editaUsr':
+
+		$id = $_POST['iduser'];
+		$nome = $_POST['edtnome'];
+		$dica = $_POST['edtdica'];
+		$idInstituicao = $_POST['edtidInstituicao'];
+		$email = $_POST['edtemail'];
+		$nivel = $_POST['edtnivelUser'];
+		$dep = $_POST['edtdepartamento'];
+		$pass = $_POST['edtPass'];
+		$status = "Ativo";
+
+		$edt = crud::edtUsr($id, $nome, $email, $nivel, $dep, $status, $pass, $idInstituicao, $dica);
+		if ($edt == true) {
+			echo 1;
+		} else {
+			echo 0;
+		}
+
+		break;
 
 	case 'cadDep':
 
@@ -274,17 +291,23 @@ switch ($value) {
 	case 'CadastroUsuario':
 		//tipo emailUser senhalUser dicalUser
 		$emailUser = $_POST['emailUser'];
-		$senhalUser = $_POST['senhalUser'];
-		$dicalUser = $_POST['dicalUser'];
-		$ativo = 0;
-		$valida = md5($emailUser);
+		$cdt = crud::VericaEmailUser($emailUser);
+		if ($cdt == false) {
+			$senhalUser = $_POST['senhalUser'];
+			$dicalUser = $_POST['dicalUser'];
+			$ativo = 0;
+			$valida = md5($emailUser);
 
-		$cdt = crud::criaUsuario($emailUser, $senhalUser, $dicalUser, $ativo, $valida);
-		if ($cdt == true) {
-			echo 1;
+			$cdt = crud::criaUsuario($emailUser, $senhalUser, $dicalUser, $ativo, $valida);
+			if ($cdt == true) {
+				echo 1;
+			} else {
+				echo 0;
+			}
 		} else {
-			echo 0;
+			echo 2;
 		}
+
 		break;
 
 	case 'VerificaEmail':
@@ -293,6 +316,18 @@ switch ($value) {
 
 		$ativo = 0;
 		$valida = md5($emailUser2);
+
+		$cdt = crud::VericaEmailUser($emailUser2);
+		if ($cdt == true) {
+			echo 1;
+		} else {
+			echo 0;
+		}
+		break;
+
+	case 'VerificaEmail2':
+		//tipo emailUser senhalUser dicalUser
+		$emailUser2 = $_POST['emailUser'];
 
 		$cdt = crud::VericaEmailUser($emailUser2);
 		if ($cdt == true) {
@@ -506,7 +541,7 @@ switch ($value) {
 		$numeroAf         	= $_POST['numeroAfPedidoAlterar'];
 		$valorPedidoAtual   = $_POST['valorPedidoAlterar'];
 		$valorPedido 		= str_replace(",", ".", $valorPedidoAtual);
-		$idInstituicao = $_POST['idInstituicaoAlterar'];		
+		$idInstituicao = $_POST['idInstituicaoAlterar'];
 		$numeroLicitacao    = $_POST['numeroLicitacaoPedidoAlterar'];
 		$anexoAlterar       = $_POST['anexoAlterar'];
 		$dataAbertura = $_POST['dataAtual2'];

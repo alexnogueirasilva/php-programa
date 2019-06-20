@@ -145,7 +145,7 @@ if($logado != 1){$logado2 = 600;
                                     </tr>
                                 <?php
                             }
-                            echo "Qtde pedidos nao atendidos:  " . $teste . " - ";
+                            echo "Qtde pedidos recebidos:  " . $teste . " - ";
                             echo "Valor Total Pedido R$" . number_format($totalPedido, 2, ',', '.');
                         } else {
                             echo "<p class='text-danger'>Sem Pedidos Cadastrados</p>";

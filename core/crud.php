@@ -1,11 +1,13 @@
 <?php
 include_once 'conex.php';
 
-class crud{
+class crud
+{
 
 
 	//Aqui fazemos a verificação do login do usuário e do seu nível de acesso
-	public static function pesquisaLoginUsr($nome, $senha){
+	public static function pesquisaLoginUsr($nome, $senha)
+	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$pwd = sha1($senha);
@@ -17,7 +19,8 @@ class crud{
 	}
 
 	//Nessa função, fazemos a montagem da tabela de dados.
-	public static function dataview($query)	{
+	public static function dataview($query)
+	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$stmt = $pdo->prepare($query);
@@ -25,7 +28,8 @@ class crud{
 		return $stmt;
 	}
 
-	public static function mostraDemandas($usuarioSessao)	{
+	public static function mostraDemandas($usuarioSessao)
+	{
 		//SQL QUE VAI MOSTRAR A LISTA DE CHAMADOS DE CADA USUÁRIO UNINDO TRÊS TABELAS - (DEMANDAS, USUÁRIOS E DEPARTAMENTOS)
 
 		$query = 'SELECT d.id, d.mensagem, cli.nomecliente, d.titulo,d.id_Instituicao as idInstituicao, d.prioridade, d.ordem_servico, d.data_criacao,d.data_fechamento, d.status,d.anexo, u.nome, dep.nome as nome_dep FROM demanda AS d INNER JOIN usuarios AS u ON d.id_usr_destino = u.id AND id_usr_criador = ' . $usuarioSessao . ' INNER JOIN departamentos AS dep ON u.id_dep = dep.id INNER JOIN cliente AS cli ON cli.codCliente = d.codCliente_dem ORDER BY data_criacao ASC';
@@ -36,7 +40,8 @@ class crud{
 		return $stmt;
 	}
 
-	public static function mostraTodasDemandas(){
+	public static function mostraTodasDemandas()
+	{
 		//SQL QUE VAI MOSTRAR A LISTA DE CHAMADOS DE CADA USUÁRIO UNINDO TRÊS TABELAS - (DEMANDAS, USUÁRIOS E DEPARTAMENTOS)
 		$query = 'SELECT d.id, d.mensagem, d.titulo, d.prioridade, d.ordem_servico, d.data_criacao, d.status, d.anexo, u.nome, d.id_usr_criador, dep.nome AS nome_dep FROM demanda AS d INNER JOIN usuarios AS u ON d.id_usr_criador = u.id INNER JOIN departamentos AS dep ON d.id_dep = dep.id ORDER BY data_criacao ASC';
 		$pdo = Database::connect();
@@ -47,7 +52,8 @@ class crud{
 	}
 
 	//Esta é a função que atualiza o cadastro com os dados vindos da edição.	
-	public static function atualizaStatusUsuario($id, $status){
+	public static function atualizaStatusUsuario($id, $status)
+	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
@@ -64,7 +70,8 @@ class crud{
 		}
 	}
 
-	public static function atualizaStatus($codigoDemanda, $status){
+	public static function atualizaStatus($codigoDemanda, $status)
+	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
@@ -73,7 +80,7 @@ class crud{
 			$stmt->bindparam(":status", $status);
 
 			$stmt->execute();
-						
+
 			$subject = "Cadastro de Ocorrencia"; // assunto
 			$message = "Sua demanda esta em atendimento, para você visualisar " . "\r\n"; //mensagem
 			$message .= "acesse com seu login " . "\r\n"; //mensagem
@@ -87,17 +94,16 @@ class crud{
 			$to = $_POST['emailSolicitante']; // recuperando email do destinatario e envia notificacao da demanda
 
 			mail($to, $subject, $message, $headers);
-			
-			return true;
-	
 
+			return true;
 		} catch (PDOException $e) {
 			echo $e->getMessage();
 			return false;
 		}
 	}
 
-	public static function fechaDemanda($codigoDemanda, $status, $dataFechamento){
+	public static function fechaDemanda($codigoDemanda, $status, $dataFechamento)
+	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
@@ -108,7 +114,7 @@ class crud{
 
 			$stmt->execute();
 			return true;
-			
+
 			$subject = "Cadastro de Ocorrencia"; // assunto
 			$message = "Sua demanda foi fechada com sucesso, para você visualisar " . "\r\n"; //mensagem
 			$message .= "acesse com seu login " . "\r\n"; //mensagem
@@ -122,7 +128,6 @@ class crud{
 			$to = $_POST['emailSolicitante']; // recuperando email do destinatario e envia notificacao da demanda
 
 			mail($to, $subject, $message, $headers);
-
 		} catch (PDOException $e) {
 			echo $e->getMessage();
 			return false;
@@ -130,7 +135,8 @@ class crud{
 	}
 
 	//Essa é a função responsável pela criação das demandas
-	public static function criaDemanda($dataAbertura, $departamento, $idLogado,$idInstituicao, $usuarioDestino, $titulo, $nomeSolicitante, $prioridade, $ordemServico, $mensagem, $status, $nomeAnexo){
+	public static function criaDemanda($dataAbertura, $departamento, $idLogado, $idInstituicao, $usuarioDestino, $titulo, $nomeSolicitante, $prioridade, $ordemServico, $mensagem, $status, $nomeAnexo)
+	{
 		if ($ordemServico == "") {
 			$ordemServico = 0;
 		}
@@ -153,7 +159,7 @@ class crud{
 			$stmt->bindparam(":anexo", $nomeAnexo);
 
 			$stmt->execute();
-		//	$id = mysql_insert_id($pdo->$stmt);	
+			//	$id = mysql_insert_id($pdo->$stmt);	
 
 			$subject = "Cadastro de Ocorrencia"; // assunto
 			$message = "Uma demanda cadastrada para você, " . "\r\n"; //mensagem
@@ -170,14 +176,14 @@ class crud{
 			mail($to, $subject, $message, $headers);
 
 			return true;
-
 		} catch (PDOException $e) {
 			echo $e->getMessage();
 			return false;
 		}
 	}
 
-	public static function addMensagem($idLogado, $dataHora, $codDemanda, $mensagem,$idInstituicao){
+	public static function addMensagem($idLogado, $dataHora, $codDemanda, $mensagem, $idInstituicao)
+	{
 		$pdo = Database::connect();
 
 		try {
@@ -208,18 +214,19 @@ class crud{
 		return true;
 	}
 
-	public static function criaUsr($nome, $email, $nivel, $dep, $status, $pass)
-	{
+	public static function criaUsr($nome, $email, $nivel, $dep, $status, $pass,$idInstituicao,$dica){
 		$pdo = Database::connect();
 		$pwd = sha1($pass);
 		try {
-			$stmt = $pdo->prepare("INSERT INTO usuarios(nome, email, nivel, id_dep, status, senha) VALUES(:nome, :email, :nivel, :id_dep, :status, :senha)");
+			$stmt = $pdo->prepare("INSERT INTO usuarios(nome, email, nivel, id_dep, status, senha,fk_idInstituicao, dica) VALUES(:nome, :email, :nivel, :id_dep, :status, :senha,:idInstituicao,:dica)");
 			$stmt->bindparam(":nome", $nome);
 			$stmt->bindparam(":email", $email);
 			$stmt->bindparam(":nivel", $nivel);
 			$stmt->bindparam(":id_dep", $dep);
 			$stmt->bindparam(":status", $status);
 			$stmt->bindparam(":senha", $pwd);
+			$stmt->bindparam(":idInstituicao", $idInstituicao);
+			$stmt->bindparam(":dica", $dica);
 			$stmt->execute();
 
 			return true;
@@ -229,47 +236,67 @@ class crud{
 			return false;
 		}
 	}
-// CLIENTE
-public static function atualizaCliente($id, $nome, $status,$tipoCliente)	{
-	$pdo = Database::connect();
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	try {
-		$stmt = $pdo->prepare("UPDATE cliente SET nomecliente=:nome, status=:status, tipoCliente=:tipoCliente WHERE codCliente=:id ");
-		$stmt->bindparam(":id", $id);
-		$stmt->bindparam(":status", $status);
-		$stmt->bindparam(":tipoCliente", $tipoCliente);
-		$stmt->bindparam(":nome", $nome);
 
-		$stmt->execute();
+	public static function enviarEmail($valida,$idInstituicao){
 
-		return true;
-	} catch (PDOException $e) {
-		echo $e->getMessage();
-		return false;
+		$to = $email;		
+		$valida = md5("$to");
+				
+		$subject = "Assunto Teste e-mail";
+		$message="<a href=valida_cadastro.php?v=$valida&$to&$idInstituicao> Teste de envio de mensagem </a>";
+		$headers = 'MIME-Version: 1.0'. "\r\n";
+		$headers .= 'content-type: text/html; charset=iso-8859-1'."\r\n";
+		$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>'."\r\n";
+		$headers .= 'From:< carlosandrefsaba@gmail.com>'."\r\n";
+		$headers .= 'CC:< programadorfsaba@gmail.com>'."\r\n";
+		$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";
+		
+		mail($to,$subject,$message,$headers);
+
 	}
-}
-
-public static function atualizaStatusCliente($id, $status,$idInstituicao)	{
-	$pdo = Database::connect();
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	try {
-		$stmt = $pdo->prepare("UPDATE cliente SET status=:status WHERE codCliente=:id AND fk_idInstituicao=:idInstituicao");
-		$stmt->bindparam(":id", $id);
-		$stmt->bindparam(":status", $status);
-		$stmt->bindparam(":idInstituicao", $idInstituicao);
-		$stmt->execute();
-		return true;
-		echo getMessage("Atualizado com sucesso;");
-	} catch (PDOException $e) {
-		echo $e->getMessage();
-		return false;
-	}
-}
-	public static function criarCliente($nomeCliente,$tipoCliente,$nomeFantasiaCliente,$idInstituicao)
+	// CLIENTE
+	public static function atualizaCliente($id, $nome, $status, $tipoCliente,$nomeFantasia,$idInstituicao)
 	{
-
 		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		try {
+			$stmt = $pdo->prepare("UPDATE cliente SET nomecliente=:nome, status=:status, tipoCliente=:tipoCliente, nomeFantasiaCliente=:nomeFantasia, fk_idInstituicao=:idInstituicao WHERE codCliente=:id ");
+			$stmt->bindparam(":id", $id);
+			$stmt->bindparam(":status", $status);
+			$stmt->bindparam(":tipoCliente", $tipoCliente);
+			$stmt->bindparam(":nome", $nome);
+			$stmt->bindparam(":nomeFantasia", $nomeFantasia);
+			$stmt->bindparam(":idInstituicao", $idInstituicao);
 
+			$stmt->execute();
+
+			return true;
+		} catch (PDOException $e) {
+			echo $e->getMessage();
+			return false;
+		}
+	}
+
+	public static function atualizaStatusCliente($id, $status, $idInstituicao)
+	{
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		try {
+			$stmt = $pdo->prepare("UPDATE cliente SET status=:status WHERE codCliente=:id AND fk_idInstituicao=:idInstituicao");
+			$stmt->bindparam(":id", $id);
+			$stmt->bindparam(":status", $status);
+			$stmt->bindparam(":idInstituicao", $idInstituicao);
+			$stmt->execute();
+			return true;
+			echo getMessage("Atualizado com sucesso;");
+		} catch (PDOException $e) {
+			echo $e->getMessage();
+			return false;
+		}
+	}
+	public static function criarCliente($nomeCliente, $tipoCliente, $nomeFantasiaCliente, $idInstituicao)
+	{
+		$pdo = Database::connect();
 		try {
 			$stmt = $pdo->prepare("INSERT INTO cliente(nomeCliente, tipoCliente, nomeFantasiaCliente, fk_idInstituicao) VALUES (:nomeCliente, :tipoCliente, :nomeFantasiaCliente,:idInstituicao)");
 			$stmt->bindparam(":nomeCliente", $nomeCliente);
@@ -285,13 +312,14 @@ public static function atualizaStatusCliente($id, $status,$idInstituicao)	{
 		}
 	}
 
-	public static function deleteCliente($idCliente,$idInstituicao)
+	public static function deleteCliente($codCliente, $idInstituicao)
 	{
+
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
-			$stmt = $pdo->prepare("DELETE FROM cliente WHERE codCliente=:codCliente AND FK_idInstituicao:idInstituicao");
-			$stmt->bindparam(":codCliente", $idCliente);
+			$stmt = $pdo->prepare("DELETE FROM cliente WHERE codCliente=:codCliente AND fk_idInstituicao=:idInstituicao");
+			$stmt->bindparam(":codCliente", $codCliente);
 			$stmt->bindparam(":idInstituicao", $idInstituicao);
 			$stmt->execute();
 			return true;
@@ -303,7 +331,7 @@ public static function atualizaStatusCliente($id, $status,$idInstituicao)	{
 
 	public static function mostrarCliente($idInstituicao)
 	{
-		$query = "SELECT * FROM cliente WHERE fk_idInstituicao='".$idInstituicao."' ORDER BY nomecliente ASC";
+		$query = "SELECT * FROM cliente WHERE fk_idInstituicao='" . $idInstituicao . "' ORDER BY nomecliente ASC";
 
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -313,7 +341,7 @@ public static function atualizaStatusCliente($id, $status,$idInstituicao)	{
 		return $stmt;
 	}
 
-//CLIENTE
+	//CLIENTE
 	public static function edtUsr($id, $nome, $email, $nivel, $dep, $status, $pass)
 	{
 
@@ -366,7 +394,8 @@ public static function atualizaStatusCliente($id, $status,$idInstituicao)	{
 		}
 	}
 
-	public static function criaUsuario($emailUser, $senhalUser, $dicalUser, $ativo, $valida){
+	public static function criaUsuario($emailUser, $senhalUser, $dicalUser, $ativo, $valida)
+	{
 		$pdo = Database::connect();
 		try {
 			$stmt = $pdo->prepare("INSERT INTO usuario(email,senha,dica,ativo,valida) 
@@ -378,7 +407,7 @@ public static function atualizaStatusCliente($id, $status,$idInstituicao)	{
 			$stmt->bindparam(":valida", $valida);
 
 			$stmt->execute();
-			
+
 			$to = $emailUser;
 
 			$valida = md5("$to");
@@ -403,13 +432,14 @@ public static function atualizaStatusCliente($id, $status,$idInstituicao)	{
 		}
 	}
 
-	public static function ativarUsuario($ativo, $valida)
+	public static function ativarUsuario($ativo, $valida,$idInstituicao)
 	{
 		$pdo = Database::connect();
 		try {
-			$stmt = $pdo->prepare("UPDATE usuario SET ativo=:ativo WHERE valida=:valida");
+			$stmt = $pdo->prepare("UPDATE usuario SET ativo=:ativo WHERE valida=:valida AND fk_idInstituicao=:idInstituicao");
 			$stmt->bindparam(":ativo", $ativo);
 			$stmt->bindparam(":valida", $valida);
+			$stmt->bindparam(":idInstituicao", $idInstituicao);
 
 			$stmt->execute();
 
@@ -421,10 +451,10 @@ public static function atualizaStatusCliente($id, $status,$idInstituicao)	{
 		}
 	}
 
-	public static function mostraUsuario($valor, $valor2)
+	public static function mostraUsuario($valor, $valor2, $valor3)
 	{
 		$pdo = Database::connect();
-		$sql = "SELECT * FROM usuario WHERE valida='" . $valor . "' AND email='" . $valor2 . "'";
+		$sql = "SELECT * FROM usuarios WHERE valida='" . $valor . "' AND email='" . $valor2 . "' AND fk_idInstituicao='" . $valor3 . "'";
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
 			$q = $pdo->prepare($sql);
@@ -437,8 +467,7 @@ public static function atualizaStatusCliente($id, $status,$idInstituicao)	{
 		}
 	}
 
-	public static function VericaEmailUser($emailUser2)
-	{
+	public static function VericaEmailUser($emailUser2)	{
 		$pdo = Database::connect();
 		$sql = "SELECT email FROM usuario WHERE email='" . $emailUser2 . "'   ";
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -452,7 +481,7 @@ public static function atualizaStatusCliente($id, $status,$idInstituicao)	{
 			return false;
 		}
 	}
-	
+
 	//Nessa função, fazemos a montagem da tabela de dados.
 	public static function mostraDep()
 	{
@@ -493,7 +522,8 @@ public static function atualizaStatusCliente($id, $status,$idInstituicao)	{
 	}
 
 	//MANAGER SLA --------------------------------------------
-	public static function cadSla($descricao, $tempo, $uniTempo){
+	public static function cadSla($descricao, $tempo, $uniTempo)
+	{
 		$pdo = Database::connect();
 
 		try {
@@ -551,77 +581,79 @@ public static function atualizaStatusCliente($id, $status,$idInstituicao)	{
 		$stmt->execute();
 		return $stmt;
 	}
-	public static function formataData($data){
+	public static function formataData($data)
+	{
 		$qtde = strlen($data);
 		$data1 = new DateTime($data);
-		if ( $qtde > 10) {
-			$dataFormatada = $data1->format('d/m/Y h:i:s');  
+		if ($qtde > 10) {
+			$dataFormatada = $data1->format('d/m/Y h:i:s');
 		} else {
-			$dataFormatada = $data1->format('d/m/Y');  
+			$dataFormatada = $data1->format('d/m/Y');
 		}
-				return $dataFormatada;
+		return $dataFormatada;
 	}
-//statuspedido
+	//statuspedido
 	public static function listarStatus()
-    {
+	{
 
-        $sql = " SELECT * FROM statusPedido order by nome ";
+		$sql = " SELECT * FROM statusPedido order by nome ";
 
-        $pdo = Database::connect();
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
-        return $stmt;
-    }
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		return $stmt;
+	}
 
-    public static function listarSatusId($id)
-    {
+	public static function listarSatusId($id)
+	{
 
-        $sql = "SELECT * FROM statusPedido WHERE codStatus = $id order by nome";
+		$sql = "SELECT * FROM statusPedido WHERE codStatus = $id order by nome";
 
-        $pdo = Database::connect();
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
-        return $stmt;
-    }
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		return $stmt;
+	}
 
-        public static function CadastroStatus($descricao)
-    {
-        $pdo = Database::connect();
+	public static function CadastroStatus($descricao)
+	{
+		$pdo = Database::connect();
 
-        try {
-            $stmt = $pdo->prepare("INSERT INTO statusPedido (nome) VALUES(:nome)");
-            $stmt->bindparam(":nome", $descricao);
-            $stmt->execute();
+		try {
+			$stmt = $pdo->prepare("INSERT INTO statusPedido (nome) VALUES(:nome)");
+			$stmt->bindparam(":nome", $descricao);
+			$stmt->execute();
 
-            return true;
-        } catch (PDOException $e) {
+			return true;
+		} catch (PDOException $e) {
 
-            echo $e->getMessage();
-            return false;
-        }
-    }
+			echo $e->getMessage();
+			return false;
+		}
+	}
 
-    public static function editarStatus($edtId, $descricao)
-    {
-        $pdo = Database::connect();
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        try {
-            $stmt = $pdo->prepare("UPDATE statusPedido SET nome=:descricao WHERE codStatus=:edtId ");
-            $stmt->bindparam(":edtId", $edtId);
-            $stmt->bindparam(":descricao", $descricao);
+	public static function editarStatus($edtId, $descricao)
+	{
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		try {
+			$stmt = $pdo->prepare("UPDATE statusPedido SET nome=:descricao WHERE codStatus=:edtId ");
+			$stmt->bindparam(":edtId", $edtId);
+			$stmt->bindparam(":descricao", $descricao);
 
-            $stmt->execute();
+			$stmt->execute();
 
-            return true;
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-            return false;
-        }
-    }
+			return true;
+		} catch (PDOException $e) {
+			echo $e->getMessage();
+			return false;
+		}
+	}
 
-    public static function deleteStatus($id){
+	public static function deleteStatus($id)
+	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$stmt = $pdo->prepare("DELETE FROM statusPedido WHERE codStatus=:id");
@@ -630,302 +662,320 @@ public static function atualizaStatusCliente($id, $status,$idInstituicao)	{
 		return true;
 	}
 
-//statuspedido
+	//statuspedido
 
-//controlepedido
-public static function totalPedidoPendetes($idInstituicao){
+	//controlepedido
+	public static function totalPedidoPendetes($idInstituicao)
+	{
 
-	$sql = "SELECT count(con.codControle) as totalPedidosPendetes
+		$sql = "SELECT count(con.codControle) as totalPedidosPendetes
 	FROM controlePedido as con 
 	inner join cliente as cli on cli.codCliente = con.codCliente 
-	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE cli.tipoCliente = 'E' AND con.codStatus = 4 AND con.fk_idInstituicao = '" .$idInstituicao. "'
+	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE cli.tipoCliente = 'E' AND con.codStatus = 4 AND con.fk_idInstituicao = '" . $idInstituicao . "'
 	ORDER BY con.dataCadastro desc";
 
-	$pdo = Database::connect();
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$stmt = $pdo->prepare($sql);
-	$stmt->execute();
-	return $stmt;
-}
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		return $stmt;
+	}
 
-public static function totalPedidoCancelados($idInstituicao){
+	public static function totalPedidoCancelados($idInstituicao)
+	{
 
-	$sql = "SELECT count(con.codControle) as totalPedidoCancelados
+		$sql = "SELECT count(con.codControle) as totalPedidoCancelados
 	FROM controlePedido as con 
 	inner join cliente as cli on cli.codCliente = con.codCliente 
-	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE cli.tipoCliente = 'E' AND con.codStatus = 4 AND con.fk_idInstituicao = '" .$idInstituicao. "'
+	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE cli.tipoCliente = 'E' AND con.codStatus = 4 AND con.fk_idInstituicao = '" . $idInstituicao . "'
 	ORDER BY con.dataCadastro desc";
 
-	$pdo = Database::connect();
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$stmt = $pdo->prepare($sql);
-	$stmt->execute();
-	return $stmt;
-}
-public static function totalPedidoAtendidos($idInstituicao){
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		return $stmt;
+	}
+	public static function totalPedidoAtendidos($idInstituicao)
+	{
 
-	$sql = "SELECT count(con.codControle) as totalPedidoAtendidos
+		$sql = "SELECT count(con.codControle) as totalPedidoAtendidos
 	FROM controlePedido as con 
 	inner join cliente as cli on cli.codCliente = con.codCliente 
-	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE cli.tipoCliente = 'E' AND con.codStatus = 16 and con.fk_idInstituicao = '" .$idInstituicao. "'
+	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE cli.tipoCliente = 'E' AND con.codStatus = 16 and con.fk_idInstituicao = '" . $idInstituicao . "'
 	ORDER BY con.dataCadastro desc";
 
-	$pdo = Database::connect();
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$stmt = $pdo->prepare($sql);
-	$stmt->execute();
-	return $stmt;
-}
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		return $stmt;
+	}
 
-public static function listarPedido($idInstituicao){
-	
-	$sql = "SELECT con.fk_idInstituicao ,con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.codCliente, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
+	public static function listarPedido($idInstituicao)
+	{
+
+		$sql = "SELECT con.fk_idInstituicao ,con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.codCliente, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
 	FROM controlePedido as con 
 	inner join cliente as cli on cli.codCliente = con.codCliente 
 	inner join statusPedido as sta on sta.codStatus = con.codStatus
-	WHERE con.fk_idInstituicao = '" .$idInstituicao. "'
+	WHERE con.fk_idInstituicao = '" . $idInstituicao . "'
 	ORDER BY con.dataCadastro desc";
 
-	$pdo = Database::connect();
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$stmt = $pdo->prepare($sql);
-	$stmt->execute();
-	return $stmt;
-}
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		return $stmt;
+	}
 
-public static function listarPedidoNaoAtendCanc($idInstituicao){
-	$sql = "SELECT con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
+	public static function listarPedidoNaoAtendCanc($idInstituicao)
+	{
+		$sql = "SELECT con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
 	FROM controlePedido as con 
 	inner join cliente as cli on cli.codCliente = con.codCliente 
-	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE sta.nome not in ('ATENDIDO','CANCELADO') AND con.fk_idInstituicao = '" .$idInstituicao. "'
-	ORDER BY con.dataCadastro desc"; 
+	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE sta.nome not in ('ATENDIDO','CANCELADO') AND con.fk_idInstituicao = '" . $idInstituicao . "'
+	ORDER BY con.dataCadastro desc";
 
-	$pdo = Database::connect();
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$stmt = $pdo->prepare($sql);
-	$stmt->execute();
-	return $stmt;
-}
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		return $stmt;
+	}
 
-public static function listarPedidoId($id, $idInstituicao) {
-	
-	$sql = "SELECT con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
+	public static function listarPedidoId($id, $idInstituicao)
+	{
+
+		$sql = "SELECT con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
 	FROM controlePedido as con 
 	inner join cliente as cli on cli.codCliente = con.codCliente 
-	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE con.codControle = $id AND con.fk_idInstituicao = '" .$idInstituicao. "' ";
+	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE con.codControle = $id AND con.fk_idInstituicao = '" . $idInstituicao . "' ";
 
-	$pdo = Database::connect();
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$stmt = $pdo->prepare($sql);
-	$stmt->execute();
-	return $stmt;
-}
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		return $stmt;
+	}
 
-public static function listarPedidoTipo($idInstituicao) {
-	
-	$sql = "SELECT con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus, cli.tipoCliente
+	public static function listarPedidoTipo($idInstituicao)
+	{
+
+		$sql = "SELECT con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus, cli.tipoCliente
 	FROM controlePedido as con 
 	inner join cliente as cli on cli.codCliente = con.codCliente 
-	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE cli.tipoCliente = 'E' AND con.fk_idInstituicao = '" .$idInstituicao. "' ";
+	inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE cli.tipoCliente = 'E' AND con.fk_idInstituicao = '" . $idInstituicao . "' ";
 
-	$pdo = Database::connect();
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$stmt = $pdo->prepare($sql);
-	$stmt->execute();
-	return $stmt;
-}
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		return $stmt;
+	}
 
 
-public static function CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao,$dataCadastro,$idInstituicao) {
-	$pdo = Database::connect();
+	public static function CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao)
+	{
+		$pdo = Database::connect();
 
-	try {
-		$stmt = $pdo->prepare("INSERT INTO controlePedido (numeroPregao, numeroAf,valorPedido,codStatus,codCliente,anexo,observacao, dataCadastro,fk_idInstituicao) 
+		try {
+			$stmt = $pdo->prepare("INSERT INTO controlePedido (numeroPregao, numeroAf,valorPedido,codStatus,codCliente,anexo,observacao, dataCadastro,fk_idInstituicao) 
 													VALUES(:numeroPregao, :numeroAf, :valorPedido, :codStatus, :codCliente, :anexo, :observacao,:dataCadastro,:idInstituicao)");
-									   					   //numeroPregao,numeroAf,valorPedido,codStatus,codCliente,anexo, observacao
-		$stmt->bindparam(":numeroPregao", $numeroPregao);
-		$stmt->bindparam(":numeroAf", $numeroAf);
-		$stmt->bindparam(":valorPedido", $valorPedido);
-		$stmt->bindparam(":codStatus", $codStatus);
-		$stmt->bindparam(":codCliente", $codCliente);
-		$stmt->bindparam(":anexo", $anexo);
-		$stmt->bindparam(":observacao", $observacao);
-		$stmt->bindparam(":dataCadastro", $dataCadastro);
-		$stmt->bindparam(":idInstituicao", $idInstituicao);
-		$stmt->execute();
+			//numeroPregao,numeroAf,valorPedido,codStatus,codCliente,anexo, observacao
+			$stmt->bindparam(":numeroPregao", $numeroPregao);
+			$stmt->bindparam(":numeroAf", $numeroAf);
+			$stmt->bindparam(":valorPedido", $valorPedido);
+			$stmt->bindparam(":codStatus", $codStatus);
+			$stmt->bindparam(":codCliente", $codCliente);
+			$stmt->bindparam(":anexo", $anexo);
+			$stmt->bindparam(":observacao", $observacao);
+			$stmt->bindparam(":dataCadastro", $dataCadastro);
+			$stmt->bindparam(":idInstituicao", $idInstituicao);
+			$stmt->execute();
 
-		return true;
-	} catch (PDOException $e) {
+			return true;
+		} catch (PDOException $e) {
 
-		echo $e->getMessage();
-		return false;
-	}
-}
-
-public static function editarPedido($codControle, $numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao,$idInstituicao){
-	$pdo = Database::connect();
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	try {
-		$stmt = $pdo->prepare("UPDATE controlepedido SET numeroPregao=:numeroPregao, numeroAf=:numeroAf,valorPedido=:valorPedido,codStatus=:codStatus,codCliente=:codCliente,anexo=:anexo,observacao=:observacao 
-		WHERE codControle=:codControle AND fk_idInstituicao=:idInstituicao ");
-		$stmt->bindparam(":codControle", $codControle);
-		$stmt->bindparam(":numeroPregao", $numeroPregao);
-		$stmt->bindparam(":numeroAf", $numeroAf);
-		$stmt->bindparam(":valorPedido", $valorPedido);
-		$stmt->bindparam(":codStatus", $codStatus);
-		$stmt->bindparam(":codCliente", $codCliente);
-		$stmt->bindparam(":anexo", $anexo);
-		$stmt->bindparam(":observacao", $observacao);
-		$stmt->bindparam(":idInstituicao", $idInstituicao); 
-		$stmt->execute();
-
-		return true;
-	} catch (PDOException $e) {
-		echo $e->getMessage();
-		return false;
-	}
-}
-public static function AlterarPedido($codControle, $statusPedido, $mensagemAlterar,$idInstituicao){
-	$pdo = Database::connect();
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	try {
-		$stmt = $pdo->prepare("UPDATE controlePedido SET codStatus=:statusPedido, observacao=:mensagemAlterar WHERE codControle=:codControle AND fk_idInstituicao=:idInstituicao ");
-		$stmt->bindparam(":codControle", $codControle);
-		$stmt->bindparam(":statusPedido", $statusPedido);
-		$stmt->bindparam(":mensagemAlterar", $mensagemAlterar);
-		$stmt->bindparam(":idInstituicao", $idInstituicao); 
-		$stmt->execute();
-
-		return true;
-	} catch (PDOException $e) {
-		echo $e->getMessage();
-		return false;
-	}
-}
-public static function AlterarPedido2($codControle, $statusPedido,$mensagemAlterar,$nomeCliente ,$numeroAf,$valorPedido,$numeroLicitacao,$anexoAlterar,$idInstituicao){
-			
-	$pdo = Database::connect();
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	try {
-		$stmt = $pdo->prepare("UPDATE controlePedido SET codStatus=:statusPedido, observacao=:mensagemAlterar, 
-		codCliente=:nomeCliente, numeroAf=:numeroAf, valorPedido=:valorPedido, numeroPregao=:numeroLicitacao, anexo=:anexoAlterar WHERE codControle=:codControle AND fk_idInstituicao=:idInstituicao ");
-		$stmt->bindparam(":codControle", $codControle);
-		$stmt->bindparam(":statusPedido", $statusPedido);
-		$stmt->bindparam(":mensagemAlterar", $mensagemAlterar);
-		$stmt->bindparam(":nomeCliente", $nomeCliente);
-		$stmt->bindparam(":numeroAf", $numeroAf);
-		$stmt->bindparam(":valorPedido", $valorPedido);
-		$stmt->bindparam(":numeroLicitacao", $numeroLicitacao);
-		$stmt->bindparam(":anexoAlterar", $anexoAlterar);
-		$stmt->bindparam(":idInstituicao", $idInstituicao); 
-
-		$stmt->execute();
-
-		return true;
-	} catch (PDOException $e) {
-		echo $e->getMessage();
-		return false;
-	}
-}
-
-public static function deletePedido($id,$idInstituicao){
-	$pdo = Database::connect();
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$stmt = $pdo->prepare("DELETE FROM controlePedido WHERE codControle=:codControle AND fk_idInstituicao =:idInstituicao ");
-	$stmt->bindparam(":codControle", $id);
-	$stmt->bindparam(":idInstituicao", $idInstituicao);
-	$stmt->execute();
-	return true;
-}
-//controlepedido
-
-//CADASTRO DE REPRESENTANTE
-public static function listarRepresentante($idInstituicao){
-	$sql = "SELECT * FROM cadRepresentante WHERE fk_idInstituicao = '" .$idInstituicao. "' ORDER BY nomeRepresentante desc";
-
-	$pdo = Database::connect();
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$stmt = $pdo->prepare($sql);
-	$stmt->execute();
-	return $stmt;
-}
-public static function listarRepresentanteId($id,$idInstituicao){
-	$sql = "SELECT * FROM cadRepresentante WHERE codRepresentante = $id AND con.fk_idInstituicao = '" .$idInstituicao. "' ORDER BY nomeRepresentante desc";
-
-	$pdo = Database::connect();
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$stmt = $pdo->prepare($sql);
-	$stmt->execute();
-	return $stmt;
-}
-
-public static function criarRepresentante($nomeRepresentante, $idInstituicao){
-	$pdo = Database::connect();
-	try{
-		$stmt = $pdo->prepare("INSERT INTO cadRepresentante(nomeRepresentante, fk_idInstituicao) VALUE (:nomeRepresentante,:idInstituicao)");
-		$stmt->bindparam(":nomeRepresentante", $nomeRepresentante);
-		$stmt->bindparam(":idInstituicao", $idInstituicao); 
-		$stmt->execute();
-
-		return true;
-	}catch(PDOException $e){
-		echo $e->getMessage();
-		return false;
-	}
-}
-public static function deleteRepresentante($codRepresentante, $idInstituicao){
-
-	$pdo = Database::connect();
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-	try{
-		$stmt = $pdo->prepare("DELETE FROM cadRepresentante WHERE codRepresentante =:codRepresentante AND fk_idInstituicao=:idInstituicao");
-		$stmt->bindParam(":codRepresentante", $codRepresentante); 
-		$stmt->bindParam(":idInstituicao", $idInstituicao); 
-		$stmt->execute();
-
-		return true;
-	}catch (PDOException $e){
 			echo $e->getMessage();
 			return false;
+		}
 	}
-}
 
-public static function editarRepresentante($nomeRepresentante,$codRepresentante,$statusRepresentante, $idInstituicao){
-	$pdo = Database::connect();
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	try{
-		$stmt = $pdo->prepare("UPDATE cadRepresentante SET nomeRepresentante=:nomeRepresentante, statusRepresentante=:statusRepresentante, fk_idInstituicao=:idInstituicao 
-		WHERE codRepresentante=:codRepresentante");
-		$stmt->bindParam(":codRepresentante", $codRepresentante);
-		$stmt->bindParam(":nomeRepresentante", $nomeRepresentante);
-		$stmt->bindParam(":statusRepresentante", $statusRepresentante);
-		$stmt->bindParam(":idInstituicao", $idInstituicao);
+	public static function editarPedido($codControle, $numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $idInstituicao)
+	{
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		try {
+			$stmt = $pdo->prepare("UPDATE controlepedido SET numeroPregao=:numeroPregao, numeroAf=:numeroAf,valorPedido=:valorPedido,codStatus=:codStatus,codCliente=:codCliente,anexo=:anexo,observacao=:observacao 
+		WHERE codControle=:codControle AND fk_idInstituicao=:idInstituicao ");
+			$stmt->bindparam(":codControle", $codControle);
+			$stmt->bindparam(":numeroPregao", $numeroPregao);
+			$stmt->bindparam(":numeroAf", $numeroAf);
+			$stmt->bindparam(":valorPedido", $valorPedido);
+			$stmt->bindparam(":codStatus", $codStatus);
+			$stmt->bindparam(":codCliente", $codCliente);
+			$stmt->bindparam(":anexo", $anexo);
+			$stmt->bindparam(":observacao", $observacao);
+			$stmt->bindparam(":idInstituicao", $idInstituicao);
+			$stmt->execute();
+
+			return true;
+		} catch (PDOException $e) {
+			echo $e->getMessage();
+			return false;
+		}
+	}
+	public static function AlterarPedido($codControle, $statusPedido, $mensagemAlterar, $idInstituicao)
+	{
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		try {
+			$stmt = $pdo->prepare("UPDATE controlePedido SET codStatus=:statusPedido, observacao=:mensagemAlterar WHERE codControle=:codControle AND fk_idInstituicao=:idInstituicao ");
+			$stmt->bindparam(":codControle", $codControle);
+			$stmt->bindparam(":statusPedido", $statusPedido);
+			$stmt->bindparam(":mensagemAlterar", $mensagemAlterar);
+			$stmt->bindparam(":idInstituicao", $idInstituicao);
+			$stmt->execute();
+
+			return true;
+		} catch (PDOException $e) {
+			echo $e->getMessage();
+			return false;
+		}
+	}
+	public static function AlterarPedido2($codControle, $statusPedido, $mensagemAlterar, $nomeCliente, $numeroAf, $valorPedido, $numeroLicitacao, $anexoAlterar, $idInstituicao)
+	{
+
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		try {
+			$stmt = $pdo->prepare("UPDATE controlePedido SET codStatus=:statusPedido, observacao=:mensagemAlterar, 
+		codCliente=:nomeCliente, numeroAf=:numeroAf, valorPedido=:valorPedido, numeroPregao=:numeroLicitacao, anexo=:anexoAlterar WHERE codControle=:codControle AND fk_idInstituicao=:idInstituicao ");
+			$stmt->bindparam(":codControle", $codControle);
+			$stmt->bindparam(":statusPedido", $statusPedido);
+			$stmt->bindparam(":mensagemAlterar", $mensagemAlterar);
+			$stmt->bindparam(":nomeCliente", $nomeCliente);
+			$stmt->bindparam(":numeroAf", $numeroAf);
+			$stmt->bindparam(":valorPedido", $valorPedido);
+			$stmt->bindparam(":numeroLicitacao", $numeroLicitacao);
+			$stmt->bindparam(":anexoAlterar", $anexoAlterar);
+			$stmt->bindparam(":idInstituicao", $idInstituicao);
+
+			$stmt->execute();
+
+			return true;
+		} catch (PDOException $e) {
+			echo $e->getMessage();
+			return false;
+		}
+	}
+
+	public static function deletePedido($id, $idInstituicao)
+	{
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare("DELETE FROM controlePedido WHERE codControle=:codControle AND fk_idInstituicao =:idInstituicao ");
+		$stmt->bindparam(":codControle", $id);
+		$stmt->bindparam(":idInstituicao", $idInstituicao);
 		$stmt->execute();
-
 		return true;
-	}catch(PDOException $e){
-		echo $e->getMessage();		
-		return false;
 	}
-}
+	//controlepedido
 
-public static function ativaRepresentante($codRepresentante,$statusRepresentante, $idInstituicao){
-	$pdo = Database::connect();
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	try{
-		$stmt = $pdo->prepare("UPDATE cadRepresentante SET statusRepresentante=:statusRepresentante, fk_idInstituicao=:idInstituicao 
-		WHERE codRepresentante=:codRepresentante");
-		$stmt->bindParam(":codRepresentante", $codRepresentante);
-		$stmt->bindParam(":statusRepresentante", $statusRepresentante);
-		$stmt->bindParam(":idInstituicao", $idInstituicao);
+	//CADASTRO DE REPRESENTANTE
+	public static function listarRepresentante($idInstituicao)
+	{
+		$sql = "SELECT * FROM cadRepresentante WHERE fk_idInstituicao = '" . $idInstituicao . "' ORDER BY nomeRepresentante desc";
+
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare($sql);
 		$stmt->execute();
-
-		return true;
-	}catch(PDOException $e){
-		echo $e->getMessage();		
-		return false;
+		return $stmt;
 	}
-}
-//CADASTRO DE REPRESENTANTE
+	public static function listarRepresentanteId($id, $idInstituicao)
+	{
+		$sql = "SELECT * FROM cadRepresentante WHERE codRepresentante = $id AND con.fk_idInstituicao = '" . $idInstituicao . "' ORDER BY nomeRepresentante desc";
+
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		return $stmt;
+	}
+
+	public static function criarRepresentante($nomeRepresentante, $idInstituicao)
+	{
+		$pdo = Database::connect();
+		try {
+			$stmt = $pdo->prepare("INSERT INTO cadRepresentante(nomeRepresentante, fk_idInstituicao) VALUE (:nomeRepresentante,:idInstituicao)");
+			$stmt->bindparam(":nomeRepresentante", $nomeRepresentante);
+			$stmt->bindparam(":idInstituicao", $idInstituicao);
+			$stmt->execute();
+
+			return true;
+		} catch (PDOException $e) {
+			echo $e->getMessage();
+			return false;
+		}
+	}
+	public static function deleteRepresentante($codRepresentante, $idInstituicao)
+	{
+
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+		try {
+			$stmt = $pdo->prepare("DELETE FROM cadRepresentante WHERE codRepresentante =:codRepresentante AND fk_idInstituicao=:idInstituicao");
+			$stmt->bindParam(":codRepresentante", $codRepresentante);
+			$stmt->bindParam(":idInstituicao", $idInstituicao);
+			$stmt->execute();
+
+			return true;
+		} catch (PDOException $e) {
+			echo $e->getMessage();
+			return false;
+		}
+	}
+
+	public static function editarRepresentante($nomeRepresentante, $codRepresentante, $statusRepresentante, $idInstituicao)
+	{
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		try {
+			$stmt = $pdo->prepare("UPDATE cadRepresentante SET nomeRepresentante=:nomeRepresentante, statusRepresentante=:statusRepresentante, fk_idInstituicao=:idInstituicao 
+		WHERE codRepresentante=:codRepresentante");
+			$stmt->bindParam(":codRepresentante", $codRepresentante);
+			$stmt->bindParam(":nomeRepresentante", $nomeRepresentante);
+			$stmt->bindParam(":statusRepresentante", $statusRepresentante);
+			$stmt->bindParam(":idInstituicao", $idInstituicao);
+			$stmt->execute();
+
+			return true;
+		} catch (PDOException $e) {
+			echo $e->getMessage();
+			return false;
+		}
+	}
+
+	public static function ativaRepresentante($codRepresentante, $statusRepresentante, $idInstituicao)
+	{
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		try {
+			$stmt = $pdo->prepare("UPDATE cadRepresentante SET statusRepresentante=:statusRepresentante, fk_idInstituicao=:idInstituicao 
+		WHERE codRepresentante=:codRepresentante");
+			$stmt->bindParam(":codRepresentante", $codRepresentante);
+			$stmt->bindParam(":statusRepresentante", $statusRepresentante);
+			$stmt->bindParam(":idInstituicao", $idInstituicao);
+			$stmt->execute();
+
+			return true;
+		} catch (PDOException $e) {
+			echo $e->getMessage();
+			return false;
+		}
+	}
+	//CADASTRO DE REPRESENTANTE
 }
