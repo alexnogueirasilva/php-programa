@@ -226,16 +226,26 @@ switch ($value) {
 		$pass = $_POST['pass'];
 		$idInstituicao = $_POST['idInstituicao'];
 		$status = "Ativo";
-		$cdt = crud::VericaEmailUser($email,$idInstituicao);
+		$cdt = crud::VericaEmailUser($email, $idInstituicao);
 		if ($cdt == false) {
 			$cdt = crud::criaUsr($nome, $email, $nivel, $dep, $status, $pass, $idInstituicao, $dica);
-			if ($cdt == true) {				
-				$envio = crud::enviarEmail($email,$idInstituicao);
-				if($envio == false){
-					echo 3;
-				}else{
-					echo 1;
-				}
+			if ($cdt == true) {
+
+				echo 1;
+
+				$to = $email;
+				$valida = md5("$to");
+
+				$subject = "Assunto Teste e-mail";
+				$message = "<a href=valida_cadastro.php?v=$valida&$to&$idInstituicao> Teste de envio de mensagem </a>";
+				$headers = 'MIME-Version: 1.0' . "\r\n";
+				$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n";
+				$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>' . "\r\n";
+				$headers .= 'From:< carlosandrefsaba@gmail.com>' . "\r\n";
+				$headers .= 'CC:< programadorfsaba@gmail.com>' . "\r\n";
+				$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>' . "\r\n";
+
+				mail($to, $subject, $message, $headers);
 			} else {
 				echo 0;
 			}
@@ -243,10 +253,9 @@ switch ($value) {
 			echo 2;
 		}
 
-	break;
+		break;
 
 	case 'excluiUsuario':
-
 		$id = $_POST['idUser'];
 
 
@@ -260,7 +269,6 @@ switch ($value) {
 
 		//EDITA USUÁRIO
 	case 'editaUsr':
-
 		$id = $_POST['iduser'];
 		$nome = $_POST['edtnome'];
 		$dica = $_POST['edtdica'];
@@ -281,7 +289,6 @@ switch ($value) {
 		break;
 
 	case 'cadDep':
-
 		$nomeDep = $_POST['nomeDep'];
 
 		$cdt = crud::criaDep($nomeDep);
@@ -296,7 +303,7 @@ switch ($value) {
 		//tipo emailUser senhalUser dicalUser
 		$emailUser = $_POST['emailUser'];
 		$idInstituicao = $_POST['idInstituicao'];
-		$cdt = crud::VericaEmailUser($emailUser,$idInstituicao);
+		$cdt = crud::VericaEmailUser($emailUser, $idInstituicao);
 		if ($cdt == false) {
 			$senhalUser = $_POST['senhalUser'];
 			$dicalUser = $_POST['dicalUser'];
@@ -323,7 +330,7 @@ switch ($value) {
 		$ativo = 0;
 		$valida = md5($emailUser2);
 
-		$cdt = crud::VericaEmailUser($emailUser2,$idInstituicao);
+		$cdt = crud::VericaEmailUser($emailUser2, $idInstituicao);
 		if ($cdt == true) {
 			echo 1;
 		} else {
@@ -336,7 +343,7 @@ switch ($value) {
 		$emailUser2 = $_POST['emailUser'];
 		$idInstituicao = $_POST['idInstituicao'];
 
-		$cdt = crud::VericaEmailUser($emailUser2,$idInstituicao);
+		$cdt = crud::VericaEmailUser($emailUser2, $idInstituicao);
 		if ($cdt == true) {
 			echo 1;
 		} else {
@@ -345,7 +352,6 @@ switch ($value) {
 		break;
 
 	case 'EditDep':
-
 		$id = $_POST['id'];
 		$nomeDep = $_POST['nomeDep'];
 
@@ -359,7 +365,6 @@ switch ($value) {
 
 
 	case 'deleteDep':
-
 		$id = $_POST['id'];
 
 
@@ -374,7 +379,6 @@ switch ($value) {
 
 		//ATUALIZA STATUS DO USUÁRIO PARA DESATIVADO
 	case 'desativaUsuario':
-
 		$id = $_POST['id'];
 		$status = "Desativado";
 
@@ -388,7 +392,6 @@ switch ($value) {
 
 		//ATUALIZA STATUS DO USUÁRIO PARA DESATIVADO
 	case 'ativaUsuario':
-
 		$id = $_POST['id'];
 		$status = "Ativo";
 
@@ -404,7 +407,6 @@ switch ($value) {
 
 		// MANAGER SLA
 	case 'cadSla':
-
 		$descricao = $_POST['descricao'];
 		$tempo = $_POST['tempo'];
 		$uniTempo = $_POST['unidtempo'];
@@ -419,7 +421,6 @@ switch ($value) {
 
 		// MANAGER SLA
 	case 'edtSla':
-
 		$descricao = $_POST['edtDescricao'];
 		$tempo = $_POST['edtTempo'];
 		$uniTempo = $_POST['edtUnidtempo'];
@@ -434,7 +435,6 @@ switch ($value) {
 		break;
 
 	case 'excluiSla':
-
 		$id = $_POST['idSla'];
 
 		$exc = crud::excluiSla($id);
@@ -457,7 +457,6 @@ switch ($value) {
 		break;
 
 	case 'editarStatus':
-
 		$descricao  = $_POST['edtDescricao'];
 		$edtId         = $_POST['edtId'];
 		$cad = crud::editarStatus($edtId, $descricao);
@@ -480,7 +479,6 @@ switch ($value) {
 
 		//controlepedido
 	case 'CadastroPedido':
-
 		$dataCadastro = $_POST['dataCadastro'];
 		$dataAbertura = $_POST['dataAtual'];
 		$numeroPregao = $_POST['numeroPregao'];
@@ -528,7 +526,6 @@ switch ($value) {
 		break;
 
 	case 'editarPedido':
-
 		$descricao  = $_POST['edtDescricao'];
 		$edtId         = $_POST['edtId'];
 		$cad = crud::editarPedido($codControle, $numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $idInstituicao);
@@ -540,7 +537,6 @@ switch ($value) {
 		break;
 
 	case 'AlterarPedido2':
-
 		$codControle        = $_POST['codigoControleAlterar'];
 		$statusPedido		= $_POST['statusPedidoAlterar'];
 		$mensagemAlterar    = $_POST['mensagemPedidoAlterar'];
@@ -599,7 +595,6 @@ switch ($value) {
 		break;
 
 	case 'AlterarPedido':
-
 		$statusPedido		= $_POST['statusPedidoAlterar'];
 		$codControle        = $_POST['codigoControleAlterar'];
 		$mensagemAlterar    = $_POST['mensagemPedidoAlterar'];
@@ -613,7 +608,6 @@ switch ($value) {
 		break;
 
 	case 'deletePedido':
-
 		$id         = $_POST['idPedido'];
 		$idInstituicao = $_POST['idInstituicao'];
 		$cad = crud::deletePedido($id, $idInstituicao);
@@ -625,7 +619,6 @@ switch ($value) {
 		break;
 
 	case 'adicionaMensagemPedido':
-
 		$idLogado = $_POST['idLogado'];
 		$dataHora = $_POST['datahora'];
 		$codDemanda = $_POST['codPedido'];
@@ -659,7 +652,6 @@ switch ($value) {
 		break;
 
 	case 'editarRepresentante':
-
 		$nomeRepresentante = $_POST['edtnome'];
 		$codRepresentante = $_POST['idRepresentante'];
 		$statusRepresentante =  $_POST['edtstatus'];
@@ -675,7 +667,6 @@ switch ($value) {
 		break;
 
 	case 'ativaRepresentante':
-
 		$codRepresentante = $_POST['idRepresentante'];
 		$statusRepresentante =  'A';
 		$idInstituicao = $_POST['idInstituicao'];
@@ -689,7 +680,6 @@ switch ($value) {
 
 		break;
 	case 'desativaRepresentante':
-
 		$codRepresentante = $_POST['idRepresentante'];
 		$statusRepresentante =  'D';
 		$idInstituicao = $_POST['idInstituicao'];
@@ -704,7 +694,6 @@ switch ($value) {
 		break;
 
 	case 'excluirRepresentante':
-
 		$codRepresentante = $_POST['idRepresentante'];
 		$idInstituicao = $_POST['idInstituicao'];
 		$cad = crud::deleteRepresentante($codRepresentante, $idInstituicao);
