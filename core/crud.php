@@ -467,9 +467,9 @@ class crud
 		}
 	}
 
-	public static function VericaEmailUser($emailUser2,$idInstituicao)	{
+	public static function VericaEmailUser($email,$idInstituicao)	{
 		$pdo = Database::connect();
-		$sql = "SELECT email FROM usuarios WHERE email='" . $emailUser2 . "' AND fk_idInstituicao='" . $idInstituicao . "'";
+		$sql = "SELECT * FROM usuarios WHERE email='" . $email . "' AND fk_idInstituicao='" . $idInstituicao . "'";
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
 			$q = $pdo->prepare($sql);
@@ -965,7 +965,7 @@ class crud
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
 			$stmt = $pdo->prepare("UPDATE cadRepresentante SET statusRepresentante=:statusRepresentante, fk_idInstituicao=:idInstituicao 
-			WHERE codRepresentante=:codRepresentante");
+		WHERE codRepresentante=:codRepresentante");
 			$stmt->bindParam(":codRepresentante", $codRepresentante);
 			$stmt->bindParam(":statusRepresentante", $statusRepresentante);
 			$stmt->bindParam(":idInstituicao", $idInstituicao);

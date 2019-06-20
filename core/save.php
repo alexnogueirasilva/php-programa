@@ -229,9 +229,13 @@ switch ($value) {
 		$cdt = crud::VericaEmailUser($email,$idInstituicao);
 		if ($cdt == false) {
 			$cdt = crud::criaUsr($nome, $email, $nivel, $dep, $status, $pass, $idInstituicao, $dica);
-			if ($cdt == true) {
-				echo 1;
-			crud::enviarEmail($email,$idInstituicao);
+			if ($cdt == true) {				
+				$envio = crud::enviarEmail($email,$idInstituicao);
+				if($envio == false){
+					echo 3;
+				}else{
+					echo 1;
+				}
 			} else {
 				echo 0;
 			}

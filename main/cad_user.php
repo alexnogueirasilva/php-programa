@@ -398,7 +398,8 @@ require_once "rodape.php";
 						idInstituicao: idInstituicao
 					}, //Dados
 					success: function(result) {
-					//	alert(result);
+					
+						alert( "resultado ajax:  "+result);
 						if (result == 1) {
 							swal({
 									title: "OK!",
@@ -422,6 +423,10 @@ require_once "rodape.php";
 
 						} else if (result == 2) {
 							alert("o email " + email + " ja existe!"); //Informa o erro					
+						
+						} else if (result == 3) {
+							
+							alert("erro ao enviar email!"); //Informa o erro					
 
 						} else {
 							swal({
@@ -436,6 +441,7 @@ require_once "rodape.php";
 										window.location = "cad_user.php";
 									}
 								});
+								alert ("erro ao cadastrr " +result);
 						}
 					}
 				});
