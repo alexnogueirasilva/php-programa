@@ -226,7 +226,7 @@ switch ($value) {
 		$pass = $_POST['pass'];
 		$idInstituicao = $_POST['idInstituicao'];
 		$status = "Ativo";
-		$cdt = crud::VericaEmailUser($email);
+		$cdt = crud::VericaEmailUser($email,$idInstituicao);
 		if ($cdt == false) {
 			$cdt = crud::criaUsr($nome, $email, $nivel, $dep, $status, $pass, $idInstituicao, $dica);
 			if ($cdt == true) {
@@ -291,7 +291,8 @@ switch ($value) {
 	case 'CadastroUsuario':
 		//tipo emailUser senhalUser dicalUser
 		$emailUser = $_POST['emailUser'];
-		$cdt = crud::VericaEmailUser($emailUser);
+		$idInstituicao = $_POST['idInstituicao'];
+		$cdt = crud::VericaEmailUser($emailUser,$idInstituicao);
 		if ($cdt == false) {
 			$senhalUser = $_POST['senhalUser'];
 			$dicalUser = $_POST['dicalUser'];
@@ -313,11 +314,12 @@ switch ($value) {
 	case 'VerificaEmail':
 		//tipo emailUser senhalUser dicalUser
 		$emailUser2 = $_POST['emailUser'];
+		$idInstituicao = $_POST['idInstituicao'];
 
 		$ativo = 0;
 		$valida = md5($emailUser2);
 
-		$cdt = crud::VericaEmailUser($emailUser2);
+		$cdt = crud::VericaEmailUser($emailUser2,$idInstituicao);
 		if ($cdt == true) {
 			echo 1;
 		} else {
@@ -328,8 +330,9 @@ switch ($value) {
 	case 'VerificaEmail2':
 		//tipo emailUser senhalUser dicalUser
 		$emailUser2 = $_POST['emailUser'];
+		$idInstituicao = $_POST['idInstituicao'];
 
-		$cdt = crud::VericaEmailUser($emailUser2);
+		$cdt = crud::VericaEmailUser($emailUser2,$idInstituicao);
 		if ($cdt == true) {
 			echo 1;
 		} else {

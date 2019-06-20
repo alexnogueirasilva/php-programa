@@ -23,7 +23,7 @@ $queryUsuarios = "SELECT usr.dica,usr.fk_idInstituicao,usr.id, usr.nome, usr.ema
 			<div class="col-lg-12">
 				<div class="form-inline">
 					<div class="form-group">
-						<input type="text" hidden id="tipo" value="criaUsr">
+						<input type="text" hidden id="tipo" value="cadUsuario">
 						<div class="input-group">
 							<input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicao" id="idInstituicao">
 							<input type="text" class="form-control" size="100" name="nome" id="nome" placeholder="Nome completo" required value="">
@@ -398,7 +398,7 @@ require_once "rodape.php";
 						idInstituicao: idInstituicao
 					}, //Dados
 					success: function(result) {
-						alert(result);
+					//	alert(result);
 						if (result == 1) {
 							swal({
 									title: "OK!",
