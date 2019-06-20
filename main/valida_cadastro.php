@@ -6,7 +6,6 @@ include_once '../core/crud.php';
 
 <?php
 
-$ativo = 0;
 $valor  = $_GET['v'];
 $valor2  = $_GET['v2'];
 $valor3  = $_GET['v3'];
@@ -21,8 +20,9 @@ $email = $cdt['email'];
 $idInstituicao = $cdt['fk_idInstituicao'];
 
 if ($valor == $codigo && $valor2 == $email && $valor3 == $idInstituicao ) {
-    $ativo = 1;
+    $ativo = "Ativo";
     $valida = $valor;
+    $idInstituicao = $valor3;
     $cdt = crud::ativarUsuario($ativo, $valida,$idInstituicao);
     echo "Cadastro ativado com sucesso!";
     echo "<script>window.location ='logout.php';</script>"; 

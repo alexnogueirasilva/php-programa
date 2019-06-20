@@ -214,11 +214,11 @@ class crud
 		return true;
 	}
 
-	public static function criaUsr($nome, $email, $nivel, $dep, $status, $pass,$idInstituicao,$dica){
+	public static function criaUsr($nome, $email, $nivel, $dep, $status, $pass,$idInstituicao,$dica,$valida){
 		$pdo = Database::connect();
 		$pwd = sha1($pass);
 		try {
-			$stmt = $pdo->prepare("INSERT INTO usuarios(nome, email, nivel, id_dep, status, senha,fk_idInstituicao, dica) VALUES(:nome, :email, :nivel, :id_dep, :status, :senha,:idInstituicao,:dica)");
+			$stmt = $pdo->prepare("INSERT INTO usuarios(nome, email, nivel, id_dep, status, senha,fk_idInstituicao, dica,valida) VALUES(:nome, :email, :nivel, :id_dep, :status, :senha,:idInstituicao,:dica,:valida)");
 			$stmt->bindparam(":nome", $nome);
 			$stmt->bindparam(":email", $email);
 			$stmt->bindparam(":nivel", $nivel);
@@ -227,6 +227,7 @@ class crud
 			$stmt->bindparam(":senha", $pwd);
 			$stmt->bindparam(":idInstituicao", $idInstituicao);
 			$stmt->bindparam(":dica", $dica);
+			$stmt->bindparam(":valida", $valida);
 			$stmt->execute();
 
 			return true;

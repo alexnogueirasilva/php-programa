@@ -225,10 +225,11 @@ switch ($value) {
 		$dep = $_POST['dep'];
 		$pass = $_POST['pass'];
 		$idInstituicao = $_POST['idInstituicao'];
+		$valida = md5($email);
 		$status = "Desativado";
 		$cdt = crud::VericaEmailUser($email, $idInstituicao);
 		if ($cdt == false) {
-			$cdt = crud::criaUsr($nome, $email, $nivel, $dep, $status, $pass, $idInstituicao, $dica);
+			$cdt = crud::criaUsr($nome, $email, $nivel, $dep, $status, $pass, $idInstituicao, $dica,$valida);
 			if ($cdt == true) {
 
 				echo 1;
@@ -247,7 +248,7 @@ switch ($value) {
 				$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>' . "\r\n";
 
 				mail($to, $subject, $message, $headers);
-				
+
 			} else {
 				echo 0;
 			}
