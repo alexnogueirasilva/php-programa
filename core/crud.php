@@ -436,7 +436,7 @@ class crud
 	{
 		$pdo = Database::connect();
 		try {
-			$stmt = $pdo->prepare("UPDATE usuario SET ativo=:ativo WHERE valida=:valida AND fk_idInstituicao=:idInstituicao");
+			$stmt = $pdo->prepare("UPDATE usuarios SET status=:ativo WHERE valida=:valida AND fk_idInstituicao=:idInstituicao");
 			$stmt->bindparam(":ativo", $ativo);
 			$stmt->bindparam(":valida", $valida);
 			$stmt->bindparam(":idInstituicao", $idInstituicao);

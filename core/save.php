@@ -225,7 +225,7 @@ switch ($value) {
 		$dep = $_POST['dep'];
 		$pass = $_POST['pass'];
 		$idInstituicao = $_POST['idInstituicao'];
-		$status = "Ativo";
+		$status = "Desativado";
 		$cdt = crud::VericaEmailUser($email, $idInstituicao);
 		if ($cdt == false) {
 			$cdt = crud::criaUsr($nome, $email, $nivel, $dep, $status, $pass, $idInstituicao, $dica);
@@ -236,16 +236,18 @@ switch ($value) {
 				$to = $email;
 				$valida = md5("$to");
 
-				$subject = "Assunto Teste e-mail";
-				$message = "<a href=valida_cadastro.php?v=$valida&$to&$idInstituicao> Teste de envio de mensagem </a>";
+				$subject = "Cadastro no Sistema"; // assunto
+				$message = "Validacao de cadastro " . "\r\n";
+				$message = "<a href=http://sistemaocorrencia.devnogueira.online/main/valida_cadastro.php?v=$valida&v2=$to&v3=$idInstituicao> Click aqui para validar seu cadastro </a>";
 				$headers = 'MIME-Version: 1.0' . "\r\n";
 				$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n";
 				$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>' . "\r\n";
-				$headers .= 'From:< carlosandrefsaba@gmail.com>' . "\r\n";
+				$headers .= 'From:< contato@sistemaocorrencia.com.br>' . "\r\n";
 				$headers .= 'CC:< programadorfsaba@gmail.com>' . "\r\n";
 				$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>' . "\r\n";
 
 				mail($to, $subject, $message, $headers);
+				
 			} else {
 				echo 0;
 			}

@@ -3,7 +3,7 @@ require_once 'cabecalho.php';
 include_once 'vrf_lgin.php';
 include_once '../core/crud.php';
 
-$queryDepart = "SELECT * FROM departamentos";
+$queryDepart = "SELECT * FROM departamentos ORDER BY nome";
 
 $queryUsuarios = "SELECT usr.dica,usr.fk_idInstituicao,usr.id, usr.nome, usr.email, usr.nivel,usr.status,usr.id_dep, dep.nome as nome_dep FROM usuarios as usr INNER JOIN departamentos as dep ON usr.id_dep = dep.id ORDER BY status ASC";
 
@@ -151,7 +151,7 @@ $queryUsuarios = "SELECT usr.dica,usr.fk_idInstituicao,usr.id, usr.nome, usr.ema
 									<td><?php print($row['nome']); ?></td>
 									<td><?php print($row['email']); ?></td>
 									<td><?php print($row['nivel']); ?></td>
-									<td><?php print($row['status']); ?></td>
+									<td id="status"><?php print($row['status']); ?></td>
 									<td><?php print($row['nome_dep']); ?></td>
 									<td><a class="btn btn-info waves-effect waves-light" id="btnEdita" data-toggle="modal" data-target="#modalEditaUsuario" data-whatever="@getbootstrap" data-codigo="<?php print($row['id']); ?>" data-nome="<?php print($row['nome']); ?>" data-email="<?php print($row['email']); ?>" data-dica="<?php print($row['dica']); ?>" data-nivel="<?php print($row['nivel']); ?>" data-dep="<?php print($row['id_dep']); ?>" data-idinstituicao="<?php print($row['fk_idInstituicao']); ?>" data-statusatual="<?php print($row['status']); ?>">Editar</a></td>
 
@@ -658,7 +658,15 @@ require_once "rodape.php";
 				}
 			}
 		});
-
-
 	});
+	//BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
+	$("tr #status").each(function(i) {
+			if ($(this).text() == "Desativado") {
+				this.style.color = "white";
+				this.style.background = "red";
+			} else {
+				this.style.color = "white";
+				this.style.background = "green";
+			}
+		});
 </Script>
