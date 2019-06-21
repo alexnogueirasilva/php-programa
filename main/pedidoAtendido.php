@@ -96,7 +96,7 @@ if($logado != 1){$logado2 = 600;
                         <tbody>
                             <?php
                             $dados = PedidoDAO::listarPedidoAtendidos($idInstituicao);
-                            $totalPedido = '';
+                            $totalPedido = 0;
                             $teste = 0;
                             if ($dados->rowCount() > 0) {
                                 while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
