@@ -5,7 +5,7 @@ include_once 'vrf_lgin.php';
 include_once '../core/crud.php';
 
 $queryInstituicao = "SELECT * FROM instituicao ";
-
+$acao = 1;
 ?>
 <div class="container-fluid">
 	<h1>Cadastro de Instituicao</h1>
@@ -18,6 +18,7 @@ $queryInstituicao = "SELECT * FROM instituicao ";
 							<label for="nomeInstituicao" class="control-label">Nome </label>
 							<input type="text" class="form-control" size="100" name="nomeInstituicao" id="nomeInstituicao" placeholder="Nome Instituicao" required value="">
 							<input type="hidden" name="idInstituicao" id="idInstituicao">
+							<input type="hidden" value="<?php echo $acao ; ?>" name="acao" id="acao">
 							<input type="hidden" value="<?php echo $dataAtual ; ?>" name="dataAtual" id="dataAtual">
 						</div>
 					</div>
@@ -79,7 +80,7 @@ $queryInstituicao = "SELECT * FROM instituicao ";
 					<tbody>
 
 						<?php
-						$dados = crud::dataview($queryInstituicao);
+						$dados = crud::listarInstituicao();
 
 						if ($dados->rowCount() > 0) {
 							while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
@@ -91,8 +92,7 @@ $queryInstituicao = "SELECT * FROM instituicao ";
 									<td><?php print(crud::formataData($row['inst_dataCadastro'])); ?></td>
 									<td><a class="btn btn-info waves-effect waves-light" id="btnEditar" data-whatever="@getbootstrap" data-codigo="<?php print($row['inst_id']); ?>" data-codigoacesso="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>" >Editar</a></td>
 									<td><a class="btn btn-info waves-effect waves-light" id="btnLimpar" data-whatever="@getbootstrap" data-codigo="<?php print($row['inst_id']); ?>" data-id="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>" data-tipoatual="<?php print($row['tipoCliente']); ?>">Limpar</a></td>
-
-									<td><a class="btn btn-danger waves-effect waves-light" data-target="#modalExluirCliente" data-whatever="@getbootstrap" id="btnExcluiCliente" data-codigo="<?php print($row['inst_id']); ?>" data-id="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>">Excluir</a></td>
+									<td><a class="btn btn-danger waves-effect waves-light" data-target="#modalExcluir" data-whatever="@getbootstrap" id="btnExcluir" data-codigo="<?php print($row['inst_id']); ?>" data-id="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>">Excluir</a></td>
 								</tr>
 							<?php
 						}
@@ -259,8 +259,8 @@ $queryInstituicao = "SELECT * FROM instituicao ";
 </div>
 <!-- MODAL ativar cliete -->
 
-<!-- MODAL EXCLUIR cliente-->
-<div class="modal fade" id="modalExluirCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
+<!-- MODAL EXCLUIR-->
+<div class="modal fade" id="modalExcluir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -268,81 +268,24 @@ $queryInstituicao = "SELECT * FROM instituicao ";
 				<h4 class="modal-title" id="headermodal">Confirmação</h4>
 			</div>
 			<div class="modal-body">
-				<div class="row">
-
-					<input type="hidden" name="excIdCliente" id="excIdCliente">
-					<input type="hidden" name="excStatusCliente" id="excStatusCliente">
-					<input type="hidden" value="<?php echo $idInstituicao; ?>" name="excidInstituicao" id="excidInstituicao">
+				<div class="row">	
+				<input type="text" hidden id="tipo" name="tipo" value="excluirInstituicao">				
+					<input type="hidden" name="excidInstituicao" id="excidInstituicao">
 					<div class="col-md-12">
 						<div id="contextoModal">
-							<h2>Você vai EXCLUIR o Cliente: <span id="ExcNomeCliente"></span>?</h2>
+							<h2>Você vai EXCLUIR o Cliente: <span id="excnomeInstituicao"></span>?</h2>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				<button type="submit" id="btnExcluirCliente" class="btn btn-primary">Confirmar</button>
+				<button type="submit" id="btnConfirmar" class="btn btn-primary">Confirmar</button>
 			</div>
 		</div>
 	</div>
 </div>
 <!-- MODAL EXCLUIR cliente-->
-
-<!-- MODAL editar cliente-->
-<div class="modal fade" id="modalEditaCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="headermodal">Editar</h4>
-			</div>
-			<div class="modal-body">
-				<div class="row">
-					<div class="col-md-12">
-						<div id="contextoModal">
-							<form id="edtcliente">
-								<input type="text" hidden name="tipo" value="editaCliente">
-								<input type="hidden" name="idcliente" id="idcliente">
-								<input type="hidden" value="<?php echo $idInstituicao; ?>" name="editaidInstituicao" id="editaidInstituicao">
-								<div class="row">
-									<div class="col-lg-12">
-
-										<div class="form-group">
-											<div class="input-group">
-												<input type="text" class="form-control" size="50" name="edtnome" id="edtnome">
-												<span class="input-group-addon"><span class="fa fa-user"></span></span>
-											</div>
-										</div>
-										<div class="form-group">
-											<div class="input-group">
-												<input type="text" class="form-control" size="50" name="edtnomeFantasia" id="edtnomeFantasia">
-												<span class="input-group-addon"><span class="fa fa-user"></span></span>
-											</div>
-										</div>
-										<div class="form-group">
-											<div class="input-group">
-												<input type="text" class="form-control" size="50" name="codigoInstituicao" id="codigoInstituicao">
-												<span class="input-group-addon"><span class="fa fa-user"></span></span>
-											</div>
-										</div>
-										<button type="submit" class="btn btn-info btn-md btn-block" id="submit"><span class="fa fa-save"></span> Salvar</button>
-
-									</div>
-									<br><br>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- MODAL editar cliente-->
 
 
 <?php
@@ -363,7 +306,7 @@ require_once "rodape.php";
 				cache: false,
 				processData: false,
 				success: function(data) {
-					alert("resultado: " +data);				
+				//	alert("resultado: " +data);				
 					if (data == 1) {
 						swal({
 								title: "OK!",
@@ -400,17 +343,18 @@ require_once "rodape.php";
 			$("#codigoAcesso").prop("disabled", false); 		
 		});
 		$(document).on("click", "#btnEditar", function() {
-			//limparCampos();		
+		//limparCampos();		
 			var codigo 		 = $(this).data('codigo');
 			var nome 		 = $(this).data('nome');
 			var nomeFantasia = $(this).data('nomefantasia');
 			var codigoAcesso = $(this).data('codigoacesso');
-			
-			$("#codigoAcesso").prop("disabled", true); 
+			var acao = 2;
+			$("#codigoAcesso").prop("readonly", true); 
 			$('#idInstituicao').val(codigo);
 			$('#codigoAcesso').val(codigoAcesso);
 			$('#nomeInstituicao').val(nome);
 			$('#nomeFantasia').val(nomeFantasia);
+			$('#acao').val(acao);
 			
 		});
 		function limparCampos() {
@@ -452,84 +396,38 @@ require_once "rodape.php";
 
 		});
 
-		$(document).on("click", "#btnExcluiCliente2", function() {
-			var id = $(this).data('codigo');
-			var nome = $(this).data('nome');
-			var nome1 = $(this).data('nome');
-			var status = $(this).data('statusatual');
-
-			$('#excIdCliente').val(id);
-			$('#ExcNomeCliente').html(nome);
-			$('#excStatusCliente').val(status);
-			$('#modalPesquisar').modal('hide');
-			$('#modalExluirCliente').modal('show');
-		});
-		$(document).on("click", "#btnExcluiCliente", function() {
-			var id = $(this).data('codigo');
-			var nome = $(this).data('nome');
-			var nome1 = $(this).data('nome');
-			var status = $(this).data('statusatual');
-
-			$('#excIdCliente').val(id);
-			$('#ExcNomeCliente').html(nome);
-			$('#excStatusCliente').val(status);
-			$('#modalExluirCliente').modal('show');
-		});
-
-		$(document).on("click", "#btnEditar", function() {
-			//limparCampos();		
+		$(document).on("click", "#btnExcluir", function() {
 			var codigo 		 = $(this).data('codigo');
 			var nome 		 = $(this).data('nome');
-			var nomeFantasia = $(this).data('nomefantasia');
-		
-			$('#idInstituicao').val(codigo);
-			$('#nomeInstituicao').val(nome);
-			$('#nomeFantasia').val(nomeFantasia);
 			
-		});
-		$(document).on("click", "#btnEditar", function() {
-			var id = $(this).data('codigo');
-			var codigo = $(this).data('id');
-			var nome = $(this).data('nome');
-			var nomeFantasia = $(this).data('nomefantasia');
-			var status = $(this).data('statusatual');
-			var tipoCliente = $(this).data('tipoatual');
-
-			$('#idcliente').val(id);
-			$('#cdtCodigo').val(codigo);
-			$('#cdtnomeCliente').val(nome);
-			$('#edtnome').val(nome);
-			$('#cdtnomeFantasiaCliente').val(nomeFantasia);
-			$('#edtstatus').val(status);
-			$('#edttipo').val(tipoCliente);
-			$('#modalPesquisar').modal('hide');
-		});
-
-		$('#btnExcluirCliente').click(function() {
-			var tipo = "excluirCliente";
-			var idCliente = $('#excIdCliente').val();
-			var status = $('#excStatusCliente').val();
+			$('#excidInstituicao').val(codigo);
+			$('#excnomeInstituicao').html(nome);
+			$('#modalExcluir').modal('show');
+		});		
+		
+		$('#btnConfirmar').click(function() {
 			var idInstituicao = $("#excidInstituicao").val();
+			var tipo = "excluirInstituicao";
 			$.ajax({
 				url: '../core/save.php',
 				type: "POST",
 				data: {
-					tipo: tipo,
-					codCliente: idCliente,
+					tipo:tipo,
 					idInstituicao: idInstituicao
 				},
-				success: function(result) { //alert(result);			
+				success: function(result) { 
+				//	alert(result);			
 					if (result == 1) {
 						swal({
 								title: "OK!",
-								text: "Cliente Excluído com Sucesso!",
+								text: "Cadastro Excluído com Sucesso!",
 								type: "success",
 								confirmButtonText: "Fechar",
 								closeOnConfirm: false
 							},
 							function(isConfirm) {
 								if (isConfirm) {
-									window.location = "cad_cliente.php";
+									window.location = "cad_instituicao.php";
 								}
 							});
 					} else {
@@ -542,7 +440,7 @@ require_once "rodape.php";
 							},
 							function(isConfirm) {
 								if (isConfirm) {
-									window.location = "cad_cliente.php";
+									window.location = "cad_instituicao.php";
 								}
 							});
 					}

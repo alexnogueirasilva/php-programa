@@ -980,6 +980,17 @@ class crud
 	}
 	//CADASTRO DE REPRESENTANTE
 	//CADASTRO DE INSTITUICAO
+
+	public static function listarInstituicao()
+	{
+		$sql = "SELECT * FROM instituicao ORDER BY inst_nome desc";
+
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		return $stmt;
+	}
 	
 	public static function cadastrarInstituicao($nomeInstituicao,$nomeFantasia,$codigoAcesso,$dataCadastro){
 		$pdo = Database::connect();
@@ -1004,7 +1015,6 @@ class crud
 			$stmt->bindparam(":nomeInstituicao", $nomeInstituicao);
 			$stmt->bindparam(":nomeFantasia", $nomeFantasia);
 			$stmt->bindparam(":idInstituicao", $idInstituicao);
-			//$stmt->bindparam(":codigoAcesso", $codigoAcesso);
 			//$stmt->bindparam(":dataCadastro", $dataCadastro);			
 			$stmt->execute();
 			return true;
@@ -1013,5 +1023,21 @@ class crud
 			return false;
 		}
 	}
+
+	public static function excluirInstituicao($idInstituicao){
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		try {
+			$stmt = $pdo->prepare("DELETE FROM instituicao WHERE inst_id =:idInstituicao");			
+			$stmt->bindParam(":idInstituicao", $idInstituicao);
+			$stmt->execute();
+
+			return true;
+		} catch (PDOException $e) {
+			echo $e->getMessage();
+			return false;
+		}
+	}
+
 	//CADASTRO DE INSTITUICAO
 }

@@ -698,7 +698,7 @@ switch ($value) {
 	case 'excluirRepresentante':
 		$codRepresentante = $_POST['idRepresentante'];
 		$idInstituicao = $_POST['idInstituicao'];
-		$cad = crud::deleteRepresentante($codRepresentante, $idInstituicao);
+		$cad = crud::excluirRepresentante($codRepresentante, $idInstituicao);
 		if ($cad == true) {
 			echo 1;
 		} else {
@@ -707,6 +707,17 @@ switch ($value) {
 
 		break;
 
+		case'excluirInstituicao':
+		
+		$idInstituicao = $_POST['idInstituicao'];
+		$cad = crud::excluirInstituicao($idInstituicao);
+		if ($cad == true) {
+			echo 1;
+		} else {
+			echo 0;
+		}
+
+		break;
 		case'cadastrarInstituicao':
 		
 		$idInstituicao = $_POST['idInstituicao'];
@@ -714,9 +725,11 @@ switch ($value) {
 		$nomeFantasia = $_POST['nomeFantasia'];
 		$codigoAcesso = $_POST['codigoAcesso'];
 		$dataCadastro = $_POST['dataAtual'];
-		if($idInstituicao < 0){
+		$acao = $_POST['acao'];
+		
+		if($acao == 1){
 			$cad = crud::cadastrarInstituicao($nomeInstituicao,$nomeFantasia,$codigoAcesso,$dataCadastro);
-		}else{
+		}else if($acao == 2){
 			$cad = crud::alterarInstituicao($idInstituicao,$nomeInstituicao,$nomeFantasia);
 		}		
 		if ($cad == true) {
@@ -724,8 +737,5 @@ switch ($value) {
 		} else {
 			echo 0;
 		}
-
-
-
 		break;
 }

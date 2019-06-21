@@ -58,7 +58,7 @@ if($logado != 1){$logado2 = 600;
                 <div id="dado"></div>
                 <div class="white-box">
                     <div class="col-sm-6">
-                        <h3>Pedidos Atendidos</h3>
+                        <h3>Pedidos Pendentes</h3>
                     </div>
                     
                     <table id="tabela" class="table table-striped">
