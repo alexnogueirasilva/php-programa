@@ -8,46 +8,38 @@ $queryInstituicao = "SELECT * FROM instituicao ";
 
 ?>
 <div class="container-fluid">
-	<div class="row bg-title">
-		<div class="col-lg-12">
-
-		</div>
-		<!-- /.col-lg-12 -->
-	</div>
-
 	<h1>Cadastro de Instituicao</h1>
-	<h4>Insira os dados do novo Instituicao</h4>
-	<form id="cdt">
+	<form id="frmInstituicao">
 		<div class="row">
 			<div class="col-lg-12">
+			<div class="form-group">
+			 <input type="text" hidden id="tipo" name="tipo" value="cadastrarInstituicao">	
+						<div class="input-group">
+							<label for="nomeInstituicao" class="control-label">Nome </label>
+							<input type="text" class="form-control" size="100" name="nomeInstituicao" id="nomeInstituicao" placeholder="Nome Instituicao" required value="">
+							<input type="hidden" name="idInstituicao" id="idInstituicao">
+							<input type="hidden" value="<?php echo $dataAtual ; ?>" name="dataAtual" id="dataAtual">
+						</div>
+					</div>
 				<div class="form-inline">
+					
 					<div class="form-group">
-						<input type="text" hidden id="tipo" value="criarCliente">
 						<div class="input-group">
-							<input type="text" class="form-control" size="70" name="cdtnomeCliente" id="cdtnomeCliente" placeholder="Nome Cliente" required value="">
-							<input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicao" id="idInstituicao">
-							<span class="input-group-addon"><span class="fa fa-user"></span></span>
+							<label for="nomeFantasia" class="control-label">Nome Fantasia </label>
+							<input type="text" class="form-control" size="55" name="nomeFantasia" id="nomeFantasia" placeholder="Nome Fantasia" required value="">
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="input-group">
-							<input type="text" class="form-control" size="37" name="cdtnomeFantasiaCliente" id="cdtnomeFantasiaCliente" placeholder="Nome fantasia Cliente" required value="">
-							<span class="input-group-addon"><span class="fa fa-user"></span></span>
+							<label for="codigoAcesso" class="control-label">Codigo de Acesso</label>
+							<input type="text" class="form-control" size="10" minlength="8" maxlength="8" name="codigoAcesso" id="codigoAcesso" placeholder="Codigo de acesso de 8 caracteres" required value="">
 						</div>
 					</div>
 					<br>
-					<br>
-					<div class="form-group">
-						<div class="input-group">
-							<input type="text" class="form-control" size="37" name="cdtCodigo" id="cdtCodigo" placeholder="Nome fantasia Cliente" required value="">
-							<span class="input-group-addon"><span class="fa fa-user"></span></span>
-						</div>
-					</div>
 				</div>
-				<br><br>
+				<br>
 				<button type="submit" class="btn btn-info btn-lg btn-block" id="btnSalvaSla"><span class="fa fa-save"></span> Salvar</button>
 			</div>
-
 		</div>
 	</form>
 
@@ -57,7 +49,7 @@ $queryInstituicao = "SELECT * FROM instituicao ";
 			<div class="white-box">
 				<div class="col-sm-6">
 					<h2>Lista de Instituicao -
-					<button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalPesquisar" data-whatever="@getbootstrap"><span class="fa fa-search"></span></span>Pesquisar Instituicao</button>
+						<button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalPesquisar" data-whatever="@getbootstrap"><span class="fa fa-search"></span></span>Pesquisar Instituicao</button>
 					</h2>
 				</div>
 
@@ -97,8 +89,8 @@ $queryInstituicao = "SELECT * FROM instituicao ";
 									<td><?php print($row['inst_nome']); ?></td>
 									<td><?php print($row['inst_nomeFantasia']); ?></td>
 									<td><?php print(crud::formataData($row['inst_dataCadastro'])); ?></td>
-									<td><a class="btn btn-info waves-effect waves-light" id="btnEdita" data-toggle="modal" data-target="#modalEditaCliente" data-whatever="@getbootstrap" data-codigo="<?php print($row['inst_id']); ?>" data-id="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>" data-tipoatual="<?php print($row['tipoCliente']); ?>">Editar</a></td>
-									<td><a class="btn btn-info waves-effect waves-light" id="btnEditar" data-whatever="@getbootstrap" data-codigo="<?php print($row['inst_id']); ?>" data-id="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>" data-tipoatual="<?php print($row['tipoCliente']); ?>">Editar</a></td>
+									<td><a class="btn btn-info waves-effect waves-light" id="btnEditar" data-whatever="@getbootstrap" data-codigo="<?php print($row['inst_id']); ?>" data-codigoacesso="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>" >Editar</a></td>
+									<td><a class="btn btn-info waves-effect waves-light" id="btnLimpar" data-whatever="@getbootstrap" data-codigo="<?php print($row['inst_id']); ?>" data-id="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>" data-tipoatual="<?php print($row['tipoCliente']); ?>">Limpar</a></td>
 
 									<td><a class="btn btn-danger waves-effect waves-light" data-target="#modalExluirCliente" data-whatever="@getbootstrap" id="btnExcluiCliente" data-codigo="<?php print($row['inst_id']); ?>" data-id="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>">Excluir</a></td>
 								</tr>
@@ -238,7 +230,6 @@ $queryInstituicao = "SELECT * FROM instituicao ";
 </div>
 <!-- MODAL desativar cliente-->
 
-
 <!-- MODAL ativar cliete -->
 <div class="modal fade" id="modalConfirmacaoAtiva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
 	<div class="modal-dialog" role="document">
@@ -361,30 +352,19 @@ require_once "rodape.php";
 <script type="text/javascript">
 	$(document).ready(function() {
 		permissaoNivel();
-
-		$('#cdt').submit(function() {
-			var tipo = "criarCliente";
-			var nomeCliente = $("#cdtnomeCliente").val();
-			var nomeFantasiaCliente = $("#cdtnomeFantasiaCliente").val();
-			var idInstituicao = $("#idInstituicao").val();
-			var tipoCliente = $("#cdtTipoCliente").val();
-
+		$("#frmInstituicao").submit(function(e) {
+			e.preventDefault();			
 			$.ajax({ //Função AJAX
 				url: "../core/save.php", //Arquivo php
-				type: "post", //Método de envio
-				data: {
-					tipo: tipo,
-					nomeCliente: nomeCliente,
-					nomeFantasiaCliente: nomeFantasiaCliente,
-					tipoCliente: tipoCliente,
-					idInstituicao: idInstituicao
-				}, //Dados
-				success: function(result) {
-					//alert(result)					
-					if (result == 1) {
-						$("#cdtnomeCliente").val('');
-						$("#cdtnomeFantasiaCliente").val('');
-						$("#cdtTipoCliente").val('');
+				type: "POST", //Método de envio				
+				data: new FormData(this),
+				tipo:tipo,
+				contentType: false,
+				cache: false,
+				processData: false,
+				success: function(data) {
+					alert("resultado: " +data);				
+					if (data == 1) {
 						swal({
 								title: "OK!",
 								text: " Cadastrado com Sucesso!",
@@ -394,7 +374,7 @@ require_once "rodape.php";
 							},
 							function(isConfirm) {
 								if (isConfirm) {
-									window.location = "cad_cliente.php";
+									window.location = "cad_instituicao.php";
 								}
 							});
 					} else {
@@ -407,19 +387,38 @@ require_once "rodape.php";
 							},
 							function(isConfirm) {
 								if (isConfirm) {
-									window.location = "cad_cliente.php";
+									window.location = "cad_instituicao.php";
 								}
-							});
+							});						
 					}
 				}
 			});
+			
 		});
-
+		$(document).on("click", "#btnLimpar", function() {
+			limparCampos();
+			$("#codigoAcesso").prop("disabled", false); 		
+		});
+		$(document).on("click", "#btnEditar", function() {
+			//limparCampos();		
+			var codigo 		 = $(this).data('codigo');
+			var nome 		 = $(this).data('nome');
+			var nomeFantasia = $(this).data('nomefantasia');
+			var codigoAcesso = $(this).data('codigoacesso');
+			
+			$("#codigoAcesso").prop("disabled", true); 
+			$('#idInstituicao').val(codigo);
+			$('#codigoAcesso').val(codigoAcesso);
+			$('#nomeInstituicao').val(nome);
+			$('#nomeFantasia').val(nomeFantasia);
+			
+		});
 		function limparCampos() {
-			$("#cdtnomeCliente").val('');
-			$("#cdtnomeFantasiaCliente").val('');
-			$("#cdtTipoCliente").val('');
-			$('#cdtCodigo').val('');
+			$("#codigoAcesso").val('');
+			$("#idInstituicao").val('');
+			$("#nomeInstituicao").val('');
+			$('#nomeFantasia').val('');
+			$('#nome').val('');
 		}
 		$(document).on("click", "#btnAtiva", function() {
 			var id = $(this).data('codigo');
@@ -477,24 +476,18 @@ require_once "rodape.php";
 			$('#modalExluirCliente').modal('show');
 		});
 
-		$(document).on("click", "#btnEdita", function() {
-			limparCampos();
-			var id = $(this).data('codigo');
-			var codigo = $(this).data('id');
-			var nome = $(this).data('nome');
+		$(document).on("click", "#btnEditar", function() {
+			//limparCampos();		
+			var codigo 		 = $(this).data('codigo');
+			var nome 		 = $(this).data('nome');
 			var nomeFantasia = $(this).data('nomefantasia');
-			var status = $(this).data('statusatual');
-			var tipoCliente = $(this).data('tipoatual');
-
-			$('#idcliente').val(id);
-			$('#codigoInstituicao').val(codigo);
-			$('#edtnome').val(nome);
-			$('#edtnomeFantasia').val(nomeFantasia);
-			$('#edtstatus').val(status);
-			$('#edttipo').val(tipoCliente);
-			$('#modalEditaCliente').modal('show');
+		
+			$('#idInstituicao').val(codigo);
+			$('#nomeInstituicao').val(nome);
+			$('#nomeFantasia').val(nomeFantasia);
+			
 		});
-		$(document).on("click", "#btnEditar", function() {			
+		$(document).on("click", "#btnEditar", function() {
 			var id = $(this).data('codigo');
 			var codigo = $(this).data('id');
 			var nome = $(this).data('nome');
@@ -674,7 +667,7 @@ require_once "rodape.php";
 							},
 							function(isConfirm) {
 								if (isConfirm) {
-									window.location = "cad_cliente.php";
+									window.location = "cad_instituicao.php";
 								}
 							});
 					} else {
@@ -687,7 +680,7 @@ require_once "rodape.php";
 							},
 							function(isConfirm) {
 								if (isConfirm) {
-									window.location = "cad_cliente.php";
+									window.location = "cad_instituicao.php";
 								}
 							});
 					}

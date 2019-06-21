@@ -231,7 +231,6 @@ switch ($value) {
 		if ($cdt == false) {
 			$cdt = crud::criaUsr($nome, $email, $nivel, $dep, $status, $pass, $idInstituicao, $dica,$valida);
 			if ($cdt == true) {
-
 				echo 1;
 
 				$to = $email;
@@ -239,13 +238,13 @@ switch ($value) {
 
 				$subject = "Cadastro no Sistema"; // assunto
 				$message = "Validacao de cadastro " . "\r\n";
-				$message = "<a href=http://sistemaocorrencia.devnogueira.online/main/valida_cadastro.php?v=$valida&v2=$to&v3=$idInstituicao> Click aqui para validar seu cadastro </a>";
+				$message .= "<a href=http://sistemaocorrencia.devnogueira.online/main/valida_cadastro.php?v=$valida&v2=$to&v3=$idInstituicao> Click aqui para validar seu cadastro </a>";
 				$headers = 'MIME-Version: 1.0' . "\r\n";
 				$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n";
 				$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>' . "\r\n";
-				$headers .= 'From:< contato@sistemaocorrencia.com.br>' . "\r\n";
-				$headers .= 'CC:< programadorfsaba@gmail.com>' . "\r\n";
-				$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>' . "\r\n";
+				$headers .= 'From:< contato@sistemaocorrencia.com.br>' . "\r\n";//email de envio
+				$headers .= 'CC:< programadorfsaba@gmail.com>' . "\r\n"; //email com copia
+				$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>' . "\r\n";//email para resposta
 
 				mail($to, $subject, $message, $headers);
 
@@ -705,6 +704,28 @@ switch ($value) {
 		} else {
 			echo 0;
 		}
+
+		break;
+
+		case'cadastrarInstituicao':
+		
+		$idInstituicao = $_POST['idInstituicao'];
+		$nomeInstituicao = $_POST['nomeInstituicao'];
+		$nomeFantasia = $_POST['nomeFantasia'];
+		$codigoAcesso = $_POST['codigoAcesso'];
+		$dataCadastro = $_POST['dataAtual'];
+		if($idInstituicao < 0){
+			$cad = crud::cadastrarInstituicao($nomeInstituicao,$nomeFantasia,$codigoAcesso,$dataCadastro);
+		}else{
+			$cad = crud::alterarInstituicao($idInstituicao,$nomeInstituicao,$nomeFantasia);
+		}		
+		if ($cad == true) {
+			echo 1;
+		} else {
+			echo 0;
+		}
+
+
 
 		break;
 }

@@ -979,4 +979,39 @@ class crud
 		}
 	}
 	//CADASTRO DE REPRESENTANTE
+	//CADASTRO DE INSTITUICAO
+	
+	public static function cadastrarInstituicao($nomeInstituicao,$nomeFantasia,$codigoAcesso,$dataCadastro){
+		$pdo = Database::connect();
+		try {
+			$stmt = $pdo->prepare("INSERT INTO instituicao(inst_nome,inst_nomeFantasia,inst_codigo,inst_dataCadastro) VALUE (:nomeInstituicao,:nomeFantasia,:codigoAcesso,:dataCadastro)");
+			$stmt->bindparam(":nomeInstituicao", $nomeInstituicao);
+			$stmt->bindparam(":nomeFantasia", $nomeFantasia);
+			$stmt->bindparam(":codigoAcesso", $codigoAcesso);
+			$stmt->bindparam(":dataCadastro", $dataCadastro);			
+			$stmt->execute();
+			return true;
+		} catch (PDOException $e) {
+			echo $e->getMessage();
+			return false;
+		}
+	}
+	public static function alterarInstituicao($idInstituicao,$nomeInstituicao,$nomeFantasia){
+		$pdo = Database::connect();
+		try {
+			//$stmt = $pdo->prepare("UPDATE cadRepresentante SET nomeRepresentante=:nomeRepresentante, statusRepresentante=:statusRepresentante, fk_idInstituicao=:idInstituicao WHERE codRepresentante=:codRepresentante");
+			$stmt = $pdo->prepare("UPDATE  instituicao SET inst_nome=:nomeInstituicao,inst_nomeFantasia=:nomeFantasia WHERE inst_id=:idInstituicao");
+			$stmt->bindparam(":nomeInstituicao", $nomeInstituicao);
+			$stmt->bindparam(":nomeFantasia", $nomeFantasia);
+			$stmt->bindparam(":idInstituicao", $idInstituicao);
+			//$stmt->bindparam(":codigoAcesso", $codigoAcesso);
+			//$stmt->bindparam(":dataCadastro", $dataCadastro);			
+			$stmt->execute();
+			return true;
+		} catch (PDOException $e) {
+			echo $e->getMessage();
+			return false;
+		}
+	}
+	//CADASTRO DE INSTITUICAO
 }
