@@ -12,18 +12,18 @@ $acao = 1;
 	<form id="frmInstituicao">
 		<div class="row">
 			<div class="col-lg-12">
-			<div class="form-group">
-			 <input type="text" hidden id="tipo" name="tipo" value="cadastrarInstituicao">	
-						<div class="input-group">
-							<label for="nomeInstituicao" class="control-label">Nome </label>
-							<input type="text" class="form-control" size="100" name="nomeInstituicao" id="nomeInstituicao" placeholder="Nome Instituicao" required value="">
-							<input type="hidden" name="idInstituicao" id="idInstituicao">
-							<input type="hidden" value="<?php echo $acao ; ?>" name="acao" id="acao">
-							<input type="hidden" value="<?php echo $dataAtual ; ?>" name="dataAtual" id="dataAtual">
-						</div>
+				<div class="form-group">
+					<input type="text" hidden id="tipo" name="tipo" value="cadastrarInstituicao">
+					<div class="input-group">
+						<label for="nomeInstituicao" class="control-label">Nome </label>
+						<input type="text" class="form-control" size="100" name="nomeInstituicao" id="nomeInstituicao" placeholder="Nome Instituicao" required value="">
+						<input type="hidden" name="idInstituicao" id="idInstituicao">
+						<input type="hidden" value="<?php echo $acao; ?>" name="acao" id="acao">
+						<input type="hidden" value="<?php echo $dataAtual; ?>" name="dataAtual" id="dataAtual">
 					</div>
+				</div>
 				<div class="form-inline">
-					
+
 					<div class="form-group">
 						<div class="input-group">
 							<label for="nomeFantasia" class="control-label">Nome Fantasia </label>
@@ -51,6 +51,7 @@ $acao = 1;
 				<div class="col-sm-6">
 					<h2>Lista de Instituicao -
 						<button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalPesquisar" data-whatever="@getbootstrap"><span class="fa fa-search"></span></span>Pesquisar Instituicao</button>
+						<button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalPesquisarAndre" data-whatever="@getbootstrap"><span class="fa fa-search"></span></span>Pesquisar</button>
 					</h2>
 				</div>
 
@@ -90,7 +91,7 @@ $acao = 1;
 									<td><?php print($row['inst_nome']); ?></td>
 									<td><?php print($row['inst_nomeFantasia']); ?></td>
 									<td><?php print(crud::formataData($row['inst_dataCadastro'])); ?></td>
-									<td><a class="btn btn-info waves-effect waves-light" id="btnEditar" data-whatever="@getbootstrap" data-codigo="<?php print($row['inst_id']); ?>" data-codigoacesso="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>" >Editar</a></td>
+									<td><a class="btn btn-info waves-effect waves-light" id="btnEditar" data-whatever="@getbootstrap" data-codigo="<?php print($row['inst_id']); ?>" data-codigoacesso="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>">Editar</a></td>
 									<td><a class="btn btn-info waves-effect waves-light" id="btnLimpar" data-whatever="@getbootstrap" data-codigo="<?php print($row['inst_id']); ?>" data-id="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>" data-tipoatual="<?php print($row['tipoCliente']); ?>">Limpar</a></td>
 									<td><a class="btn btn-danger waves-effect waves-light" data-target="#modalExcluir" data-whatever="@getbootstrap" id="btnExcluir" data-codigo="<?php print($row['inst_id']); ?>" data-id="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>">Excluir</a></td>
 								</tr>
@@ -110,7 +111,7 @@ $acao = 1;
 </div>
 </div>
 
-<!-- MODAL pesqusiar cliente-->
+<!-- MODAL pesqusiar-->
 <div class="modal fade bs-example-modal-lg" id="modalPesquisar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
@@ -159,7 +160,7 @@ $acao = 1;
 										<tbody>
 
 											<?php
-											$dados = crud::dataview($queryInstituicao);
+											$dados = crud::listarInstituicao();
 
 											if ($dados->rowCount() > 0) {
 												while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
@@ -199,7 +200,78 @@ $acao = 1;
 		</div>
 	</div>
 </div>
-<!-- MODAL pesqusiar cliente-->
+<!-- MODAL pesqusiar-->
+
+<!-- MODAL pesqusiar andre-->
+<div class="modal fade bs-example-modal-lg" id="modalPesquisarAndre" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="headermodal">Pesquisar</h4>
+			</div>
+
+			<div class="modal-body">
+				<div class="form-inline">
+					<div class="form-group">
+						<input type="text" class="form-control" size="100" name="valorPesquisa" id="valorPesquisa" placeholder="dados parar pesquisa" value="">
+						<button name="btnBuscar" id="btnBuscar" class="btn btn-success waves-effect waves-light" type="submit" data-whatever="@getbootstrap"><span class="fa fa-search"></span></span>Buscar</button>
+					</div>
+
+				</div>
+				<div class="row">
+					<input type="hidden" name="statusAtualDes" id="statusAtualDes">
+					<input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoDes" id="idInstituicaoDes">
+					<div class="col-md-12">
+						<!-- LISTAR cliente-->
+
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="white-box">
+									<hr>
+									<div class="col-sm-6">
+										<h3>Lista de Instituicao</h3>
+									</div>
+									<table id="tabela" class="table table-striped">
+										<thead>
+											<tr>
+												<th>Código</th>
+												<th>Nome</th>
+												<th>Nome fantasia</th>
+												<th>Data</th>
+												<th>Alterar</th>
+												<th>Excluir</th>
+											</tr>
+										<tfoot>
+											<tr>
+												<th>Código</th>
+												<th>Nome</th>
+												<th>Nome fantasia</th>
+												<th>Data</th>
+												<th>Alterar</th>
+												<th>Excluir</th>
+											</tr>
+										</tfoot>
+										</thead>
+										<tbody id="andre">
+
+										</tbody>
+									</table>
+
+								</div>
+							</div>
+						</div>
+
+						<!-- LISTAR cliente-->
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<!-- MODAL pesqusiar andre-->
 
 <!-- MODAL desativar cliente-->
 <div class="modal fade" id="modalConfirmacaoDesativa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
@@ -268,8 +340,8 @@ $acao = 1;
 				<h4 class="modal-title" id="headermodal">Confirmação</h4>
 			</div>
 			<div class="modal-body">
-				<div class="row">	
-				<input type="text" hidden id="tipo" name="tipo" value="excluirInstituicao">				
+				<div class="row">
+					<input type="text" hidden id="tipo" name="tipo" value="excluirInstituicao">
 					<input type="hidden" name="excidInstituicao" id="excidInstituicao">
 					<div class="col-md-12">
 						<div id="contextoModal">
@@ -296,17 +368,17 @@ require_once "rodape.php";
 	$(document).ready(function() {
 		permissaoNivel();
 		$("#frmInstituicao").submit(function(e) {
-			e.preventDefault();			
+			e.preventDefault();
 			$.ajax({ //Função AJAX
 				url: "../core/save.php", //Arquivo php
 				type: "POST", //Método de envio				
 				data: new FormData(this),
-				tipo:tipo,
+				tipo: tipo,
 				contentType: false,
 				cache: false,
 				processData: false,
 				success: function(data) {
-				//	alert("resultado: " +data);				
+					//	alert("resultado: " +data);				
 					if (data == 1) {
 						swal({
 								title: "OK!",
@@ -332,31 +404,32 @@ require_once "rodape.php";
 								if (isConfirm) {
 									window.location = "cad_instituicao.php";
 								}
-							});						
+							});
 					}
 				}
 			});
-			
+
 		});
 		$(document).on("click", "#btnLimpar", function() {
 			limparCampos();
-			$("#codigoAcesso").prop("disabled", false); 		
+			$("#codigoAcesso").prop("disabled", false);
 		});
 		$(document).on("click", "#btnEditar", function() {
-		//limparCampos();		
-			var codigo 		 = $(this).data('codigo');
-			var nome 		 = $(this).data('nome');
+			//limparCampos();		
+			var codigo = $(this).data('codigo');
+			var nome = $(this).data('nome');
 			var nomeFantasia = $(this).data('nomefantasia');
 			var codigoAcesso = $(this).data('codigoacesso');
 			var acao = 2;
-			$("#codigoAcesso").prop("readonly", true); 
+			$("#codigoAcesso").prop("readonly", true);
 			$('#idInstituicao').val(codigo);
 			$('#codigoAcesso').val(codigoAcesso);
 			$('#nomeInstituicao').val(nome);
 			$('#nomeFantasia').val(nomeFantasia);
 			$('#acao').val(acao);
-			
+
 		});
+
 		function limparCampos() {
 			$("#codigoAcesso").val('');
 			$("#idInstituicao").val('');
@@ -397,14 +470,14 @@ require_once "rodape.php";
 		});
 
 		$(document).on("click", "#btnExcluir", function() {
-			var codigo 		 = $(this).data('codigo');
-			var nome 		 = $(this).data('nome');
-			
+			var codigo = $(this).data('codigo');
+			var nome = $(this).data('nome');
+
 			$('#excidInstituicao').val(codigo);
 			$('#excnomeInstituicao').html(nome);
 			$('#modalExcluir').modal('show');
-		});		
-		
+		});
+
 		$('#btnConfirmar').click(function() {
 			var idInstituicao = $("#excidInstituicao").val();
 			var tipo = "excluirInstituicao";
@@ -412,11 +485,11 @@ require_once "rodape.php";
 				url: '../core/save.php',
 				type: "POST",
 				data: {
-					tipo:tipo,
+					tipo: tipo,
 					idInstituicao: idInstituicao
 				},
-				success: function(result) { 
-				//	alert(result);			
+				success: function(result) {
+					//	alert(result);			
 					if (result == 1) {
 						swal({
 								title: "OK!",
@@ -446,6 +519,31 @@ require_once "rodape.php";
 					}
 				}
 			});
+		});
+
+		$('#btnBuscar').click(function() {
+			var valorPesquisar = $("#valorPesquisa").val();
+			var tipo = "pesquisar";	
+			
+			$.ajax({
+				url: 'buscar.php',
+				type: "POST",
+				data: {
+					tipo: tipo,
+					valorPesquisar:valorPesquisar
+
+				},
+				success: function(data) {
+					//alert(data);
+					if (data) {
+							$('#andre').html(data);
+					} else {
+						alert("nenhum dados encontrado para pesquisa com ");
+					}
+				}
+			});
+
+			return false;
 		});
 
 		$('#btnDesativaCliente').click(function() {
