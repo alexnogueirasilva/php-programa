@@ -21,11 +21,13 @@ switch ($tipo) {
 			foreach($dados as $row) {
 
 				$html .= "<tr>
-								<td>" . $row['inst_id'] . "</td>
-								<td>" . $row['inst_nome'] . "</td>
-								<td>" . $row['inst_nomeFantasia'] . "</td>
-								<td>" . $row['inst_dataCadastro'] . "</td>								
-							</tr>";
+								<td>".$row['inst_id']."</td>
+								<td>".$row['inst_nome']."</td>
+								<td>".$row['inst_nomeFantasia']."</td>
+								<td>".crud::formataData($row['inst_dataCadastro'])."</td>
+								<td><a class='btn btn-info waves-effect waves-light' id='btnEditar' data-whatever='@getbootstrap' data-codigo=".$row['inst_id']." data-codigoacesso=".$row['inst_codigo']." data-nome=".$row['inst_nome']." data-nomefantasia=".$row['inst_nomeFantasia'].">Editar</a></td>
+								<td><a class='btn btn-danger waves-effect waves-light' data-target='#modalExcluir'  id='btnExcluir' data-whatever='@getbootstrap' data-codigo=".$row['inst_id']." data-codigoacesso=".$row['inst_codigo']." data-nome=".$row['inst_nome']." data-nomefantasia=".$row['inst_nomeFantasia'].">Exluir</a></td>
+								</tr>";
 			}
 		} else {
 			echo "<p class='text-danger'>Sem informacoes cadastradas</p>";

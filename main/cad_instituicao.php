@@ -49,12 +49,10 @@ $acao = 1;
 		<div class="col-sm-12">
 			<div class="white-box">
 				<div class="col-sm-6">
-					<h2>Lista de Instituicao -
-						<button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalPesquisar" data-whatever="@getbootstrap"><span class="fa fa-search"></span></span>Pesquisar Instituicao</button>
+					<h2>Lista de Instituicao - 
 						<button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalPesquisarAndre" data-whatever="@getbootstrap"><span class="fa fa-search"></span></span>Pesquisar</button>
 					</h2>
 				</div>
-
 				<table id="tabela" class="table table-striped">
 					<thead>
 						<tr>
@@ -79,7 +77,6 @@ $acao = 1;
 					</tfoot>
 					</thead>
 					<tbody>
-
 						<?php
 						$dados = crud::listarInstituicao();
 
@@ -108,6 +105,76 @@ $acao = 1;
 		</div>
 	</div>
 	<!-- LISTAR cliente-->
+
+	<!-- MODAL pesqusiar andre-->
+	<div class="modal fade bs-example-modal-lg" id="modalPesquisarAndre" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="headermodal">Pesquisar</h4>
+				</div>
+
+				<div class="modal-body">
+					<div class="form-inline">
+						<div class="form-group">
+							<input type="text" class="form-control" size="100" name="valorPesquisa" id="valorPesquisa" placeholder="dados parar pesquisa" value="">
+							<button name="btnBuscar" id="btnBuscar" class="btn btn-success waves-effect waves-light" type="submit" data-whatever="@getbootstrap"><span class="fa fa-search"></span></span>Buscar</button>
+						</div>
+
+					</div>
+					<div class="row">
+						<input type="hidden" name="statusAtualDes" id="statusAtualDes">
+						<input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoDes" id="idInstituicaoDes">
+						<div class="col-md-12">
+							<!-- LISTAR cliente-->
+
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="white-box">
+										<hr>
+										<div class="col-sm-6">
+											<h3>Listar resultadi de pesquisa</h3>
+										</div>
+										<table id="tabela1" class="table table-striped">
+											<thead>
+												<tr>
+													<th>Código</th>
+													<th>Nome</th>
+													<th>Nome fantasia</th>
+													<th>Data</th>
+													<th>Alterar</th>
+													<th>Excluir</th>
+												</tr>
+											<tfoot>
+												<tr>
+													<th>Código</th>
+													<th>Nome</th>
+													<th>Nome fantasia</th>
+													<th>Data</th>
+													<th>Alterar</th>
+													<th>Excluir</th>
+												</tr>
+											</tfoot>
+											</thead>
+											<tbody id="tabela2">
+
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<!-- LISTAR cliente-->
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- MODAL pesqusiar andre-->
+
 </div>
 </div>
 
@@ -119,159 +186,54 @@ $acao = 1;
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title" id="headermodal">Confirmação</h4>
 			</div>
-			<div class="modal-body">
-				<div class="row">
-					<input type="hidden" name="codigoClienteDes" id="codigoClienteDes">
-					<input type="hidden" name="statusAtualDes" id="statusAtualDes">
-					<input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoDes" id="idInstituicaoDes">
-					<div class="col-md-12">
-						<!-- LISTAR cliente-->
-
-						<div class="row">
-							<div class="col-sm-12">
-								<div class="white-box">
-									<hr>
-
-									<div class="col-sm-6">
-										<h3>Lista de Instituicao</h3>
-									</div>
-
-									<table id="tabela" class="table table-striped">
-										<thead>
-											<tr>
-												<th>Código</th>
-												<th>Nome</th>
-												<th>Nome fantasia</th>
-												<th>Data</th>
-												<th>Alterar</th>
-												<th>Excluir</th>
-											</tr>
-										<tfoot>
-											<tr>
-												<th>Código</th>
-												<th>Nome</th>
-												<th>Nome fantasia</th>
-												<th>Data</th>
-												<th>Alterar</th>
-												<th>Excluir</th>
-											</tr>
-										</tfoot>
-										</thead>
-										<tbody>
-
-											<?php
-											$dados = crud::listarInstituicao();
-
-											if ($dados->rowCount() > 0) {
-												while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
-													?>
-													<tr>
-														<td><?php print($row['inst_id']); ?></td>
-														<td><?php print($row['inst_nome']); ?></td>
-														<td><?php print($row['inst_nomeFantasia']); ?></td>
-														<td><?php print(crud::formataData($row['inst_dataCadastro'])); ?></td>
-														<td><a class="btn btn-info waves-effect waves-light" id="btnEditar" data-whatever="@getbootstrap" data-codigo="<?php print($row['inst_id']); ?>" data-id="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>">Editar</a></td>
-
-														<td><a class="btn btn-danger waves-effect waves-light" data-target="#modalExluirCliente" data-whatever="@getbootstrap" id="btnExcluiCliente2" data-codigo="<?php print($row['inst_id']); ?>" data-id="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>">Excluir</a></td>
-													</tr>
-												<?php
-											}
-										} else {
-											echo "<p class='text-danger'>Sem informacoes cadastradas</p>";
-										}
-										?>
-
-										</tbody>
-									</table>
-
-								</div>
-							</div>
+			<!-- LISTAR cliente-->
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="white-box">
+						<div class="col-sm-6">
+							<h3>Lista de Instituicao
+								<div class="form-group">
+									<input type="text" class="form-control" size="100" name="valorPesquisa" id="valorPesquisa" placeholder="dados parar pesquisa" value="">
+									<button name="btnBuscar" id="btnBuscar" class="btn btn-success waves-effect waves-light" type="submit" data-whatever="@getbootstrap"><span class="fa fa-search"></span></span>Buscar</button>
+							</h3>
 						</div>
-
-						<!-- LISTAR cliente-->
-
 					</div>
+					<table id="tabela" class="table table-striped">
+						<thead>
+							<tr>
+								<th>Código</th>
+								<th>Nome</th>
+								<th>Nome fantasia</th>
+								<th>Data</th>
+								<th>Alterar</th>
+								<th>Excluir</th>
+							</tr>
+						<tfoot>
+							<tr>
+								<th>Código</th>
+								<th>Nome</th>
+								<th>Nome fantasia</th>
+								<th>Data</th>
+								<th>Alterar</th>
+								<th>Excluir</th>
+							</tr>
+						</tfoot>
+						</thead>
+						<tbody id="tabela2">
+
+
+						</tbody>
+					</table>
+
 				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				<button type="submit" id="btnDesativaCliente" class="btn btn-primary">Confirmar</button>
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 <!-- MODAL pesqusiar-->
 
-<!-- MODAL pesqusiar andre-->
-<div class="modal fade bs-example-modal-lg" id="modalPesquisarAndre" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="headermodal">Pesquisar</h4>
-			</div>
 
-			<div class="modal-body">
-				<div class="form-inline">
-					<div class="form-group">
-						<input type="text" class="form-control" size="100" name="valorPesquisa" id="valorPesquisa" placeholder="dados parar pesquisa" value="">
-						<button name="btnBuscar" id="btnBuscar" class="btn btn-success waves-effect waves-light" type="submit" data-whatever="@getbootstrap"><span class="fa fa-search"></span></span>Buscar</button>
-					</div>
-
-				</div>
-				<div class="row">
-					<input type="hidden" name="statusAtualDes" id="statusAtualDes">
-					<input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoDes" id="idInstituicaoDes">
-					<div class="col-md-12">
-						<!-- LISTAR cliente-->
-
-						<div class="row">
-							<div class="col-sm-12">
-								<div class="white-box">
-									<hr>
-									<div class="col-sm-6">
-										<h3>Lista de Instituicao</h3>
-									</div>
-									<table id="tabela" class="table table-striped">
-										<thead>
-											<tr>
-												<th>Código</th>
-												<th>Nome</th>
-												<th>Nome fantasia</th>
-												<th>Data</th>
-												<th>Alterar</th>
-												<th>Excluir</th>
-											</tr>
-										<tfoot>
-											<tr>
-												<th>Código</th>
-												<th>Nome</th>
-												<th>Nome fantasia</th>
-												<th>Data</th>
-												<th>Alterar</th>
-												<th>Excluir</th>
-											</tr>
-										</tfoot>
-										</thead>
-										<tbody id="andre">
-
-										</tbody>
-									</table>
-
-								</div>
-							</div>
-						</div>
-
-						<!-- LISTAR cliente-->
-
-					</div>
-				</div>
-			</div>
-
-		</div>
-	</div>
-</div>
-<!-- MODAL pesqusiar andre-->
 
 <!-- MODAL desativar cliente-->
 <div class="modal fade" id="modalConfirmacaoDesativa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
@@ -415,6 +377,7 @@ require_once "rodape.php";
 			$("#codigoAcesso").prop("disabled", false);
 		});
 		$(document).on("click", "#btnEditar", function() {
+
 			//limparCampos();		
 			var codigo = $(this).data('codigo');
 			var nome = $(this).data('nome');
@@ -427,7 +390,32 @@ require_once "rodape.php";
 			$('#nomeInstituicao').val(nome);
 			$('#nomeFantasia').val(nomeFantasia);
 			$('#acao').val(acao);
+			$('#modalPesquisarAndre').modal('hide');
 
+		});
+
+		$('#btnBuscar').click(function() {
+			var valorPesquisar = $("#valorPesquisa").val();
+			var tipo = "pesquisar";
+
+			$.ajax({
+				url: 'buscar.php',
+				type: "POST",
+				data: {
+					tipo: tipo,
+					valorPesquisar: valorPesquisar
+				},
+				success: function(data) {
+					//		alert(data);
+					if (data) {
+						$('#tabela2').html(data);
+					} else {
+						alert("nenhum dados encontrado para pesquisa com ");
+					}
+				}
+			});
+
+			return false;
 		});
 
 		function limparCampos() {
@@ -475,6 +463,7 @@ require_once "rodape.php";
 
 			$('#excidInstituicao').val(codigo);
 			$('#excnomeInstituicao').html(nome);
+			$('#modalPesquisarAndre').modal('hide');
 			$('#modalExcluir').modal('show');
 		});
 
@@ -519,31 +508,6 @@ require_once "rodape.php";
 					}
 				}
 			});
-		});
-
-		$('#btnBuscar').click(function() {
-			var valorPesquisar = $("#valorPesquisa").val();
-			var tipo = "pesquisar";	
-			
-			$.ajax({
-				url: 'buscar.php',
-				type: "POST",
-				data: {
-					tipo: tipo,
-					valorPesquisar:valorPesquisar
-
-				},
-				success: function(data) {
-					//alert(data);
-					if (data) {
-							$('#andre').html(data);
-					} else {
-						alert("nenhum dados encontrado para pesquisa com ");
-					}
-				}
-			});
-
-			return false;
 		});
 
 		$('#btnDesativaCliente').click(function() {
