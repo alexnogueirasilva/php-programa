@@ -39,7 +39,7 @@ $acao = 1;
 					<br>
 				</div>
 				<br>
-				<button type="submit" class="btn btn-info btn-lg btn-block" id="btnSalvaSla"><span class="fa fa-save"></span> Salvar</button>
+				<button type="submit" class="btn btn-info btn-lg btn-block" disabled="disabled" id="btnSalvar"><span class="fa fa-save"></span> Salvar</button>
 			</div>
 		</div>
 	</form>
@@ -78,8 +78,11 @@ $acao = 1;
 					</thead>
 					<tbody>
 						<?php
-						$dados = crud::listarInstituicao();
-
+						if($nivel == 1){
+							$dados = crud::listarInstituicao();
+						}else{						
+							$dados = crud::listarInstituicaoId($idInstituicao);
+						}
 						if ($dados->rowCount() > 0) {
 							while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
 								?>
@@ -329,6 +332,10 @@ require_once "rodape.php";
 <script type="text/javascript">
 	$(document).ready(function() {
 		permissaoNivel();
+		<?php if ($nivel == 1) { ?>
+			$("#codigoAcesso").prop("readonly", false);
+			$("#btnSalvar").prop("disabled", false);
+		<?php } ?>
 		$("#frmInstituicao").submit(function(e) {
 			e.preventDefault();
 			$.ajax({ //Função AJAX
@@ -377,14 +384,22 @@ require_once "rodape.php";
 			$("#codigoAcesso").prop("disabled", false);
 		});
 		$(document).on("click", "#btnEditar", function() {
-
-			//limparCampos();		
+			//limparCampos();
 			var codigo = $(this).data('codigo');
 			var nome = $(this).data('nome');
 			var nomeFantasia = $(this).data('nomefantasia');
 			var codigoAcesso = $(this).data('codigoacesso');
 			var acao = 2;
+
+			if (codigo < 0) { 
+				$("#btnSalvar").prop("disabled", true);			
+			}			
 			$("#codigoAcesso").prop("readonly", true);
+
+			<?php if ($nivel == 1) { ?>
+				$("#codigoAcesso").prop("readonly", false);			
+			<?php } ?>
+
 			$('#idInstituicao').val(codigo);
 			$('#codigoAcesso').val(codigoAcesso);
 			$('#nomeInstituicao').val(nome);
@@ -397,7 +412,6 @@ require_once "rodape.php";
 		$('#btnBuscar').click(function() {
 			var valorPesquisar = $("#valorPesquisa").val();
 			var tipo = "pesquisar";
-
 			$.ajax({
 				url: 'buscar.php',
 				type: "POST",

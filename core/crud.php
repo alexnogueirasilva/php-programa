@@ -979,11 +979,21 @@ class crud
 		}
 	}
 	//CADASTRO DE REPRESENTANTE
-	//CADASTRO DE INSTITUICAO
 
+	//CADASTRO DE INSTITUICAO
 	public static function listarInstituicao()
 	{
 		$sql = "SELECT * FROM instituicao ORDER BY inst_nome desc";
+
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		return $stmt;
+	}
+	public static function listarInstituicaoId($idInstituicao)
+	{
+		$sql = "SELECT * FROM instituicao WHERE inst_codigo = '" . $idInstituicao . "' ORDER BY inst_nome desc";
 
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
