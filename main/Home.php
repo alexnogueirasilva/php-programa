@@ -3,7 +3,7 @@ require_once 'cabecalho.php';
 include_once 'vrf_lgin.php';
 include_once '../core/crud.php';
 //CONTATO TODOS
-$totalContatos = crud::dataview("SELECT COUNT(*) as total from contatocliente where fk_idInstituicao = '".$idInstituicao."'" );
+$totalContatos = crud::dataview("SELECT COUNT(*) as total from contatoCliente where fk_idInstituicao = '".$idInstituicao."'" );
 $arrayContatosTodos = $totalContatos->fetchAll(PDO::FETCH_ASSOC);
 //DEMANDA TODOS
 $totalDemandas = crud::dataview("SELECT COUNT(*) as total from demanda where fk_idInstituicao = '".$idInstituicao."'" );
@@ -50,7 +50,7 @@ $arrayPedidoTodos = $totalPedido->fetchAll(PDO::FETCH_ASSOC);
 					<div class="panel-heading">
 						<h3 class="panel-title">Contatos</h3>
 					</div>
-					<div class="panel-body" onclick="window.location.href = 'contatos.php'" style="cursor:pointer">
+					<div class="panel-body" onclick="window.location.href = 'cad_contato.php'" style="cursor:pointer">
 						<h3 id="contatos"><?php print($arrayContatosTodos[0]['total']); ?></h3>
 					</div>
 				</div>

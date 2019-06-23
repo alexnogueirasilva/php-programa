@@ -7,34 +7,58 @@ include_once '../core/crud.php';
 $acao = 1;
 ?>
 <div class="container-fluid">
-	<h1>Cadastro de Instituicao</h1>
-	<form id="frmInstituicao">
+	<h1>Cadastro de Contatos</h1>
+	<form id="frmContato">
 		<div class="row">
 			<div class="col-lg-12">
-				<div class="form-group">
+			<div class="form-group">
+				<label for="nomeCliente" class="control-label">Nome </label>
+                            <select class="form-control" name="nomeCliente" id="nomeCliente" required>
+                                <option value="" selected disabled>Selecione o Cliente</option>
+                                <?php
+                                $selectCliente = crud::mostrarCliente($idInstituicao);
+                                if ($selectCliente->rowCount() > 0) {
+                                    while ($row = $selectCliente->fetch(PDO::FETCH_ASSOC)) {
+                                        ?>
+                                        <option value="<?php print($row['codCliente']); ?>">
+                                            <?php print($row['nomeCliente']); ?>
+                                        </option>
+                                    <?php
+                                }
+                            }
+                            ?>
+                            </select>
+			</div>	
+			
+			<div class="form-group">
 					<input type="text" hidden id="tipo" name="tipo" value="cadastrarInstituicao">
-					<div class="input-group">
+					
 						<label for="nomeInstituicao" class="control-label">Nome </label>
-						<input type="text" class="form-control" size="100" name="nomeInstituicao" id="nomeInstituicao" placeholder="Nome Instituicao" required value="">
+						<input type="text" class="form-control" size="100" name="nomeInstituicao" id="nomeInstituicao" placeholder="Nome do contato" required value="">
 						<input type="hidden" name="idInstituicao" id="idInstituicao">
 						<input type="hidden" value="<?php echo $acao; ?>" name="acao" id="acao">
 						<input type="hidden" value="<?php echo $dataAtual; ?>" name="dataAtual" id="dataAtual">
-					</div>
-				</div>
+				</div>				
 				<div class="form-inline">
 
 					<div class="form-group">
 						<div class="input-group">
-							<label for="nomeFantasia" class="control-label">Nome Fantasia </label>
-							<input type="text" class="form-control" size="55" name="nomeFantasia" id="nomeFantasia" placeholder="Nome Fantasia" required value="">
+							<label for="nomeFantasia"  class="control-label">Telefone </label>
+							<input type="text"  data-mask="(00) 0000-0000" data-mask-selectonfocus="true" class="form-control" size="28" name="nomeFantasia" id="nomeFantasia" placeholder="(xx) xxxx-xxxx" required value="">
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="input-group">
-							<label for="codigoAcesso" class="control-label">Codigo de Acesso</label>
-							<input type="text" class="form-control" size="10" minlength="8" maxlength="8" name="codigoAcesso" id="codigoAcesso" placeholder="Codigo de acesso de 8 caracteres" required value="">
+							<label for="nomeFantasia"   class="control-label">Celular </label>
+							<input type="text" data-mask="(00) 0 0000-0000" class="form-control" size="28" name="nomeFantasia" id="nomeFantasia" placeholder="(xx) xxxxx-xxxx" required value="">
 						</div>
 					</div>
+					<div class="form-group">
+						<div class="input-group">
+							<label for="nomeFantasia" class="control-label">Email </label>
+							<input type="email" class="form-control" size="50" name="nomeFantasia" id="nomeFantasia" placeholder="email@email.com" required value="">
+						</div>
+					</div>					
 					<br>
 				</div>
 				<br>
@@ -43,32 +67,34 @@ $acao = 1;
 		</div>
 	</form>
 
-	<!-- LISTAR cliente-->
+	<!-- LISTAR Contatos-->
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="white-box">
 				<div class="col-sm-6">
-					<h2>Lista de Instituicao - 
+					<h2>Lista de Contatos - 
 						<button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalPesquisarAndre" data-whatever="@getbootstrap"><span class="fa fa-search"></span></span>Pesquisar</button>
 					</h2>
 				</div>
 				<table id="tabela" class="table table-striped">
 					<thead>
 						<tr>
-							<th>Código</th>
+							<th>Cliente</th>
 							<th>Nome</th>
-							<th>Tipo</th>
-							<th>Status</th>
+							<th>Email</th>
+							<th>Telefone</th>
+							<th>Celular</th>
 							<th>Alterar</th>
 							<th>Alterar</th>
 							<th>Excluir</th>
 						</tr>
 					<tfoot>
 						<tr>
-							<th>Código</th>
+							<th>Cliente</th>
 							<th>Nome</th>
-							<th>Tipo</th>
-							<th>Status</th>
+							<th>Email</th>
+							<th>Telefone</th>
+							<th>Celular</th>
 							<th>Alterar</th>
 							<th>Alterar</th>
 							<th>Excluir</th>
@@ -78,18 +104,19 @@ $acao = 1;
 					<tbody>
 						<?php
 						if($nivel == 1){
-							$dados = crud::listarInstituicao();
+							$dados = crud::listarContato($idInstituicao);
 						}else{						
-							$dados = crud::listarInstituicaoId($idInstituicao);
+							$dados = crud::listarContato($idInstituicao);
 						}
 						if ($dados->rowCount() > 0) {
 							while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
 								?>
 								<tr>
-									<td><?php print($row['inst_id']); ?></td>
-									<td><?php print($row['inst_nome']); ?></td>
-									<td><?php print($row['inst_nomeFantasia']); ?></td>
-									<td><?php print(crud::formataData($row['inst_dataCadastro'])); ?></td>
+									<td><?php print($row['codCliente']); ?></td>
+									<td><?php print($row['nome']); ?></td>
+									<td><?php print($row['email']); ?></td>
+									<td><?php print($row['telfone']); ?></td>
+									<td><?php print($row['celular']); ?></td>
 									<td><a class="btn btn-info waves-effect waves-light" id="btnEditar" data-whatever="@getbootstrap" data-codigo="<?php print($row['inst_id']); ?>" data-codigoacesso="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>">Editar</a></td>
 									<td><a class="btn btn-info waves-effect waves-light" id="btnLimpar" data-whatever="@getbootstrap" data-codigo="<?php print($row['inst_id']); ?>" data-id="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>" data-tipoatual="<?php print($row['tipoCliente']); ?>">Limpar</a></td>
 									<td><a class="btn btn-danger waves-effect waves-light" data-target="#modalExcluir" data-whatever="@getbootstrap" id="btnExcluir" data-codigo="<?php print($row['inst_id']); ?>" data-id="<?php print($row['inst_codigo']); ?>" data-nome="<?php print($row['inst_nome']); ?>" data-nomefantasia="<?php print($row['inst_nomeFantasia']); ?>">Excluir</a></td>

@@ -1058,4 +1058,66 @@ class crud
 	}
 
 	//CADASTRO DE INSTITUICAO
+
+//CADASTRO DE CONTATOS
+public static function listarContato($idInstituicao)
+{
+	$sql = "SELECT * FROM contatoCliente WHERE fk_idInstituicao = '" . $idInstituicao . "' ORDER BY nome desc";
+
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	return $stmt;
+}
+
+public static function cadastrarContato($nomeInstituicao,$nomeFantasia,$codigoAcesso,$dataCadastro){
+	$pdo = Database::connect();
+	try {
+		$stmt = $pdo->prepare("INSERT INTO instituicao(inst_nome,inst_nomeFantasia,inst_codigo,inst_dataCadastro) VALUE (:nomeInstituicao,:nomeFantasia,:codigoAcesso,:dataCadastro)");
+		$stmt->bindparam(":nomeInstituicao", $nomeInstituicao);
+		$stmt->bindparam(":nomeFantasia", $nomeFantasia);
+		$stmt->bindparam(":codigoAcesso", $codigoAcesso);
+		$stmt->bindparam(":dataCadastro", $dataCadastro);			
+		$stmt->execute();
+		return true;
+	} catch (PDOException $e) {
+		echo $e->getMessage();
+		return false;
+	}
+}
+public static function alterarContato($idInstituicao,$nomeInstituicao,$nomeFantasia){
+	$pdo = Database::connect();
+	try {
+		//$stmt = $pdo->prepare("UPDATE cadRepresentante SET nomeRepresentante=:nomeRepresentante, statusRepresentante=:statusRepresentante, fk_idInstituicao=:idInstituicao WHERE codRepresentante=:codRepresentante");
+		$stmt = $pdo->prepare("UPDATE  instituicao SET inst_nome=:nomeInstituicao,inst_nomeFantasia=:nomeFantasia WHERE inst_id=:idInstituicao");
+		$stmt->bindparam(":nomeInstituicao", $nomeInstituicao);
+		$stmt->bindparam(":nomeFantasia", $nomeFantasia);
+		$stmt->bindparam(":idInstituicao", $idInstituicao);
+		//$stmt->bindparam(":dataCadastro", $dataCadastro);			
+		$stmt->execute();
+		return true;
+	} catch (PDOException $e) {
+		echo $e->getMessage();
+		return false;
+	}
+}
+
+public static function excluirContato($idInstituicao){
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	try {
+		$stmt = $pdo->prepare("DELETE FROM instituicao WHERE inst_id =:idInstituicao");			
+		$stmt->bindParam(":idInstituicao", $idInstituicao);
+		$stmt->execute();
+
+		return true;
+	} catch (PDOException $e) {
+		echo $e->getMessage();
+		return false;
+	}
+}
+
+//CADASTRO DE INSTITUICAO
+
 }
