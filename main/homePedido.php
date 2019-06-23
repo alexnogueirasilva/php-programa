@@ -3,26 +3,26 @@ require_once 'cabecalho.php';
 include_once 'vrf_lgin.php';
 include_once '../core/crud.php';
 //PEDIDOS CANCELADOS
-$totalPedidoCancelado = crud::dataview("SELECT COUNT(*) as total from controlePedido as con inner join statusPedido as sta on sta.codStatus = con.codStatus where sta.nome in ('NEGADO','CANCELADO')");
+$totalPedidoCancelado = crud::dataview("SELECT COUNT(*) as total from controlePedido as con inner join statusPedido as sta on sta.codStatus = con.codStatus where sta.nome in ('NEGADO','CANCELADO') AND con.fk_idInstituicao = '".$idInstituicao."'");
 $arrayPedidoCancelados = $totalPedidoCancelado->fetchAll(PDO::FETCH_ASSOC);
 //PEDIDOS TODOS
-$totalTodos = crud::dataview("SELECT COUNT(*) as total from controlePedido as con inner join statusPedido as sta on sta.codStatus = con.codStatus");
+$totalTodos = crud::dataview("SELECT COUNT(*) as total from controlePedido as con inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE con.fk_idInstituicao = '".$idInstituicao."' " );
 $arrayPedidoTodos = $totalTodos->fetchAll(PDO::FETCH_ASSOC);
 
 //PEDIDOS TODOS - //,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente,sta.nome as nomeStatus 
 $todosPedidos = crud::dataview("SELECT DISTINCT cli.nomeCliente
 FROM controlePedido as con 
 inner join cliente as cli on cli.codCliente = con.codCliente 
-inner join statusPedido as sta on sta.codStatus = con.codStatus order by con.codControle ");
+inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE con.fk_idInstituicao = '".$idInstituicao."' order by con.codControle ");
 $arrayPedidos = $todosPedidos->fetchAll(PDO::FETCH_ASSOC);
 
 $andre = crud::dataview("SELECT R.codCliente,R.nomeCliente, R.qtdePedidos FROM (
 	SELECT DISTINCT c.nomeCliente, c.codCliente,
 	(SELECT COUNT(con.numeroAf) AS qtde
 	FROM controlePedido AS con 
-	WHERE c.codCliente = con.codCliente 
+	WHERE c.codCliente = con.codCliente AND con.fk_idInstituicao = '".$idInstituicao."'
 	) as qtdePedidos
-	FROM cliente as c) AS R
+	FROM cliente as c WHERE c.fk_idInstituicao = '".$idInstituicao."') AS R
 	 WHERE R.qtdePedidos > 0
 	 ORDER BY R.qtdePedidos DESC; ");
 $arrayAndre = $andre->fetchAll(PDO::FETCH_ASSOC);
@@ -31,10 +31,10 @@ $status = crud::listarStatus($idInstituicao);//("SELECT *  FROM statusPedido	 OR
 $arraystatus = $status->fetchAll(PDO::FETCH_ASSOC);
 
 //PEDIDOS EM ATENDIMENTO
-$totalPedidoAtendimento = crud::dataview("SELECT COUNT(*) as total from controlePedido as con inner join statusPedido as sta on sta.codStatus = con.codStatus where sta.nome='ATENDIDO'");
+$totalPedidoAtendimento = crud::dataview("SELECT COUNT(*) as total from controlePedido as con inner join statusPedido as sta on sta.codStatus = con.codStatus where sta.nome='ATENDIDO' AND con.fk_idInstituicao = '".$idInstituicao."'");
 $arrayPedidoAtendimento = $totalPedidoAtendimento->fetchAll(PDO::FETCH_ASSOC);
 //PEDIDOS ABERTAS
-$totalPedidoAberto = crud::dataview("SELECT COUNT(*) as total from controlePedido as con inner join statusPedido as sta on sta.codStatus = con.codStatus where sta.nome not in ('ATENDIDO','CANCELADO')");
+$totalPedidoAberto = crud::dataview("SELECT COUNT(*) as total from controlePedido as con inner join statusPedido as sta on sta.codStatus = con.codStatus where sta.nome not in ('ATENDIDO','CANCELADO') AND con.fk_idInstituicao = '".$idInstituicao."'");
 $arrayPedidoAberto = $totalPedidoAberto->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <div class="content">
