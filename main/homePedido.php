@@ -27,7 +27,7 @@ $andre = crud::dataview("SELECT R.codCliente,R.nomeCliente, R.qtdePedidos FROM (
 	 ORDER BY R.qtdePedidos DESC; ");
 $arrayAndre = $andre->fetchAll(PDO::FETCH_ASSOC);
 
-$status = crud::dataview("SELECT *  FROM statuspedido	 ORDER BY nome ASC; ");
+$status = crud::listarStatus($idInstituicao);//("SELECT *  FROM statusPedido	 ORDER BY nome ASC; ");
 $arraystatus = $status->fetchAll(PDO::FETCH_ASSOC);
 
 //PEDIDOS EM ATENDIMENTO
