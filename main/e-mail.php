@@ -5,18 +5,11 @@ include_once '../core/crud.php';
 
 //testando como enviar e-mail
 
-//$to = "programadorfsaba@gmail.com";
 
 $to = $_POST['email'];
 $senha = $_POST['senha'];
 $dica = $_POST['dica'];
 $valida = md5("$to");
-//cadastro
-/*INSERT INTO usuario
-(email,senha,dica,ativo,valida)
-VALUES
-('$to', '$senha','$dica',0, '$valida');*/
-
 
 
 $subject = "Assunto Teste e-mail";

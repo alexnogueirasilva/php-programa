@@ -146,14 +146,12 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
 
                             </tbody>
                         </table>
-                   
-                   
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
         <!-- /.row -->
-</div>
+    </div>
 
 
     <!-- MODAL DETALHES -->
@@ -285,7 +283,7 @@ $queryComentarios = ("SELECT hst.mensagem, hst.cod_usr_msg, us.nome FROM hst_men
 
 
 
-
+</div>
 <!-- /#page-wrapper -->
 
 
@@ -306,8 +304,6 @@ include_once "modais.php";
         $("#atualizar").click(function(){
             location.reload();
         });
-
-
 
         //MONTA O SELECT DOS FUNCIONÁRIOS DIRETO DO BANCO ----------------------------------------
         $('#departamento').change(function(){
@@ -344,6 +340,7 @@ include_once "modais.php";
             //MONTA OS COMENTÁRIOS NO MODAL
             $.ajax({
                 url: 'busca_mensagens.php',
+               
                 type: "POST",
                 data: {id : id},
                 success: function(data) {                   
@@ -425,8 +422,6 @@ include_once "modais.php";
             //var status = "Em atendimento";
             var mensagem = $("#mensagem").val();
             var demandas = $("#demandas").val();
-
-
             $.ajax({
                 url: '../core/save.php',
                 type: "POST",

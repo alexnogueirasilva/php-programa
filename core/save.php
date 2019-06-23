@@ -412,8 +412,9 @@ switch ($value) {
 		$descricao = $_POST['descricao'];
 		$tempo = $_POST['tempo'];
 		$uniTempo = $_POST['unidtempo'];
+		$idInstituicao = $_POST['idInstituicao'];
 
-		$cad = crud::cadSla($descricao, $tempo, $uniTempo);
+		$cad = crud::cadSla($descricao, $tempo, $uniTempo, $idInstituicao);
 		if ($cad == true) {
 			echo 1;
 		} else {
@@ -427,8 +428,9 @@ switch ($value) {
 		$tempo = $_POST['edtTempo'];
 		$uniTempo = $_POST['edtUnidtempo'];
 		$id = $_POST['edtId'];
+		$idInstituicao = $_POST['edtIdInstituicao'];
 
-		$cad = crud::edtSla($id, $descricao, $tempo, $uniTempo);
+		$cad = crud::edtSla($id, $descricao, $tempo, $uniTempo,$idInstituicao);
 		if ($cad == true) {
 			echo 1;
 		} else {
@@ -438,8 +440,9 @@ switch ($value) {
 
 	case 'excluiSla':
 		$id = $_POST['idSla'];
-
-		$exc = crud::excluiSla($id);
+		$idInstituicao = $_POST['excIdInstituicao'];
+		
+		$exc = crud::excluiSla($id,$idInstituicao);
 		if ($exc == true) {
 			echo 1;
 		} else {
@@ -450,7 +453,8 @@ switch ($value) {
 		//statuspedido
 	case 'CadastroStatus':
 		$descricao = $_POST['descricao'];
-		$cad = crud::CadastroStatus($descricao);
+		$idInstituicao = $_POST['idInstituicao'];
+		$cad = crud::CadastroStatus($descricao,$idInstituicao);
 		if ($cad == true) {
 			echo 1;
 		} else {
@@ -461,7 +465,8 @@ switch ($value) {
 	case 'editarStatus':
 		$descricao  = $_POST['edtDescricao'];
 		$edtId         = $_POST['edtId'];
-		$cad = crud::editarStatus($edtId, $descricao);
+		$idInstituicao         = $_POST['edtIdInstituicao'];
+		$cad = crud::editarStatus($edtId, $descricao,$idInstituicao);
 		if ($cad == true) {
 			echo 1;
 		} else {
@@ -470,7 +475,8 @@ switch ($value) {
 		break;
 	case 'excluirStatus':
 		$id         = $_POST['id'];
-		$cad = crud::deleteStatus($id);
+		$idInstituicao         = $_POST['idInstituicao'];
+		$cad = crud::deleteStatus($id,$idInstituicao);
 		if ($cad == true) {
 			echo 1;
 		} else {
@@ -657,7 +663,7 @@ switch ($value) {
 		$nomeRepresentante = $_POST['edtnome'];
 		$codRepresentante = $_POST['idRepresentante'];
 		$statusRepresentante =  $_POST['edtstatus'];
-		$idInstituicao = $_POST['idInstituicao'];
+		$idInstituicao = $_POST['editaridInstituicao'];
 		$cad = crud::editarRepresentante($nomeRepresentante, $codRepresentante, $statusRepresentante, $idInstituicao);
 
 		if ($cad == true) {
@@ -698,7 +704,7 @@ switch ($value) {
 	case 'excluirRepresentante':
 		$codRepresentante = $_POST['idRepresentante'];
 		$idInstituicao = $_POST['idInstituicao'];
-		$cad = crud::excluirRepresentante($codRepresentante, $idInstituicao);
+		$cad = crud::deleteRepresentante($codRepresentante, $idInstituicao);
 		if ($cad == true) {
 			echo 1;
 		} else {
@@ -713,6 +719,17 @@ switch ($value) {
 		$cad = crud::excluirInstituicao($idInstituicao);
 		if ($cad == true) {
 			echo 1;
+		} else {
+			echo 0;
+		}
+
+		break;
+		case'listarInstituicao':
+		
+	//	$idInstituicao = $_POST['idInstituicao'];
+		$cad = crud::listarInstituicao();
+		if ($cad == true) {
+			echo $cad;
 		} else {
 			echo 0;
 		}

@@ -20,7 +20,7 @@ $email = $cdt['email'];
 if ($valor == $codigo && $valor2 == $email ) {
     $ativo = 1;
     $valida = $valor;
-    $cdt = crud::ativarUsuario($ativo, $valida);
+    $cdt = crud::ativarUsuario($ativo, $valida, $codInstituicao);
     echo "Cadastro ativado com sucesso!";
    // echo "<script>window.location ='logout.php';</script>"; 
 } else {

@@ -53,7 +53,6 @@ $arrayAberto = $totalAberto->fetchAll(PDO::FETCH_ASSOC);
       </tr>
     </tbody>
   </table>
-
 </div>
 
 <div class="container-fluid">
@@ -108,12 +107,9 @@ $arrayAberto = $totalAberto->fetchAll(PDO::FETCH_ASSOC);
       </form>
       <div class="col-md-6" id="divBuscaPorData">
 
-
       </div>
 
     </div>
-
-
     <div class="row bg-title">
       <div class="col-lg-12">
         <div id="grafico" style="width: 600px; height: 300px;"></div>
@@ -121,8 +117,6 @@ $arrayAberto = $totalAberto->fetchAll(PDO::FETCH_ASSOC);
       <!-- /.col-lg-12 -->
     </div>
   </div>
-
-
   <!-- ___ -->
 
   <!-- row -->
@@ -268,11 +262,7 @@ require_once "rodape.php";
       }
     });
 
-
-
-
   });
-
 
   google.charts.load('current', {
     'packages': ['corechart']

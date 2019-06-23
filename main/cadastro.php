@@ -17,39 +17,37 @@ $queryUsuarios = "SELECT usr.id, usr.nome, usr.email, usr.nivel,usr.status,usr.i
 
     <h1>Cadastra Usuário</h1>
     <h4>Insira os dados do novo usuário</h4>
-    <form id="frmCadastro" action="e-mail.php">
+    <form id="frmCadastro" action="e-mail.php"> 
         <div class="row">
-        <div class="col-lg-12">
-        <div class="form-inline">
-            <div class="form-group">
-                <div class="input-group">
-                    <!--<input type="email" class="form-control" size="50" id="email" name="email" placeholder="E-mail" required > -->
-                    <span class="input-group-addon"><span class="fa fa-envelope"></span>
-                    <input type="email" class="form-control" size="70" name="email" id="email" placeholder="Digite seu E-mail:" required oninvalid="this.setCustomValidity('Digite um e-mail valido!')" oninput="this.setCustomValidity('')" >
-                    <button id="btnVerificarEmail" title="Click para verificar se este e-mail esta diponivel" class="btn btn-success"><span class="fa fa-search"></span></span></button>
-                    
-                   
+            <div class="col-lg-12">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <!--<input type="email" class="form-control" size="50" id="email" name="email" placeholder="E-mail" required > -->
+                            <span class="input-group-addon"><span class="fa fa-envelope"></span>
+                                <input type="email" class="form-control" size="70" name="email" id="email" placeholder="Digite seu E-mail:" required oninvalid="this.setCustomValidity('Digite um e-mail valido!')" oninput="this.setCustomValidity('')">
+                                <button id="btnVerificarEmail" title="Click para verificar se este e-mail esta diponivel" class="btn btn-success"><span class="fa fa-search"></span></span></button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="password" name="senha" value="" class="form-control" size="30" maxlength="15" minlength="5" id="senha" placeholder="digite a senha" required>
+                            <span class="input-group-addon"><span class="fa fa-key"></span></span>
+                        </div>
+                    </div>
+                </div><br>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="fa fa-envelope"></span></span>
+                            <input type="text" class="form-control" size="70" minlength="3" maxlength="50" name="dica" id="dica" placeholder="digite a dica" required>
+                        </div>
+                    </div>
                 </div>
+                <br>
+                <br>
+                <button type="submit" class="btn btn-info btn-lg btn-block" id="submit"><span class="fa fa-save"></span> Salvar</button>
             </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <input type="password" name="senha" value="" class="form-control" size="30" maxlength="15" minlength="5" id="senha" placeholder="digite a senha" required>
-                    <span class="input-group-addon"><span class="fa fa-key"></span></span>
-                </div>
-            </div>
-        </div><br>
-        <div class="form-inline">
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon"><span class="fa fa-envelope"></span></span>
-                    <input type="text" class="form-control" size="70" minlength="3" maxlength="50" name="dica" id="dica" placeholder="digite a dica" required>
-                </div>
-            </div>
-        </div>
-<br>
-<br>
-        <button type="submit" class="btn btn-info btn-lg btn-block" id="submit"><span class="fa fa-save"></span> Salvar</button>
-        </div>
         </div>
     </form>
 
@@ -122,13 +120,15 @@ require_once "rodape.php";
 ?>
 <script type="text/javascript">
     $(document).ready(function() {
-       
+
         permissaoNivel();
+
         $('#frmCadastro').submit(function() {
             var tipo = "CadastroUsuario";
             var emailUser = $("#email").val();
             var senhalUser = $("#senha").val();
             var dicalUser = $("#dica").val();
+
             $.ajax({ //Função AJAX
                 url: "../core/save.php", //Arquivo php
                 type: "post", //Método de envio
@@ -140,6 +140,7 @@ require_once "rodape.php";
                 }, //Dados
 
                 success: function(result) {
+                 //   alert(" resultado cad: " + result);
                     if (result == 1) {
                         swal({
                                 title: "OK!",
@@ -153,42 +154,8 @@ require_once "rodape.php";
                                     window.location = "cadastro.php";
                                 }
                             });
-                    } else {
-                        alert("Erro ao salvar " + result); //Informa o erro
-                    }
-                }
-            });
-
-            return false; //Evita que a página seja atualizada
-        });
-
-        $('#frmCadastro').submit(function() {
-            var tipo = "VerificaEmail";
-            var emailUser = $("#email").val();
-            
-            $.ajax({ //Função AJAX
-                url: "../core/save.php", //Arquivo php
-                type: "post", //Método de envio
-                data: {
-                    tipo: tipo,
-                    emailUser: emailUser,                   
-                }, //Dados
-
-                success: function(result) {
-                    if (result ==1 ) {
-                       // alert (" REsultado cadastro02 " + result);
-                        swal({
-                                title: "OK!",
-                                text: "Cadastrado com Sucesso!",
-                                type: "success",
-                                confirmButtonText: "Fechar",
-                                closeOnConfirm: false
-                            },
-                            function(isConfirm) {
-                                if (isConfirm) {
-                                    window.location = "cadastro.php";
-                                }
-                            });
+                    } else if (result == 2) {
+                        alert("o email "+ emailUser+ " ja existe!"); //Informa o erro
                     } else {
                         alert("Erro ao salvar "); //Informa o erro
                     }
@@ -197,131 +164,188 @@ require_once "rodape.php";
 
             return false; //Evita que a página seja atualizada
         });
-/*
-        $(document).on("click", "#btnEditar", function() {
-            var id = $(this).data('codigo');
-            var nome = $(this).data('nome');
+        /*
+                $('#frmCadastro').submit(function() {
+                    var tipo = "VerificaEmail";
+                    var emailUser = $("#email").val();
+                    
+                    $.ajax({ //Função AJAX
+                        url: "../core/save.php", //Arquivo php
+                        type: "post", //Método de envio
+                        data: {
+                            tipo: tipo,
+                            emailUser: emailUser,                   
+                        }, //Dados
 
+                        success: function(result) {
+                            if (result ==1 ) {
+                               // alert (" REsultado cadastro02 " + result);
+                                swal({
+                                        title: "OK!",
+                                        text: "Cadastrado com Sucesso!",
+                                        type: "success",
+                                        confirmButtonText: "Fechar",
+                                        closeOnConfirm: false
+                                    },
+                                    function(isConfirm) {
+                                        if (isConfirm) {
+                                            window.location = "cadastro.php";
+                                        }
+                                    });
+                            } else {
+                                alert("Erro ao salvar "); //Informa o erro
+                            }
+                        }
+                    });
 
-            $('#idDep').val(id);
-            $('#edtNomeDep').val(nome);
-
-        });
-*/
-/*
-        $('#frmEdtDep').submit(function() {
-            var tipo = "EditDep";
-            var id = $('#idDep').val();
-            var nomeDep = $('#edtNomeDep').val();
-
-            $.ajax({ //Função AJAX
-                url: "../core/save.php", //Arquivo php
-                type: "post", //Método de envio
+                    return false; //Evita que a página seja atualizada
+                });
+        */
+        function VerificaEmail2() {
+            var emailUser = $("#email").val();
+            var tipo = 'VerificaEmail2';
+            //MONTA OS COMENTÁRIOS NO MODAL
+            $.ajax({
+                url: '../core/save.php',
+                type: "POST",
                 data: {
                     tipo: tipo,
-                    id: id,
-                    nomeDep: nomeDep
-                }, //Dados
-                success: function(result) {
-                    //alert(result)
-                    if (result == 1) {
-                        swal({
-                                title: "OK!",
-                                text: "Dados Editados com Sucesso!",
-                                type: "success",
-                                confirmButtonText: "Fechar",
-                                closeOnConfirm: false
-                            },
-
-                            function(isConfirm) {
-                                if (isConfirm) {
-                                    window.location = "cad_dep.php";
-                                }
-                            });
-
-                    } else {
-                        swal({
-                                title: "Ops!",
-                                text: "Algo deu errado!",
-                                type: "error",
-                                confirmButtonText: "Fechar",
-                                closeOnConfirm: false
-                            },
-
-                            function(isConfirm) {
-                                if (isConfirm) {
-                                    window.location = "cad_dep.php";
-                                }
-                            });
+                    emailUser: emailUser
+                },
+                success: function(data) {
+                    if (data == 1) {
+                        alert("email ja existe");
                     }
                 }
             });
-
-            return false;
-        });
-*/
-/*
-        $(document).on("click", "#btnExcluir", function() {
-            var id = $(this).data('codigo');
-            var nome = $(this).data('nome');
-
-            $('#idDep').val(id);
-            $('#labelDep').html("Você vai excluir o departamento <strong>" + nome + "?</strong>");
-
-        });
-
-*/
-/*
-        $('#frmDeleteDep').submit(function() {
-            var tipo = "deleteDep";
-            var id = $('#idDep').val();
+        }
 
 
-            $.ajax({ //Função AJAX
-                url: "../core/save.php", //Arquivo php
-                type: "post", //Método de envio
-                data: {
-                    tipo: tipo,
-                    id: id
-                }, //Dados
-                success: function(result) {
-                    //alert(result)
-                    if (result == 1) {
-                        swal({
-                                title: "OK!",
-                                text: "Departamento Excluído com Sucesso!",
-                                type: "success",
-                                confirmButtonText: "Fechar",
-                                closeOnConfirm: false
-                            },
+        /*
+                $(document).on("click", "#btnEditar", function() {
+                    var id = $(this).data('codigo');
+                    var nome = $(this).data('nome');
 
-                            function(isConfirm) {
-                                if (isConfirm) {
-                                    window.location = "cad_dep.php";
-                                }
-                            });
 
-                    } else {
-                        swal({
-                                title: "Ops!",
-                                text: "Algo deu errado!",
-                                type: "error",
-                                confirmButtonText: "Fechar",
-                                closeOnConfirm: false
-                            },
+                    $('#idDep').val(id);
+                    $('#edtNomeDep').val(nome);
 
-                            function(isConfirm) {
-                                if (isConfirm) {
-                                    window.location = "cad_dep.php";
-                                }
-                            });
-                    }
-                }
-            });
+                });
+        */
+        /*
+                $('#frmEdtDep').submit(function() {
+                    var tipo = "EditDep";
+                    var id = $('#idDep').val();
+                    var nomeDep = $('#edtNomeDep').val();
 
-            return false;
-        });
-*/
+                    $.ajax({ //Função AJAX
+                        url: "../core/save.php", //Arquivo php
+                        type: "post", //Método de envio
+                        data: {
+                            tipo: tipo,
+                            id: id,
+                            nomeDep: nomeDep
+                        }, //Dados
+                        success: function(result) {
+                            //alert(result)
+                            if (result == 1) {
+                                swal({
+                                        title: "OK!",
+                                        text: "Dados Editados com Sucesso!",
+                                        type: "success",
+                                        confirmButtonText: "Fechar",
+                                        closeOnConfirm: false
+                                    },
+
+                                    function(isConfirm) {
+                                        if (isConfirm) {
+                                            window.location = "cad_dep.php";
+                                        }
+                                    });
+
+                            } else {
+                                swal({
+                                        title: "Ops!",
+                                        text: "Algo deu errado!",
+                                        type: "error",
+                                        confirmButtonText: "Fechar",
+                                        closeOnConfirm: false
+                                    },
+
+                                    function(isConfirm) {
+                                        if (isConfirm) {
+                                            window.location = "cad_dep.php";
+                                        }
+                                    });
+                            }
+                        }
+                    });
+
+                    return false;
+                });
+        */
+        /*
+                $(document).on("click", "#btnExcluir", function() {
+                    var id = $(this).data('codigo');
+                    var nome = $(this).data('nome');
+
+                    $('#idDep').val(id);
+                    $('#labelDep').html("Você vai excluir o departamento <strong>" + nome + "?</strong>");
+
+                });
+
+        */
+        /*
+                $('#frmDeleteDep').submit(function() {
+                    var tipo = "deleteDep";
+                    var id = $('#idDep').val();
+
+
+                    $.ajax({ //Função AJAX
+                        url: "../core/save.php", //Arquivo php
+                        type: "post", //Método de envio
+                        data: {
+                            tipo: tipo,
+                            id: id
+                        }, //Dados
+                        success: function(result) {
+                            //alert(result)
+                            if (result == 1) {
+                                swal({
+                                        title: "OK!",
+                                        text: "Departamento Excluído com Sucesso!",
+                                        type: "success",
+                                        confirmButtonText: "Fechar",
+                                        closeOnConfirm: false
+                                    },
+
+                                    function(isConfirm) {
+                                        if (isConfirm) {
+                                            window.location = "cad_dep.php";
+                                        }
+                                    });
+
+                            } else {
+                                swal({
+                                        title: "Ops!",
+                                        text: "Algo deu errado!",
+                                        type: "error",
+                                        confirmButtonText: "Fechar",
+                                        closeOnConfirm: false
+                                    },
+
+                                    function(isConfirm) {
+                                        if (isConfirm) {
+                                            window.location = "cad_dep.php";
+                                        }
+                                    });
+                            }
+                        }
+                    });
+
+                    return false;
+                });
+        */
 
     });
 </script>

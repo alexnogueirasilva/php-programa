@@ -10,7 +10,7 @@ $emailLogado    = $_SESSION['emailUsuario'];
 $instituicao    = $_SESSION['instituicaoUsuario'];
 $queryDepart    = "SELECT * FROM departamentos";
 $queryCliente   = "SELECT * FROM cliente";
-/*
+
 echo " Andre  $andre<br/> ";
 
 echo " segundos  $segundos<br/> ";
@@ -19,7 +19,6 @@ echo " limite $limite<br/> ";
 if($logado != 1){$logado2 = 600;
     echo "<meta HTTP-EQUIV='refresh' CONTENT='$logado2;'>";//atualizacao automatica
 }
-*/
 ?>
 
 <div class="container-fluid">
@@ -213,7 +212,7 @@ include_once "modais.php";
                     $("#salvaDemanda").prop("disabled", true);
                 },
                 success: function(data) { 
-                   // alert(data);                                                 
+                   alert(data);                                                 
                     if (data == 1) {                       
                         swal({
                                 title: "OK!",

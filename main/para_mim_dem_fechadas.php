@@ -158,8 +158,9 @@ $queryDemandas = 'SELECT d.id, d.mensagem, d.titulo, d.prioridade, d.ordem_servi
                         <div class="col-md-12">
                             <h4><strong>Comentários:</strong></h4>
                             <table class="table table-striped">
-                                <tbody id="comentariosDemand">
-
+                                <tbody id="comentariosDemand" >
+                                
+                                
                                 </tbody>
                             </table>
                         </div>
@@ -218,22 +219,21 @@ include_once "modais.php";
         var titulo = $(this).data('titulodet');
         var status = $(this).data('status');
         var dataCriacao = $(this).data('datacriacao');
-        var mensagem = $(this).data('mensagem');
-            //alert(titulo);
+        var mensagem = $(this).data('mensagem');         
             
             $('#tituloDetalhes').html(titulo);
             $('#statusDet').html(status);
             $('#dataCriacaoDet').html(dataCriacao);
             $('#mensagemDet').html(mensagem);
-            //$('#modalDetDemanda').modal('show');
-
+            var tipo = 'busca_mensagens';
              //MONTA OS COMENTÁRIOS NO MODAL
              $.ajax({
                 url: 'busca_mensagens.php',
-                type: "POST",
-                data: {id : id},
-                success: function(data) {                   
-                    if (data) {                            
+                type: "POST",                  
+                data: {id : id, tipo : tipo},
+                success: function(data) {     
+                  // alert(data);              
+                    if (id) {                            
                         $('#comentariosDemand').html(data);
                     } 
                 }

@@ -523,15 +523,16 @@ class crud
 	}
 
 	//MANAGER SLA --------------------------------------------
-	public static function cadSla($descricao, $tempo, $uniTempo)
+	public static function cadSla($descricao, $tempo, $uniTempo,$idInstituicao)
 	{
 		$pdo = Database::connect();
 
 		try {
-			$stmt = $pdo->prepare("INSERT INTO tbl_sla (descricao, tempo, unitempo) VALUES(:descricao,:tempo,:unitempo)");
+			$stmt = $pdo->prepare("INSERT INTO tbl_sla (descricao, tempo, unitempo,fk_idInstituicao) VALUES(:descricao,:tempo,:unitempo,:idInstituicao)");
 			$stmt->bindparam(":descricao", $descricao);
 			$stmt->bindparam(":tempo", $tempo);
 			$stmt->bindparam(":unitempo", $uniTempo);
+			$stmt->bindparam(":idInstituicao", $idInstituicao);
 
 			$stmt->execute();
 
@@ -543,16 +544,17 @@ class crud
 		}
 	}
 
-	public static function edtSla($id, $descricao, $tempo, $uniTempo)
+	public static function edtSla($id, $descricao, $tempo, $uniTempo,$idInstituicao)
 	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
-			$stmt = $pdo->prepare("UPDATE tbl_sla SET descricao=:descricao, tempo=:tempo, uniTempo=:uniTempo WHERE id=:id ");
+			$stmt = $pdo->prepare("UPDATE tbl_sla SET descricao=:descricao, tempo=:tempo, uniTempo=:uniTempo, fk_idInstituicao=:idInstituicao WHERE id=:id ");
 			$stmt->bindparam(":id", $id);
 			$stmt->bindparam(":descricao", $descricao);
 			$stmt->bindparam(":tempo", $tempo);
 			$stmt->bindparam(":uniTempo", $uniTempo);
+			$stmt->bindparam(":idInstituicao", $idInstituicao);
 
 			$stmt->execute();
 
@@ -563,25 +565,28 @@ class crud
 		}
 	}
 
-	public static function excluiSla($id)
+	public static function excluiSla($id,$idInstituicao)
 	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$stmt = $pdo->prepare("DELETE FROM tbl_sla WHERE id=:id");
+		$stmt = $pdo->prepare("DELETE FROM tbl_sla WHERE id=:id AND fk_idInstituicao=:idInstituicao");
 		$stmt->bindparam(":id", $id);
+		$stmt->bindparam(":idInstituicao", $idInstituicao);
 		$stmt->execute();
 		return true;
 	}
 
-	public static function mostraSla()
+	public static function mostraSla($idInstituicao)
 	{
-		$query = "SELECT * FROM tbl_sla";
+		$query = "SELECT * FROM tbl_sla WHERE fk_idInstituicao = '".$idInstituicao."' " ;
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$stmt = $pdo->prepare($query);
 		$stmt->execute();
 		return $stmt;
 	}
+
+	// SLA
 	public static function formataData($data)
 	{
 		$qtde = strlen($data);
@@ -594,10 +599,10 @@ class crud
 		return $dataFormatada;
 	}
 	//statuspedido
-	public static function listarStatus()
+	public static function listarStatus($idInstituicao)
 	{
 
-		$sql = " SELECT * FROM statusPedido order by nome ";
+		$sql = " SELECT * FROM statusPedido WHERE fk_idInstituicao = '" . $idInstituicao . "' order by nome ";
 
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -606,10 +611,10 @@ class crud
 		return $stmt;
 	}
 
-	public static function listarSatusId($id)
+	public static function listarSatusId($id,$idInstituicao)
 	{
 
-		$sql = "SELECT * FROM statusPedido WHERE codStatus = $id order by nome";
+		$sql = "SELECT * FROM statusPedido WHERE codStatus = $id  AND fk_idInstituicao = '" . $idInstituicao . "'order by nome";
 
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -618,13 +623,14 @@ class crud
 		return $stmt;
 	}
 
-	public static function CadastroStatus($descricao)
+	public static function CadastroStatus($descricao,$idInstituicao)
 	{
 		$pdo = Database::connect();
 
 		try {
-			$stmt = $pdo->prepare("INSERT INTO statusPedido (nome) VALUES(:nome)");
+			$stmt = $pdo->prepare("INSERT INTO statusPedido (nome, fk_idInstituicao) VALUES(:nome,:fk_idInstituicao)");
 			$stmt->bindparam(":nome", $descricao);
+			$stmt->bindparam(":fk_idInstituicao", $idInstituicao);
 			$stmt->execute();
 
 			return true;
@@ -635,14 +641,15 @@ class crud
 		}
 	}
 
-	public static function editarStatus($edtId, $descricao)
+	public static function editarStatus($edtId, $descricao,$idInstituicao)
 	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
-			$stmt = $pdo->prepare("UPDATE statusPedido SET nome=:descricao WHERE codStatus=:edtId ");
+			$stmt = $pdo->prepare("UPDATE statusPedido SET nome=:descricao, fk_idInstituicao=:idInstituicao WHERE codStatus=:edtId AND fk_idInstituicao = '" . $idInstituicao . "' ");
 			$stmt->bindparam(":edtId", $edtId);
 			$stmt->bindparam(":descricao", $descricao);
+			$stmt->bindparam(":idInstituicao", $idInstituicao);
 
 			$stmt->execute();
 
@@ -653,12 +660,13 @@ class crud
 		}
 	}
 
-	public static function deleteStatus($id)
+	public static function deleteStatus($id,$idInstituicao)
 	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$stmt = $pdo->prepare("DELETE FROM statusPedido WHERE codStatus=:id");
+		$stmt = $pdo->prepare("DELETE FROM statusPedido WHERE codStatus=:id AND fk_idInstituicao =:idInstituicao");
 		$stmt->bindparam(":id", $id);
+		$stmt->bindparam(":idInstituicao", $idInstituicao);
 		$stmt->execute();
 		return true;
 	}

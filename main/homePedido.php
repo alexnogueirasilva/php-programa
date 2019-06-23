@@ -2,138 +2,85 @@
 require_once 'cabecalho.php';
 include_once 'vrf_lgin.php';
 include_once '../core/crud.php';
-//CONTATO TODOS
-$totalContatos = crud::dataview("SELECT COUNT(*) as total from contatocliente where fk_idInstituicao = '".$idInstituicao."'" );
-$arrayContatosTodos = $totalContatos->fetchAll(PDO::FETCH_ASSOC);
-//DEMANDA TODOS
-$totalDemandas = crud::dataview("SELECT COUNT(*) as total from demanda where fk_idInstituicao = '".$idInstituicao."'" );
-$arrayDemandasTodos = $totalDemandas->fetchAll(PDO::FETCH_ASSOC);
-//INSTITUICAO TODOS
-$totalInstituicao = crud::dataview("SELECT COUNT(*) as total from instituicao where inst_codigo = '".$idInstituicao."'" );
-$arrayInstituicaoTodos = $totalInstituicao->fetchAll(PDO::FETCH_ASSOC);
-//USUARIOS TODOS
-$totalUsuarios = crud::dataview("SELECT COUNT(*) as total from usuarios where fk_idInstituicao = '".$idInstituicao."'" );
-$arrayUsuariosTodos = $totalUsuarios->fetchAll(PDO::FETCH_ASSOC);
-//SLA TODOS
-$totalSla = crud::dataview("SELECT COUNT(*) as total from tbl_sla where fk_idInstituicao = '".$idInstituicao."'" );
-$arraySlaTodos = $totalSla->fetchAll(PDO::FETCH_ASSOC);
-//REPRESENTANTES TODOS
-$totalRepresentante = crud::dataview("SELECT COUNT(*) as total from cadrepresentante where fk_idInstituicao = '".$idInstituicao."'" );
-$arrayRepresentanteTodos = $totalRepresentante->fetchAll(PDO::FETCH_ASSOC);
-//STATUS TODOS
-$totalStatus = crud::dataview("SELECT COUNT(*) as total from statusPedido where fk_idInstituicao = '".$idInstituicao."'" );
-$arrayStatusTodos = $totalStatus->fetchAll(PDO::FETCH_ASSOC);
-//CLIENTES TODOS
-$totalClientes = crud::dataview("SELECT COUNT(*) as total from cliente where fk_idInstituicao = '".$idInstituicao."'" );
-$arrayClienteTodos = $totalClientes->fetchAll(PDO::FETCH_ASSOC);
+//PEDIDOS CANCELADOS
+$totalPedidoCancelado = crud::dataview("SELECT COUNT(*) as total from controlePedido as con inner join statusPedido as sta on sta.codStatus = con.codStatus where sta.nome in ('NEGADO','CANCELADO')");
+$arrayPedidoCancelados = $totalPedidoCancelado->fetchAll(PDO::FETCH_ASSOC);
 //PEDIDOS TODOS
-$totalPedido = crud::dataview("SELECT COUNT(*) as total from controlePedido where fk_idInstituicao = '".$idInstituicao."'" );
-$arrayPedidoTodos = $totalPedido->fetchAll(PDO::FETCH_ASSOC);
+$totalTodos = crud::dataview("SELECT COUNT(*) as total from controlePedido as con inner join statusPedido as sta on sta.codStatus = con.codStatus");
+$arrayPedidoTodos = $totalTodos->fetchAll(PDO::FETCH_ASSOC);
 
+//PEDIDOS TODOS - //,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente,sta.nome as nomeStatus 
+$todosPedidos = crud::dataview("SELECT DISTINCT cli.nomeCliente
+FROM controlePedido as con 
+inner join cliente as cli on cli.codCliente = con.codCliente 
+inner join statusPedido as sta on sta.codStatus = con.codStatus order by con.codControle ");
+$arrayPedidos = $todosPedidos->fetchAll(PDO::FETCH_ASSOC);
+
+$andre = crud::dataview("SELECT R.codCliente,R.nomeCliente, R.qtdePedidos FROM (
+	SELECT DISTINCT c.nomeCliente, c.codCliente,
+	(SELECT COUNT(con.numeroAf) AS qtde
+	FROM controlePedido AS con 
+	WHERE c.codCliente = con.codCliente 
+	) as qtdePedidos
+	FROM cliente as c) AS R
+	 WHERE R.qtdePedidos > 0
+	 ORDER BY R.qtdePedidos DESC; ");
+$arrayAndre = $andre->fetchAll(PDO::FETCH_ASSOC);
+
+$status = crud::dataview("SELECT *  FROM statuspedido	 ORDER BY nome ASC; ");
+$arraystatus = $status->fetchAll(PDO::FETCH_ASSOC);
+
+//PEDIDOS EM ATENDIMENTO
+$totalPedidoAtendimento = crud::dataview("SELECT COUNT(*) as total from controlePedido as con inner join statusPedido as sta on sta.codStatus = con.codStatus where sta.nome='ATENDIDO'");
+$arrayPedidoAtendimento = $totalPedidoAtendimento->fetchAll(PDO::FETCH_ASSOC);
+//PEDIDOS ABERTAS
+$totalPedidoAberto = crud::dataview("SELECT COUNT(*) as total from controlePedido as con inner join statusPedido as sta on sta.codStatus = con.codStatus where sta.nome not in ('ATENDIDO','CANCELADO')");
+$arrayPedidoAberto = $totalPedidoAberto->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <div class="content">
 	<div class="container-fluid">
 		<div class="row">
-			
-			<div class="col-sm-3 text-center">
-				<div class="panel panel-success">
-					<div class="panel-heading">
-						<h3 class="panel-title">Clientes</h3>
-					</div>
-					<div class="panel-body" onclick="window.location.href = 'cad_cliente.php'" style="cursor:pointer">
-						<h3 id="clientes"><?php print($arrayClienteTodos[0]['total']); ?></h3>
-					</div>
-				</div>
-			</div>
+		<h3 class="panel-title text-center">INFORMACOES DE PEDIDOS</h3><br>
 			<div class="col-sm-3 text-center">
 				<div class="panel panel-info">
 					<div class="panel-heading">
-						<h3 class="panel-title">Contatos</h3>
+						<h3 class="panel-title">Recebidas</h3>
 					</div>
-					<div class="panel-body" onclick="window.location.href = 'contatos.php'" style="cursor:pointer">
-						<h3 id="contatos"><?php print($arrayContatosTodos[0]['total']); ?></h3>
+					<div class="panel-body" onclick="window.location.href = 'pedido.php'" style="cursor:pointer">
+						<h3><?php print($arrayPedidoTodos[0]['total']); ?></h3>
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-3 text-center">
-				<div class="panel panel-warning">
+				<div class="panel panel-success">
 					<div class="panel-heading">
-						<h3 class="panel-title">Demandas</h3>
+						<h3 class="panel-title">Atendidos</h3>
 					</div>
-					<div class="panel-body" onclick="window.location.href = 'index_user.php'" style="cursor:pointer">
-						<h3 id="demandas"><?php print($arrayDemandasTodos[0]['total']); ?></h3>
+					<div class="panel-body" onclick="window.location.href = 'pedidoAtendido.php'" style="cursor:pointer">
+						<h3 id="pedidoAtendido"><?php print($arrayPedidoAtendimento[0]['total']); ?></h3>
 					</div>
 				</div>
 			</div>
-			
 			<div class="col-sm-3 text-center">
 				<div class="panel panel-danger">
 					<div class="panel-heading">
-						<h3 class="panel-title">Instituicao</h3>
+						<h3 class="panel-title">Negados</h3>
 					</div>
-					<div class="panel-body" onclick="window.location.href = 'cad_instituicao.php'" style="cursor:pointer">
-						<h3 id="instituicao"><?php print($arrayInstituicaoTodos[0]['total']); ?></h3>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-sm-3 text-center">
-				<div class="panel panel-danger">
-					<div class="panel-heading">
-						<h3 class="panel-title">Pedido</h3>
-					</div>
-					<div class="panel-body" onclick="window.location.href = 'homePedido.php'" style="cursor:pointer">
-						<h3 id="pedidos"><?php print($arrayPedidoTodos[0]['total']); ?></h3>
+					<div class="panel-body" onclick="window.location.href = 'pedidoCancelado.php'" style="cursor:pointer">
+						<h3 id="pedidoCancelado"><?php print($arrayPedidoCancelados[0]['total']); ?></h3>
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-3 text-center">
 				<div class="panel panel-yellow">
 					<div class="panel-heading">
-						<h3 class="panel-title">Representantes</h3>
+						<h3 class="panel-title">Pendentes</h3>
 					</div>
-					<div class="panel-body" onclick="window.location.href = 'cad_representante.php'" style="cursor:pointer">
-						<h3 id="representantes"><?php print($arrayRepresentanteTodos[0]['total']); ?></h3>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col-sm-3 text-center">
-				<div class="panel panel-success">
-					<div class="panel-heading">
-						<h3 class="panel-title">Sla</h3>
-					</div>
-					<div class="panel-body" onclick="window.location.href = 'cad_sla.php'" style="cursor:pointer">
-						<h3 id="sla"><?php print($arraySlaTodos[0]['total']); ?></h3>
+					<div class="panel-body" onclick="window.location.href = 'pedidoPendente.php'" style="cursor:pointer">
+						<h3 id="pedidoPendente"><?php print($arrayPedidoAberto[0]['total']); ?></h3>
 					</div>
 				</div>
 			</div>
-
-			<div class="col-sm-3 text-center">
-				<div class="panel panel-info">
-					<div class="panel-heading">
-						<h3 class="panel-title">Status</h3>
-					</div>
-					<div class="panel-body" onclick="window.location.href = 'cad_status.php'" style="cursor:pointer">
-						<h3 id="status"><?php print($arrayStatusTodos[0]['total']); ?></h3>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col-sm-3 text-center">
-				<div class="panel panel-info">
-					<div class="panel-heading">
-						<h3 class="panel-title">Usuarios</h3>
-					</div>
-					<div class="panel-body" onclick="window.location.href = 'cad_user.php'" style="cursor:pointer">
-						<h3 id="usuarios"><?php print($arrayUsuariosTodos[0]['total']); ?></h3>
-					</div>
-				</div>
-			</div>
-
-			
-		
-		</div>		
 		</div>
 		<div class="row">
 

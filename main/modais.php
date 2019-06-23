@@ -62,7 +62,7 @@ $idInstituicao    = $_SESSION['instituicaoUsuario'];
                             <select class="form-control" name="prioridade" id="prioridade" required>
                                 <option value="" selected disabled>Prioridade</option>
                                 <?php
-                                    $selectSla = crud::mostraSla();
+                                    $selectSla = crud::mostraSla($idInstituicao);
                                     if($selectSla->rowCount()>0)
                                     {
                                         while($row=$selectSla->fetch(PDO::FETCH_ASSOC)){                                            
@@ -79,7 +79,7 @@ $idInstituicao    = $_SESSION['instituicaoUsuario'];
                             <select class="form-control"maxlength="50" name="nomeSolicitante" id="nomeSolicitante" required>
                                 <option value="" selected disabled>Selecione o solicitante</option>
                                 <?php
-                                    $selectCliente = crud::mostrarCliente();
+                                    $selectCliente = crud::mostrarCliente($idInstituicao);
                                     if($selectCliente->rowCount()>0)
                                     {
                                         while($row=$selectCliente->fetch(PDO::FETCH_ASSOC)){

@@ -50,7 +50,7 @@ if($logado != 1){$logado2 = 600;
     <div class="row">
         <div class="col-md-12">
             <button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalCadastrarPedido" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-plus"></i></span>Cadastrar Pedido</button>
-            <button class="btn btn-success waves-effect waves-light" type="button"  onclick="window.location.href = 'Home.php'" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-home"></i></span>Home</button>
+            <button class="btn btn-success waves-effect waves-light" type="button"  onclick="window.location.href = 'homePedido.php'" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-home"></i></span>Home</button>
         </div>
         <form id="frmIndex" method="post">
         <div class="row">
@@ -140,7 +140,7 @@ if($logado != 1){$logado2 = 600;
                                     </tr>
                                 <?php
                             }
-                            echo "Qtde pedidos atendidos:  " . $teste . " - ";
+                            echo "Qtde pedidos nao atendidos:  " . $teste . " - ";
                             echo "Valor Total Pedido R$" . number_format($totalPedido, 2, ',', '.');
                         } else {
                             echo "<p class='text-danger'>Sem Pedidos Cadastrados</p>";
@@ -204,7 +204,7 @@ if($logado != 1){$logado2 = 600;
                             <select class="form-control" name="statusPedido" id="statusPedido" required>
                                 <option value="" selected disabled>Selecione o Status</option>
                                 <?php
-                                $selectStatus = crud::listarStatus();
+                                $selectStatus = crud::listarStatus($idInstituicao);
                                 if ($selectStatus->rowCount() > 0) {
                                     while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
                                         ?>
@@ -366,7 +366,7 @@ if($logado != 1){$logado2 = 600;
                             <select class="form-control" name="statusPedidoAlterar" id="statusPedidoAlterar" required>
                                 <option value="" selected disabled>Selecione o Status</option>
                                 <?php
-                                $selectStatus = crud::listarStatus();
+                                $selectStatus = crud::listarStatus($idInstituicao);
                                 if ($selectStatus->rowCount() > 0) {
                                     while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
                                         ?>
@@ -466,7 +466,7 @@ include_once "modais.php";
             });
         }));
 
-    //ADICIONA MENSAGEM À DEMANDA -----------------------------------------------------------
+    //ADICIONA MENSAGEM -----------------------------------------------------------
         $('#frmAddMensagem').submit(function(){
             var tipo = "adicionaMensagemPedido";
             var idLogado = $("#idLogado").val();
@@ -511,7 +511,8 @@ include_once "modais.php";
                     } 
                 }
             });
-            }//FUNÇÃO QUE ATUALIZA AS MENSAGENS NOS DETALHES APÓS SUBMETE-LA -------------------------
+        }
+            //FUNÇÃO QUE ATUALIZA AS MENSAGENS NOS DETALHES APÓS SUBMETE-LA -------------------------
  
 
        
@@ -528,7 +529,8 @@ include_once "modais.php";
             }); //SETA O CÓDIGO NO MODAL PARA ATUALIZAR O STATUS ------------------------------------------
 
 
-        $("#frmAlterarPedido").on('submit', (function(e) {
+        
+            $("#frmAlterarPedido").on('submit', (function(e) {
                 e.preventDefault();
                 var table = $("#tabela").val();
                 var codigoControle = $("#codigoControleAlterar").val();

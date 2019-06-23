@@ -50,7 +50,7 @@ if($logado != 1){$logado2 = 600;
     <div class="row">
         <div class="col-md-12">
             <button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalCadastrarPedido" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-plus"></i></span>Cadastrar Pedido</button>
-            <button class="btn btn-success waves-effect waves-light" type="button" onclick="window.location.href = 'Home.php'" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-home"></i></span>Home</button>
+            <button class="btn btn-success waves-effect waves-light" type="button" onclick="window.location.href = 'homePedido.php'" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-home"></i></span>Home</button>
         </div>
         <form id="frmIndex" method="post">
         <div class="row">
@@ -145,7 +145,7 @@ if($logado != 1){$logado2 = 600;
                                     </tr>
                                 <?php
                             }
-                            echo "Qtde pedidos recebidos:  " . $teste . " - ";
+                            echo "Qtde pedidos nao atendidos:  " . $teste . " - ";
                             echo "Valor Total Pedido R$" . number_format($totalPedido, 2, ',', '.');
                         } else {
                             echo "<p class='text-danger'>Sem Pedidos Cadastrados</p>";
@@ -213,7 +213,7 @@ if($logado != 1){$logado2 = 600;
                             <select class="form-control" name="statusPedido" id="statusPedido" required>
                                 <option value="" selected disabled>Selecione o Status</option>
                                 <?php
-                                $selectStatus = crud::listarStatus();
+                                $selectStatus = crud::listarStatus($idInstituicao);
                                 if ($selectStatus->rowCount() > 0) {
                                     while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
                                         ?>
@@ -382,7 +382,7 @@ if($logado != 1){$logado2 = 600;
                 </div>
             </div>
         </div>
-    </div>
+</div>
         <!-- MODAL EXCLUIR cliente-->
 
 
@@ -422,7 +422,7 @@ if($logado != 1){$logado2 = 600;
                             <select class="form-control" name="statusPedidoAlterar" id="statusPedidoAlterar" required>
                                 <option value="" selected disabled>Selecione o Status</option>
                                 <?php
-                                $selectStatus = crud::listarStatus();
+                                $selectStatus = crud::listarStatus($idInstituicao);
                                 if ($selectStatus->rowCount() > 0) {
                                     while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
                                         ?>
@@ -460,7 +460,7 @@ if($logado != 1){$logado2 = 600;
                         <input type="file" name="file" id="file">
                         <br>
                         <div class="form-group">
-                        <input type="text" style="text-transform" class="form-control"  name="anexoAlterar" id="anexoAlterar">
+                        <input type="text" style="text-transform" class="form-control"  name="anexoAlterar" id="anexoAlterar" readonly="readonly">
                         </div>
                         <div class="modal-footer">                        
                             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -471,7 +471,7 @@ if($logado != 1){$logado2 = 600;
 
             </div>
         </div>
-    </div>
+</div>
     <!-- MODAL altera Pedido-->
 
 
@@ -501,6 +501,7 @@ include_once "modais.php";
             $.ajax({
                 url: "../core/save.php",
                 type: "POST",
+                
                 data: new FormData(this),
                 contentType: false,
                 cache: false,
@@ -510,7 +511,7 @@ include_once "modais.php";
                     $("#salvaPedido").prop("disabled", true);
                 },
                 success: function(data) {
-                     // alert ("resultado data " + data);
+                    // alert ("resultado data " + data);
                     if (data == 1) {
                         swal({
                                 title: "OK!",
@@ -535,8 +536,7 @@ include_once "modais.php";
                                 closeOnConfirm: false
                             },
                             function(isConfirm) {
-                                if (isConfirm) {
-                                    $('#modalCadastrarPedido').modal('hide');
+                                if (isConfirm) {                        
                                     location.reload(table);
                                 }
                             });

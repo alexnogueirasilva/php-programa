@@ -22,6 +22,7 @@ require_once '../vendor/autoload.php';
 				<div class="form-inline">
 					<div class="form-group">
 						<div class="input-group">
+						<input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicao" id="idInstituicao">
 							<input type="text" class="form-control" size="200" name="nomeRepresentante" id="nomeRepresentante" placeholder="Nome do departamento" required>
 							<input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicao" id="idInstituicao">
 							<span class="input-group-addon"><span class="fa fa-cubes"></span></span>
@@ -81,11 +82,11 @@ require_once '../vendor/autoload.php';
 								<td><?php print($row['codRepresentante']); ?></td>
 								<td><?php print($row['nomeRepresentante']); ?></td>
 								<td id="statusRepresentante"><?php print($row['statusRepresentante']); ?></td>
-								<td><a class="btn btn-info waves-effect waves-light" id="btnEdita" data-toggle="modal" data-target="#modalEditaRepresentante" data-whatever="@getbootstrap" data-codigo="<?php print($row['codRepresentante']); ?>" data-nome="<?php print($row['nomeRepresentante']); ?>" data-statusatual="<?php print($row['statusRepresentante']); ?>">Editar</a></td>
-								<td><a class="btn btn-danger waves-effect waves-light" data-target="#modalExluirRepresentante" data-whatever="@getbootstrap" id="btnExcluiRepresentante" data-codigo="<?php print($row['codRepresentante']); ?>" data-statusatual="<?php print($row['statusRepresentante']); ?>" data-nome="<?php print($row['nomeRepresentante']); ?>">Excluir</a></td>
-								<td><a class="btn btn-danger waves-effect waves-light" data-target="#modalConfirmacaoDesativa" data-whatever="@getbootstrap" id="btnDesativa" data-codigo="<?php print($row['codRepresentante']); ?>" data-statusatual="<?php print($row['statusRepresentante']); ?>" data-nome="<?php print($row['nomeRepresentante']); ?>">Desativar</a></td>
+								<td><a class="btn btn-info waves-effect waves-light" id="btnEdita" data-toggle="modal" data-target="#modalEditaRepresentante" data-whatever="@getbootstrap" data-codigo="<?php print($row['codRepresentante']); ?>" data-nome="<?php print($row['nomeRepresentante']); ?>" data-idinstituicao="<?php print($row['fk_idInstituicao']); ?>" data-statusatual="<?php print($row['statusRepresentante']); ?>">Editar</a></td>
+								<td><a class="btn btn-danger waves-effect waves-light" data-target="#modalExluirRepresentante" data-whatever="@getbootstrap" id="btnExcluiRepresentante" data-codigo="<?php print($row['codRepresentante']); ?>" data-statusatual="<?php print($row['statusRepresentante']); ?>" data-idinstituicao="<?php print($row['fk_idInstituicao']); ?>" data-nome="<?php print($row['nomeRepresentante']); ?>">Excluir</a></td>
+								<td><a class="btn btn-danger waves-effect waves-light" data-target="#modalConfirmacaoDesativa" data-whatever="@getbootstrap" id="btnDesativa" data-codigo="<?php print($row['codRepresentante']); ?>" data-statusatual="<?php print($row['statusRepresentante']); ?>" data-idinstituicao="<?php print($row['fk_idInstituicao']); ?>" data-nome="<?php print($row['nomeRepresentante']); ?>">Desativar</a></td>
 
-								<td><a class="btn btn-info waves-effect waves-light" data-target="#modalConfirmacaoAtiva" data-whatever="@getbootstrap" id="btnAtiva" data-codigo="<?php print($row['codRepresentante']); ?>" data-statusatual="<?php print($row['statusRepresentante']); ?>" data-nome="<?php print($row['nomeRepresentante']); ?>">Ativa</a></td>
+								<td><a class="btn btn-info waves-effect waves-light" data-target="#modalConfirmacaoAtiva" data-whatever="@getbootstrap" id="btnAtiva" data-codigo="<?php print($row['codRepresentante']); ?>" data-statusatual="<?php print($row['statusRepresentante']); ?>" data-idinstituicao="<?php print($row['fk_idInstituicao']); ?>" data-nome="<?php print($row['nomeRepresentante']); ?>">Ativa</a></td>
 							</tr>
 						<?php
 					}
@@ -174,7 +175,7 @@ require_once '../vendor/autoload.php';
 
 					<input type="hidden" name="excIdRepresentante" id="excIdRepresentante">
 					<input type="hidden" name="excStatusRepresentante" id="excStatusRepresentante">
-					<input type="hidden" value="<?php echo $idInstituicao; ?>" name="excidInstituicao" id="excidInstituicao">
+					<input type="hidden" name="excidInstituicao" id="excidInstituicao">
 					<div class="col-md-12">
 						<div id="contextoModal">
 							<h2>Você vai EXCLUIR o Representante: <span id="ExcNomeRepresentante"></span>?</h2>
@@ -333,10 +334,12 @@ require_once "rodape.php";
 			var id = $(this).data('codigo');
 			var nome = $(this).data('nome');
 			var status = $(this).data('statusatual');
-			var idInstituicao = $("#excidInstituicao").val();
+			var idInstituicao = $(this).data('idinstituicao');
+		
 			$('#excIdRepresentante').val(id);
 			$('#ExcNomeRepresentante').html(" Codigo: " + id + " - Nome: " + nome);
 			$('#excStatusRepresentante').val(status);
+			$('#excidInstituicao').val(idInstituicao);
 			$('#modalExluirRepresentante').modal('show');
 		});
 
@@ -355,7 +358,7 @@ require_once "rodape.php";
 			var tipo = "excluirRepresentante";
 			var idRepresentante = $('#excIdRepresentante').val();
 			var status = $('#excStatusRepresentante').val();
-			var idInstituicao = $("#excidInstituicao").val();
+			var idInstituicao = $('#excidInstituicao').val();
 
 			$.ajax({
 				url: '../core/save.php',
@@ -400,7 +403,7 @@ require_once "rodape.php";
 		$('#btnDesativaRepresentante').click(function() {
 			var tipo = "desativaRepresentante";
 			var idRepresentante = $('#codigoRepresentanteDes').val();
-			var idInstituicao = $("#InstituicaoDes").val();
+			var idInstituicao = $("#idInstituicaoDes").val();
 			var status = $('#statusAtualDes').val();
 			$.ajax({
 				url: '../core/save.php',
@@ -410,6 +413,7 @@ require_once "rodape.php";
 					idRepresentante: idRepresentante, idInstituicao:idInstituicao
 				},
 				success: function(result) {
+				//	alert(result);
 					if (result == 1) {
 						swal({
 								title: "OK!",

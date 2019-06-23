@@ -3,7 +3,7 @@ require_once 'cabecalho.php';
 include_once 'vrf_lgin.php';
 include_once '../core/crud.php';
 
-$queryDepart = "SELECT * FROM departamentos ORDER BY nome";
+$queryDepart = "SELECT * FROM departamentos";
 
 $queryUsuarios = "SELECT usr.dica,usr.fk_idInstituicao,usr.id, usr.nome, usr.email, usr.nivel,usr.status,usr.id_dep, dep.nome as nome_dep FROM usuarios as usr INNER JOIN departamentos as dep ON usr.id_dep = dep.id ORDER BY status ASC";
 
@@ -388,11 +388,17 @@ require_once "rodape.php";
 					url: "../core/save.php", //Arquivo php
 					type: "post", //Método de envio
 					data: {
-						tipo: tipo, nome: nome,	email: email,
-						nivel: nivel, dep: dep,	dica: dica,
-						pass: pass,	idInstituicao: idInstituicao
+						tipo: tipo,
+						nome: nome,
+						email: email,
+						nivel: nivel,
+						dep: dep,
+						dica: dica,
+						pass: pass,
+						idInstituicao: idInstituicao
 					}, //Dados
-					success: function(result) {					
+					success: function(result) {
+					
 						alert( "resultado ajax:  "+result);
 						if (result == 1) {
 							swal({
@@ -414,8 +420,9 @@ require_once "rodape.php";
 							$("#uPass2").val('');
 							$("#departamento").val('');
 							$("#nivelUser").val('');
+
 						} else if (result == 2) {
-							alert("o email " + email + " ja existe!"); //Informa o erro																	
+							alert("o email " + email + " ja existe!"); //Informa o erro	
 						} else {
 							swal({
 									title: "Ops!",
@@ -429,6 +436,7 @@ require_once "rodape.php";
 										window.location = "cad_user.php";
 									}
 								});
+								alert ("erro ao cadastrar " +result);
 						}
 					}
 				});

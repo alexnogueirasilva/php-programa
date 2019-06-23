@@ -22,6 +22,7 @@ include_once '../core/crud.php';
 					<div class="form-group">
 						<input type="text" hidden id="tipo" name="tipo" value="CadastroStatus">
 						<div class="input-group">
+						<input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicao" id="idInstituicao">
 							<input type="text" class="form-control" size="40" name="descricao" id="descricao" placeholder="Descrição" required>
 							<span class="input-group-addon"><span class="fa fa-hourglass-half"></span></span>
 						</div>
@@ -64,7 +65,7 @@ include_once '../core/crud.php';
 					<tbody>
 						<?php
 
-						$dados = crud::listarStatus();
+						$dados = crud::listarStatus($idInstituicao);
 						if ($dados->rowCount() > 0) {
 							while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
 								?>
@@ -72,9 +73,9 @@ include_once '../core/crud.php';
 									<td><?php print($row['codStatus']); ?></td>
 									<td><?php print($row['nome']); ?></td>
 									<td><?php print(crud::formataData($row['dataCadastro'])); ?></td>
-									<td><a class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#modalEditarStatus" data-whatever="@getbootstrap" id="btnEditar" class="btn btn-danger waves-effect waves-light" data-codigo="<?php print($row['codStatus']); ?>" data-datacadastro="<?php print(crud::formataData($row['dataCadastro'])); ?>" data-descricao="<?php print($row['nome']); ?>">Editar</a></td>
+									<td><a class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#modalEditarStatus" data-whatever="@getbootstrap" id="btnEditar" class="btn btn-danger waves-effect waves-light" data-codigo="<?php print($row['codStatus']); ?>"  data-idinstituicao="<?php print($row['fk_idInstituicao']); ?>" data-datacadastro="<?php print(crud::formataData($row['dataCadastro'])); ?>" data-descricao="<?php print($row['nome']); ?>">Editar</a></td>
 
-									<td><a class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#modalDeleteStatus" data-whatever="@getbootstrap" id="btnExcluir" class="btn btn-info waves-effect waves-light" data-codigo="<?php print($row['codStatus']); ?>" data-descricao="<?php print($row['nome']); ?>">Excluir</a></td>
+									<td><a class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#modalDeleteStatus" data-whatever="@getbootstrap" id="btnExcluir" class="btn btn-info waves-effect waves-light" data-codigo="<?php print($row['codStatus']); ?>" data-idinstituicao="<?php print($row['fk_idInstituicao']); ?>" data-descricao="<?php print($row['nome']); ?>">Excluir</a></td>
 								</tr>
 							<?php
 						}
@@ -107,6 +108,7 @@ include_once '../core/crud.php';
 								<div class="form-group">
 									<input type="hidden" id="tipo" name="tipo" value="editarStatus">
 									<input type="hidden" id="edtId" name="edtId">
+									<input type="hidden" id="edtIdInstituicao" name="edtIdInstituicao">
 									<div class="input-group">
 										<input type="text" class="form-control" size="40" name="edtDescricao" id="edtDescricao" required>
 										<span class="input-group-addon"><span class="fa fa-hourglass-half"></span></span>
@@ -137,6 +139,7 @@ include_once '../core/crud.php';
 			<div class="modal-body">
 				<div class="row">
 					<input type="hidden" class="form-control" id="idStatus" name="idStatus">
+					<input type="hidden" id="excIdInstituicao" name="excIdInstituicao">
 					<div class="col-md-12">
 						<div id="contextoModal">
 							<h2>Você vai EXCLUIR o status: <span id="ExcNomeStatus"></span>?</h2>
@@ -209,11 +212,12 @@ require_once "rodape.php";
 			var id = $(this).data('codigo');
 			var desc = $(this).data('descricao');
 			var dataCadastro = $(this).data('datacadastro');
+			var idInstituicao = $(this).data('idinstituicao');
 
 			$('#edtId').val(id);
 			$('#edtDescricao').val(desc);
 			$('#edtDataCadastro').val(dataCadastro);
-
+			$('#edtIdInstituicao').val(idInstituicao);	
 		});
 
 		$('#frmEditarStatus').submit(function(e) {
@@ -262,8 +266,10 @@ require_once "rodape.php";
 		$(document).on("click", "#btnExcluir", function() {
 			var id = $(this).data('codigo');
 			var desc = $(this).data('descricao');
-
+			var idInstituicao = $(this).data('idinstituicao');
+			
 			$('#idStatus').val(id);
+			$('#excIdInstituicao').val(idInstituicao);
 			$('#ExcNomeStatus').html(desc);
 			// $('#labelStatus').html("Você vai excluir cadastro do status: <strong> "+ id +" - "  +desc+"?</strong>");             
 		});
@@ -272,16 +278,19 @@ require_once "rodape.php";
 
 			var tipo = "excluirStatus";
 			var id = $('#idStatus').val();
-
+			var idInstituicao = $('#excIdInstituicao').val();
+			
 			$.ajax({ //Função AJAX
 				url: "../core/save.php", //Arquivo php
 				type: "POST", //Método de envio
 				tipo: "excluirStatus",
 				data: {
 					tipo: tipo,
+					idInstituicao: idInstituicao,
 					id: id
 				},
-				success: function(result) {				
+				success: function(result) {	
+				//	alert(result);			
 					if (result == 1) {
 						swal({
 								title: "OK!",
