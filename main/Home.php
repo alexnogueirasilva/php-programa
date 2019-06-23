@@ -18,7 +18,7 @@ $arrayUsuariosTodos = $totalUsuarios->fetchAll(PDO::FETCH_ASSOC);
 $totalSla = crud::dataview("SELECT COUNT(*) as total from tbl_sla where fk_idInstituicao = '".$idInstituicao."'" );
 $arraySlaTodos = $totalSla->fetchAll(PDO::FETCH_ASSOC);
 //REPRESENTANTES TODOS
-$totalRepresentante = crud::dataview("SELECT COUNT(*) as total from cadrepresentante where fk_idInstituicao = '".$idInstituicao."'" );
+$totalRepresentante = crud::dataview("SELECT COUNT(*) as total from cadRepresentante where fk_idInstituicao = '".$idInstituicao."'" );
 $arrayRepresentanteTodos = $totalRepresentante->fetchAll(PDO::FETCH_ASSOC);
 //STATUS TODOS
 $totalStatus = crud::dataview("SELECT COUNT(*) as total from statusPedido where fk_idInstituicao = '".$idInstituicao."'" );
