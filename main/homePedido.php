@@ -47,7 +47,7 @@ $arrayPedidoAberto = $totalPedidoAberto->fetchAll(PDO::FETCH_ASSOC);
 						<h3 class="panel-title">Recebidas</h3>
 					</div>
 					<div class="panel-body" onclick="window.location.href = 'pedido.php'" style="cursor:pointer">
-						<h3><?php print($arrayPedidoTodos[0]['total']); ?></h3>
+						<h3 id="pedidoTodos"> <?php print($arrayPedidoTodos[0]['total']); ?></h3>
 					</div>
 				</div>
 			</div>
@@ -83,7 +83,6 @@ $arrayPedidoAberto = $totalPedidoAberto->fetchAll(PDO::FETCH_ASSOC);
 			</div>
 		</div>
 		<div class="row">
-
 			<div class="col-md-6">
 				<div class="panel-body">
 					<div id="graficoPedido" style="width: 600px; height: 300px;"></div> <br>
@@ -172,11 +171,12 @@ $arrayPedidoAberto = $totalPedidoAberto->fetchAll(PDO::FETCH_ASSOC);
 						</table>
 					</div>
 				</div>
+
 			</div>
 			<div class="col-md-6">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h3 class="panel-title">Status de Pedido</h3>
+						<h3 class="panel-title">Categorias</h3>
 					</div>
 					<div class="panel-body">
 						<table class="table table-hover">
@@ -250,9 +250,10 @@ require_once "rodape.php";
 		var data = google.visualization.arrayToDataTable([
 			['Task', 'Hours per Day'],
 			<?php
-			echo "['Pendentes'," . $arrayPedidoAberto[0]['total'] . "],";
+			echo "['Total'," . $arrayPedidoTodos[0]['total'] . "],";
 			echo "['Cancelados'," . $arrayPedidoCancelados[0]['total'] . "],";
-			echo "['Atendido'," . $arrayPedidoAtendimento[0]['total'] . "],";
+			echo "['Pendentes'," . $arrayPedidoAberto[0]['total'] . "],";
+			echo "['Atendido'," . $arrayPedidoAtendimento[0]['total'] . "],";			
 			?>
 		]);
 
@@ -271,6 +272,7 @@ require_once "rodape.php";
 		var cancelado = $('#pedidoCancelado').text();
 		var pendente = $('#pedidoPendente').text();
 		var atendido = $('#pedidoAtendido').text();
+		var todos = $('#pedidoTodos').text();
 		//	alert(atendido);
 
 		var data = google.visualization.arrayToDataTable([
@@ -279,6 +281,7 @@ require_once "rodape.php";
 			['Pendente', parseInt(pendente)],
 			['Atendido', parseInt(atendido)],
 			['Cancelado', parseInt(cancelado)],
+			['Todos', parseInt(todos)],
 
 		]);
 
