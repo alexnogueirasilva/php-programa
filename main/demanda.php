@@ -33,8 +33,7 @@ if($logado != 1){$logado2 = 600;
     <!-- row -->
     <div class="row">
         <div class="col-md-12">
-            <button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalCriaDemanda" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-plus"></i></span>Criar Ocorrencia</button>           
-            <a class="btn btn-success waves-effect waves-light" href="pedido.php" ><span class="btn-label"><i class="fa fa-plus"></i></span>Cadastro de Pedidos</a>        
+            <button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalCriaDemanda" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-plus"></i></span>Criar Ocorrencia</button> 
         </div>
 
         <div class="row">
@@ -62,7 +61,7 @@ if($logado != 1){$logado2 = 600;
                         <tbody>
                             <?php
 
-                            $dados = crud::mostraDemandas($_SESSION['usuarioID']);
+                            $dados = crud::mostraDemandas($_SESSION['usuarioID'], $idInstituicao);
                             //print_r($dados);
                             if ($dados->rowCount() > 0) {
                                 while ($row = $dados->fetch(PDO::FETCH_ASSOC)) {
@@ -107,7 +106,7 @@ if($logado != 1){$logado2 = 600;
                                         data-datacriacao="<?php print(crud::formataData($row['data_criacao'])); ?>" 
                                         data-datafechamento="<?php print(crud::formataData($row['data_fechamento'])); ?>" 
                                         data-mensagem="<?php print($row['mensagem']); ?>" 
-                                        data-dataidinstituicao="<?php print($row['idInstituicao']) ?>" >Detalhes</a></td>
+                                        data-dataidinstituicao="<?php print($row['fk_idInstituicao']) ?>" >Detalhes</a></td>
                                     </tr>                                    
                                 <?php
                             }

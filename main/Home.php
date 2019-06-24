@@ -8,6 +8,9 @@ $arrayContatosTodos = $totalContatos->fetchAll(PDO::FETCH_ASSOC);
 //DEMANDA TODOS
 $totalDemandas = crud::dataview("SELECT COUNT(*) as total from demanda where fk_idInstituicao = '".$idInstituicao."'" );
 $arrayDemandasTodos = $totalDemandas->fetchAll(PDO::FETCH_ASSOC);
+//Departamentos TODOS
+$totalDepartamentos = crud::dataview("SELECT COUNT(*) as total from departamentos where fk_idInstituicao = '".$idInstituicao."'" );
+$arrayDepartamentosTodos = $totalDepartamentos->fetchAll(PDO::FETCH_ASSOC);
 //INSTITUICAO TODOS
 $totalInstituicao = crud::dataview("SELECT COUNT(*) as total from instituicao where inst_codigo = '".$idInstituicao."'" );
 $arrayInstituicaoTodos = $totalInstituicao->fetchAll(PDO::FETCH_ASSOC);
@@ -38,27 +41,32 @@ $arrayPedidoTodos = $totalPedido->fetchAll(PDO::FETCH_ASSOC);
 			<div class="col-sm-3 text-center">
 				<div class="panel panel-success">
 					<div class="panel-heading">
-						<h3 class="panel-title">Clientes</h3>
+						<h3 class="panel-title"> <span class="fa fa-user"></span> Clientes 
+						</h3>
 					</div>
+					
 					<div class="panel-body" onclick="window.location.href = 'cad_cliente.php'" style="cursor:pointer">
-						<h3 id="clientes"><?php print($arrayClienteTodos[0]['total']); ?></h3>
+						<h3 id="clientes"><?php print($arrayClienteTodos[0]['total']); ?>						
+					</h3>
+						
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-3 text-center">
 				<div class="panel panel-info">
 					<div class="panel-heading">
-						<h3 class="panel-title">Contatos</h3>
+						<h3 class="panel-title"> <span class="fa fa-user"></span> Contatos</h3>
 					</div>
 					<div class="panel-body" onclick="window.location.href = 'cad_contato.php'" style="cursor:pointer">
 						<h3 id="contatos"><?php print($arrayContatosTodos[0]['total']); ?></h3>
 					</div>
 				</div>
 			</div>
+						
 			<div class="col-sm-3 text-center">
 				<div class="panel panel-warning">
 					<div class="panel-heading">
-						<h3 class="panel-title">Demandas</h3>
+						<h3 class="panel-title"> <span class="fa fa-user"></span> Demandas</h3>
 					</div>
 					<div class="panel-body" onclick="window.location.href = 'index_user.php'" style="cursor:pointer">
 						<h3 id="demandas"><?php print($arrayDemandasTodos[0]['total']); ?></h3>
@@ -69,7 +77,18 @@ $arrayPedidoTodos = $totalPedido->fetchAll(PDO::FETCH_ASSOC);
 			<div class="col-sm-3 text-center">
 				<div class="panel panel-danger">
 					<div class="panel-heading">
-						<h3 class="panel-title">Instituicao</h3>
+						<h3 class="panel-title">  <span class="fa fa-cubes"></span> Departamentos</h3>
+					</div>
+					<div class="panel-body" onclick="window.location.href = 'cad_dep.php'" style="cursor:pointer">
+						<h3 id="Departamentos"><?php print($arrayDepartamentosTodos[0]['total']); ?></h3>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-3 text-center">
+				<div class="panel panel-warning">
+					<div class="panel-heading">
+						<h3 class="panel-title"><span class="fa fa-cubes"></span> Instituicao</h3>
 					</div>
 					<div class="panel-body" onclick="window.location.href = 'cad_instituicao.php'" style="cursor:pointer">
 						<h3 id="instituicao"><?php print($arrayInstituicaoTodos[0]['total']); ?></h3>
@@ -80,7 +99,7 @@ $arrayPedidoTodos = $totalPedido->fetchAll(PDO::FETCH_ASSOC);
 			<div class="col-sm-3 text-center">
 				<div class="panel panel-danger">
 					<div class="panel-heading">
-						<h3 class="panel-title">Pedido</h3>
+						<h3 class="panel-title"><span class="fa fa-user"></span> Pedido</h3>
 					</div>
 					<div class="panel-body" onclick="window.location.href = 'homePedido.php'" style="cursor:pointer">
 						<h3 id="pedidos"><?php print($arrayPedidoTodos[0]['total']); ?></h3>
@@ -88,9 +107,9 @@ $arrayPedidoTodos = $totalPedido->fetchAll(PDO::FETCH_ASSOC);
 				</div>
 			</div>
 			<div class="col-sm-3 text-center">
-				<div class="panel panel-yellow">
+				<div class="panel panel-success">
 					<div class="panel-heading">
-						<h3 class="panel-title">Representantes</h3>
+						<h3 class="panel-title"><span class="fa fa-user"></span> Representantes</h3>
 					</div>
 					<div class="panel-body" onclick="window.location.href = 'cad_representante.php'" style="cursor:pointer">
 						<h3 id="representantes"><?php print($arrayRepresentanteTodos[0]['total']); ?></h3>
@@ -99,9 +118,9 @@ $arrayPedidoTodos = $totalPedido->fetchAll(PDO::FETCH_ASSOC);
 			</div>
 			
 			<div class="col-sm-3 text-center">
-				<div class="panel panel-success">
+				<div class="panel panel-info">
 					<div class="panel-heading">
-						<h3 class="panel-title">Sla</h3>
+						<h3 class="panel-title"><span class="fa fa-hourglass-half"></span>    Sla</h3>
 					</div>
 					<div class="panel-body" onclick="window.location.href = 'cad_sla.php'" style="cursor:pointer">
 						<h3 id="sla"><?php print($arraySlaTodos[0]['total']); ?></h3>
@@ -110,9 +129,9 @@ $arrayPedidoTodos = $totalPedido->fetchAll(PDO::FETCH_ASSOC);
 			</div>
 
 			<div class="col-sm-3 text-center">
-				<div class="panel panel-info">
+				<div class="panel panel-success">
 					<div class="panel-heading">
-						<h3 class="panel-title">Status</h3>
+						<h3 class="panel-title"><span class="fa fa-hourglass-half"></span> Status</h3>
 					</div>
 					<div class="panel-body" onclick="window.location.href = 'cad_status.php'" style="cursor:pointer">
 						<h3 id="status"><?php print($arrayStatusTodos[0]['total']); ?></h3>
@@ -123,15 +142,15 @@ $arrayPedidoTodos = $totalPedido->fetchAll(PDO::FETCH_ASSOC);
 			<div class="col-sm-3 text-center">
 				<div class="panel panel-info">
 					<div class="panel-heading">
-						<h3 class="panel-title">Usuarios</h3>
+						<h3 class="panel-title"><span class="fa fa-user"></span> Usuarios</h3>
 					</div>
 					<div class="panel-body" onclick="window.location.href = 'cad_user.php'" style="cursor:pointer">
 						<h3 id="usuarios"><?php print($arrayUsuariosTodos[0]['total']); ?></h3>
 					</div>
 				</div>
-			</div>
+			</div>		
 		</div>		
-		</div>		
+		</div>
 	</div>
 </div>
 </div>
