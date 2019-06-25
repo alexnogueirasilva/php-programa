@@ -32,7 +32,7 @@ class crud
 	{
 		//SQL QUE VAI MOSTRAR A LISTA DE CHAMADOS DE CADA USUÁRIO UNINDO TRÊS TABELAS - (DEMANDAS, USUÁRIOS E DEPARTAMENTOS)
 
-		$query = 'SELECT d.id, d.mensagem, cli.nomecliente, d.titulo,d.id_Instituicao as idInstituicao, d.prioridade, d.ordem_servico, d.data_criacao,d.data_fechamento, d.status,d.anexo, u.nome, dep.nome as nome_dep FROM demanda AS d INNER JOIN usuarios AS u ON d.id_usr_destino = u.id AND id_usr_criador = ' . $usuarioSessao . ' INNER JOIN departamentos AS dep ON u.id_dep = dep.id INNER JOIN cliente AS cli ON cli.codCliente = d.codCliente_dem ORDER BY data_criacao ASC';
+		$query = 'SELECT d.id, d.mensagem, cli.nomecliente, d.titulo,d.fk_idInstituicao, d.prioridade, d.ordem_servico, d.data_criacao,d.data_fechamento, d.status,d.anexo, u.nome, dep.nome as nome_dep FROM demanda AS d INNER JOIN usuarios AS u ON d.id_usr_destino = u.id AND id_usr_criador = ' . $usuarioSessao . ' INNER JOIN departamentos AS dep ON u.id_dep = dep.id INNER JOIN cliente AS cli ON cli.codCliente = d.codCliente_dem ORDER BY data_criacao ASC';
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$stmt = $pdo->prepare($query);
@@ -144,12 +144,12 @@ class crud
 
 		$pdo = Database::connect();
 		try {
-			$stmt = $pdo->prepare("INSERT INTO demanda(data_criacao, id_dep, id_usr_criador,id_instituicao, id_usr_destino, titulo, codCliente_dem, prioridade, ordem_servico, mensagem, status, anexo) 
-												VALUES(:data_criacao, :id_dep, :id_usr_criador,:id_instituicao, :id_usr_destino, :titulo, :codCliente_dem, :prioridade, :ordem_servico, :mensagem, :status, :anexo)");
+			$stmt = $pdo->prepare("INSERT INTO demanda(data_criacao, id_dep, id_usr_criador,fk_idInstituicao, id_usr_destino, titulo, codCliente_dem, prioridade, ordem_servico, mensagem, status, anexo) 
+												VALUES(:data_criacao, :id_dep, :id_usr_criador,:idInstituicao, :id_usr_destino, :titulo, :codCliente_dem, :prioridade, :ordem_servico, :mensagem, :status, :anexo)");
 			$stmt->bindparam(":data_criacao", $dataAbertura);
 			$stmt->bindparam(":id_dep", $departamento);
 			$stmt->bindparam(":id_usr_criador", $idLogado);
-			$stmt->bindparam(":id_instituicao", $idInstituicao);
+			$stmt->bindparam(":idInstituicao", $idInstituicao);
 			$stmt->bindparam(":id_usr_destino", $usuarioDestino);
 			$stmt->bindparam(":titulo", $titulo);
 			$stmt->bindparam(":codCliente_dem", $nomeSolicitante);
