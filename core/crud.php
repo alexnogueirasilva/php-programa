@@ -87,10 +87,10 @@ class crud
 			$message .= "<a href=http://sistemaocorrencia.devnogueira.online/index.php> SO - Click aqui para fazer o login </a>"; //menssagem com link
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n"; //formato
-			$headers .= 'From: <contato@sistemaocorrencia.com.br>' . "\r\n"; //email de envio
+			$headers .= 'From:< noreply@sistemadevnogueira.online>' . "\r\n"; //email de envio
 			$headers .= 'CC: <' . $emailLogado . '>' . "\r\n"; //email de copia
 			$emailLogado =  $_POST['emaillogado']; //recuperando o e-mail do usuario logado
-			//$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";//email para resposta
+			$headers .= 'Reply-To: < suporti@sistemadevnogueira.online>' . "\r\n";//email para resposta
 			$to = $_POST['emailSolicitante']; // recuperando email do destinatario e envia notificacao da demanda
 
 			mail($to, $subject, $message, $headers);
@@ -121,11 +121,12 @@ class crud
 			$message .= "<a href=http://sistemaocorrencia.devnogueira.online/index.php> SO - Click aqui para fazer o login </a>"; //menssagem com link
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n"; //formato
-			$headers .= 'From: <contato@sistemaocorrencia.com.br>' . "\r\n"; //email de envio
+			$headers .= 'From:< noreply@sistemadevnogueira.online>' . "\r\n";//email de envio a
 			$headers .= 'CC: <' . $emailLogado . '>' . "\r\n"; //email de copia
 			$emailLogado =  $_POST['emaillogado']; //recuperando o e-mail do usuario logado
-			//$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";//email para resposta
+			$headers .= 'Reply-To: < suporti@sistemadevnogueira.online>' . "\r\n";//email para resposta
 			$to = $_POST['emailSolicitante']; // recuperando email do destinatario e envia notificacao da demanda
+
 
 			mail($to, $subject, $message, $headers);
 		} catch (PDOException $e) {
@@ -167,10 +168,10 @@ class crud
 			$message .= "<a href=http://sistemaocorrencia.devnogueira.online/index.php> SO - Click aqui para fazer o login </a>"; //menssagem com link
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n"; //formato
-			$headers .= 'From: <contato@sistemaocorrencia.com.br>' . "\r\n"; //email de envio
+			$headers .= 'From:< noreply@sistemadevnogueira.online>' . "\r\n";//email de envio a
 			$headers .= 'CC: <' . $emailLogado . '>' . "\r\n"; //email de copia
 			$emailLogado =  $_POST['emaillogado']; //recuperando o e-mail do usuario logado
-			//$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";//email para resposta
+			$headers .= 'Reply-To: < suporti@sistemadevnogueira.online>' . "\r\n";//email para resposta
 			$to = $_POST['emailDestino']; // recuperando email do destinatario e envia notificacao da demanda
 
 			mail($to, $subject, $message, $headers);
@@ -247,10 +248,10 @@ class crud
 		$message="<a href=valida_cadastro.php?v=$valida&$to&$idInstituicao> Teste de envio de mensagem </a>";
 		$headers = 'MIME-Version: 1.0'. "\r\n";
 		$headers .= 'content-type: text/html; charset=iso-8859-1'."\r\n";
-		$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>'."\r\n";
-		$headers .= 'From:< carlosandrefsaba@gmail.com>'."\r\n";
-		$headers .= 'CC:< programadorfsaba@gmail.com>'."\r\n";
-		$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>'."\r\n";
+		//$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>'."\r\n";
+		$headers .= 'From:< noreply@sistemadevnogueira.online>' . "\r\n";//email de envio a
+	//	$headers .= 'CC:< programadorfsaba@gmail.com>'."\r\n";
+		$headers .= 'Reply-To: < suporti@sistemadevnogueira.online>' . "\r\n";//email para resposta
 		
 		mail($to,$subject,$message,$headers);
 
@@ -418,11 +419,12 @@ class crud
 			$message .= "<a href=http://sistemaocorrencia.devnogueira.online/main/valida_cadastro.php?v=$valida&v2=$to> SO - Click aqui para validar seu cadastro </a>";
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n"; //formato
-			$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>' . "\r\n"; //
-			$headers .= 'From:< contato@sistemaocorrencia.com.br>' . "\r\n"; //email de envio
-			$headers .= 'CC:< programadorfsaba@gmail.com>' . "\r\n"; // email de copia
-			$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>' . "\r\n"; //email para resposta
+			//$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>' . "\r\n"; //
+			$headers .= 'From:< noreply@sistemadevnogueira.online>' . "\r\n";//email de envio a
+		//	$headers .= 'CC:< programadorfsaba@gmail.com>' . "\r\n"; // email de copia
+			$headers .= 'Reply-To: < suporti@sistemadevnogueira.online>' . "\r\n";//email para resposta
 
+			
 			mail($to, $subject, $message, $headers);
 
 			return true;
