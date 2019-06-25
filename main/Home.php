@@ -68,7 +68,7 @@ $arrayPedidoTodos = $totalPedido->fetchAll(PDO::FETCH_ASSOC);
 					<div class="panel-heading">
 						<h3 class="panel-title"> <span class="fa fa-user"></span> Demandas</h3>
 					</div>
-					<div class="panel-body" onclick="window.location.href = 'index_user.php'" style="cursor:pointer">
+					<div class="panel-body" onclick="window.location.href = 'demanda.php'" style="cursor:pointer">
 						<h3 id="demandas"><?php print($arrayDemandasTodos[0]['total']); ?></h3>
 					</div>
 				</div>

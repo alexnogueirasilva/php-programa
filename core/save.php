@@ -241,10 +241,10 @@ switch ($value) {
 				$message .= "<a href=http://sistemaocorrencia.devnogueira.online/main/valida_cadastro.php?v=$valida&v2=$to&v3=$idInstituicao> Click aqui para validar seu cadastro </a>";
 				$headers = 'MIME-Version: 1.0' . "\r\n";
 				$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n";
-				$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>' . "\r\n";
-				$headers .= 'From:< contato@sistemaocorrencia.com.br>' . "\r\n";//email de envio
-				$headers .= 'CC:< programadorfsaba@gmail.com>' . "\r\n"; //email com copia
-				$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>' . "\r\n";//email para resposta
+				///$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>' . "\r\n";//email de destino
+				$headers .= 'From:< noreply@sistemadevnogueira.online>' . "\r\n";//email de envio
+				//$headers .= 'CC:< programadorfsaba@gmail.com>' . "\r\n"; //email com copia
+				$headers .= 'Reply-To: < suporti@sistemadevnogueira.online>' . "\r\n";//email para resposta
 
 				mail($to, $subject, $message, $headers);
 
