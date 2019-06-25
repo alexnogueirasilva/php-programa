@@ -242,7 +242,7 @@ switch ($value) {
 				$headers = 'MIME-Version: 1.0' . "\r\n";
 				$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n";
 				///$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>' . "\r\n";//email de destino
-				$headers .= 'From:< noreply@sistemadevnogueira.online>' . "\r\n";//email de envio
+				$headers .= 'From:< noreply@sistemadevnogueira.online>' . "\r\n";//email de envio a
 				//$headers .= 'CC:< programadorfsaba@gmail.com>' . "\r\n"; //email com copia
 				$headers .= 'Reply-To: < suporti@sistemadevnogueira.online>' . "\r\n";//email para resposta
 
