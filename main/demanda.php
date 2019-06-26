@@ -211,7 +211,7 @@ include_once "modais.php";
                     $("#salvaDemanda").prop("disabled", true);
                 },
                 success: function(data) { 
-                   alert(data);                                                 
+                  // alert(data);                                                 
                     if (data == 1) {                       
                         swal({
                                 title: "OK!",

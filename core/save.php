@@ -513,7 +513,7 @@ switch ($value) {
 				$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao);
 				if ($cdt == true) {
 					echo 1;
-					//enviaEmail();
+					crud::enviarEmailPedido();
 				} else {
 					echo 0;
 				}
@@ -526,12 +526,15 @@ switch ($value) {
 			$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao);
 			if ($cdt == true) {
 				echo 1;
+				crud::enviarEmailPedido();
 			} else {
 				echo 0;
 			}
 		}
 
 		break;
+
+
 
 	case 'editarPedido':
 		$descricao  = $_POST['edtDescricao'];
@@ -755,4 +758,5 @@ switch ($value) {
 			echo 0;
 		}
 		break;
+		//INSTITUICAO
 }
