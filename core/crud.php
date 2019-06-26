@@ -1124,13 +1124,17 @@ public static function excluirContato($idInstituicao){
 
 //ENVIO DE EMAIL
 public static function enviarEmailPedido(){
-	
-	$to = "vendas2@fabmed.com.br";
+	if($idUsuario == 16){
+		$to = "suporte-ti@fabmed.com.br";
+	}else{
+
+		$to = "vendas2@fabmed.com.br";
+	}
 
 			$subject = "Cadastro de Pedido"; // assunto
 			$message = "Um pedido cadastrado para voce, " . "\r\n"; //mensagem
 			$message .= "acesse com seu login para da tratamento " . "\r\n"; //mensagem
-			$message .= "<a href=http://sistemaocorrencia.devnogueira.online/index.php> SO - Click aqui para fazer o login </a>" . "\r\n"; //menssagem com link
+			$message .= "<a href=http://sistemaocorrencia.devnogueira.online/index.php> SO - Click aqui para fazer o login </a> " . "\r\n"; //menssagem com link
 			$message .= " Favor da tratamento Obrigado! "."\r\n";
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n"; //formato
@@ -1138,7 +1142,7 @@ public static function enviarEmailPedido(){
 			//$headers .= 'CC: <' . $emailLogado . '>' . "\r\n"; //email de copia
 			//$emailLogado =  $_POST['emaillogado']; //recuperando o e-mail do usuario logado
 		    //$headers .= 'Reply-To: < suporti@sistemadevnogueira.online>' . "\r\n";//email para resposta
-		//$to = $_POST['emailDestino']; // recuperando email do destinatario e envia notificacao da demanda
+			//$to = $_POST['emailDestino']; // recuperando email do destinatario e envia notificacao da demanda
 
 			mail($to, $subject, $message, $headers);
 }
