@@ -1134,8 +1134,8 @@ public static function enviarEmailPedido(){
 			$subject = "Cadastro de Pedido"; // assunto
 			$message = "Um pedido cadastrado para voce, " . "\r\n"; //mensagem
 			$message .= "<span> acesse com seu login para da tratamento </span> " . "\r\n"; //mensagem
-			$message .= "<a href=http://sistemaocorrencia.devnogueira.online/index.php> SO - Click aqui para fazer o login </a> " . "\r\n"; //menssagem com link
-			$message .= "<br> Favor da tratamento Obrigado! "."\r\n";
+			$message .= "<br> <br> <a href=http://sistemaocorrencia.devnogueira.online/index.php> SO - Click aqui para fazer o login </a> " . "\r\n"; //menssagem com link
+			$message .= "<br> <br> Favor da tratamento Obrigado! "."\r\n";
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n"; //formato
 			$headers .= 'From:< noreply@sistemadevnogueira.online>' . "\r\n";//email de envio a
