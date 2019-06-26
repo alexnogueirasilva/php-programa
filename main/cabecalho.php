@@ -77,11 +77,8 @@ $dataAtual = date('Y-m-d H:i:s');
                     </li>  -->
 
                 </ul>
-
-
                 <ul class="nav navbar-top-links navbar-right pull-right">
                     <li>
-
                         <a><i class="fa fa-user"></i> Você está logado como </a>
 
                     </li>
@@ -129,7 +126,7 @@ $dataAtual = date('Y-m-d H:i:s');
                             <li><a href="cad_cliente.php">Cadastros Clientes</a></li>
                             <li><a href="cad_dep.php">Cadastros Departamentos</a></li>
                             <li><a href="cad_instituicao.php">Cadastro Instituicao</a></li>
-                            
+                            <li><a href="demanda.php">Cadastro Demanda</a></li>                            
                             <li><a href="cad_sla.php">Cadastros SLAs</a></li>
                             <li><a href="cad_representante.php">Cadastros Representante</a></li>                              
                             <li><a href="pedido.php">Cadastros Pedidos  </a></li>
@@ -141,8 +138,7 @@ $dataAtual = date('Y-m-d H:i:s');
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>                 
-                        <li id="Desenvolvimento"> <a href="#" class="waves-effect"><i class="icon-graph fa-fw"></i> Em Desenvolvimento<span class="fa arrow"></span> </a>
-                        <?php if ($nivel == 1) { ?>
+                        <li id="cadDesenvolvimento"> <a href="#" class="waves-effect"><i class="icon-graph fa-fw"></i> Em Desenvolvimento<span class="fa arrow"></span> </a>
                             <ul class="nav nav-second-level">                               
                                 <li><a href="cadastro.php">Cadastros Usuários</a></li>  
                                 <li><a href="e-mail.php">E-mail</a></li>
@@ -152,7 +148,6 @@ $dataAtual = date('Y-m-d H:i:s');
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                    <?php }  ?>
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->
