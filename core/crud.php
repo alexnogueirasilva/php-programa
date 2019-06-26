@@ -1131,14 +1131,14 @@ public static function enviarEmailPedido(){
 			$message = "Um pedido cadastrado para voce, " . "\r\n"; //mensagem
 			$message .= "acesse com seu login para da tratamento " . "\r\n"; //mensagem
 			$message .= "<a href=http://sistemaocorrencia.devnogueira.online/index.php> SO - Click aqui para fazer o login </a>"; //menssagem com link
-			$message = " Favor da tratamento Obrigado!"\r\n";
+			$message = " Favor da tratamento Obrigado! "."\r\n";
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n"; //formato
 			$headers .= 'From:< noreply@sistemadevnogueira.online>' . "\r\n";//email de envio a
 			//$headers .= 'CC: <' . $emailLogado . '>' . "\r\n"; //email de copia
 			//$emailLogado =  $_POST['emaillogado']; //recuperando o e-mail do usuario logado
 		    //$headers .= 'Reply-To: < suporti@sistemadevnogueira.online>' . "\r\n";//email para resposta
-		//	$to = $_POST['emailDestino']; // recuperando email do destinatario e envia notificacao da demanda
+		//$to = $_POST['emailDestino']; // recuperando email do destinatario e envia notificacao da demanda
 
 			mail($to, $subject, $message, $headers);
 }
