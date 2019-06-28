@@ -552,7 +552,7 @@ include_once "modais.php";
                         $("#alteraPedido").prop("disabled", true);
                     },
                     success: function(data) {
-                     //   alert(data);
+                        alert(data);
                         if (data == 1) {
                             swal({
                                     title: "OK!",
@@ -589,7 +589,7 @@ include_once "modais.php";
 
 
         
-            $('#departamento').change(function() {
+        $('#departamento').change(function() {
             var codDepart = $("#departamento").val();
             $.ajax({
                 url: 'busca_funcionario.php',
@@ -690,30 +690,7 @@ include_once "modais.php";
         }); //VERIFICA SE DEMANDA TEM ANEXO ------------------------------------------------------------      
     });
 
-    //BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
-    /*$("tr #statusControle").each(function(i) {
-        //    var corFundo = $("#statusControle").data('cortexto1'); // var idControle = $(this).data('codigocontroledet');
-        var corFundo = "";
-        var corTexto = "";
-        var statusAtual1 = "";
-        corTexto = "<?php echo $corTexto; ?>";
-        corFundo = "<?php echo $corFundo; ?>";
-        statusAtual1 = "<?php echo $statusAtual1; ?>";
-        // alert ( " statusAtual1 = " + statusAtual1 + " corFundo = " + corFundo + " status = " + corTexto);
-
-        if ($(this).text() == "ATENDIDO") {
-            //$(status).css("color", "red");
-            this.style.background = "blue"; //cor do fundo
-            this.style.color = "White"; //cor da fonte
-        } else if ($(this).text() == "Pendente") {
-            this.style.color = "White"; //cor da fonte
-            this.style.background = "red"; //cor do fundo
-        }
-        escape {
-            this.style.color = "";
-        }
-    }*/
-    //BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
+    
     $("tr #statusControle").each(function(i) {
         if ($(this).text() == "RECEPCIONADO" || $(this).text() == "LIBERADO PARCIALMENTE") {
             //$(status).css("color", "red");

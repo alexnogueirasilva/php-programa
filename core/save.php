@@ -513,9 +513,9 @@ switch ($value) {
 				$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao);
 				if ($cdt == true) {
 					echo 1;					
-			if(!$statusPedido == "ATENDIDO"){
+			
 				crud::enviarEmailPedido($email);
-			}	
+		
 				} else {
 					echo 0;
 				}
@@ -529,9 +529,9 @@ switch ($value) {
 			if ($cdt == true) {
 				echo 1;
 				
-			if(!$statusPedido == "ATENDIDO"){
+		
 				crud::enviarEmailPedido($email);
-			}					
+
 			} else {
 				echo 0;
 			}
@@ -591,10 +591,8 @@ switch ($value) {
 				);
 
 				if ($cad == true) {
-					echo 1;
-					if(!$statusPedido == "ATENDIDO"){
+					echo 1;				
 						crud::enviarEmailPedido($email);
-					}	
 				} else {
 					echo 0;
 				}
@@ -607,9 +605,9 @@ switch ($value) {
 
 			if ($cad == true) {
 				echo 1;	
-			if(!$statusPedido == "ATENDIDO"){
+		
 				crud::enviarEmailPedido($email);
-			}	
+		
 			} else {
 				echo 0;
 			}
@@ -622,12 +620,13 @@ switch ($value) {
 		$mensagemAlterar    = $_POST['mensagemPedidoAlterar'];
 		$idInstituicao 		= $_POST['idInstituicaoAlterar'];
 		$email		 		= $_POST['emailAlterar'];
+	
 		$cad = crud::AlterarPedido($codControle, $statusPedido, $mensagemAlterar, $idInstituicao);
 		if ($cad == true) {
 			echo 1;
-			if(!$statusPedido == "ATENDIDO"){
+			
 				crud::enviarEmailPedido($email);
-			}			
+				
 		} else {
 			echo 0;
 		}
