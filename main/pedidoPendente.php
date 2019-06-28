@@ -380,6 +380,9 @@ if($logado != 1){$logado2 = 600;
                             </select>
                         </div>
                         <div class="form-group">
+                        <input type="text" size="50" class="form-control" name="emailAlterar" id="emailAlterar" placeholder="Informe e-mail separando por ; ">
+                    </div>
+                        <div class="form-group">
                             <label for="message-text" class="control-label">Observação:</label>
                             <textarea name="mensagemPedidoAlterar" class="form-control" rows="3" id="mensagemPedidoAlterar"></textarea>
                         </div>
@@ -522,7 +525,9 @@ include_once "modais.php";
                 var statusAlterar = $(this).data('statusalterar');
                 var mensagemAlterar = $(this).data('mensagemalterar');
 
-
+                var email = 'emaii@email.com.br';
+            
+            $('#emailAlterar').val(email);
                 $('#codigoControleAlterar').val(codigoControle);
                 $('#statusPedidoAlterar').val(statusAlterar);
                 $('#mensagemPedidoAlterar').val(mensagemAlterar);

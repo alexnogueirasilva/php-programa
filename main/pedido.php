@@ -68,6 +68,7 @@ if($logado != 1){$logado2 = 600;
                                 <th>Tipo</th>                               
                                 <th>Licitação</th>
                                 <th>Pedido</th>
+                                <th>Status</th>
                                 <th>Valor</th>
                                 <th>Anexo</th>
                                 <th>Alterar</th>
@@ -81,6 +82,7 @@ if($logado != 1){$logado2 = 600;
                                 <th>Licitação</th>
                                 
                                 <th>Pedido</th>
+                                <th>Status</th>
                                 <th>Valor</th>
                                 <th>Anexo</th>
                                 <th>Alterar</th>
@@ -125,6 +127,7 @@ if($logado != 1){$logado2 = 600;
                                         <td><?php print($row['tipoCliente']); ?></td>
                                         <td><?php print($row['numeroPregao']); ?></td>
                                         <td><?php print($row['numeroAf']); ?></td>
+                                        <td id="statusControle"><?php print($row['nomeStatus']); ?></td>
                                         <td> R$<?php print(number_format($row['valorPedido'], 2, ',', '.')); ?></td>
 
                                         <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']); ?>">Anexo</a></td>

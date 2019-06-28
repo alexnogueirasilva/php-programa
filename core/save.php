@@ -497,7 +497,7 @@ switch ($value) {
 		$codStatus = $_POST['statusPedido'];
 		$codCliente = $_POST['nomeCliente'];
 		$observacao = $_POST['mensagem'];
-
+		$email		 		= $_POST['emailAlterar'];
 		//ENTRA AQUI SE TIVER ANEXO
 		if (!empty($_FILES["file"]["name"])) {
 			$validextensions = array("jpeg", "jpg", "png", "PNG", "JPG", "JPEG", "pdf", "PDF", "docx");
@@ -512,8 +512,10 @@ switch ($value) {
 				//SALVA NO BANCO
 				$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao);
 				if ($cdt == true) {
-					echo 1;
-					crud::enviarEmailPedido();
+					echo 1;					
+			if(!$statusPedido == "ATENDIDO"){
+				crud::enviarEmailPedido($email);
+			}	
 				} else {
 					echo 0;
 				}
@@ -526,7 +528,10 @@ switch ($value) {
 			$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao);
 			if ($cdt == true) {
 				echo 1;
-				crud::enviarEmailPedido();
+				
+			if(!$statusPedido == "ATENDIDO"){
+				crud::enviarEmailPedido($email);
+			}					
 			} else {
 				echo 0;
 			}
@@ -538,6 +543,7 @@ switch ($value) {
 	case 'editarPedido':
 		$descricao  = $_POST['edtDescricao'];
 		$edtId         = $_POST['edtId'];
+		$email		 		= $_POST['emailAlterar'];
 		$cad = crud::editarPedido($codControle, $numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $idInstituicao);
 		if ($cad == true) {
 			echo 1;
@@ -558,6 +564,7 @@ switch ($value) {
 		$numeroLicitacao    = $_POST['numeroLicitacaoPedidoAlterar'];
 		$anexoAlterar       = $_POST['anexoAlterar'];
 		$dataAbertura = $_POST['dataAtual2'];
+		$email		 		= $_POST['emailAlterar'];
 		//ENTRA AQUI SE TIVER ANEXO
 		if (!empty($_FILES["file"]["name"])) {
 
@@ -585,7 +592,9 @@ switch ($value) {
 
 				if ($cad == true) {
 					echo 1;
-					//enviaEmail();
+					if(!$statusPedido == "ATENDIDO"){
+						crud::enviarEmailPedido($email);
+					}	
 				} else {
 					echo 0;
 				}
@@ -597,7 +606,10 @@ switch ($value) {
 			$cad = crud::AlterarPedido2($codControle, $statusPedido, $mensagemAlterar, $nomeCliente,	$numeroAf, $valorPedido, $numeroLicitacao, $anexoAlterar, $idInstituicao);
 
 			if ($cad == true) {
-				echo 1;
+				echo 1;	
+			if(!$statusPedido == "ATENDIDO"){
+				crud::enviarEmailPedido($email);
+			}	
 			} else {
 				echo 0;
 			}
@@ -609,10 +621,13 @@ switch ($value) {
 		$codControle        = $_POST['codigoControleAlterar'];
 		$mensagemAlterar    = $_POST['mensagemPedidoAlterar'];
 		$idInstituicao 		= $_POST['idInstituicaoAlterar'];
+		$email		 		= $_POST['emailAlterar'];
 		$cad = crud::AlterarPedido($codControle, $statusPedido, $mensagemAlterar, $idInstituicao);
 		if ($cad == true) {
 			echo 1;
-			crud::enviarEmailPedido();
+			if(!$statusPedido == "ATENDIDO"){
+				crud::enviarEmailPedido($email);
+			}			
 		} else {
 			echo 0;
 		}

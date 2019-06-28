@@ -1123,14 +1123,15 @@ public static function excluirContato($idInstituicao){
 //CADASTRO DE INSTITUICAO
 
 //ENVIO DE EMAIL
-public static function enviarEmailPedido(){
-	if($idUsuario == 16){
+public static function enviarEmailPedido($email){
+	/*if($idUsuario == 16){
 		$to = "suporte-ti@fabmed.com.br";
 	}else{
 
 		$to = "vendas2@fabmed.com.br";
-	}
-
+	} 
+*/
+$to = $email;
 			$subject = "Cadastro de Pedido"; // assunto
 			$message = "Um pedido cadastrado para voce, " . "\r\n"; //mensagem
 			$message .= "<span> acesse com seu login para da tratamento </span> " . "\r\n"; //mensagem
