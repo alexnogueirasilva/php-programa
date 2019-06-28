@@ -493,11 +493,12 @@ switch ($value) {
 		$idInstituicao = $_POST['idInstituicao'];
 		$numeroAf = $_POST['numeroAf'];
 		$valorPedidoAtual = $_POST['valorPedido'];
-		$valorPedido 		= str_replace(",", ".", $valorPedidoAtual);
+		$valorPedido 		= str_replace(",", ".", $valorPedidoAtual); 
 		$codStatus = $_POST['statusPedido'];
 		$codCliente = $_POST['nomeCliente'];
 		$observacao = $_POST['mensagem'];
-		$email		 		= $_POST['emailAlterar'];
+		$emailAtual		 		= $_POST['emailAlterar'];
+		$email 		= str_replace(";", ",", $emailAtual); 
 		//ENTRA AQUI SE TIVER ANEXO
 		if (!empty($_FILES["file"]["name"])) {
 			$validextensions = array("jpeg", "jpg", "png", "PNG", "JPG", "JPEG", "pdf", "PDF", "docx");
@@ -564,7 +565,8 @@ switch ($value) {
 		$numeroLicitacao    = $_POST['numeroLicitacaoPedidoAlterar'];
 		$anexoAlterar       = $_POST['anexoAlterar'];
 		$dataAbertura = $_POST['dataAtual2'];
-		$email		 		= $_POST['emailAlterar'];
+		$emailAtual		 		= $_POST['emailAlterar'];
+		$email 		= str_replace(";", ",", $emailAtual); 
 		//ENTRA AQUI SE TIVER ANEXO
 		if (!empty($_FILES["file"]["name"])) {
 
@@ -619,7 +621,8 @@ switch ($value) {
 		$codControle        = $_POST['codigoControleAlterar'];
 		$mensagemAlterar    = $_POST['mensagemPedidoAlterar'];
 		$idInstituicao 		= $_POST['idInstituicaoAlterar'];
-		$email		 		= $_POST['emailAlterar'];
+		$emailAtual		 		= $_POST['emailAlterar'];
+		$email 		= str_replace(";", ",", $emailAtual); 
 	
 		$cad = crud::AlterarPedido($codControle, $statusPedido, $mensagemAlterar, $idInstituicao);
 		if ($cad == true) {
