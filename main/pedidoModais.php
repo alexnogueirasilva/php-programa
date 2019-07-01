@@ -107,7 +107,7 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                         <input type="hidden" id="codigoControleAlterar" name="codigoControleAlterar">
                         <input type="hidden" id="dataFechamentoPedidoAlterar" name="dataFechamentoPedidoAlterar">
                         <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataAtual" id="dataAtual">
-                        <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoAlterar" id="idInstituicaoAlterar">
+                        <input type="hidden" name="idInstituicaoAlterar" id="idInstituicaoAlterar">
                         <div class="form-group">
                             <select class="form-control" name="statusPedidoAlterar" id="statusPedidoAlterar" required>
                                 <option value="" selected disabled>Selecione o Status</option>

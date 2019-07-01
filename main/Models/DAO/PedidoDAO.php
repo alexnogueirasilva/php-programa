@@ -625,7 +625,7 @@ class PedidoDAO
 
 //controlepedido
 public static function listarPedido(){
-	$sql = "SELECT con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
+	$sql = "SELECT con.codControle,con.dataAlteracao,con.dataFechamento,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
 	FROM controlePedido as con 
 	inner join cliente as cli on cli.codCliente = con.codCliente 
 	inner join statusPedido as sta on sta.codStatus = con.codStatus
@@ -638,13 +638,13 @@ public static function listarPedido(){
 	return $stmt;
 }
 
-public static function listarPedidoNaoAteCanc() {//nao atendidos/cancelado
+public static function listarPedidoNaoAteCanc($idInstituicao) {//nao atendidos/cancelado
 
-	$sql = "SELECT sta.nome,con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
+	$sql = "SELECT sta.nome,con.codControle,con.dataAlteracao,con.dataFechamento,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
 	FROM controlePedido as con 
 	inner join cliente as cli on cli.codCliente = con.codCliente 
 	inner join statusPedido as sta on sta.codStatus = con.codStatus
-	where sta.nome  not in  ('ATENDIDO','CANCELADO')
+	where sta.nome  not in  ('ATENDIDO','CANCELADO') AND con.fk_idInstituicao = '" . $idInstituicao . "'
 	ORDER BY con.dataCadastro desc";
 
 	$pdo = Database::connect();
@@ -653,13 +653,13 @@ public static function listarPedidoNaoAteCanc() {//nao atendidos/cancelado
 	$stmt->execute();
 	return $stmt;
 }
-public static function listarPedidoCanceladosNegados() {// cancelado ou negado
+public static function listarPedidoCanceladosNegados($idInstituicao) {// cancelado ou negado
 
-	$sql = "SELECT sta.nome,con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
+	$sql = "SELECT sta.nome,con.codControle,con.dataAlteracao,con.dataFechamento,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao,con.fk_idInstituicao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
 	FROM controlePedido as con 
 	inner join cliente as cli on cli.codCliente = con.codCliente 
 	inner join statusPedido as sta on sta.codStatus = con.codStatus
-	where sta.nome in  ('NEGADO','CANCELADO')
+	where sta.nome in  ('NEGADO','CANCELADO') AND con.fk_idInstituicao = '" . $idInstituicao . "'
 	ORDER BY con.dataCadastro desc";
 
 	$pdo = Database::connect();
@@ -668,13 +668,13 @@ public static function listarPedidoCanceladosNegados() {// cancelado ou negado
 	$stmt->execute();
 	return $stmt;
 }
-public static function listarPedidoAtendidos() {// Atendidos
+public static function listarPedidoAtendidos($idInstituicao) {// Atendidos
 
-	$sql = "SELECT sta.nome,con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
+	$sql = "SELECT sta.nome,con.fk_idInstituicao,con.codControle,con.dataAlteracao,con.dataFechamento,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente,sta.codStatus, sta.nome as nomeStatus 
 	FROM controlePedido as con 
 	inner join cliente as cli on cli.codCliente = con.codCliente 
 	inner join statusPedido as sta on sta.codStatus = con.codStatus
-	where sta.nome in  ('ATENDIDO')
+	where sta.nome in  ('ATENDIDO') AND con.fk_idInstituicao = '" . $idInstituicao . "'
 	ORDER BY con.dataCadastro desc";
 
 	$pdo = Database::connect();
@@ -685,11 +685,11 @@ public static function listarPedidoAtendidos() {// Atendidos
 }
 
 public static function listarPedidoId($id) {	
-	$sql = "SELECT con.codControle,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
+	$sql = "SELECT con.codControle,con.fk_idInstituicao,con.dataAlteracao,con.dataFechamento,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
 	FROM controlePedido as con 
 	inner join cliente as cli on cli.codCliente = con.codCliente 
 	inner join statusPedido as sta on sta.codStatus = con.codStatus
-	 WHERE con.codCliente = $id
+	 WHERE con.codCliente = $id AND con.fk_idInstituicao = '" . $idInstituicao . "'
 	 	 ORDER BY con.dataCadastro desc";
 
 	$pdo = Database::connect();

@@ -125,6 +125,7 @@ $('#btnExcluirPedido').click(function () {
 
 //SETA O CÓDIGO NO MODAL PARA ATUALIZAR
 $(document).on("click", "#btnPedidoAlterar", function () {
+ 
     var codigoControle = $(this).data('codigocontrolealterar');
     var statusAlterar = $(this).data('statusalterar');
     var mensagemAlterar = $(this).data('mensagemalterar');
@@ -137,8 +138,6 @@ $(document).on("click", "#btnPedidoAlterar", function () {
     var anexoAlterar = $(this).data('anexoalterar');
     var idInstituicao = $(this).data('idinstituicaoalterar');
 
-   // alert("codigo "+numeroAf +" status "+numeroLicitacao);
-
     $('#codigoControleAlterar').val(codigoControle);
     $('#statusPedidoAlterar').val(statusAlterar);
     $('#mensagemPedidoAlterar').val(mensagemAlterar);
@@ -150,11 +149,11 @@ $(document).on("click", "#btnPedidoAlterar", function () {
     $('#valorPedidoAlterar').val(valorPedido); 
     $('#anexoAlterar').val(anexoAlterar); 
     $('#idInstituicaoAlterar').val(idInstituicao); 
-}); //SETA O CÓDIGO NO MODAL PARA ATUALIZAR
+}); 
+//SETA O CÓDIGO NO MODAL PARA ATUALIZAR
 
 //SETA O CÓDIGO NO FORMULARIO PARA ATUALIZAR
 $("#frmAlterarPedido").on('submit', (function (e) {
-
     e.preventDefault();
     $.ajax({
         url: "../core/save.php",
@@ -168,7 +167,7 @@ $("#frmAlterarPedido").on('submit', (function (e) {
             $("#alteraPedido").prop("disabled", true);
         },
         success: function (data) {
-           // alert(data);
+           //alert(data);
             if (data == 1) {
                 swal({
                     title: "OK!",

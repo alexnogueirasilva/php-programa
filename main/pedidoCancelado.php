@@ -127,7 +127,9 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                                             <td><?php print($horas .   'hs ' . 'e ' .  $minutos . 'm'); ?></td>
 
                                             <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']); ?>">Anexo</a></td>
-                                            <td><a class="btn btn-primary waves-effect waves-light" type="button" id="btnPedidoAlterar" data-toggle="modal" data-target="#modalPedidoAlterar" data-whatever="@getbootstrap" target="_blank" data-statusalterar="<?php print($row['codStatus']); ?>" data-mensagemalterar="<?php print($row['observacao']); ?>" data-codigocontrolealterar="<?php print($row['codControle']); ?>" data-dataalteracao="<?php print($row['dataAlteracao']); ?>" data-datafechamento="<?php print($row['dataFechamento']); ?>">Alterar</a></td>
+                                            <td><a class="btn btn-primary waves-effect waves-light" type="button" id="btnPedidoAlterar" data-toggle="modal" data-target="#modalPedidoAlterar" data-whatever="@getbootstrap" target="_blank" 
+                                            data-idinstituicaoalterar="<?php print($row['fk_idInstituicao']); ?>"
+                                             data-statusalterar="<?php print($row['codStatus']); ?>" data-mensagemalterar="<?php print($row['observacao']); ?>" data-codigocontrolealterar="<?php print($row['codControle']); ?>" data-dataalteracao="<?php print($row['dataAlteracao']); ?>" data-datafechamento="<?php print($row['dataFechamento']); ?>">Alterar</a></td>
                                             
                                             <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" data-toggle="modal" data-target="#modalDetPedido" data-whatever="@getbootstrap" 
                                             data-codigocontroledet="<?php print($row['codControle']); ?>" data-nomeclientedet="<?php print($row['nomeCliente']); ?>" 
@@ -240,69 +242,3 @@ require_once "rodape.php";
 include_once "pedidoModais.php";
 ?>
 <script src="js/pedido.js"></script>
-
-<script type="text/javascript">
-    $(document).ready(function(e) {
-
-        permissaoNivel();
-
-        $("#frmCadastroPedido").on('submit', (function(e) {
-            e.preventDefault();
-            var table = $("#tabela").val();
-            var nomeCliente = $("#nomeCliente").val();
-            var valorPedido = $("#valorPedido").val();
-            var statusPedido = $("#statusPedido").val();
-            var numeroAF = $("#numeroAf").val();
-            var mensagem = $("#mensagem").val();
-            var numeroPregao = $("#numeroPregao").val();
-            $.ajax({
-                url: "../core/save.php",
-                type: "POST",
-                data: new FormData(this),
-                contentType: false,
-                cache: false,
-                processData: false,
-                beforeSend: function() {
-                    $("#salvaPedido").html("<i class='fa fa-spinner fa-spin'></i> Enviando, aguarde...");
-                    $("#salvaPedido").prop("disabled", true);
-                },
-                success: function(data) {
-                    //   alert ("resultado data " + data);
-                    if (data == 1) {
-                        swal({
-                                title: "OK!",
-                                text: "Cadastrado com Sucesso!",
-                                type: "success",
-                                confirmButtonText: "Fechar",
-                                closeOnConfirm: false
-                            },
-                            function(isConfirm) {
-                                if (isConfirm) {
-                                    $('#modalCadastrarPedido').modal('hide');
-                                    location.reload(table);
-                                    //      window.location = "cadastro.php";
-                                }
-                            });
-                    } else {
-                        swal({
-                                title: "Ops!",
-                                text: "Algo deu errado!",
-                                type: "error",
-                                confirmButtonText: "Fechar",
-                                closeOnConfirm: false
-                            },
-                            function(isConfirm) {
-                                if (isConfirm) {
-                                    $('#modalCadastrarPedido').modal('hide');
-                                    location.reload(table);
-                                }
-                            });
-                    }
-                }
-            });
-        }));
-
-        -----------------------------------------------------------      
-    });
-
-</script>
