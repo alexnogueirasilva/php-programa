@@ -159,6 +159,7 @@ $arrayPedidoTodos = $totalPedido->fetchAll(PDO::FETCH_ASSOC);
 require_once "rodape.php";
 ?>
 <script type="text/javascript">
+permissaoNivel();
 	google.charts.load('current', {
 		'packages': ['corechart']
 	});
