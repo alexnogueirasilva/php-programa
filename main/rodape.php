@@ -30,6 +30,7 @@
     
         <script src="../assets/bower_components/datatables/jquery.dataTables.min.js"></script>
                 <script>
+                    permissaoNivel()
                 $(document).ready(function() {   
                     //$('#tabela').DataTable();
                     $("#tabela").DataTable({
