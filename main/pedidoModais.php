@@ -1,4 +1,4 @@
-<?php 
+<?php
 include_once 'vrf_lgin.php';
 require_once 'cabecalho.php';
 
@@ -28,24 +28,24 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                     <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicao" id="idInstituicao">
                     <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataCadastro" id="dataCadastro">
                     <div class="form-group">
-                            <select class="form-control" name="nomeCliente" id="nomeCliente" required>
-                                <option value="" selected disabled>Selecione o Cliente</option>
+                        <select class="form-control" name="nomeCliente" id="nomeCliente" required>
+                            <option value="" selected disabled>Selecione o Cliente</option>
+                            <?php
+                            $selectCliente = crud::mostrarCliente($idInstituicao);
+                            if ($selectCliente->rowCount() > 0) {
+                                while ($row = $selectCliente->fetch(PDO::FETCH_ASSOC)) {
+                                    ?>
+                                    <option value="<?php print($row['codCliente']); ?>">
+                                        <?php print($row['nomeCliente']); ?>
+                                    </option>
                                 <?php
-                                $selectCliente = crud::mostrarCliente($idInstituicao);
-                                if ($selectCliente->rowCount() > 0) {
-                                    while ($row = $selectCliente->fetch(PDO::FETCH_ASSOC)) {
-                                        ?>
-                                        <option value="<?php print($row['codCliente']); ?>">
-                                            <?php print($row['nomeCliente']); ?>
-                                        </option>
-                                    <?php
-                                }
                             }
-                            ?>
-                            </select>
-                        </div>
+                        }
+                        ?>
+                        </select>
+                    </div>
+                    
                     <div class="form-inline">
-                        
                         <div class="form-group">
                             <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroAf" id="numeroAf" placeholder="Numero da AF" required>
                         </div>
@@ -55,9 +55,9 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                     </div>
                     <br>
                     <div class="form-inline">
-                        
+
                         <div class="form-group">
-                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="valorPedido" id="valorPedido" placeholder="Valor do Pedido">
+                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="13" class="form-control" name="valorPedido" id="valorPedido" placeholder="Valor do Pedido">
                         </div>
                         <div class="form-group">
                             <select class="form-control" name="statusPedido" id="statusPedido" required>
@@ -77,6 +77,7 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                             </select>
                         </div>
                     </div>
+
                     <br>
                     <div class="form-group">
                         <label for="message-text" class="control-label">Observação:</label>
@@ -85,6 +86,10 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                     <input type="file" name="file" id="file">
             </div>
             <div class="modal-footer">
+                <div class="form-group">
+                    <input type="text" size="50" class="form-control" name="email" id="email" placeholder="Informe e-mail separando por virgula ">
+                </div>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                 <button type="submit" id="salvaPedido" class="btn btn-primary">Enviar</button>
             </div>
             </form>
@@ -95,85 +100,88 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
 
 <!-- MODAL ALTERAR PEDIDO-->
 <div class="modal fade" id="modalPedidoAlterar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel1">Alterar Status do Pedido</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="frmAlterarPedido" action="" method="post" enctype="multipart/form-data">
-                        <input type="hidden" value="AlterarPedido" name="tipo" id="tipo">
-                        <input type="hidden" id="codigoControleAlterar" name="codigoControleAlterar">
-                        <input type="hidden" id="dataFechamentoPedidoAlterar" name="dataFechamentoPedidoAlterar">
-                        <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataAtual" id="dataAtual">
-                        <input type="hidden" name="idInstituicaoAlterar" id="idInstituicaoAlterar">
-                        <div class="form-group">
-                            <select class="form-control" name="statusPedidoAlterar" id="statusPedidoAlterar" required>
-                                <option value="" selected disabled>Selecione o Status</option>
-                                <?php
-                                $selectStatus = crud::listarStatus($idInstituicao);
-                                if ($selectStatus->rowCount() > 0) {
-                                    while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
-                                        ?>
-                                        <option value="<?php print($row['codStatus']); ?>">
-                                            <?php print($row['nome']); ?>
-                                        </option>
-                                    <?php
-                                }
-                            }
-                            ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                        <input type="text" size="50" class="form-control" name="emailAlterar" id="emailAlterar" placeholder="Informe e-mail separando por ; ">
-                    </div>
-                        <div class="form-group">
-                            <label for="message-text" class="control-label">Observação:</label>
-                            <textarea name="mensagemPedidoAlterar" class="form-control" rows="3" id="mensagemPedidoAlterar"></textarea>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                            <button type="submit" id="alteraPedido" class="btn btn-primary">Enviar</button>
-                        </div>
-                    </form>
-                </div>
-
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel1">Alterar Status do Pedido</h4>
             </div>
+            <div class="modal-body">
+                <form id="frmAlterarPedido" action="" method="post" enctype="multipart/form-data">
+                    <input type="hidden" value="AlterarPedido" name="tipo" id="tipo">
+                    <input type="hidden" id="codigoControleAlterar" name="codigoControleAlterar">
+                    <input type="hidden" id="dataFechamentoPedidoAlterar" name="dataFechamentoPedidoAlterar">
+                    <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataAtual" id="dataAtual">
+                    <input type="hidden" name="idInstituicaoAlterar" id="idInstituicaoAlterar">
+                    <div class="form-group">
+                        <select class="form-control" name="statusPedidoAlterar" id="statusPedidoAlterar" required>
+                            <option value="" selected disabled>Selecione o Status</option>
+                            <?php
+                            $selectStatus = crud::listarStatus($idInstituicao);
+                            if ($selectStatus->rowCount() > 0) {
+                                while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
+                                    ?>
+                                    <option value="<?php print($row['codStatus']); ?>">
+                                        <?php print($row['nome']); ?>
+                                    </option>
+                                <?php
+                            }
+                        }
+                        ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" size="50" class="form-control" name="emailAlterar" id="emailAlterar" placeholder="Informe e-mail separando por virgula ">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="control-label">Observação:</label>
+                        <textarea name="mensagemPedidoAlterar" class="form-control" rows="3" id="mensagemPedidoAlterar"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        <button type="submit" id="alteraPedido" class="btn btn-primary">Enviar</button>
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
+</div>
 </div>
 <!-- MODAL ALTERAR PEDIDO-->
 
 <!-- MODAL EXCLUIR -->
 <div class="modal fade" id="modalExluirPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="headermodal">Confirmação</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="frmExcluirPedido">
-                        <div class="row">
-                            <input type="hidden"  name="tipo" id="tipo" value="deletePedido">
-                            <input type="hidden"  name="ExcIdInstituicao" id="ExcIdInstituicao">
-                            <input type="hidden" name="excIdPedido" id="excIdPedido">
-                            <div class="col-md-12">
-                                <div id="contextoModal">
-                                    <h2>Você vai EXCLUIR pedido do Cliente: <span id="ExcNomePedido"></span>?</h2>
-                                </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="headermodal">Confirmação</h4>
+            </div>
+            <div class="modal-body">
+                <form id="frmExcluirPedido">
+                    <div class="row">
+                        <input type="hidden" name="tipo" id="tipo" value="deletePedido">
+                        <input type="hidden" name="ExcIdInstituicao" id="ExcIdInstituicao">
+                        <input type="hidden" name="excIdPedido" id="excIdPedido">
+                        <div class="col-md-12">
+                            <div id="contextoModal">
+                                <h2>Você vai EXCLUIR pedido do Cliente: <span id="ExcNomePedido"></span>?</h2>
                             </div>
                         </div>
-                    
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" id="btnExcluirPedido" class="btn btn-primary">Confirmar</button>
-                </div>
-                        </form>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <input type="text" size="50" class="form-control" name="emailExcluir" id="emailAlterar" placeholder="Informe e-mail separando por virgula ">
                         </div>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="btnExcluirPedido" class="btn btn-primary">Confirmar</button>
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
 </div>
 <!-- MODAL EXCLUIR -->
 
@@ -212,7 +220,7 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                             </tr>
                             <tr>
                                 <td>Valor</td>
-                                <td><span id="valorDetathes"></span></td>                                
+                                <td><span id="valorDetathes"></span></td>
                             </tr>
                             <tr>
                                 <td>Cadastrado em:</td>

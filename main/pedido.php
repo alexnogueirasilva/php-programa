@@ -167,6 +167,7 @@ if($logado != 1){$logado2 = 600;
                 <form id="frmAlterarPedido" action="" method="post" enctype="multipart/form-data">
                     <input type="hidden" value="AlterarPedido2" name="tipo" id="tipo">
                     <input type="hidden" id="codigoControleAlterar" name="codigoControleAlterar">
+                    <input type="hidden" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="idInstituicaoAlterar" id="idInstituicaoAlterar" placeholder="instituicao" required>
                     <input type="hidden" id="dataFechamentoPedidoAlterar" name="dataFechamentoPedidoAlterar">
                     <input type="hidden" id="dataFechamentoPedidoAlterar" name="dataFechamentoPedidoAlterar">
                     <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataAtual2" id="dataAtual2">
@@ -188,6 +189,18 @@ if($logado != 1){$logado2 = 600;
                         </select>
                     </div>
                     <div class="form-inline">
+                    <div class="form-group">
+                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroAfPedidoAlterar" id="numeroAfPedidoAlterar" placeholder="Numero da AF" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroLicitacaoPedidoAlterar" id="numeroLicitacaoPedidoAlterar" placeholder="Numero da licitacao" required>
+                        </div>                
+                    </div>
+                    <br>
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="13" class="form-control" name="valorPedidoAlterar" id="valorPedidoAlterar" placeholder="valor pedido" required>
+                        </div>
                         <div class="form-group">
                             <select class="form-control" name="statusPedidoAlterar" id="statusPedidoAlterar" required>
                                 <option value="" selected disabled>Selecione o Status</option>
@@ -205,24 +218,9 @@ if($logado != 1){$logado2 = 600;
                             ?>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <input type="text" size="36" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroAfPedidoAlterar" id="numeroAfPedidoAlterar" placeholder="Numero da AF" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" size="36" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroLicitacaoPedidoAlterar" id="numeroLicitacaoPedidoAlterar" placeholder="Numero da licitacao" required>
-                        </div>
+                        
                     </div>
-                    <br>
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="13" class="form-control" name="valorPedidoAlterar" id="valorPedidoAlterar" placeholder="valor pedido" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="hidden" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="idInstituicaoAlterar" id="idInstituicaoAlterar" placeholder="instituicao" required>
-                        </div>
-
-                    </div>
-
+                    <br>                    
                     <div class="form-group">
                         <label for="message-text" class="control-label">Observação:</label>
                         <textarea name="mensagemPedidoAlterar" class="form-control" rows="3" id="mensagemPedidoAlterar"></textarea>
@@ -233,6 +231,9 @@ if($logado != 1){$logado2 = 600;
                         <input type="text" style="text-transform" class="form-control" name="anexoAlterar" id="anexoAlterar" readonly="readonly">
                     </div>
                     <div class="modal-footer">
+                    <div class="form-group">
+                        <input type="text" size="50" class="form-control" name="emailAlterar" id="emailAlterar" placeholder="Informe e-mail separando por virgula ">
+                    </div>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                         <button type="submit" id="alteraPedido" class="btn btn-primary">Enviar</button>
                     </div>

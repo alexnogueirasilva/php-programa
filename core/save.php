@@ -496,6 +496,7 @@ switch ($value) {
 		$codStatus = $_POST['statusPedido'];
 		$codCliente = $_POST['nomeCliente'];
 		$observacao = $_POST['mensagem'];
+		$email = $_POST['email'];
 
 		//ENTRA AQUI SE TIVER ANEXO
 		if (!empty($_FILES["file"]["name"])) {
@@ -512,7 +513,7 @@ switch ($value) {
 				$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao);
 				if ($cdt == true) {
 					echo 1;
-					//enviaEmail();
+				crud::enviarEmailPedido($email);
 				} else {
 					echo 0;
 				}
@@ -525,6 +526,7 @@ switch ($value) {
 			$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao);
 			if ($cdt == true) {
 				echo 1;
+				crud::enviarEmailPedido($email);
 			} else {
 				echo 0;
 			}
@@ -545,6 +547,7 @@ switch ($value) {
 
 	case 'AlterarPedido2':
 		$codControle        = $_POST['codigoControleAlterar'];
+		$email		        = $_POST['emailAlterar'];
 		$statusPedido		= $_POST['statusPedidoAlterar'];
 		$mensagemAlterar    = $_POST['mensagemPedidoAlterar'];
 		$nomeCliente  		= $_POST['idClientePedidoAlterar'];
@@ -584,7 +587,7 @@ switch ($value) {
 
 				if ($cad == true) {
 					echo 1;
-					//enviaEmail();
+					crud::enviarEmailPedido($email);
 				} else {
 					echo 0;
 				}
@@ -597,6 +600,7 @@ switch ($value) {
 
 			if ($cad == true) {
 				echo 1;
+				crud::enviarEmailPedido($email);
 			} else {
 				echo 0;
 			}
@@ -612,7 +616,7 @@ switch ($value) {
 		$email		 		= $_POST['emailAlterar'];
 		$dataAlteracao 		= $_POST['dataAtual'];
 		$dataFechamento 	= $_POST['dataFechamentoPedidoAlterar'];
-		
+				
 		if($statusPedido == "16" || $statusPedido == "7"  || $statusPedido == "2"){
 			if($dataFechamento == ""){
 				$dataFechamento = $dataAlteracao;
@@ -631,11 +635,13 @@ switch ($value) {
 
 	case 'deletePedido':
 	
+		$email      = $_POST['emailExcluir'];
 		$id      = $_POST['excIdPedido'];
 		$idInstituicao = $_POST['ExcIdInstituicao'];
 		$cad = crud::deletePedido($id, $idInstituicao);
 		if ($cad == true) {
 			echo 1;
+			crud::enviarEmailPedido($email);
 		} else {
 			echo 0;
 		}

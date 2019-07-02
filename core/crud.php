@@ -244,7 +244,8 @@ class crud
 		}
 	}
 
-	public static function enviarEmail($email, $idInstituicao){
+	public static function enviarEmail($email, $idInstituicao)
+	{
 
 		$to = $email;
 		$valida = md5("$to");
@@ -1163,8 +1164,8 @@ class crud
 		$to = $email;
 
 				$subject = "Informacoes de Pedido"; // assunto
-				$message = "Validacao de cadastro  <br> " . "\r\n";
-				$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a>";
+				$message = "Inclusao ou alteracao de pedido no sistema <br><br> " . "\r\n";
+				$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a> <br>";
 				$headers = 'MIME-Version: 1.0' . "\r\n";
 				$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n";
 				$headers .= 'From:< noreply@sistemadevnogueira.online>' . "\r\n"; //email de envio
