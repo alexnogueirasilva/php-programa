@@ -161,7 +161,7 @@ if($logado != 1){$logado2 = 600;
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="exampleModalLabel1">AlterarAAA Status do Pedido</h4>
+                <h4 class="modal-title" id="exampleModalLabel1">Alterar Pedido</h4>
             </div>
             <div class="modal-body">
                 <form id="frmAlterarPedido" action="" method="post" enctype="multipart/form-data">
@@ -215,7 +215,7 @@ if($logado != 1){$logado2 = 600;
                     <br>
                     <div class="form-inline">
                         <div class="form-group">
-                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="valorPedidoAlterar" id="valorPedidoAlterar" placeholder="valor pedido" required>
+                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="13" class="form-control" name="valorPedidoAlterar" id="valorPedidoAlterar" placeholder="valor pedido" required>
                         </div>
                         <div class="form-group">
                             <input type="hidden" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="idInstituicaoAlterar" id="idInstituicaoAlterar" placeholder="instituicao" required>
@@ -243,34 +243,6 @@ if($logado != 1){$logado2 = 600;
     </div>
 </div>
 <!-- MODAL altera Pedido-->
-<!-- MODAL EXCLUIR -->
-<div class="modal fade" id="modalExluirPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="headermodal">Confirmação</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <input type="hidden" name="ExcIdInstituicao" id="ExcIdInstituicao">
-                    <input type="hidden" name="excIdPedido" id="excIdPedido">
-                    <div class="col-md-12">
-                        <div id="contextoModal">
-                            <h2>Você vai EXCLUIR pedido do Cliente: <span id="ExcNomePedido"></span>?</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                <button type="submit" id="btnExcluirPedido" class="btn btn-primary">Confirmar</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- MODAL EXCLUIR -->
-
 
 
 

@@ -3,14 +3,6 @@ permissaoNivel();
 //SETA O CÓDIGO NO FORMULARIO PARA CADASTRAR
 $("#frmCadastroPedido").on('submit', (function (e) {
     e.preventDefault();
-   /* var table = $("#tabela").val();
-    var nomeCliente = $("#nomeCliente").val();
-    var valorPedido = $("#valorPedido").val();
-    var statusPedido = $("#statusPedido").val();
-    var numeroAF = $("#numeroAf").val();
-    var mensagem = $("#mensagem").val();
-    var numeroPregao = $("#numeroPregao").val();*/
-    
     $.ajax({
         url: "../core/save.php",
         type: "POST",
@@ -23,7 +15,8 @@ $("#frmCadastroPedido").on('submit', (function (e) {
             $("#salvaPedido").prop("disabled", true);
         },
         success: function (data) {
-         //   alert("resultado data " + data);
+              alert("resultado data " + data);
+            
             if (data == 1) {
                 swal({
                     title: "OK!",
@@ -35,11 +28,12 @@ $("#frmCadastroPedido").on('submit', (function (e) {
                     function (isConfirm) {
                         if (isConfirm) {
                             $('#modalCadastrarPedido').modal('hide');
-                            location.reload(table);
-                            //      window.location = "cadastro.php";
+                            //location.reload(table);
+                            window.location.reload();// = "pedidoCancelado.php";
                         }
                     });
             } else {
+            
                 swal({
                     title: "Ops!",
                     text: "Algo deu errado!",
@@ -49,7 +43,9 @@ $("#frmCadastroPedido").on('submit', (function (e) {
                 },
                     function (isConfirm) {
                         if (isConfirm) {
-                            location.reload(table);
+                            // location.reload(table);
+                            $('#modalCadastrarPedido').modal('hide');
+                            window.location.reload();
                         }
                     });
             }
@@ -73,18 +69,18 @@ $(document).on("click", "#btnExcluiPedido", function () {
 //SETA O CÓDIGO NO MODAL PARA EXCLUIR
 
 //SETA O CÓDIGO NO FORMULARIO PARA EXCLUIR
-$('#btnExcluirPedido').click(function () {
-    var tipo = "deletePedido";
-    var idPedido = $('#excIdPedido').val();
-    var idInstituicao = $('#ExcNomePedido').val();
-    var idInstituicao = $('#ExcIdInstituicao').val();
+$('#frmExcluirPedido').on('submit',(function (e) {    
+    e.preventDefault();
     $.ajax({
-        url: '../core/save.php',
+        url: "../core/save.php",
         type: "POST",
-        data: {
-            tipo: tipo,
-            idPedido: idPedido,
-            idInstituicao: idInstituicao
+        data: new FormData(this),
+        contentType: false,
+        cache: false,
+        processData: false,
+        beforeSend: function () {
+            $("#btnExcluirPedido").html("<i class='fa fa-spinner fa-spin'></i> Enviando, aguarde...");
+            $("#btnExcluirPedido").prop("disabled", true);
         },
         success: function (result) {
             //alert(result);
@@ -120,12 +116,12 @@ $('#btnExcluirPedido').click(function () {
         }
     });
 
-});
+}));
 //SETA O CÓDIGO NO FORMULARIO PARA EXCLUIR
 
 //SETA O CÓDIGO NO MODAL PARA ATUALIZAR
 $(document).on("click", "#btnPedidoAlterar", function () {
- 
+
     var codigoControle = $(this).data('codigocontrolealterar');
     var statusAlterar = $(this).data('statusalterar');
     var mensagemAlterar = $(this).data('mensagemalterar');
@@ -143,13 +139,13 @@ $(document).on("click", "#btnPedidoAlterar", function () {
     $('#mensagemPedidoAlterar').val(mensagemAlterar);
     $('#dataAlteracaoPedidoAlterar').val(dataAlteracao);
     $('#dataFechamentoPedidoAlterar').val(dataFechamento);
-    $('#idClientePedidoAlterar').val(Cliente); 
-    $('#numeroAfPedidoAlterar').val(numeroAf); 
-    $('#numeroLicitacaoPedidoAlterar').val(numeroLicitacao); 
-    $('#valorPedidoAlterar').val(valorPedido); 
-    $('#anexoAlterar').val(anexoAlterar); 
-    $('#idInstituicaoAlterar').val(idInstituicao); 
-}); 
+    $('#idClientePedidoAlterar').val(Cliente);
+    $('#numeroAfPedidoAlterar').val(numeroAf);
+    $('#numeroLicitacaoPedidoAlterar').val(numeroLicitacao);
+    $('#valorPedidoAlterar').val(valorPedido);
+    $('#anexoAlterar').val(anexoAlterar);
+    $('#idInstituicaoAlterar').val(idInstituicao);
+});
 //SETA O CÓDIGO NO MODAL PARA ATUALIZAR
 
 //SETA O CÓDIGO NO FORMULARIO PARA ATUALIZAR
@@ -167,7 +163,7 @@ $("#frmAlterarPedido").on('submit', (function (e) {
             $("#alteraPedido").prop("disabled", true);
         },
         success: function (data) {
-           //alert(data);
+            //alert(data);
             if (data == 1) {
                 swal({
                     title: "OK!",

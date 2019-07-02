@@ -154,20 +154,24 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                     <h4 class="modal-title" id="headermodal">Confirmação</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <input type="hidden"  name="ExcIdInstituicao" id="ExcIdInstituicao">
-                        <input type="hidden" name="excIdPedido" id="excIdPedido">
-                        <div class="col-md-12">
-                            <div id="contextoModal">
-                                <h2>Você vai EXCLUIR pedido do Cliente: <span id="ExcNomePedido"></span>?</h2>
+                    <form id="frmExcluirPedido">
+                        <div class="row">
+                            <input type="hidden"  name="tipo" id="tipo" value="deletePedido">
+                            <input type="hidden"  name="ExcIdInstituicao" id="ExcIdInstituicao">
+                            <input type="hidden" name="excIdPedido" id="excIdPedido">
+                            <div class="col-md-12">
+                                <div id="contextoModal">
+                                    <h2>Você vai EXCLUIR pedido do Cliente: <span id="ExcNomePedido"></span>?</h2>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                     <button type="submit" id="btnExcluirPedido" class="btn btn-primary">Confirmar</button>
                 </div>
+                        </form>
+                        </div>
             </div>
         </div>
 </div>
