@@ -130,14 +130,17 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                         ?>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <input type="text" size="50" class="form-control" name="emailAlterar" id="emailAlterar" placeholder="Informe e-mail separando por virgula ">
-                    </div>
+                    
                     <div class="form-group">
                         <label for="message-text" class="control-label">Observação:</label>
                         <textarea name="mensagemPedidoAlterar" class="form-control" rows="3" id="mensagemPedidoAlterar"></textarea>
+                    <br>
+                    <div class="form-group">
+                        <input type="text" size="50" class="form-control" name="emailAlterar" id="emailAlterar" placeholder="Informe e-mail separando por virgula ">
+                    </div>
                     </div>
                     <div class="modal-footer">
+                    
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                         <button type="submit" id="alteraPedido" class="btn btn-primary">Enviar</button>
                     </div>
@@ -149,6 +152,7 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
 </div>
 </div>
 <!-- MODAL ALTERAR PEDIDO-->
+
 
 <!-- MODAL EXCLUIR -->
 <div class="modal fade" id="modalExluirPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
@@ -170,11 +174,11 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                             </div>
                         </div>
                     </div>
-
-                    <div class="modal-footer">
-                        <div class="form-group">
+                    <div class="form-group">
                             <input type="text" size="50" class="form-control" name="emailExcluir" id="emailExcluir" placeholder="Informe e-mail separando por virgula ">
                         </div>
+                    <div class="modal-footer">
+                        
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                         <button type="submit" id="btnExcluirPedido" class="btn btn-primary">Confirmar</button>
                     </div>
