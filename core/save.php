@@ -547,14 +547,14 @@ switch ($value) {
 
 	case 'AlterarPedido2':
 		$codControle        = $_POST['codigoControleAlterar'];
-		$email		        = $_POST['emailAlterar'];
+		$email		        = $_POST['emailAlterar2'];
 		$statusPedido		= $_POST['statusPedidoAlterar'];
 		$mensagemAlterar    = $_POST['mensagemPedidoAlterar'];
 		$nomeCliente  		= $_POST['idClientePedidoAlterar'];
 		$numeroAf         	= $_POST['numeroAfPedidoAlterar'];
 		$valorPedidoAtual   = $_POST['valorPedidoAlterar'];
 		$valorPedido 		= str_replace(",", ".", $valorPedidoAtual);
-		$idInstituicao = $_POST['idInstituicaoAlterar'];
+		$idInstituicao 		= $_POST['idInstituicaoAlterar'];
 		$numeroLicitacao    = $_POST['numeroLicitacaoPedidoAlterar'];
 		$anexoAlterar       = $_POST['anexoAlterar'];
 		$dataAbertura 		= $_POST['dataAtual2'];

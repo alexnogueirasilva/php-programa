@@ -15,7 +15,7 @@ $("#frmCadastroPedido").on('submit', (function (e) {
             $("#salvaPedido").prop("disabled", true);
         },
         success: function (data) {
-              alert("resultado data " + data);
+            //  alert("resultado data " + data);
             
             if (data == 1) {
                 swal({
@@ -163,7 +163,7 @@ $("#frmAlterarPedido").on('submit', (function (e) {
             $("#alteraPedido").prop("disabled", true);
         },
         success: function (data) {
-            alert(data);
+            //alert(data);
             if (data == 1) {
                 swal({
                     title: "OK!",

@@ -173,7 +173,7 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
 
                     <div class="modal-footer">
                         <div class="form-group">
-                            <input type="text" size="50" class="form-control" name="emailExcluir" id="emailAlterar" placeholder="Informe e-mail separando por virgula ">
+                            <input type="text" size="50" class="form-control" name="emailExcluir" id="emailExcluir" placeholder="Informe e-mail separando por virgula ">
                         </div>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                         <button type="submit" id="btnExcluirPedido" class="btn btn-primary">Confirmar</button>
