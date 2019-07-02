@@ -244,8 +244,7 @@ class crud
 		}
 	}
 
-	public static function enviarEmail($email, $idInstituicao)
-	{
+	public static function enviarEmail($email, $idInstituicao){
 
 		$to = $email;
 		$valida = md5("$to");
@@ -1159,5 +1158,19 @@ class crud
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute();		
 		return $stmt;
+	}
+	public static function enviarEmailPedido($email){
+		$to = $email;
+
+				$subject = "Informacoes de Pedido"; // assunto
+				$message = "Validacao de cadastro  <br> " . "\r\n";
+				$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a>";
+				$headers = 'MIME-Version: 1.0' . "\r\n";
+				$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n";
+				$headers .= 'From:< noreply@sistemadevnogueira.online>' . "\r\n"; //email de envio
+				//$headers .= 'CC:< programadorfsaba@gmail.com>' . "\r\n"; //email com copia
+			//	$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>' . "\r\n"; //email para resposta
+
+				mail($to, $subject, $message, $headers);
 	}
 }

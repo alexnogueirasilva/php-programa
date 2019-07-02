@@ -623,6 +623,7 @@ switch ($value) {
 		$cad = crud::AlterarPedido($codControle, $statusPedido, $mensagemAlterar, $idInstituicao,$dataAlteracao,$dataFechamento);
 		if ($cad == true) {
 			echo 1;
+			crud::enviarEmailPedido($email);
 		} else {
 			echo 0;
 		}
