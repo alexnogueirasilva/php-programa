@@ -621,7 +621,7 @@ switch ($value) {
 		$dataAlteracao 		= $_POST['dataAtual'];
 		$dataFechamento 	= $_POST['dataFechamentoPedidoAlterar'];
 		$subject 			= $_POST['subjectAlterar'];
-		$nomeUsuario			= $_POST['nomeUsuarioAlterar'];
+		$nomeUsuario		= $_POST['nomeUsuarioAlterar'];
 				
 		if($statusPedido == "16" || $statusPedido == "7"  || $statusPedido == "2"){
 			if($dataFechamento == ""){
@@ -641,11 +641,12 @@ switch ($value) {
 
 	case 'deletePedido':
 	
-		$email      = $_POST['emailExcluir'];
-		$id      = $_POST['excIdPedido'];
-		$idInstituicao = $_POST['ExcIdInstituicao'];
-		$nomeUsuario = $_POST['ExcnomeUsuario'];
-		$subject = $_POST['Excsubject'];
+		$email      	= $_POST['emailExcluir'];
+		$id      		= $_POST['excIdPedido'];
+		$idInstituicao 	= $_POST['ExcIdInstituicao'];
+		$nomeUsuario 	= $_POST['ExcnomeUsuario'];
+		$subject 		= $_POST['Excsubject'];
+		
 		$cad = crud::deletePedido($id, $idInstituicao);
 		if ($cad == true) {
 			echo 1;
@@ -656,11 +657,11 @@ switch ($value) {
 		break;
 
 	case 'adicionaMensagemPedido':
-		$idLogado = $_POST['idLogado'];
-		$dataHora = $_POST['datahora'];
-		$codDemanda = $_POST['codPedido'];
-		$mensagem = $_POST['mensagem'];
-		$idInstituicao = $_POST['idInstituicao'];
+		$idLogado 		= $_POST['idLogado'];
+		$dataHora 		= $_POST['datahora'];
+		$codDemanda		= $_POST['codPedido'];
+		$mensagem 		= $_POST['mensagem'];
+		$idInstituicao 	= $_POST['idInstituicao'];
 
 		$cdt = crud::addMensagem($idLogado, $dataHora, $codDemanda, $mensagem, $idInstituicao);
 		if ($cdt == true) {
