@@ -169,6 +169,7 @@ if($logado != 1){$logado2 = 600;
                     <input type="hidden" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="idInstituicaoAlterar" id="idInstituicaoAlterar" placeholder="instituicao" required>
                     <input type="hidden" id="dataFechamentoPedidoAlterar" name="dataFechamentoPedidoAlterar">
                     <input type="hidden" id="dataFechamentoPedidoAlterar" name="dataFechamentoPedidoAlterar">
+                    <input type="hidden" value="<?php echo $nomeUsuario; ?>" name="nomeUsuarioAlterar2" id="nomeUsuarioAlterar2">
                     <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataAtual2" id="dataAtual2">
                     <div class="form-group">
                         <select class="form-control" name="idClientePedidoAlterar" id="idClientePedidoAlterar" required>
