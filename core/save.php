@@ -497,7 +497,7 @@ switch ($value) {
 		$codCliente = $_POST['nomeCliente'];
 		$observacao = $_POST['mensagem'];
 		$email = $_POST['email'];
-		$subject = $_POST['$subject'];
+		$subject = $_POST['subject'];
 
 		//ENTRA AQUI SE TIVER ANEXO
 		if (!empty($_FILES["file"]["name"])) {
@@ -560,7 +560,7 @@ switch ($value) {
 		$anexoAlterar       = $_POST['anexoAlterar'];
 		$dataAbertura 		= $_POST['dataAtual2'];
 		$dataAlteracao 		= $_POST['dataAtual2'];
-		$subject			= $_POST['subjectAletar2'];
+		$subject			= $_POST['subjectAlterar2'];
 		//ENTRA AQUI SE TIVER ANEXO
 		if (!empty($_FILES["file"]["name"])) {
 
@@ -618,7 +618,7 @@ switch ($value) {
 		$email		 		= $_POST['emailAlterar'];
 		$dataAlteracao 		= $_POST['dataAtual'];
 		$dataFechamento 	= $_POST['dataFechamentoPedidoAlterar'];
-		$subject 	= $_POST['subjectAlterar'];
+		$subject 			= $_POST['subjectAlterar'];
 				
 		if($statusPedido == "16" || $statusPedido == "7"  || $statusPedido == "2"){
 			if($dataFechamento == ""){

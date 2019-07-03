@@ -165,7 +165,7 @@ if($logado != 1){$logado2 = 600;
                 <form id="frmAlterarPedido" action="" method="post" enctype="multipart/form-data">
                     <input type="hidden" value="AlterarPedido2" name="tipo" id="tipo">
                     <input type="hidden" id="codigoControleAlterar" name="codigoControleAlterar">
-                    <input type="hidden" id="subjectAlterar2" name="subjectAlterar" value="Cadastro de Pedido">
+                    <input type="hidden" id="subjectAlterar2" name="subjectAlterar2" value="Cadastro de Pedido">
                     <input type="hidden" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="idInstituicaoAlterar" id="idInstituicaoAlterar" placeholder="instituicao" required>
                     <input type="hidden" id="dataFechamentoPedidoAlterar" name="dataFechamentoPedidoAlterar">
                     <input type="hidden" id="dataFechamentoPedidoAlterar" name="dataFechamentoPedidoAlterar">
