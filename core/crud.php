@@ -1164,7 +1164,7 @@ class crud
 	public static function enviarEmailPedido($email,$subject,$nomeUsuario){
 		$to = $email;
 		
-		$nomeUsuario
+		
 				//$subject = "Informacoes de Pedido"; // assunto
 				$message = "Usuario: " .$nomeUsuario. " Efetuou movimentacao de pedido no sistema <br><br> " . "\r\n";
 				$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a> <br>";
