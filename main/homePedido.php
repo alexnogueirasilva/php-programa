@@ -238,7 +238,7 @@ $arrayPedidoAberto = $totalPedidoAberto->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <?php
-require_once "rodape.php";
+	require_once "rodape.php";
 ?>
 <script type="text/javascript">
 	google.charts.load('current', {
@@ -258,7 +258,12 @@ require_once "rodape.php";
 		]);
 
 		var options = {
-			title: 'Pedidos Por Status'
+			title: 'Pedidos Por Status',
+			width: 390,
+			height: 300,
+			bar: {
+				groupWidth: "100%"
+			}
 		};
 
 		var chart = new google.visualization.PieChart(document.getElementById('graficoPedido1'));
@@ -276,18 +281,17 @@ require_once "rodape.php";
 		//	alert(atendido);
 
 		var data = google.visualization.arrayToDataTable([
-			['Task', 'Hours per Day'],
+			['Task', 'Quantidade'],
 			//['Element', 'Density',{role: "style"}],
 			['Pendente', parseInt(pendente)],
 			['Atendido', parseInt(atendido)],
 			['Cancelado', parseInt(cancelado)],
 			['Todos', parseInt(todos)],
-
 		]);
 
 		var options = {
 			title: 'Pedidos Por Status',
-			width: 300,
+			width: 390,
 			height: 300,
 			bar: {
 				groupWidth: "100%"
@@ -296,7 +300,6 @@ require_once "rodape.php";
 				position: "none"
 			}
 		};
-
 		var chart = new google.visualization.LineChart(document.getElementById('graficoPedido'));
 
 		chart.draw(data, options);
