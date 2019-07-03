@@ -1160,10 +1160,10 @@ class crud
 		$stmt->execute();		
 		return $stmt;
 	}
-	public static function enviarEmailPedido($email){
+	public static function enviarEmailPedido($email,$subject){
 		$to = $email;
 
-				$subject = "Informacoes de Pedido"; // assunto
+				//$subject = "Informacoes de Pedido"; // assunto
 				$message = "Inclusao ou alteracao de pedido no sistema <br><br> " . "\r\n";
 				$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a> <br>";
 				$headers = 'MIME-Version: 1.0' . "\r\n";

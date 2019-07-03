@@ -4,8 +4,6 @@ require_once '../vendor/autoload.php';
 include_once 'vrf_lgin.php';
 include_once '../core/crud.php';
 
-$queryAnvisa = " SELECT * FROM anvisa ORDER BY substancia ";
-
 ?>
 <div class="container-fluid">
 	<div class="row bg-title">
@@ -15,61 +13,66 @@ $queryAnvisa = " SELECT * FROM anvisa ORDER BY substancia ";
 		<!-- /.col-lg-12 -->
 	</div>
 	
-	<h1>Cadastra Produtos</h1>
+	<h1>Cadastra Departamento</h1>
+	<h4>Insira os dados do Departamento</h4>
+	<form id="frmCadDep">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="form-inline">
+					<div class="form-group">						
+						<div class="input-group">
+							<input type="text" class="form-control" size="200" name="nomeDep" id="nomeDep" placeholder="Nome do departamento" required >
+							<span class="input-group-addon"><span class="fa fa-cubes"></span></span>
+						</div>
+					</div>					
+				</div>				
+				<br><br>
+				<button type="submit" class="btn btn-info btn-lg btn-block" id="submit"><span class="fa fa-save"></span> Salvar</button>
+			</div>
+
+		</div>
+	</form>
 		<div class="row">
 		<div class="col-sm-12"> 
 			<div class="white-box">
 				<hr>
 
 				<div class="col-sm-6"> 
-					<h3>Lista de Produtos</h3>
+					<h3>Lista de Departamentos</h3>
 				</div>
 
 				<table id="tabela" class="table table-striped">
 					<thead>
 						<tr>
-							<th>nome Comercial</th>
-							<th>Principio ativo</th>							                           
-							<th>Fabricante</th>							                           
-							<th>Registro</th>							                           														                           
-							<th>Apresentacao</th>							                           
+							<th>Código</th>
+							<th>Nome</th>							                           
 							<th>Editar</th>                    
 							<th>Excluir</th>                    
 						</tr>
 						<tfoot>
 						<tr>
-							<th>nome Comercial</th>
-							<th>Principio ativo</th>							                           
-							<th>Fabricante</th>							                           
-							<th>Registro</th>								                           
-							<th>Apresentacao</th>							                           
+							<th>Código</th>
+							<th>Nome</th>							                           
 							<th>Editar</th>                    
-							<th>Excluir</th>                     
+							<th>Excluir</th>                    
 						</tr>
 						</tfoot>
 					</thead>
 					<tbody>
 
 						<?php
-						$dados = crud::dataview($queryAnvisa);
+						$dados = crud::mostraDep();
                                        
 						if($dados->rowCount()>0){
 							while($row=$dados->fetch(PDO::FETCH_ASSOC)){
 
 								?> 
 								<tr>
-									<td><?php print($row['nome_comercial']); ?></td>
-									<td><?php print($row['substancia']); ?></td>
-									<td><?php print($row['fabricante']); ?></td>
-									<td><?php print($row['registro']); ?></td>
-									<td><?php print($row['cod_barras']); ?></td>
-									<td><?php print($row['apresentacao']); ?></td>
-									<td><a class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#modalDetalhesAnvisa" data-whatever="@getbootstrap" id="btnDetalhes" class="btn btn-danger waves-effect waves-light" 
-									data-fabricante="<?php print($row['fabricante']); ?>" data-registro="<?php print($row['registro']); ?>"
-									data-substancia="<?php print($row['substancia']); ?>" data-apresentacao="<?php print($row['apresentacao']); ?>" data-lista="<?php print($row['lista']); ?>"
-									data-cnpj="<?php print($row['cnpj']); ?>" data-nomecomercial="<?php print($row['nome_comercial']); ?>">Detalhes</a></td>
+									<td><?php print($row['id']); ?></td>
+									<td><?php print($row['nome']); ?></td>
+									<td><a class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#modalEditDep" data-whatever="@getbootstrap" id="btnEditar" class="btn btn-danger waves-effect waves-light" data-codigo="<?php print($row['id']); ?>" data-nome="<?php print($row['nome']); ?>">Editar</a></td>
 									
-									<td><a class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#modalDeleteDep" data-whatever="@getbootstrap" id="btnExcluir" class="btn btn-info waves-effect waves-light" >Excluir</a></td>         
+									<td><a class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#modalDeleteDep" data-whatever="@getbootstrap" id="btnExcluir" class="btn btn-info waves-effect waves-light" data-codigo="<?php print($row['id']); ?>" data-nome="<?php print($row['nome']); ?>">Excluir</a></td>         
 								</tr>
 								<?php 
 							}
@@ -81,100 +84,12 @@ $queryAnvisa = " SELECT * FROM anvisa ORDER BY substancia ";
 
 					</tbody>
 				</table>
+				
 			</div>
 		</div>
 	</div>
 </div>
 </div>
-
-<!-- MODAL detalhe do Pedido-->
-<div class="modal fade bs-example-modal-lg" id="modalDetalhesAnvisa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="exampleModalLabel1">Detalhes do Pedido</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <table id="" class="table table-striped">
-                            <tr>
-                                <td>Código</td>
-                                <td><span id="codigoDetalhes"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Nome Cliente</td>
-                                <td><span id="nomeClienteDetalhes"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Tipo</td>
-                                <td><span id="tipoClienteDetalhes"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Licitacao</td>
-                                <td><span id="licitacaoDetalhes"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Pedido</td>
-                                <td><span id="pedidoDetalhes"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Valor</td>
-                                <td><span id="valorDetathes"></span></td>                                
-                            </tr>
-                            <tr>
-                                <td>Cadastrado em:</td>
-                                <td><span id="dataCriacaoDetalhes"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Status</td>
-                                <td id="statusDetalhes"></td>
-                            </tr>
-                            <tr>
-                                <th>Decorridos</th>
-                                <td id="tempoDetalhes"></td>
-                            </tr>
-                            <tr>
-                                <td>Mensagem</td>
-                                <td id="mensagemDetatalhes"></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-12">
-                        <h4><strong>Comentários:</strong></h4>
-                        <table class="table table-striped">
-                            <tbody id="comentariosPedido">
-
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="col-md-12">
-                        <form id="frmAddMensagem">
-                            <input type="hidden" value="<?php echo $idLogado; ?>" name="idLogado" id="idLogado">
-                            <input type="hidden" value="<?php echo $dataMsg; ?>" name="datahora" id="datahora">
-                            <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoMensagem" id="idInstituicaoMensagem">
-                            <div class="form-group">
-                                <label for="message-text" class="control-label">Adicionar Comentário</label>
-                                <textarea name="mensagemComentario" class="form-control" rows="2" id="mensagemComentario" required></textarea>
-                            </div>
-                            <button type="submit" id="addMensagem" class="btn btn-primary">Enviar</button>
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <td><a class="btn btn-primary waves-effect waves-light" type="button" id="btnPedidoAlterar2" data-toggle="modal" data-target="#modalPedidoAlterar" data-whatever="@getbootstrap" value="<?php echo $idControle; ?>" target="_blank" data-codigocontrolealterar="<?php print($row['codControle']); ?>">Alterar</a></td>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- MODAL detalhe-->
 
 <div class="modal fade" id="modalEditDep" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
         <div class="modal-dialog" role="document">
@@ -211,9 +126,9 @@ $queryAnvisa = " SELECT * FROM anvisa ORDER BY substancia ";
                 </div>
             </div>
         </div>
-    </div>
+</div>
 
-    <div class="modal fade" id="modalDeleteDep" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+<div class="modal fade" id="modalDeleteDep" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header" >
@@ -248,7 +163,9 @@ $queryAnvisa = " SELECT * FROM anvisa ORDER BY substancia ";
                 </div>
             </div>
         </div>
-    </div>
+</div>
+
+
 
 
 <?php

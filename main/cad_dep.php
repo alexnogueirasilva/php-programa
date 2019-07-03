@@ -84,6 +84,7 @@ include_once '../core/crud.php';
 
 					</tbody>
 				</table>
+				
 			</div>
 		</div>
 	</div>
@@ -125,9 +126,9 @@ include_once '../core/crud.php';
                 </div>
             </div>
         </div>
-    </div>
+</div>
 
-    <div class="modal fade" id="modalDeleteDep" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+<div class="modal fade" id="modalDeleteDep" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header" >
@@ -162,7 +163,9 @@ include_once '../core/crud.php';
                 </div>
             </div>
         </div>
-    </div>
+</div>
+
+
 
 
 <?php

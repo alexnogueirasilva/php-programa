@@ -25,6 +25,7 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                 <form id="frmCadastroPedido" action="" method="post" enctype="multipart/form-data">
                     <input type="hidden" value="CadastroPedido" name="tipo" id="tipo">
                     <input type="hidden" value="<?php echo $nomeAnexo; ?>" name="dataAtual" id="dataAtual">
+                    <input type="hidden" value="Cadastro de Pedido" name="subject" id="subject">
                     <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicao" id="idInstituicao">
                     <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataCadastro" id="dataCadastro">
                     <div class="form-group">
@@ -110,6 +111,7 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                 <form id="frmAlterarPedido" action="" method="post" enctype="multipart/form-data">
                     <input type="hidden" value="AlterarPedido" name="tipo" id="tipo">
                     <input type="hidden" id="codigoControleAlterar" name="codigoControleAlterar">
+                    <input type="hidden" id="subjectAlterar" name="subjectAlterar" value="Alteração do Pedido">
                     <input type="hidden" id="dataFechamentoPedidoAlterar" name="dataFechamentoPedidoAlterar">
                     <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataAtual" id="dataAtual">
                     <input type="hidden" name="idInstituicaoAlterar" id="idInstituicaoAlterar">
@@ -167,6 +169,7 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                     <div class="row">
                         <input type="hidden" name="tipo" id="tipo" value="deletePedido">
                         <input type="hidden" name="ExcIdInstituicao" id="ExcIdInstituicao">
+                        <input type="hidden" name="Excsubject" id="Excsubject" value="Exclusao de Pedido">
                         <input type="hidden" name="excIdPedido" id="excIdPedido">
                         <div class="col-md-12">
                             <div id="contextoModal">
