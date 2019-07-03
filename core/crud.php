@@ -1,9 +1,10 @@
 <?php
+$logado         = $_SESSION['nomeUsuario'];
 include_once 'conex.php';
 
 class crud
 {
-	$logado         = $_SESSION['nomeUsuario'];
+	
 
 	//Aqui fazemos a verificação do login do usuário e do seu nível de acesso
 	public static function pesquisaLoginUsr($nome, $senha)
