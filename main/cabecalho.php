@@ -120,6 +120,16 @@ $dataAtual = date('Y-m-d H:i:s');
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
+                    <li> <a id="cadPedidos" href="#" class="waves-effect"><i class="icon-envelope fa-fw"></i>Cadastro Pedido<span class="fa arrow"></span> </a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="pedidoAtendido.php">Atendidos</a></li>
+                            <li><a href="pedidoCancelado.php">Cancelados</a></li>
+                            <li><a href="pedidoPendente.php">Pendente</a></li>
+                            <li><a href="pedido.php">Todos </a></li>
+                            <li><a href="pedidoHome.php">Dashboard</a></li>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
                     <li id="cadLogin"> <a href="#" class="waves-effect"><i class="icon-graph fa-fw"></i> Gerência<span class="fa arrow"></span> </a>
                         <ul class="nav nav-second-level">                           
                             <li><a href="cad_user.php">Cadastros Usuários</a></li>
@@ -128,8 +138,7 @@ $dataAtual = date('Y-m-d H:i:s');
                             <li><a href="cad_instituicao.php">Cadastro Instituicao</a></li>
                             <li><a href="demanda.php">Cadastro Demanda</a></li>                            
                             <li><a href="cad_sla.php">Cadastros SLAs</a></li>
-                            <li><a href="cad_representante.php">Cadastros Representante</a></li>                              
-                            <li><a href="pedido.php">Cadastros Pedidos  </a></li>
+                            <li><a href="cad_representante.php">Cadastros Representante</a></li>                                                          
                             <li><a href="Home.php">Dashboard</a></li>
                             <li><a href="cad_status.php">Cadastros Status  </a></li>
                             <li><a href="lista_todas.php">Listar Todas Demandas</a></li>
