@@ -50,7 +50,7 @@ if($logado != 1){$logado2 = 600;
     <div class="row">
         <div class="col-md-12">
             <button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalCadastrarPedido" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-plus"></i></span>Cadastrar Pedido</button>
-            <button class="btn btn-success waves-effect waves-light" type="button" onclick="window.location.href = 'homePedido.php'" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-home"></i></span>Home</button>
+            <button class="btn btn-success waves-effect waves-light" type="button" onclick="window.location.href = 'pedidoHome.php'" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-home"></i></span>Home</button>
         </div>
         <form id="frmIndex" method="post">
             <div class="row">
