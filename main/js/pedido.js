@@ -375,7 +375,7 @@ $("#frmSuportePedido").on('submit', (function (e) {
             $("#btnSuporte").prop("disabled", true);
         },
         success: function (data) {
-            //  alert("resultado data " + data);
+             alert("resultado data " + data);
             
             if (data == 1) {
                 swal({
