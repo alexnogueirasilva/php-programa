@@ -168,6 +168,7 @@ $("#frmAlterarPedido").on('submit', (function (e) {
         },
         success: function (data) {
             alert(data);
+            alert("teste");
             if (data == 1) {
                 swal({
                     title: "OK!",
@@ -195,7 +196,7 @@ $("#frmAlterarPedido").on('submit', (function (e) {
                     function (isConfirm) {
                          
                         if (isConfirm) {
-alert("teste");
+
                            $('#modalPedidoAlterar').modal('hide');  
                            $('#erro').val(data);
                            $('#modalSuportePedido').modal('show');  
