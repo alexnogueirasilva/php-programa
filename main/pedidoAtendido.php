@@ -111,7 +111,7 @@ if($logado != 1){$logado2 = 600;
                                     $datatime2 = new DateTime($dataAtual);
                                     $codStatus = $row['codStatus'];
                                     if($codStatus == "16" || $codStatus == "7" || $codStatus == "2"){
-                                        $datatime1 =  new DateTime($row['dataFechamento']);
+                                        $datatime2 =  new DateTime($row['dataFechamento']);
                                     }
                                            
                                     $data1  = $datatime1->format('Y-m-d H:i');
