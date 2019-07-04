@@ -167,8 +167,8 @@ $("#frmAlterarPedido").on('submit', (function (e) {
             $("#alteraPedido").prop("disabled", true);
         },
         success: function (data) {
-            alert(data);
-            alert("teste");
+            //alert(data);
+           
             if (data == 1) {
                 swal({
                     title: "OK!",
@@ -191,10 +191,8 @@ $("#frmAlterarPedido").on('submit', (function (e) {
                     type: "error",
                     confirmButtonText: "Fechar",
                     closeOnConfirm: true
-                },
-                
+                },                
                     function (isConfirm) {
-                         
                         if (isConfirm) {
 
                            $('#modalPedidoAlterar').modal('hide');  
