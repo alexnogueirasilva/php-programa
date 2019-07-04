@@ -515,7 +515,9 @@ switch ($value) {
 				$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao);
 				if ($cdt == true) {
 					echo 1;
-				crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+					if(!$email ==''){
+						crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+					}
 				} else {
 					echo 0;
 				}
@@ -528,7 +530,9 @@ switch ($value) {
 			$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao);
 			if ($cdt == true) {
 				echo 1;
-				crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+				if(!$email ==''){
+					crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+				}
 			} else {
 				echo 0;
 			}
@@ -591,7 +595,9 @@ switch ($value) {
 
 				if ($cad == true) {
 					echo 1;
-					crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+					if(!$email ==''){
+						crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+					}
 				} else {
 					echo 0;
 				}
@@ -604,7 +610,9 @@ switch ($value) {
 
 			if ($cad == true) {
 				echo 1;
-				crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+				if(!$email ==''){
+					crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+				}
 			} else {
 				echo 0;
 			}
@@ -614,7 +622,7 @@ switch ($value) {
 	case 'AlterarPedido':
 
 		$statusPedido		= $_POST['statusPedidoAlterar'];
-		$codControle        = $_POST['codigoControleAlterar'];
+		$codControle        = $_POST['codigoControleAlterar.'];
 		$mensagemAlterar    = $_POST['mensagemPedidoAlterar'];
 		$idInstituicao 		= $_POST['idInstituicaoAlterar'];
 		$email		 		= $_POST['emailAlterar'];
@@ -633,7 +641,9 @@ switch ($value) {
 		$cad = crud::AlterarPedido($codControle, $statusPedido, $mensagemAlterar, $idInstituicao,$dataAlteracao,$dataFechamento);
 		if ($cad == true) {
 			echo 1;
-			crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+			if(!$email ==''){
+				crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+			}
 		} else {
 			echo 0;
 		}
@@ -650,7 +660,10 @@ switch ($value) {
 		$cad = crud::deletePedido($id, $idInstituicao);
 		if ($cad == true) {
 			echo 1;
-			crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+			if(!$email ==''){
+				crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+			}
+
 		} else {
 			echo 0;
 		}
@@ -811,5 +824,17 @@ switch ($value) {
 		} else {
 			echo 0;
 		}
+		break;
+
+
+		case 'suporte':
+
+		$nomeUsuario 	= $_POST['nomeUsuarioSuporte'];
+		$mensagem = $_POST['mensagemPedidoSuporte'];
+		$erro = $_POST['erro'];
+		$email			 = $_POST['emailSuporte'];
+		$data = $_POST['dataSuporte'];
+		
+		crud::enviarEmailSuporte($email,$mensagem,$nomeUsuario,$erro,$data);
 		break;
 }

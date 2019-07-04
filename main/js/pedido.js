@@ -15,7 +15,7 @@ $("#frmCadastroPedido").on('submit', (function (e) {
             $("#salvaPedido").prop("disabled", true);
         },
         success: function (data) {
-            //  alert("resultado data " + data);
+            // alert("resultado data " + data);
             
             if (data == 1) {
                 swal({
@@ -39,13 +39,15 @@ $("#frmCadastroPedido").on('submit', (function (e) {
                     text: "Algo deu errado!",
                     type: "error",
                     confirmButtonText: "Fechar",
-                    closeOnConfirm: false
+                    closeOnConfirm: true//false
                 },
                     function (isConfirm) {
                         if (isConfirm) {
                             // location.reload(table);
                             $('#modalCadastrarPedido').modal('hide');
-                            window.location.reload();
+                            $('#erro').val(data);
+                            $('#modalSuportePedido').modal('show');
+                          //  window.location.reload();
                         }
                     });
             }
@@ -103,12 +105,14 @@ $('#frmExcluirPedido').on('submit',(function (e) {
                     text: "Algo deu errado!",
                     type: "error",
                     confirmButtonText: "Fechar",
-                    closeOnConfirm: false
+                    closeOnConfirm: true// false
                 },
                     function (isConfirm) {
                         if (isConfirm) {
                             $('#modalExluirPedido').modal('hide');
-                            location.reload(table);
+                            $('#erro').val(result);
+                            $('#modalSuportePedido').modal('show');
+                           // location.reload(table);
                         }
                     });
             }
@@ -185,14 +189,20 @@ $("#frmAlterarPedido").on('submit', (function (e) {
                     text: "Algo deu errado!",
                     type: "error",
                     confirmButtonText: "Fechar",
-                    closeOnConfirm: false
+                    closeOnConfirm: true
                 },
+                
                     function (isConfirm) {
+                         
                         if (isConfirm) {
-                            $('#modalPedidoAlterar').modal('hide');
-                            window.location.reload();// = "pedidoCancelado.php";
+
+                           $('#modalPedidoAlterar').modal('hide');  
+                           $('#erro').val(data);
+                           $('#modalSuportePedido').modal('show');  
+                           // window.location.reload();// = "pedidoCancelado.php";
                         }
                     });
+
             }
         }
     });
@@ -349,3 +359,57 @@ $("tr #statusControle").each(function (i) {
         this.style.color = "White";
     }
 });
+
+//SETA O CÓDIGO NO FORMULARIO PARA SUPORTE
+$("#frmSuportePedido").on('submit', (function (e) {
+    e.preventDefault();
+    $.ajax({
+        url: "../core/save.php",
+        type: "POST",
+        data: new FormData(this),
+        contentType: false,
+        cache: false,
+        processData: false,
+        beforeSend: function () {
+            $("#btnSuporte").html("<i class='fa fa-spinner fa-spin'></i> Enviando, aguarde...");
+            $("#btnSuporte").prop("disabled", true);
+        },
+        success: function (data) {
+            //  alert("resultado data " + data);
+            
+            if (data == 1) {
+                swal({
+                    title: "OK!",
+                    text: "E-mail enviado com Sucesso!",
+                    type: "success",
+                    confirmButtonText: "Fechar",
+                    closeOnConfirm: false
+                },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            $('#modalSuportePedido').modal('hide');
+                            //location.reload(table);
+                            window.location.reload();// = "pedidoCancelado.php";
+                        }
+                    });
+            } else {
+            
+                swal({
+                    title: "Ops!",
+                    text: "Algo deu errado!",
+                    type: "error",
+                    confirmButtonText: "Fechar",
+                    closeOnConfirm: false
+                },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            // location.reload(table);
+                            $('#modalSuportePedido').modal('hide');
+                            window.location.reload();
+                        }
+                    });
+            }
+        }
+    });
+}));
+//SETA O CÓDIGO NO FORMULARIO PARA SUPORTE

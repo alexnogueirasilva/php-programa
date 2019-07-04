@@ -154,7 +154,7 @@ $nomeUsuario
         </div>
     </div>
 </div>
-</div>
+
 <!-- MODAL ALTERAR PEDIDO-->
 
 
@@ -309,6 +309,46 @@ $nomeUsuario
     </div>
 </div>
 <!-- MODAL anexo do Pedido-->
+
+<!-- MODAL SUPORTE-->
+<div class="modal fade" id="modalSuportePedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel1">Suporte</h4>
+            </div>
+            <div class="modal-body">
+                <form id="frmSuportePedido" action="" method="post" enctype="multipart/form-data">
+                    <input type="hidden" value="suporte" name="tipo" id="tipo">
+                    <input type="hidden" name="erro" id="erro">
+                    <input type="hidden" value="<?php echo $nomeUsuario; ?>" name="nomeUsuarioSuporte" id="nomeUsuarioSuporte">
+                    <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataSuporte" id="dataSuporte">
+                    <div class="form-group">
+                        
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message-text" class="control-label">Observação:</label>
+                        <textarea name="mensagemPedidoSuporte" class="form-control" rows="3" id="mensagemPedidoSuporte"></textarea>
+                    <br>
+                    <div class="form-group">
+                        <input type="text" size="50" class="form-control" value="<?php echo $emailLogado; ?>"  name="emailSuporte" id="emailSuporte" placeholder="Informe e-mail separando por virgula ">
+                    </div>
+                    </div>
+                    <div class="modal-footer">                    
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        <button type="submit" id="btnSuporte" class="btn btn-primary">Enviar</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- MODAL SUPORTE-->
+
 
 <!-- UPLOAD DE ARQUIVOS -->
 <script src="js/jquery.form.js"></script>

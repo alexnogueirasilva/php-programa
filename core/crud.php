@@ -1176,4 +1176,21 @@ class crud
 
 				mail($to, $subject, $message, $headers);
 	}
+	public static function enviarEmailSuporte($email,$mensagem,$nomeUsuario,$erro,$data){
+		
+		$to = 'suporte@sistemadevnogueira.online';
+		
+				$subject = "Erro no sistema"; // assunto
+				$message = "Usuario: " .$nomeUsuario. " identificou o erro no sistema <br><br> " . "\r\n";
+				$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a> <br><br><br> " . "\r\n";
+				$message .= "error ".$erro. " "  . "\r\n";
+				$message .= "favor da tratamento" . "\r\n";
+				$headers = 'MIME-Version: 1.0' . "\r\n";
+				$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n";
+				$headers .= 'From:< noreply@sistemadevnogueira.online>' . "\r\n"; //email de envio
+				$headers .= 'CC:< '.$email.'' . "\r\n"; //email com copia
+				$headers .= 'Reply-To: <suporte@sistemadevnogueira.online>' . "\r\n"; //email para resposta
+
+				mail($to, $subject, $message, $headers);
+	}
 }
