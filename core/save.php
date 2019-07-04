@@ -835,11 +835,7 @@ switch ($value) {
 		$email			 = $_POST['emailSuporte'];
 		$data = $_POST['dataSuporte'];
 		//echo $nomeUsuario .' mensagem '. $mensagem. ' erro ' . $erro .'  email '.$email.' data ' .$data ;
-		$cdt = crud::enviarEmailSuporte( $email,$mensagem,$nomeUsuario,$erro,$data);
-		if ($cdt == true) {	
-		echo 1;
-		}else{
-			echo 0;
-		}
+		crud::enviarEmailSuporte( $email,$mensagem,$nomeUsuario,$erro,$data);
+		
 		break;
 }

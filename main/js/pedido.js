@@ -375,39 +375,9 @@ $("#frmSuportePedido").on('submit', (function (e) {
         },
         success: function (data) {
              alert("resultado data " + data);
+             $('#modalSuportePedido').modal('hide');
+                window.location.reload();
             
-            if (data == 1) {
-                swal({
-                    title: "OK!",
-                    text: "E-mail enviado com Sucesso!",
-                    type: "success",
-                    confirmButtonText: "Fechar",
-                    closeOnConfirm: false
-                },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            $('#modalSuportePedido').modal('hide');
-                            //location.reload(table);
-                            window.location.reload();// = "pedidoCancelado.php";
-                        }
-                    });
-            } else {
-            
-                swal({
-                    title: "Ops!",
-                    text: "Algo deu errado!",
-                    type: "error",
-                    confirmButtonText: "Fechar",
-                    closeOnConfirm: false
-                },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            // location.reload(table);
-                            $('#modalSuportePedido').modal('hide');
-                            window.location.reload();
-                        }
-                    });
-            }
         }
     });
 }));
