@@ -1188,7 +1188,8 @@ class crud
 				$headers = 'MIME-Version: 1.0' . "\r\n";
 				$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n";
 				$headers .= 'From:< noreply@sistemadevnogueira.online>' . "\r\n"; //email de envio
-				$headers .= 'CC:< '.$email." ". "\r\n"; //email com copia
+				$headers .= 'CC:<vendas2@fabmed.com.br >' . "\r\n"; //email com copia
+				//$headers .= 'CC:< '.$ email." ". "\r\n"; //email com copia
 				$headers .= 'Reply-To: <suporte@sistemadevnogueira.online>' . "\r\n"; //email para resposta
 
 				mail($to, $subject, $message, $headers);

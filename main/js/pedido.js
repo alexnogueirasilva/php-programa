@@ -373,8 +373,8 @@ $("#frmSuportePedido").on('submit', (function (e) {
             $("#btnSuporte").html("<i class='fa fa-spinner fa-spin'></i> Enviando, aguarde...");
             $("#btnSuporte").prop("disabled", true);
         },
-        success: function (data) {
-             alert("resultado data " + data);
+        success: function () {
+             alert(" teste  ");
              $('#modalSuportePedido').modal('hide');
                 window.location.reload();
             
