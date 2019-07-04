@@ -195,7 +195,7 @@ $("#frmAlterarPedido").on('submit', (function (e) {
                     function (isConfirm) {
                          
                         if (isConfirm) {
-
+alert("teste");
                            $('#modalPedidoAlterar').modal('hide');  
                            $('#erro').val(data);
                            $('#modalSuportePedido').modal('show');  
