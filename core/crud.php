@@ -1182,6 +1182,8 @@ class crud
 		
 				$subject = "Erro no sistema"; // assunto
 				$message = "Usuario: " .$nomeUsuario. " identificou o erro no sistema <br><br> " . "\r\n";
+				$message = "mensagem do usuario: " .$mensagem. "  <br><br> " . "\r\n";
+				$message = "erro ocorrido em: " .$data. "  <br><br> " . "\r\n";
 				$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a> <br><br><br> " . "\r\n";
 				$message .= "error ".$erro. " "  . "\r\n";
 				$message .= "favor da tratamento" . "\r\n";
