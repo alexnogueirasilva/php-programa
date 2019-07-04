@@ -1185,12 +1185,13 @@ class crud
 				$message = "mensagem do usuario: " .$mensagem. "  <br><br> " . "\r\n";
 				$message = "erro ocorrido em: " .$data. "  <br><br> " . "\r\n";
 				$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a> <br><br><br> " . "\r\n";
-				$message .= "error ".$erro. " "  . "\r\n";
+				$message .= "error ".$erro. " <br><br>"  . "\r\n";
 				$message .= "favor da tratamento" . "\r\n";
 				$headers = 'MIME-Version: 1.0' . "\r\n";
 				$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n";
 				$headers .= 'From:< noreply@sistemadevnogueira.online>' . "\r\n"; //email de envio
-				$headers .= 'CC:<vendas2@fabmed.com.br >' . "\r\n"; //email com copia
+				//$headers .= 'CC:<vendas2@fabmed.com.br >' . "\r\n"; //email com copia
+				$headers .= 'CC:<'.$email.'>' . "\r\n"; //email com copia
 				//$headers .= 'CC:< '.$ email." ". "\r\n"; //email com copia
 				$headers .= 'Reply-To: <suporte@sistemadevnogueira.online>' . "\r\n"; //email para resposta
 
