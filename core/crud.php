@@ -1182,9 +1182,9 @@ class crud
 		
 				$subject = "Erro no sistema"; // assunto
 				$message = "Usuario: " .$nomeUsuario. " identificou o erro no sistema <br><br> " . "\r\n";
-				$message .= "mensagem do usuario: " .$mensagem. "  <br><br> " . "\r\n";
+				$message .= "Mensagem do Usuario: " .$mensagem. "  <br><br> " . "\r\n";
 				$message .= "erro ocorrido em: " .$data. "  <br><br> " . "\r\n";
-				$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a> <br><br><br> " . "\r\n";
+				$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a> <br><br> " . "\r\n";
 				$message .= "error ".$erro. " <br><br>"  . "\r\n";
 				$message .= "favor da tratamento" . "\r\n";
 				$headers = 'MIME-Version: 1.0' . "\r\n";

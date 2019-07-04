@@ -374,7 +374,7 @@ $("#frmSuportePedido").on('submit', (function (e) {
             $("#btnSuporte").prop("disabled", true);
         },
         success: function () {
-             alert(" teste  ");
+            // alert(" teste  ");
              $('#modalSuportePedido').modal('hide');
                 window.location.reload();
             
