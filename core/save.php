@@ -597,6 +597,8 @@ switch ($value) {
 					echo 1;
 					if(!$email ==''){
 						crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+						crud::enviarEmailPedidoAnexo($email,$subject,$nomeUsuario,$anexoAlterar);
+						
 					}
 				} else {
 					echo 0;
