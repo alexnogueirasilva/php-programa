@@ -105,13 +105,14 @@
         /*alert(user);
         alert(senha);
         die();*/
-
+     //   alert(" teste ");          
         $.ajax({            //Função AJAX
             url:"main/login.php",            //Arquivo php
             type:"post",                //Método de envio
             data: "user="+user+"&senha="+senha, //Dados
             success: function (result){         //Sucesso no AJAX
-                    alert(result);             
+                    //alert(result);             
+                  
                 if(result==1){  
                     $("#errolog").fadeOut();                    
                             location.href='main/Home.php'   //Redireciona                          
@@ -123,12 +124,12 @@
                             $('#user').val('');
                             $('#senha').val('');
                             $("#errolog").fadeOut();
-                        })
+                        });
                     }
-                })
+                });
         return false;   //Evita que a página seja atualizada
-    })
-    })
+        });
+    });
 </script>
 
 </body>
