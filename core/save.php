@@ -516,7 +516,10 @@ switch ($value) {
 				if ($cdt == true) {
 					echo 1;
 					if(!$email ==''){
-						crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+						//crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+					
+					crud::enviarEmailPedidoAnexo($email,$subject,$nomeUsuario,$anexo);
+				}
 					}
 				} else {
 					echo 0;
@@ -531,7 +534,9 @@ switch ($value) {
 			if ($cdt == true) {
 				echo 1;
 				if(!$email ==''){
-					crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+				//	crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+				
+					crud::enviarEmailPedidoAnexo($email,$subject,$nomeUsuario,$anexo);
 				}
 			} else {
 				echo 0;
@@ -596,7 +601,11 @@ switch ($value) {
 				if ($cad == true) {
 					echo 1;
 					if(!$email ==''){
-						crud::enviarEmailPedido($email,$subject,$nomeUsuario);										
+						//crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+						$anexo = $anexoAlterar;
+					crud::enviarEmailPedidoAnexo($email,$subject,$nomeUsuario,$anexo);										
+				}
+
 					}
 				} else {
 					echo 0;
@@ -612,7 +621,8 @@ switch ($value) {
 				echo 1;
 				if(!$email ==''){
 					//crud::enviarEmailPedido($email,$subject,$nomeUsuario);
-					crud::enviarEmailPedidoAnexo($email,$subject,$nomeUsuario,$anexoAlterar);
+					$anexo = $anexoAlterar;
+					crud::enviarEmailPedidoAnexo($email,$subject,$nomeUsuario,$anexo);
 				}
 			} else {
 				echo 0;
