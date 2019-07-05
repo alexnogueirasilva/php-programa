@@ -111,7 +111,7 @@
             type:"post",                //Método de envio
             data: "user="+user+"&senha="+senha, //Dados
             success: function (result){         //Sucesso no AJAX
-                    //alert(result)                 
+                    alert(result)                 
                 if(result==1){  
                     $("#errolog").fadeOut();                    
                             location.href='main/Home.php'   //Redireciona                          
