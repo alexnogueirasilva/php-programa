@@ -143,7 +143,6 @@ $dataAtual = date('Y-m-d H:i:s');
                             <li><a href="cad_status.php">Cadastros Status  </a></li>
                             <li><a href="lista_todas.php">Listar Todas Demandas</a></li>
                             <li><a href="relatorios.php">Relatórios</a></li>
-
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>                 
