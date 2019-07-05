@@ -597,12 +597,12 @@ switch ($value) {
 					$idInstituicao,
 					$dataAlteracao
 				);
-
+				$anexo = $anexoAlterar;
 				if ($cad == true) {
 					echo 1;
 					if(!$email ==''){
 						//crud::enviarEmailPedido($email,$subject,$nomeUsuario);
-						$anexo = $anexoAlterar;
+						
 					crud::enviarEmailPedidoAnexo($email,$subject,$nomeUsuario,$anexo);										
 				}
 
@@ -615,13 +615,14 @@ switch ($value) {
 			}
 		} else {
 			//CASO NÃO TENHA ANEXO ENTRA AQUI
+			$anexo = $anexoAlterar;
 			$cad = crud::AlterarPedido2($codControle, $statusPedido, $mensagemAlterar, $nomeCliente,	$numeroAf, $valorPedido, $numeroLicitacao, $anexoAlterar, $idInstituicao,$dataAlteracao);
 
 			if ($cad == true) {
 				echo 1;
 				if(!$email ==''){
 					//crud::enviarEmailPedido($email,$subject,$nomeUsuario);
-					$anexo = $anexoAlterar;
+					
 					crud::enviarEmailPedidoAnexo($email,$subject,$nomeUsuario,$anexo);
 				}
 			} else {
