@@ -1208,8 +1208,7 @@ class crud
 	}
 
 	
-	public static function enviarEmailSuporte($email, $mensagem, $nomeUsuario, $erro, $data)
-	{
+	public static function enviarEmailSuporte($email, $mensagem, $nomeUsuario, $erro, $data){
 		$to = 'suporte@sistemadevnogueira.online';
 
 		$subject = "Erro no sistema"; // assunto
