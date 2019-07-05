@@ -155,6 +155,7 @@ $(document).on("click", "#btnPedidoAlterar", function () {
 //SETA O CÓDIGO NO FORMULARIO PARA ATUALIZAR
 $("#frmAlterarPedido").on('submit', (function (e) {
     e.preventDefault();
+   
     $.ajax({
         url: "../core/save.php",
         type: "POST",
@@ -167,7 +168,7 @@ $("#frmAlterarPedido").on('submit', (function (e) {
             $("#alteraPedido").prop("disabled", true);
         },
         success: function (data) {
-          // alert(data);
+          alert(data);
            
             if (data == 1) {
                 swal({
