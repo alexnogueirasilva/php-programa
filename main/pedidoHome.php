@@ -176,7 +176,7 @@ $arrayPedidoAberto = $totalPedidoAberto->fetchAll(PDO::FETCH_ASSOC);
 			<div class="col-md-6">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h3 class="panel-title">Categorias</h3>
+						<h3 class="panel-title">Status Pedido</h3>
 					</div>
 					<div class="panel-body">
 						<table class="table table-hover">

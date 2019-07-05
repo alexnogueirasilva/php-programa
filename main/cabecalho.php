@@ -116,7 +116,7 @@ $dataAtual = date('Y-m-d H:i:s');
                         <ul class="nav nav-second-level">
                             <li><a href="para_mim_dem_abertas.php">Abertas</a></li>
                             <li><a href="para_mim_dem_fechadas.php">Fechadas</a></li>
-
+                            
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
