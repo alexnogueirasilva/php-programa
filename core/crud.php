@@ -4,7 +4,7 @@ include_once 'conex.php';
 
 class crud
 {
-	
+
 
 	//Aqui fazemos a verificação do login do usuário e do seu nível de acesso
 	public static function pesquisaLoginUsr($nome, $senha)
@@ -698,7 +698,8 @@ class crud
 		return $stmt;
 	}
 
-	public static function totalPedidoCancelados($idInstituicao){
+	public static function totalPedidoCancelados($idInstituicao)
+	{
 
 		$sql = "SELECT count(con.codControle) as totalPedidoCancelados
 	FROM controlePedido as con 
@@ -712,7 +713,8 @@ class crud
 		$stmt->execute();
 		return $stmt;
 	}
-	public static function totalPedidoAtendidos($idInstituicao)	{
+	public static function totalPedidoAtendidos($idInstituicao)
+	{
 
 		$sql = "SELECT count(con.codControle) as totalPedidoAtendidos
 		FROM controlePedido as con 
@@ -727,7 +729,8 @@ class crud
 		return $stmt;
 	}
 
-	public static function listarPedidoCanceladosNegados($idInstituicao) {// cancelado ou negado
+	public static function listarPedidoCanceladosNegados($idInstituicao)
+	{ // cancelado ou negado
 
 		$sql = "SELECT sta.nome,con.codControle,con.dataAlteracao,con.dataFechamento,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao,con.fk_idInstituicao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
 		FROM controlePedido as con 
@@ -735,7 +738,7 @@ class crud
 		inner join statusPedido as sta on sta.codStatus = con.codStatus
 		where sta.nome in  ('NEGADO','CANCELADO') AND con.fk_idInstituicao = '" . $idInstituicao . "'
 		ORDER BY con.dataCadastro desc";
-	
+
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$stmt = $pdo->prepare($sql);
@@ -743,7 +746,8 @@ class crud
 		return $stmt;
 	}
 
-	public static function listarPedido($idInstituicao)	{
+	public static function listarPedido($idInstituicao)
+	{
 
 		$sql = "SELECT con.fk_idInstituicao ,con.codControle,con.dataFechamento,con.dataAlteracao,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.codCliente, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
 		FROM controlePedido as con 
@@ -760,7 +764,8 @@ class crud
 		return $stmt;
 	}
 
-	public static function listarPedidoNaoAtendCanc($idInstituicao){
+	public static function listarPedidoNaoAtendCanc($idInstituicao)
+	{
 		$sql = "SELECT con.fk_idInstituicao,con.codControle,con.dataFechamento,con.dataAlteracao,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
 		FROM controlePedido as con 
 		inner join cliente as cli on cli.codCliente = con.codCliente 
@@ -774,7 +779,8 @@ class crud
 		return $stmt;
 	}
 
-	public static function listarPedidoId($id, $idInstituicao)	{
+	public static function listarPedidoId($id, $idInstituicao)
+	{
 
 		$sql = "SELECT con.fk_idInstituicao,con.codControle,con.dataFechamento,con.dataAlteracao,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
 		FROM controlePedido as con 
@@ -788,7 +794,8 @@ class crud
 		return $stmt;
 	}
 
-	public static function listarPedidoTipo($idInstituicao)	{
+	public static function listarPedidoTipo($idInstituicao)
+	{
 
 		$sql = "SELECT con.fk_idInstituicao,con.codControle,con.dataFechamento,con.dataAlteracao,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus, cli.tipoCliente
 		FROM controlePedido as con 
@@ -854,7 +861,8 @@ class crud
 			return false;
 		}
 	}
-	public static function AlterarPedido($codControle, $statusPedido, $mensagemAlterar, $idInstituicao,$dataAlteracao,$dataFechamento){
+	public static function AlterarPedido($codControle, $statusPedido, $mensagemAlterar, $idInstituicao, $dataAlteracao, $dataFechamento)
+	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
@@ -873,7 +881,8 @@ class crud
 			return false;
 		}
 	}
-	public static function AlterarPedido2($codControle, $statusPedido, $mensagemAlterar, $nomeCliente, $numeroAf, $valorPedido, $numeroLicitacao, $anexoAlterar, $idInstituicao,$dataAlteracao){
+	public static function AlterarPedido2($codControle, $statusPedido, $mensagemAlterar, $nomeCliente, $numeroAf, $valorPedido, $numeroLicitacao, $anexoAlterar, $idInstituicao, $dataAlteracao)
+	{
 
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -1019,7 +1028,8 @@ class crud
 		$stmt->execute();
 		return $stmt;
 	}
-	public static function listarInstituicaoId($idInstituicao){
+	public static function listarInstituicaoId($idInstituicao)
+	{
 		$sql = "SELECT * FROM instituicao WHERE inst_codigo = '" . $idInstituicao . "' ORDER BY inst_nome desc";
 
 		$pdo = Database::connect();
@@ -1029,7 +1039,8 @@ class crud
 		return $stmt;
 	}
 
-	public static function listarInstituicaoNome($valorPesquisar){
+	public static function listarInstituicaoNome($valorPesquisar)
+	{
 		$sql = "SELECT * FROM instituicao 
 		WHERE inst_nome LIKE'%" . $valorPesquisar . "%' ORDER BY inst_nome desc";
 
@@ -1153,46 +1164,48 @@ class crud
 	}
 	//CADASTRO DE INSTITUICAO
 
-	public static function pesquisar($valorPesquisar){
+	public static function pesquisar($valorPesquisar)
+	{
 		$sql = "SELECT * FROM instituicao WHERE inst_nome LIKE'%" . $valorPesquisar . "%' ORDER BY inst_nome desc";
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$stmt = $pdo->prepare($sql);
-		$stmt->execute();		
+		$stmt->execute();
 		return $stmt;
 	}
-	public static function enviarEmailPedido($email,$subject,$nomeUsuario){
+	public static function enviarEmailPedido($email, $subject, $nomeUsuario)
+	{
 		$to = $email;
-		
-				//$subject = "Informacoes de Pedido"; // assunto
-				$message = "Usuario: " .$nomeUsuario. " efetuou movimentacao de pedido no sistema <br><br> " . "\r\n";
-				$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a> <br><br><br> " . "\r\n";
-				$message .= "favor da tratamento" . "\r\n";
-				$headers = 'MIME-Version: 1.0' . "\r\n";
-				$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n";
-				$headers .= 'From:< noreply@sistemadevnogueira.online>' . "\r\n"; //email de envio
-				//$headers .= 'CC:< programadorfsaba@gmail.com>' . "\r\n"; //email com copia
-			//	$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>' . "\r\n"; //email para resposta
 
-				mail($to, $subject, $message, $headers);
+		//$subject = "Informacoes de Pedido"; // assunto
+		$message = "Usuario: " . $nomeUsuario . " efetuou movimentacao de pedido no sistema <br><br> " . "\r\n";
+		$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a> <br><br><br> " . "\r\n";
+		$message .= "favor da tratamento" . "\r\n";
+		$headers = 'MIME-Version: 1.0' . "\r\n";
+		$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n";
+		$headers .= 'From:< noreply@sistemadevnogueira.online>' . "\r\n"; //email de envio
+		//$headers .= 'CC:< programadorfsaba@gmail.com>' . "\r\n"; //email com copia
+		//	$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>' . "\r\n"; //email para resposta
+
+		mail($to, $subject, $message, $headers);
 	}
-	public static function enviarEmailSuporte($email,$mensagem,$nomeUsuario,$erro,$data){
-		
+	public static function enviarEmailSuporte($email, $mensagem, $nomeUsuario, $erro, $data)
+	{
 		$to = 'suporte@sistemadevnogueira.online';
-		
-				$subject = "Erro no sistema"; // assunto
-				$message = "Usuario: " .$nomeUsuario. " identificou o erro no sistema <br><br> " . "\r\n";
-				$message .= "Mensagem do Usuario: " .$mensagem. "  <br><br> " . "\r\n";
-				$message .= "erro ocorrido em: " .$data. "  <br><br> " . "\r\n";
-				$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a> <br><br> " . "\r\n";
-				$message .= "error ".$erro. " <br><br>"  . "\r\n";
-				$message .= "favor da tratamento" . "\r\n";
-				$headers = 'MIME-Version: 1.0' . "\r\n";
-				$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n";
-				$headers .= 'From:< noreply@sistemadevnogueira.online>' . "\r\n"; //email de envio			
-				$headers .= 'CC:<'.$email.'>' . "\r\n"; //email com copia
-				$headers .= 'Reply-To: <suporte@sistemadevnogueira.online>' . "\r\n"; //email para resposta
 
-				mail($to, $subject, $message, $headers);
+		$subject = "Erro no sistema"; // assunto
+		$message = "Usuario: " . $nomeUsuario . " identificou o erro no sistema <br><br> " . "\r\n";
+		$message .= "Mensagem do Usuario: " . $mensagem . "  <br><br> " . "\r\n";
+		$message .= "erro ocorrido em: " . $data . "  <br><br> " . "\r\n";
+		$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a> <br><br> " . "\r\n";
+		$message .= "error " . $erro . " <br><br>"  . "\r\n";
+		$message .= "favor da tratamento" . "\r\n";
+		$headers = 'MIME-Version: 1.0' . "\r\n";
+		$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n";
+		$headers .= 'From:< noreply@sistemadevnogueira.online>' . "\r\n"; //email de envio			
+		$headers .= 'CC:<' . $email . '>' . "\r\n"; //email com copia
+		$headers .= 'Reply-To: <' . $to . '>' . "\r\n"; //email para resposta
+
+		mail($to, $subject, $message, $headers);
 	}
 }

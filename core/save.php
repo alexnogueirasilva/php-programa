@@ -826,15 +826,14 @@ switch ($value) {
 		}
 		break;
 
-
 		case 'suporte':
 
 		$nomeUsuario 	= $_POST['nomeUsuarioSuporte'];
 		$mensagem = $_POST['mensagemPedidoSuporte'];
 		$erro 	= 	$_POST['erro'];
 		$email			 = $_POST['emailSuporte'];
-		$data = $_POST['dataSuporte'];
-		//echo $nomeUsuario .' mensagem '. $mensagem. ' erro ' . $erro .'  email '.$email.' data ' .$data ;
+		$data = crud::formataData($_POST['dataSuporte']);
+		
 		crud::enviarEmailSuporte( $email,$mensagem,$nomeUsuario,$erro,$data);
 		
 		break;
