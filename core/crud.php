@@ -1192,7 +1192,7 @@ class crud
 	
 	public static function enviarEmailPedidoAnexo($email,$subject,$nomeUsuario,$anexo){
 		$to = $email;
-		$anexo;
+		
 				//$subject = "Informacoes de Pedido"; // assunto
 				$message = "Usuario: " .$nomeUsuario. " efetuou movimentacao de pedido no sistema <br><br> " . "\r\n";
 				$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a> <br><br> " . "\r\n";
