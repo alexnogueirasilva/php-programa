@@ -1189,13 +1189,14 @@ class crud
 
 				mail($to, $subject, $message, $headers);
 	}
+	
 	public static function enviarEmailPedidoAnexo($email,$subject,$nomeUsuario,$anexoAlterar){
 		$to = $email;
 		$anexo = $anexoAlterar;
 				//$subject = "Informacoes de Pedido"; // assunto
 				$message = "Usuario: " .$nomeUsuario. " efetuou movimentacao de pedido no sistema <br><br> " . "\r\n";
 				$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a> <br><br><br> " . "\r\n";
-				$message .= "<a href=http://sistemaocorrencia.devnogueira.online/".$anexo."> Click aqui visualisar o anexo</a> <br><br><br> " . "\r\n";
+				$message .= "<a href=http://sistemaocorrencia.devnogueira.online/.$anexo.> Click aqui visualisar o anexo</a> <br><br><br> " . "\r\n";
 				$message .= "favor da tratamento" . "\r\n";
 				$headers = 'MIME-Version: 1.0' . "\r\n";
 				$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n";
