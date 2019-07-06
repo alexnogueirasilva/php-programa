@@ -515,11 +515,9 @@ switch ($value) {
 				$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao);
 				if ($cdt == true) {
 					echo 1;
-					if(!$email ==''){
-						//crud::enviarEmailPedido($email,$subject,$nomeUsuario);
-					
-					crud::enviarEmailPedidoAnexo($email,$subject,$nomeUsuario,$anexo);
-				}
+					if (!$email == '') {
+						//crud::enviarEmailPedido($email,$subject,$nomeUsuario);					
+						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo);
 					}
 				} else {
 					echo 0;
@@ -533,10 +531,10 @@ switch ($value) {
 			$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao);
 			if ($cdt == true) {
 				echo 1;
-				if(!$email ==''){
-				//	crud::enviarEmailPedido($email,$subject,$nomeUsuario);
-				
-					crud::enviarEmailPedidoAnexo($email,$subject,$nomeUsuario,$anexo);
+				if (!$email == '') {
+					//	crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+
+					crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo);
 				}
 			} else {
 				echo 0;
@@ -600,12 +598,9 @@ switch ($value) {
 				$anexo = $anexoAlterar;
 				if ($cad == true) {
 					echo 1;
-					if(!$email ==''){
+					if (!$email == '') {
 						//crud::enviarEmailPedido($email,$subject,$nomeUsuario);
-						
-					crud::enviarEmailPedidoAnexo($email,$subject,$nomeUsuario,$anexo);										
-				}
-
+						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo);
 					}
 				} else {
 					echo 0;
@@ -616,23 +611,22 @@ switch ($value) {
 		} else {
 			//CASO NÃO TENHA ANEXO ENTRA AQUI
 			$anexo = $anexoAlterar;
-			$cad = crud::AlterarPedido2($codControle, $statusPedido, $mensagemAlterar, $nomeCliente,	$numeroAf, $valorPedido, $numeroLicitacao, $anexoAlterar, $idInstituicao,$dataAlteracao);
+			$cad = crud::AlterarPedido2($codControle, $statusPedido, $mensagemAlterar, $nomeCliente,	$numeroAf, $valorPedido, $numeroLicitacao, $anexoAlterar, $idInstituicao, $dataAlteracao);
 
 			if ($cad == true) {
 				echo 1;
-				if(!$email ==''){
+				if (!$email == '') {
 					//crud::enviarEmailPedido($email,$subject,$nomeUsuario);
-					
-					crud::enviarEmailPedidoAnexo($email,$subject,$nomeUsuario,$anexo);
+
+					crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo);
 				}
 			} else {
 				echo 0;
 			}
 		}
-	break;
+		break;
 
 	case 'AlterarPedido':
-
 		$statusPedido		= $_POST['statusPedidoAlterar'];
 		$codControle        = $_POST['codigoControleAlterar'];
 		$mensagemAlterar    = $_POST['mensagemPedidoAlterar'];
@@ -642,40 +636,38 @@ switch ($value) {
 		$dataFechamento 	= $_POST['dataFechamentoPedidoAlterar'];
 		$subject 			= $_POST['subjectAlterar'];
 		$nomeUsuario		= $_POST['nomeUsuarioAlterar'];
-				
-		if($statusPedido == "16" || $statusPedido == "7"  || $statusPedido == "2"){
-			if($dataFechamento == ""){
+
+		if ($statusPedido == "16" || $statusPedido == "7"  || $statusPedido == "2") {
+			if ($dataFechamento == "") {
 				$dataFechamento = $dataAlteracao;
-			}			
-		}else{
+			}
+		} else {
 			$dataFechamento = null;
 		}
-		$cad = crud::AlterarPedido($codControle, $statusPedido, $mensagemAlterar, $idInstituicao,$dataAlteracao,$dataFechamento);
+		$cad = crud::AlterarPedido($codControle, $statusPedido, $mensagemAlterar, $idInstituicao, $dataAlteracao, $dataFechamento);
 		if ($cad == true) {
 			echo 1;
-			if(!$email ==''){
-				crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+			if (!$email == '') {
+				crud::enviarEmailPedido($email, $subject, $nomeUsuario);
 			}
 		} else {
 			echo 0;
 		}
-	break;
+		break;
 
 	case 'deletePedido':
-	
 		$email      	= $_POST['emailExcluir'];
 		$id      		= $_POST['excIdPedido'];
 		$idInstituicao 	= $_POST['ExcIdInstituicao'];
 		$nomeUsuario 	= $_POST['ExcnomeUsuario'];
 		$subject 		= $_POST['Excsubject'];
-		
+
 		$cad = crud::deletePedido($id, $idInstituicao);
 		if ($cad == true) {
 			echo 1;
-			if(!$email ==''){
-				crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+			if (!$email == '') {
+				crud::enviarEmailPedido($email, $subject, $nomeUsuario);
 			}
-
 		} else {
 			echo 0;
 		}
@@ -695,7 +687,7 @@ switch ($value) {
 			echo 0;
 		}
 
-	break;
+		break;
 
 
 		//controlepedido
@@ -769,7 +761,6 @@ switch ($value) {
 		break;
 
 	case 'excluirInstituicao':
-
 		$idInstituicao = $_POST['idInstituicao'];
 		$cad = crud::excluirInstituicao($idInstituicao);
 		if ($cad == true) {
@@ -791,7 +782,6 @@ switch ($value) {
 
 		break;
 	case 'cadastrarInstituicao':
-
 		$idInstituicao = $_POST['idInstituicao'];
 		$nomeInstituicao = $_POST['nomeInstituicao'];
 		$nomeFantasia = $_POST['nomeFantasia'];
@@ -812,12 +802,11 @@ switch ($value) {
 		break;
 
 	case 'pesquisar':
-		
 		$valorPesquisar = $_POST['valorPesquisar'];
 		$html = '';
 		$cdt = crud::pesquisar($valorPesquisar);
-		
-		if ($cdt == true) {			
+
+		if ($cdt == true) {
 			if ($cdt->rowCount() > 0) {
 				while ($row = $cdt->fetch(PDO::FETCH_ASSOC)) {
 					$html .= "<tr>
@@ -825,7 +814,7 @@ switch ($value) {
 									<td>" . $row['inst_nome'] . "</td>
 									<td>" . $row['inst_nomeFantasia'] . "</td>
 									<td>" . crud::formataData($row['inst_dataCadastro']) . "</td>
-									<td><a class='btn btn-info waves-effect waves-light' id='btnEditar' data-whatever='@getbootstrap' data-codigo=" . $row['inst_id'] . " data-codigoacesso=" . $row['inst_codigo'] . " data-nome=". $row['inst_nome']. " data-nomefantasia=" . $row['inst_nomeFantasia'] . ">Editar</a></td>
+									<td><a class='btn btn-info waves-effect waves-light' id='btnEditar' data-whatever='@getbootstrap' data-codigo=" . $row['inst_id'] . " data-codigoacesso=" . $row['inst_codigo'] . " data-nome=" . $row['inst_nome'] . " data-nomefantasia=" . $row['inst_nomeFantasia'] . ">Editar</a></td>
 									<td><a class='btn btn-danger waves-effect waves-light' data-target='#modalExcluir'  id='btnExcluir' data-whatever='@getbootstrap' data-codigo=" . $row['inst_id'] . " data-codigoacesso=" . $row['inst_codigo'] . " data-nome=" . $row['inst_nome'] . " data-nomefantasia=" . $row['inst_nomeFantasia'] . ">Excluir</a></td>
 									</tr>";
 				}
@@ -838,15 +827,14 @@ switch ($value) {
 		}
 		break;
 
-		case 'suporte':
-
+	case 'suporte':
 		$nomeUsuario 	= $_POST['nomeUsuarioSuporte'];
 		$mensagem = $_POST['mensagemPedidoSuporte'];
 		$erro 	= 	$_POST['erro'];
 		$email			 = $_POST['emailSuporte'];
 		$data = crud::formataData($_POST['dataSuporte']);
-		
-		crud::enviarEmailSuporte( $email,$mensagem,$nomeUsuario,$erro,$data);
-		
+
+		crud::enviarEmailSuporte($email, $mensagem, $nomeUsuario, $erro, $data);
+
 		break;
 }
