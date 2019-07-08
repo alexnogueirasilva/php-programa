@@ -15,7 +15,7 @@ $("#frmCadastroPedido").on('submit', (function (e) {
             $("#salvaPedido").prop("disabled", true);
         },
         success: function (data) {
-          // alert("resultado data " + data);
+          //alert("resultado data " + data);
             
             if (data == 1) {
                 swal({
@@ -66,7 +66,7 @@ $(document).on("click", "#btnExcluiPedido", function () {
     $('#ExcNomePedido').html(nome);
     $('#ExcIdInstituicao').val(idInstituicao);
 
-//    $('#modalExluirPedido').modal('show');
+    $('#modalExluirPedido').modal('show');
 });
 //SETA O CÓDIGO NO MODAL PARA EXCLUIR
 

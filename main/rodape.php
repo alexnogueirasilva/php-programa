@@ -1,9 +1,9 @@
+
 <footer class="footer text-center"> 2019 &copy; SD - Sistemas de Ocorrência  </footer>
         
         </div>
         <!-- /#wrapper -->
         <!-- jQuery -->
-    
         <script src="../assets/bower_components/jquery/dist/jquery.min.js"></script>
         <!-- Bootstrap Core JavaScript -->
         <script src="../assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>

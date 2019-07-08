@@ -638,9 +638,6 @@ switch ($value) {
 		$nomeUsuario		= $_POST['nomeUsuarioAlterar'];
 		$mensagemEmail		= $_POST['mensagemEmailAlterar'];
 				
-		if($statusPedido == "16" || $statusPedido == "7"  || $statusPedido == "2"){
-			if($dataFechamento == ""){
-
 		if ($statusPedido == "16" || $statusPedido == "7"  || $statusPedido == "2") {
 			if ($dataFechamento == "") {
 				$dataFechamento = $dataAlteracao;
@@ -653,8 +650,6 @@ switch ($value) {
 			echo 1;
 			if(!$email ==''){
 				crud::enviarEmailPedido($email,$subject,$nomeUsuario,$mensagemEmail);
-			if (!$email == '') {
-				crud::enviarEmailPedido($email, $subject, $nomeUsuario);
 			}
 		} else {
 			echo 0;
@@ -667,17 +662,18 @@ switch ($value) {
 		$idInstituicao 	= $_POST['ExcIdInstituicao'];
 		$nomeUsuario 	= $_POST['ExcnomeUsuario'];
 		$subject 		= $_POST['Excsubject'];
-		$mensagemEmail		= '';
+		$mensagemEmail	= $_POST['ExcnomeUsuario'];
 
 		$cad = crud::deletePedido($id, $idInstituicao);
 		if ($cad == true) {
 			echo 1;
 			if(!$email ==''){
 				crud::enviarEmailPedido($email,$subject,$nomeUsuario,$mensagemEmail);
+			}
 		} else {
 			echo 0;
 		}
-		break;
+	break;
 
 	case 'adicionaMensagemPedido':
 		$idLogado 		= $_POST['idLogado'];
