@@ -1175,7 +1175,7 @@ class crud
 	}
 	public static function enviarEmailPedido($email, $subject, $nomeUsuario,$mensagemEmail)	{
 		$to = $email;
-		if($mensagemEmail == ""){
+		if($mensagemEmail == ''){
 			$mensagemEmail = "sem informacoes!";
 		}
 		

@@ -180,14 +180,14 @@ $nomeUsuario
                         <input type="hidden" name="excIdPedido" id="excIdPedido">
                         <div class="col-md-12">
                             <div id="contextoModal">
-                                <h2>Você vai EXCLUIR pedido do Cliente: <span id="ExcNomePedido"></span>?</h2>
+                                <h2>Você vai EXCLUIR pedido do Cliente: <span nome="ExcNomePedido" id="ExcNomePedido"></span>?</h2>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                            <input type="text" size="50" class="form-control" name="emailExcluir" id="emailExcluir" placeholder="Informe e-mail separando por virgula ">
+                            <input type="text" size="50" class="form-control" name="emailExcluir" id="emailExcluir" placeholder="Informe e-mail separando por virgula">
                            <!-- <textarea name="ExcmensagemPedido" class="form-control" rows="3" id="ExcmensagemEmail"></textarea> -->
-                        </div>
+                    </div>
                     <div class="modal-footer">                        
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                         <button type="submit" id="btnExcluirPedido" class="btn btn-primary">Confirmar</button>
