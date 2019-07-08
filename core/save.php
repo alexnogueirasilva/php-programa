@@ -569,7 +569,7 @@ switch ($value) {
 		$dataAbertura 		= $_POST['dataAtual2'];
 		$dataAlteracao 		= $_POST['dataAtual2'];
 		$subject			= $_POST['subjectAlterar2'];
-		$nomeUsuario			= $_POST['nomeUsuarioAlterar2'];
+		$nomeUsuario		= $_POST['nomeUsuarioAlterar2'];
 		//ENTRA AQUI SE TIVER ANEXO
 		if (!empty($_FILES["file"]["name"])) {
 

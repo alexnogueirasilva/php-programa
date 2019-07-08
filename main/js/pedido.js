@@ -15,8 +15,8 @@ $("#frmCadastroPedido").on('submit', (function (e) {
             $("#salvaPedido").prop("disabled", true);
         },
         success: function (data) {
-          //alert("resultado data " + data);
-            
+            //alert("resultado data " + data);
+
             if (data == 1) {
                 swal({
                     title: "OK!",
@@ -33,7 +33,7 @@ $("#frmCadastroPedido").on('submit', (function (e) {
                         }
                     });
             } else {
-            
+
                 swal({
                     title: "Ops!",
                     text: "Algo deu errado!",
@@ -47,7 +47,7 @@ $("#frmCadastroPedido").on('submit', (function (e) {
                             $('#modalCadastrarPedido').modal('hide');
                             $('#erro').val(data);
                             $('#modalSuportePedido').modal('show');
-                          //  window.location.reload();
+                            //  window.location.reload();
                         }
                     });
             }
@@ -61,7 +61,7 @@ $(document).on("click", "#btnExcluiPedido", function () {
     var id = $(this).data('codigoexcluir');
     var nome = $(this).data('nomeexcluir');
     var idInstituicao = $(this).data('idinstituicaoexcluir');
-//alert("id "+id+" nome "+nome+" int. "+idInstituicao);
+    //alert("id "+id+" nome "+nome+" int. "+idInstituicao);
     $('#excIdPedido').val(id);
     $('#ExcNomePedido').html(nome);
     $('#ExcIdInstituicao').val(idInstituicao);
@@ -71,7 +71,7 @@ $(document).on("click", "#btnExcluiPedido", function () {
 //SETA O CÓDIGO NO MODAL PARA EXCLUIR
 
 //SETA O CÓDIGO NO FORMULARIO PARA EXCLUIR
-$('#frmExcluirPedido').on('submit',(function (e) {    
+$('#frmExcluirPedido').on('submit', (function (e) {
     e.preventDefault();
     $.ajax({
         url: "../core/save.php",
@@ -112,7 +112,7 @@ $('#frmExcluirPedido').on('submit',(function (e) {
                             $('#modalExluirPedido').modal('hide');
                             $('#erro').val(result);
                             $('#modalSuportePedido').modal('show');
-                           // location.reload(table);
+                            // location.reload(table);
                         }
                     });
             }
@@ -155,7 +155,7 @@ $(document).on("click", "#btnPedidoAlterar", function () {
 //SETA O CÓDIGO NO FORMULARIO PARA ATUALIZAR
 $("#frmAlterarPedido").on('submit', (function (e) {
     e.preventDefault();
-   
+
     $.ajax({
         url: "../core/save.php",
         type: "POST",
@@ -168,8 +168,8 @@ $("#frmAlterarPedido").on('submit', (function (e) {
             $("#alteraPedido").prop("disabled", true);
         },
         success: function (data) {
-         // alert(data);
-           
+            // alert(data);
+
             if (data == 1) {
                 swal({
                     title: "OK!",
@@ -192,14 +192,14 @@ $("#frmAlterarPedido").on('submit', (function (e) {
                     type: "error",
                     confirmButtonText: "Fechar",
                     closeOnConfirm: true
-                },                
+                },
                     function (isConfirm) {
                         if (isConfirm) {
 
-                           $('#modalPedidoAlterar').modal('hide');  
-                           $('#erro').val(data);
-                           $('#modalSuportePedido').modal('show');  
-                           // window.location.reload();// = "pedidoCancelado.php";
+                            $('#modalPedidoAlterar').modal('hide');
+                            $('#erro').val(data);
+                            $('#modalSuportePedido').modal('show');
+                            // window.location.reload();// = "pedidoCancelado.php";
                         }
                     });
 
@@ -376,9 +376,9 @@ $("#frmSuportePedido").on('submit', (function (e) {
         },
         success: function () {
             // alert(" teste  ");
-             $('#modalSuportePedido').modal('hide');
-                window.location.reload();
-            
+            $('#modalSuportePedido').modal('hide');
+            window.location.reload();
+
         }
     });
 }));

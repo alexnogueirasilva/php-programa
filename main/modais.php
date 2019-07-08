@@ -16,14 +16,14 @@ $idInstituicao    = $_SESSION['instituicaoUsuario'];
 ?>
 
 <!-- MODAL CRIA DEMANDA -->
-    <div class="modal fade bs-example-modal-lg" id="modalCriaDemanda" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+<div class="modal fade bs-example-modal-lg" id="modalCriaDemanda" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="exampleModalLabel1">Criar Ocorrencia</h4>
             </div>
-            <div class="modal-body">
+                <div class="modal-body">
                 <form id="frmCriaDemanda" action="" method="post" enctype="multipart/form-data" >                    
                     <input type="hidden" value="criaDemanda" name="tipo" id="tipo">
                     <input type="hidden" value="<?php echo $data; ?>" name="dataAtual" id="dataAtual">
@@ -100,7 +100,7 @@ $idInstituicao    = $_SESSION['instituicaoUsuario'];
                             <textarea name="mensagem" class="form-control" rows="5" id="mensagem" required></textarea>          
                         </div>                    
                     <input type="file" name="file" id="file">                    
-            </div>
+                </div>
                     <div class="modal-footer">
                         <button type="submit" id="salvaDemanda" class="btn btn-primary" >Enviar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
