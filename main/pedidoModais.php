@@ -13,7 +13,6 @@ $emailLogado    = $_SESSION['emailUsuario'];
 $instituicao    = $_SESSION['instituicaoUsuario'];
 $nomeUsuario
 ?>
-
 <!-- MODAL CADASTRAR PEDIDO -->
 <div class="modal fade bs-example-modal-lg" id="modalCadastrarPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
     <div class="modal-dialog modal-lg" role="document">
@@ -118,38 +117,40 @@ $nomeUsuario
                     <input type="hidden" value="<?php echo $nomeUsuario; ?>" name="nomeUsuarioAlterar" id="nomeUsuarioAlterar">
                     <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataAtual" id="dataAtual">
                     <input type="hidden" name="idInstituicaoAlterar" id="idInstituicaoAlterar">
-                        <div class="form-group">
-                            <select class="form-control" name="statusPedidoAlterar" id="statusPedidoAlterar" required>
-                                <option value="" selected disabled>Selecione o Status</option>
+                    <div class="form-group">
+                        <select class="form-control" name="statusPedidoAlterar" id="statusPedidoAlterar" required>
+                            <option value="" selected disabled>Selecione o Status</option>
+                            <?php
+                            $selectStatus = crud::listarStatus($idInstituicao);
+                            if ($selectStatus->rowCount() > 0) {
+                                while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
+                                    ?>
+                                    <option value="<?php print($row['codStatus']); ?>">
+                                        <?php print($row['nome']); ?>
+                                    </option>
                                 <?php
-                                $selectStatus = crud::listarStatus($idInstituicao);
-                                if ($selectStatus->rowCount() > 0) {
-                                    while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
-                                        ?>
-                                        <option value="<?php print($row['codStatus']); ?>">
-                                            <?php print($row['nome']); ?>
-                                        </option>
-                                    <?php
-                                }
                             }
-                            ?>
-                            </select>
-                        </div>
+                        }
+                        ?>
+                        </select>
+                    </div>
                     
-                        <div class="form-group">
-                            <label for="message-text" class="control-label">Observação:</label>
-                            <textarea name="mensagemPedidoAlterar" class="form-control" rows="3" id="mensagemPedidoAlterar"></textarea>
-                        <div>
-                        <br>
-                        <div class="form-group">
-                            <input type="text" size="50" class="form-control" name="emailAlterar" id="emailAlterar" placeholder="Informe e-mail separando por virgula ">
-                        </div>
-                        <div class="form-group">
+                    <div class="form-group">
+                        <label for="message-text" class="control-label">Observação:</label>
+                        <textarea name="mensagemPedidoAlterar" class="form-control" rows="3" id="mensagemPedidoAlterar"></textarea>
+                    <br>
+                    <div class="form-group">
+                        <input type="text" size="50" class="form-control" name="emailAlterar" id="emailAlterar" placeholder="Informe e-mail separando por virgula ">
+                    </div>
+                    <div class="form-group">
                             <label for="message-text" class="control-label">Mensagem:</label>
                             <textarea name="mensagemEmailAlterar" class="form-control" rows="3" id="mensagemEmailAlterar"></textarea>                  
                         </div>
                         <br>
+
+                    </div>
                     <div class="modal-footer">
+                    
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                         <button type="submit" id="alteraPedido" class="btn btn-primary">Enviar</button>
                     </div>
@@ -159,7 +160,9 @@ $nomeUsuario
         </div>
     </div>
 </div>
+
 <!-- MODAL ALTERAR PEDIDO-->
+
 
 <!-- MODAL EXCLUIR -->
 <div class="modal fade" id="modalExluirPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
@@ -179,14 +182,15 @@ $nomeUsuario
                         <input type="hidden" name="excIdPedido" id="excIdPedido">
                         <div class="col-md-12">
                             <div id="contextoModal">
-                                <h2>Você vai EXCLUIR pedido do Cliente: <span nome="ExcNomePedido" id="ExcNomePedido"></span>?</h2>
+                                <h2>Você vai EXCLUIR pedido do Cliente: <span id="ExcNomePedido"></span>?</h2>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                            <input type="text" size="50" class="form-control" name="emailExcluir" id="emailExcluir" placeholder="Informe e-mail separando por virgula">
-                    </div>
-                    <div class="modal-footer">                        
+                            <input type="text" size="50" class="form-control" name="emailExcluir" id="emailExcluir" placeholder="Informe e-mail separando por virgula ">
+                        </div>
+                    <div class="modal-footer">
+                        
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                         <button type="submit" id="btnExcluirPedido" class="btn btn-primary">Confirmar</button>
                     </div>
@@ -352,6 +356,5 @@ $nomeUsuario
 <!-- MODAL SUPORTE-->
 
 
-<!-- UPLOAD DE ARQUIVOS  -->
+<!-- UPLOAD DE ARQUIVOS -->
 <script src="js/jquery.form.js"></script>
-<!-- UPLOAD DE ARQUIVOS  -->
