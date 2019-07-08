@@ -138,15 +138,16 @@ $nomeUsuario
                     <div class="form-group">
                         <label for="message-text" class="control-label">Observação:</label>
                         <textarea name="mensagemPedidoAlterar" class="form-control" rows="3" id="mensagemPedidoAlterar"></textarea>
-                    <br>
+                    <div>
+                        <br>
                     <div class="form-group">
                         <input type="text" size="50" class="form-control" name="emailAlterar" id="emailAlterar" placeholder="Informe e-mail separando por virgula ">
-                        <div class="form-group">
+                    </div>
+                    <div class="form-group">
                         <label for="message-text" class="control-label">Mensagem:</label>
-                        <textarea name="mensagemEmailAlterar" class="form-control" rows="3" id="mensagemEmailAlterar"></textarea>
+                        <textarea name="mensagemEmailAlterar" class="form-control" rows="3" id="mensagemEmailAlterar"></textarea>                  
+                    </div>
                     <br>
-                    </div>
-                    </div>
                     <div class="modal-footer">
                     
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>

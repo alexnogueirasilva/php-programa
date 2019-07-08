@@ -168,7 +168,7 @@ $("#frmAlterarPedido").on('submit', (function (e) {
             $("#alteraPedido").prop("disabled", true);
         },
         success: function (data) {
-          alert(data);
+         // alert(data);
            
             if (data == 1) {
                 swal({
