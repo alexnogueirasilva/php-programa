@@ -141,6 +141,10 @@ $nomeUsuario
                     <br>
                     <div class="form-group">
                         <input type="text" size="50" class="form-control" name="emailAlterar" id="emailAlterar" placeholder="Informe e-mail separando por virgula ">
+                        <div class="form-group">
+                        <label for="message-text" class="control-label">Mensagem:</label>
+                        <textarea name="mensagemPedidoAlterar" class="form-control" rows="3" id="mensagemEmailAlterar"></textarea>
+                    <br>
                     </div>
                     </div>
                     <div class="modal-footer">
@@ -182,9 +186,9 @@ $nomeUsuario
                     </div>
                     <div class="form-group">
                             <input type="text" size="50" class="form-control" name="emailExcluir" id="emailExcluir" placeholder="Informe e-mail separando por virgula ">
+                           <!-- <textarea name="ExcmensagemPedido" class="form-control" rows="3" id="ExcmensagemEmail"></textarea> -->
                         </div>
-                    <div class="modal-footer">
-                        
+                    <div class="modal-footer">                        
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                         <button type="submit" id="btnExcluirPedido" class="btn btn-primary">Confirmar</button>
                     </div>

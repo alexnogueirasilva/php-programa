@@ -642,6 +642,7 @@ switch ($value) {
 		$dataFechamento 	= $_POST['dataFechamentoPedidoAlterar'];
 		$subject 			= $_POST['subjectAlterar'];
 		$nomeUsuario		= $_POST['nomeUsuarioAlterar'];
+		$mensagemEmail		= $_POST['mensagemEmailAlterar'];
 				
 		if($statusPedido == "16" || $statusPedido == "7"  || $statusPedido == "2"){
 			if($dataFechamento == ""){
@@ -654,7 +655,7 @@ switch ($value) {
 		if ($cad == true) {
 			echo 1;
 			if(!$email ==''){
-				crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+				crud::enviarEmailPedido($email,$subject,$nomeUsuario,$mensagemEmail);
 			}
 		} else {
 			echo 0;
@@ -668,12 +669,13 @@ switch ($value) {
 		$idInstituicao 	= $_POST['ExcIdInstituicao'];
 		$nomeUsuario 	= $_POST['ExcnomeUsuario'];
 		$subject 		= $_POST['Excsubject'];
-		
+		$mensagemEmail		= "";//$_POST['ExcmensagemEmail'];
+
 		$cad = crud::deletePedido($id, $idInstituicao);
 		if ($cad == true) {
 			echo 1;
 			if(!$email ==''){
-				crud::enviarEmailPedido($email,$subject,$nomeUsuario);
+				crud::enviarEmailPedido($email,$subject,$nomeUsuario,$mensagemEmail);
 			}
 
 		} else {
