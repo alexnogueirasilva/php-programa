@@ -516,10 +516,8 @@ switch ($value) {
 				if ($cdt == true) {
 					echo $cdt;
 					if (!$email == '') {
-						$dadosCadastro = "Codigo: ".$cdt." "."Licitacao: ".$numeroPregao;
-						//crud::enviarEmailPedido($email,$subject,$nomeUsuario);					
-						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo);
-						crud::enviarEmailPedidoAnexo2($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
+						$dadosCadastro = "Codigo: ".$cdt." <br>"."Licitacao: ".$numeroPregao." <br>"."Autorizacao: ".$numeroAf;
+						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 					}
 				} else {
 					echo 0;
@@ -534,9 +532,8 @@ switch ($value) {
 			if ($cdt == true) {
 				echo $cdt;
 				if (!$email == '') {
-					//	crud::enviarEmailPedido($email,$subject,$nomeUsuario);
-
-					crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo);
+					$dadosCadastro = "Codigo: ".$cdt." <br>"."Licitacao: ".$numeroPregao." <br>"."Autorizacao: ".$numeroAf;
+					crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 				}
 			} else {
 				echo 0;
@@ -602,7 +599,8 @@ switch ($value) {
 					echo 1;
 					if (!$email == '') {
 						//crud::enviarEmailPedido($email,$subject,$nomeUsuario);
-						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo);
+						$dadosCadastro = "Codigo: ".$codControle." <br>"."Licitacao: ".$numeroPregao." <br>"."Autorizacao: ".$numeroAf;
+						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 					}
 				} else {
 					echo 0;
@@ -618,9 +616,8 @@ switch ($value) {
 			if ($cad == true) {
 				echo 1;
 				if (!$email == '') {
-					//crud::enviarEmailPedido($email,$subject,$nomeUsuario);
-
-					crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo);
+					$dadosCadastro = "Codigo: ".$codControle." <br>"."Licitacao: ".$numeroPregao." <br>"."Autorizacao: ".$numeroAf;
+						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 				}
 			} else {
 				echo 0;
