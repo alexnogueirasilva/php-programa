@@ -599,7 +599,7 @@ switch ($value) {
 					echo 1;
 					if (!$email == '') {
 						//crud::enviarEmailPedido($email,$subject,$nomeUsuario);
-						$dadosCadastro = "Codigo: ".$codControle." <br>"."Licitacao: ".$numeroPregao." <br>"."Autorizacao: ".$numeroAf;
+						$dadosCadastro = "Codigo: ".$codControle." <br>"."Licitacao: ".$numeroLicitacao." <br>"."Autorizacao: ".$numeroAf;
 						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 					}
 				} else {
@@ -616,7 +616,7 @@ switch ($value) {
 			if ($cad == true) {
 				echo 1;
 				if (!$email == '') {
-					$dadosCadastro = "Codigo: ".$codControle." <br>"."Licitacao: ".$numeroPregao." <br>"."Autorizacao: ".$numeroAf;
+					$dadosCadastro = "Codigo: ".$codControle." <br>"."Licitacao: ".$numeroLicitacao." <br>"."Autorizacao: ".$numeroAf;
 						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 				}
 			} else {

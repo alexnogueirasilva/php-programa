@@ -134,17 +134,17 @@ $nomeUsuario
                         ?>
                         </select>
                     </div>
-                    
+                    <!--
                     <input type="checkbox" name="email2" checked="checked" />
 
-                    <?php            
+                    < ?php            
             
             if(isset($_GET['email2'])){
                 echo "Checado!";
             } else{
                 echo "Não Checado";
             }
-            ?>    
+            ? >  -->   
 
                     <div class="form-group">
                         <label for="message-text" class="control-label">Observação:</label>

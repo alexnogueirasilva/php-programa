@@ -1,5 +1,14 @@
 permissaoNivel();
 
+
+$(document).on("click", "#email2", function () {
+   
+   // var idInstituicao = $(this).data('idinstituicaoexcluir');
+    alert("teste");
+   // $('#excIdPedido').val(id);
+   
+});
+
 //SETA O CÓDIGO NO FORMULARIO PARA CADASTRAR
 $("#frmCadastroPedido").on('submit', (function (e) {
     e.preventDefault();
@@ -167,7 +176,7 @@ $("#frmAlterarPedido").on('submit', (function (e) {
             $("#alteraPedido").prop("disabled", true);
         },
         success: function (data) {
-            // alert(data);
+             alert(data);
 
             if (data == 1) {
                 swal({
