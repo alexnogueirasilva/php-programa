@@ -1124,7 +1124,11 @@ class crud
 			$stmt->bindparam(":codigoAcesso", $codigoAcesso);
 			$stmt->bindparam(":dataCadastro", $dataCadastro);
 			$stmt->execute();
-			return true;
+			
+			$id_cad = $pdo->lastInsertId();
+		
+			return	$id_cad;
+			//return true;
 		} catch (PDOException $e) {
 			echo $e->getMessage();
 			return false;

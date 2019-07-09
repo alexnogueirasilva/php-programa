@@ -17,10 +17,10 @@ $("#frmCadastroPedido").on('submit', (function (e) {
         success: function (data) {
             //alert("resultado data " + data);
 
-            if (data == 1) {
+            if (data >= 1) {
                 swal({
                     title: "OK!",
-                    text: "Cadastrado com Sucesso!",
+                    text: "Cadastrado com Sucesso! \nCódigo " + data,
                     type: "success",
                     confirmButtonText: "Fechar",
                     closeOnConfirm: false

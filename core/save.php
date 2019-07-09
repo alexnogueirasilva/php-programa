@@ -514,7 +514,7 @@ switch ($value) {
 				//SALVA NO BANCO
 				$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao);
 				if ($cdt == true) {
-					echo 1;
+					echo $cdt;
 					if (!$email == '') {
 						//crud::enviarEmailPedido($email,$subject,$nomeUsuario);					
 						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo);
@@ -530,7 +530,7 @@ switch ($value) {
 			$anexo = "sem_anexo.php";
 			$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao);
 			if ($cdt == true) {
-				echo 1;
+				echo $cdt;
 				if (!$email == '') {
 					//	crud::enviarEmailPedido($email,$subject,$nomeUsuario);
 
