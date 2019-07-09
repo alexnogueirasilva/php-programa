@@ -1198,6 +1198,23 @@ class crud
 				mail($to, $subject, $message, $headers);
 	}
 	
+	public static function enviarEmailPedidoAnexo2($email,$subject,$nomeUsuario,$anexo,$dadosCadastro){
+		$to = $email;
+		
+				//$subject = "Informacoes de Pedido"; // assunto
+				$message = "Ola, <br><br> " .$nomeUsuario. " efetuou movimentacao de pedido no sistema <br><br> " . "\r\n";
+				$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a> <br><br> " . "\r\n";
+				$message .= "<a href=http://sistemaocorrencia.devnogueira.online/anexos/".$anexo."> Click aqui para visualisar o anexo</a> <br><br> " . "\r\n";
+				$message .= "Dados do cadastro: " . $dadosCadastro. " <br><br>" . "\r\n";
+				$message .= "favor da tratamento" . "\r\n";
+				$headers = 'MIME-Version: 1.0' . "\r\n";
+				$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n";
+				$headers .= 'From:< noreply@sistemadevnogueira.online>' . "\r\n"; //email de envio
+				//$headers .= 'CC:< programadorfsaba@gmail.com>' . "\r\n"; //email com copia
+			//	$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>' . "\r\n"; //email para resposta
+
+				mail($to, $subject, $message, $headers);
+	}
 	public static function enviarEmailPedidoAnexo($email,$subject,$nomeUsuario,$anexo){
 		$to = $email;
 		

@@ -516,8 +516,10 @@ switch ($value) {
 				if ($cdt == true) {
 					echo $cdt;
 					if (!$email == '') {
+						$dadosCadastro = "Codigo: ".$cdt." "."Licitacao: ".$numeroPregao;
 						//crud::enviarEmailPedido($email,$subject,$nomeUsuario);					
 						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo);
+						crud::enviarEmailPedidoAnexo2($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 					}
 				} else {
 					echo 0;
