@@ -230,10 +230,11 @@ if($logado != 1){$logado2 = 600;
                     <div class="form-group">
                         <input type="text" style="text-transform" class="form-control" name="anexoAlterar" id="anexoAlterar" readonly="readonly">
                     </div>
-                    <div class="modal-footer">
                     <div class="form-group">
                         <input type="text" size="50" class="form-control" name="emailAlterar2" id="emailAlterar2" placeholder="Informe e-mail separando por virgula ">
                     </div>
+                    <div class="modal-footer">
+                    
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                         <button type="submit" id="alteraPedido" class="btn btn-primary">Enviar</button>
                     </div>

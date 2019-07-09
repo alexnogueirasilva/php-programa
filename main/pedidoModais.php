@@ -134,29 +134,39 @@ $nomeUsuario
                         ?>
                         </select>
                     </div>
+                    
+                    <input type="checkbox" name="email2" checked="checked" />
+
+                    <?php            
+            
+            if(isset($_GET['email2'])){
+                echo "Checado!";
+            } else{
+                echo "Não Checado";
+            }
+            ?>    
 
                     <div class="form-group">
                         <label for="message-text" class="control-label">Observação:</label>
                         <textarea name="mensagemPedidoAlterar" class="form-control" rows="3" id="mensagemPedidoAlterar"></textarea>
                         <br>
+                        
                         <div class="form-group">
                             <input type="text" size="50" class="form-control" name="emailAlterar" id="emailAlterar" placeholder="Informe e-mail separando por virgula ">
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">Mensagem:</label>
                             <textarea name="mensagemEmailAlterar" class="form-control" rows="3" id="mensagemEmailAlterar"></textarea>
-                        </div>
-                        <br>
-
+                        </div>                     
                     </div>
                     <div class="modal-footer">
-
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        <button type="submit" id="alteraPedido" class="btn btn-primary">Enviar</button>
-                    </div>
+                        <button type="submit" id="alteraPedido" class="btn btn-primary">Enviar</button>                        
+                    </div>                    
                 </form>
+                
             </div>
-
+            
         </div>
     </div>
 </div>
@@ -195,8 +205,7 @@ $nomeUsuario
                     <div class="form-group">
                             <label for="message-text" class="control-label">Mensagem:</label>
                             <textarea name="excmensagemEmail" class="form-control" rows="3" id="excmensagemEmail"></textarea>
-                        </div>
-                        <br>
+                        </div>                       
                     <div class="modal-footer">
 
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
