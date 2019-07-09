@@ -827,9 +827,12 @@ class crud
 			$stmt->bindparam(":observacao", $observacao);
 			$stmt->bindparam(":dataCadastro", $dataCadastro);
 			$stmt->bindparam(":idInstituicao", $idInstituicao);
+			
 			$stmt->execute();
-
-			return true;
+			$id_cad = $pdo->lastInsertId();
+		
+			return	$id_cad;
+			//return true;
 		} catch (PDOException $e) {
 
 			echo $e->getMessage();
@@ -1125,10 +1128,8 @@ class crud
 			$stmt->bindparam(":dataCadastro", $dataCadastro);
 			$stmt->execute();
 			
-			$id_cad = $pdo->lastInsertId();
-		
-			return	$id_cad;
-			//return true;
+			
+			return true;
 		} catch (PDOException $e) {
 			echo $e->getMessage();
 			return false;
