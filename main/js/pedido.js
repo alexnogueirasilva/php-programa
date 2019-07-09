@@ -63,7 +63,7 @@ $(document).on("click", "#btnExcluiPedido", function () {
     var idInstituicao = $(this).data('idinstituicaoexcluir');
     //alert("id "+id+" nome "+nome+" int. "+idInstituicao);
     $('#excIdPedido').val(id);
-    $('#ExcNomePedido').html(nome);
+    $('#ExcNomePedido').val(nome);
     $('#ExcIdInstituicao').val(idInstituicao);
 
     $('#modalExluirPedido').modal('show');

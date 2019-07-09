@@ -662,7 +662,8 @@ switch ($value) {
 		$idInstituicao 	= $_POST['ExcIdInstituicao'];
 		$nomeUsuario 	= $_POST['ExcnomeUsuario'];
 		$subject 		= $_POST['Excsubject'];
-		$mensagemEmail	= $_POST['ExcnomeUsuario'];
+		$mensagemEmail	= $_POST['excmensagemEmail'];
+		
 
 		$cad = crud::deletePedido($id, $idInstituicao);
 		if ($cad == true) {

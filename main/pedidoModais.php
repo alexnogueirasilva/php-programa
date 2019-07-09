@@ -46,7 +46,7 @@ $nomeUsuario
                         ?>
                         </select>
                     </div>
-                    
+
                     <div class="form-inline">
                         <div class="form-group">
                             <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroAf" id="numeroAf" placeholder="Numero da AF" required>
@@ -134,23 +134,23 @@ $nomeUsuario
                         ?>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="message-text" class="control-label">Observação:</label>
                         <textarea name="mensagemPedidoAlterar" class="form-control" rows="3" id="mensagemPedidoAlterar"></textarea>
-                    <br>
-                    <div class="form-group">
-                        <input type="text" size="50" class="form-control" name="emailAlterar" id="emailAlterar" placeholder="Informe e-mail separando por virgula ">
-                    </div>
-                    <div class="form-group">
+                        <br>
+                        <div class="form-group">
+                            <input type="text" size="50" class="form-control" name="emailAlterar" id="emailAlterar" placeholder="Informe e-mail separando por virgula ">
+                        </div>
+                        <div class="form-group">
                             <label for="message-text" class="control-label">Mensagem:</label>
-                            <textarea name="mensagemEmailAlterar" class="form-control" rows="3" id="mensagemEmailAlterar"></textarea>                  
+                            <textarea name="mensagemEmailAlterar" class="form-control" rows="3" id="mensagemEmailAlterar"></textarea>
                         </div>
                         <br>
 
                     </div>
                     <div class="modal-footer">
-                    
+
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                         <button type="submit" id="alteraPedido" class="btn btn-primary">Enviar</button>
                     </div>
@@ -182,15 +182,23 @@ $nomeUsuario
                         <input type="hidden" name="excIdPedido" id="excIdPedido">
                         <div class="col-md-12">
                             <div id="contextoModal">
-                                <h2>Você vai EXCLUIR pedido do Cliente: <span id="ExcNomePedido"></span>?</h2>
+                                <h2>Você vai EXCLUIR pedido do Cliente: </h2>
+                                <div class="form-group">
+                                    <input type="text" size="50" class="form-control" disabled="disabled" name="ExcNomePedido" id="ExcNomePedido">
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                            <input type="text" size="50" class="form-control" name="emailExcluir" id="emailExcluir" placeholder="Informe e-mail separando por virgula ">
+                        <input type="text" size="50" class="form-control" name="emailExcluir" id="emailExcluir" placeholder="Informe e-mail separando por virgula ">
+                    </div>
+                    <div class="form-group">
+                            <label for="message-text" class="control-label">Mensagem:</label>
+                            <textarea name="excmensagemEmail" class="form-control" rows="3" id="excmensagemEmail"></textarea>
                         </div>
+                        <br>
                     <div class="modal-footer">
-                        
+
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                         <button type="submit" id="btnExcluirPedido" class="btn btn-primary">Confirmar</button>
                     </div>
@@ -331,18 +339,18 @@ $nomeUsuario
                     <input type="hidden" value="<?php echo $nomeUsuario; ?>" name="nomeUsuarioSuporte" id="nomeUsuarioSuporte">
                     <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataSuporte" id="dataSuporte">
                     <div class="form-group">
-                        
+
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="message-text" class="control-label">Observação:</label>
                         <textarea name="mensagemPedidoSuporte" class="form-control" rows="3" id="mensagemPedidoSuporte"></textarea>
-                    <br>
-                    <div class="form-group">
-                        <input type="text" size="50" class="form-control" value="<?php echo $emailLogado; ?>"  name="emailSuporte" id="emailSuporte" placeholder="Informe e-mail separando por virgula ">
+                        <br>
+                        <div class="form-group">
+                            <input type="text" size="50" class="form-control" value="<?php echo $emailLogado; ?>" name="emailSuporte" id="emailSuporte" placeholder="Informe e-mail separando por virgula ">
+                        </div>
                     </div>
-                    </div>
-                    <div class="modal-footer">                    
+                    <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                         <button type="submit" id="btnSuporte" class="btn btn-primary">Enviar</button>
                     </div>
