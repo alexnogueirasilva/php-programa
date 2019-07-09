@@ -517,7 +517,7 @@ switch ($value) {
 					echo $cdt;
 					if (!$email == '') {
 						$dadosCadastro = "Codigo: ".$cdt." <br>"."Licitacao: ".$numeroPregao." <br>"."Autorizacao: ".$numeroAf 
-					." <br>"."Autorizacao: ".$numeroAf." <br>"."Valor do Pedido R$: ".$valorPedidoAtual;
+					." <br>"."Autorizacao: ".$numeroAf." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do Pedido R$: ".$observacao;
 						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 					}
 				} else {
@@ -534,7 +534,7 @@ switch ($value) {
 				echo $cdt;
 				if (!$email == '') {
 					$dadosCadastro = "Codigo: ".$cdt." <br>"."Licitacao: ".$numeroPregao." <br>"."Autorizacao: ".$numeroAf 
-					." <br>"."Autorizacao: ".$numeroAf." <br>"."Valor do Pedido R$: ".$valorPedidoAtual;
+					." <br>"."Autorizacao: ".$numeroAf." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do Pedido R$: ".$observacao;
 					crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 				}
 			} else {
@@ -602,7 +602,7 @@ switch ($value) {
 					if (!$email == '') {
 						//crud::enviarEmailPedido($email,$subject,$nomeUsuario);
 						$dadosCadastro = "Codigo: ".$codControle." <br>"."Licitacao: ".$numeroLicitacao." <br>"."Autorizacao: ".$numeroAf
-						." <br>"."Valor do Pedido R$: ".$valorPedidoAtual;
+						." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do pedido: ".$mensagemAlterar;
 						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 					}
 				} else {
@@ -620,7 +620,7 @@ switch ($value) {
 				echo 1;
 				if (!$email == '') {
 					$dadosCadastro = "Codigo: ".$codControle." <br>"."Licitacao: ".$numeroLicitacao." <br>"."Autorizacao: ".$numeroAf
-						." <br>"."Valor do Pedido R$: ".$valorPedidoAtual;
+						." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do pedido: ".$mensagemAlterar;
 						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 				}
 			} else {
