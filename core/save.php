@@ -532,6 +532,7 @@ switch ($value) {
 			$anexo = "sem_anexo.php";
 			$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao);
 			if ($cdt == true) {
+				
 				echo $cdt;
 				if (!$email == '') {
 					$dadosCadastro = "Codigo: ".$cdt." <br>"."Cliente: ".$Cliente." <br>"."Licitacao: ".$numeroPregao." <br>"."Autorizacao: ".$numeroAf 
@@ -572,6 +573,7 @@ switch ($value) {
 		$dataAlteracao 		= $_POST['dataAtual2'];
 		$subject			= $_POST['subjectAlterar2'];
 		$nomeUsuario		= $_POST['nomeUsuarioAlterar2'];
+		$Cliente = $_POST['Cliente'];
 		//ENTRA AQUI SE TIVER ANEXO
 		if (!empty($_FILES["file"]["name"])) {
 
@@ -602,7 +604,7 @@ switch ($value) {
 					echo 1;
 					if (!$email == '') {
 						//crud::enviarEmailPedido($email,$subject,$nomeUsuario);
-						$dadosCadastro = "Codigo: ".$codControle." <br>"."Licitacao: ".$numeroLicitacao." <br>"."Autorizacao: ".$numeroAf
+						$dadosCadastro = "Codigo: ".$codControle." <br>"."Cliente: ".$Cliente.." <br>"."Licitacao: ".$numeroLicitacao." <br>"."Autorizacao: ".$numeroAf
 						." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do pedido: ".$mensagemAlterar;
 						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 					}
@@ -620,7 +622,7 @@ switch ($value) {
 			if ($cad == true) {
 				echo 1;
 				if (!$email == '') {
-					$dadosCadastro = "Codigo: ".$codControle." <br>"."Licitacao: ".$numeroLicitacao." <br>"."Autorizacao: ".$numeroAf
+					$dadosCadastro = "Codigo: ".$codControle." <br>"."Cliente: ".$Cliente.." <br>"."Licitacao: ".$numeroLicitacao." <br>"."Autorizacao: ".$numeroAf
 						." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do pedido: ".$mensagemAlterar;
 						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 				}

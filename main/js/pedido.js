@@ -26,7 +26,7 @@ $("#frmCadastroPedido").on('submit', (function (e) {
             $("#salvaPedido").prop("disabled", true);
         },
         success: function (data) {
-            //alert("resultado data " + data);
+           // alert("resultado data " + data);
             if (data >= 1) {
                 swal({
                     title: "OK!",
@@ -166,6 +166,8 @@ $('#codigoControleAlterar').val(codigoControle);
 $("#frmAlterarPedido").on('submit', (function (e) {
     e.preventDefault();
     //pegando texto do option
+    var Cliente = document.getElementById('idClientePedidoAlterar').options[document.getElementById('idClientePedidoAlterar').selectedIndex].innerText; 
+    $('#Cliente').val(Cliente);
     var nome = document.getElementById('statusPedidoAlterar').options[document.getElementById('statusPedidoAlterar').selectedIndex].innerText; 
    // alert(nome);
     $.ajax({
