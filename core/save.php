@@ -622,7 +622,7 @@ switch ($value) {
 			if ($cad == true) {
 				echo 1;
 				if (!$email == '') {
-					$dadosCadastro = "Codigo: ".$codControle." <br>"."Cliente: ".$Cliente.." <br>"."Licitacao: ".$numeroLicitacao." <br>"."Autorizacao: ".$numeroAf
+					$dadosCadastro = "Codigo: ".$codControle." <br>"."Cliente: ".$Cliente." <br>"."Licitacao: ".$numeroLicitacao." <br>"."Autorizacao: ".$numeroAf
 						." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do pedido: ".$mensagemAlterar;
 						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 				}
