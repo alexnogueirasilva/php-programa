@@ -28,6 +28,7 @@ $nomeUsuario
                     <input type="hidden" value="<?php echo $nomeUsuario; ?>" name="nomeUsuario" id="nomeUsuario">
                     <input type="hidden" value="Cadastro de Pedido" name="subject" id="subject">
                     <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicao" id="idInstituicao">
+                    <input type="hidden" id="Cliente" name="Cliente">
                     <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataCadastro" id="dataCadastro">
                     <div class="form-group">
                         <select class="form-control" name="nomeCliente" id="nomeCliente" required>
@@ -120,19 +121,23 @@ $nomeUsuario
                     <div class="form-group">
                         <select class="form-control" name="statusPedidoAlterar" id="statusPedidoAlterar" required>
                             <option value="" selected disabled>Selecione o Status</option>
+                           
                             <?php
+                             
                             $selectStatus = crud::listarStatus($idInstituicao);
                             if ($selectStatus->rowCount() > 0) {
                                 while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
-                                    ?>
+                                    ?>                                    
                                     <option value="<?php print($row['codStatus']); ?>">
-                                        <?php print($row['nome']); ?>
+                                        <?php  print($row['nome']); ?>                                       
+                                       
                                     </option>
                                 <?php
                             }
                         }
                         ?>
                         </select>
+                       
                     </div>
                     <!--
                     <input type="checkbox" name="email2" checked="checked" />

@@ -12,6 +12,9 @@ $(document).on("click", "#email2", function () {
 //SETA O CÓDIGO NO FORMULARIO PARA CADASTRAR
 $("#frmCadastroPedido").on('submit', (function (e) {
     e.preventDefault();
+    var nome = document.getElementById('nomeCliente').options[document.getElementById('nomeCliente').selectedIndex].innerText; 
+    $('#Cliente').val(nome);
+
     $.ajax({
         url: "../core/save.php",
         type: "POST",
@@ -145,8 +148,8 @@ $(document).on("click", "#btnPedidoAlterar", function () {
     var valorPedido = $(this).data('valorpedido');
     var anexoAlterar = $(this).data('anexoalterar');
     var idInstituicao = $(this).data('idinstituicaoalterar');
-
-    $('#codigoControleAlterar').val(codigoControle);
+    
+$('#codigoControleAlterar').val(codigoControle);
     $('#statusPedidoAlterar').val(statusAlterar);
     $('#mensagemPedidoAlterar').val(mensagemAlterar);
     $('#dataAlteracaoPedidoAlterar').val(dataAlteracao);
@@ -163,7 +166,9 @@ $(document).on("click", "#btnPedidoAlterar", function () {
 //SETA O CÓDIGO NO FORMULARIO PARA ATUALIZAR
 $("#frmAlterarPedido").on('submit', (function (e) {
     e.preventDefault();
-
+    //pegando texto do option
+    var nome = document.getElementById('statusPedidoAlterar').options[document.getElementById('statusPedidoAlterar').selectedIndex].innerText; 
+   // alert(nome);
     $.ajax({
         url: "../core/save.php",
         type: "POST",
