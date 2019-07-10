@@ -518,7 +518,7 @@ switch ($value) {
 					echo $cdt;
 					if (!$email == '') {
 						$dadosCadastro = "Codigo: ".$cdt." <br>"."Cliente: ".$Cliente." <br>"."Licitacao: ".$numeroPregao." <br>"."Autorizacao: ".$numeroAf 
-					." <br>"."Autorizacao: ".$numeroAf." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do Pedido R$: ".$observacao;
+					." <br>"."Autorizacao: ".$numeroAf." <br>"."Valor do Pedido R$".$valorPedidoAtual." <br>"."Observacao: ".$observacao;
 						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 					}
 				} else {
@@ -536,7 +536,7 @@ switch ($value) {
 				echo $cdt;
 				if (!$email == '') {
 					$dadosCadastro = "Codigo: ".$cdt." <br>"."Cliente: ".$Cliente." <br>"."Licitacao: ".$numeroPregao." <br>"."Autorizacao: ".$numeroAf 
-					." <br>"."Autorizacao: ".$numeroAf." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do Pedido R$: ".$observacao;
+					." <br>"."Autorizacao: ".$numeroAf." <br>"."Valor do Pedido R$".$valorPedidoAtual." <br>"."Observacao: ".$observacao;
 					crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 				}
 			} else {
@@ -604,7 +604,7 @@ switch ($value) {
 					echo 1;
 					if (!$email == '') {
 						//crud::enviarEmailPedido($email,$subject,$nomeUsuario);
-						$dadosCadastro = "Codigo: ".$codControle." <br>"."Cliente: ".$Cliente.." <br>"."Licitacao: ".$numeroLicitacao." <br>"."Autorizacao: ".$numeroAf
+						$dadosCadastro = "Codigo: ".$codControle." <br>"."Cliente: ".$Cliente." <br>"."Licitacao: ".$numeroLicitacao." <br>"."Autorizacao: ".$numeroAf
 						." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do pedido: ".$mensagemAlterar;
 						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 					}
