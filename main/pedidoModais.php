@@ -120,10 +120,8 @@ $nomeUsuario
                     <input type="hidden" name="idInstituicaoAlterar" id="idInstituicaoAlterar">
                     <div class="form-group">
                         <select class="form-control" name="statusPedidoAlterar" id="statusPedidoAlterar" required>
-                            <option value="" selected disabled>Selecione o Status</option>
-                           
-                            <?php
-                             
+                            <option value="" selected disabled>Selecione o Status</option>                           
+                            <?php                             
                             $selectStatus = crud::listarStatus($idInstituicao);
                             if ($selectStatus->rowCount() > 0) {
                                 while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {

@@ -1,6 +1,5 @@
 permissaoNivel();
 
-
 $(document).on("click", "#email2", function () {
    
    // var idInstituicao = $(this).data('idinstituicaoexcluir');
@@ -12,8 +11,8 @@ $(document).on("click", "#email2", function () {
 //SETA O CÓDIGO NO FORMULARIO PARA CADASTRAR
 $("#frmCadastroPedido").on('submit', (function (e) {
     e.preventDefault();
-    var nome = document.getElementById('nomeCliente').options[document.getElementById('nomeCliente').selectedIndex].innerText; 
-    $('#Cliente').val(nome);
+    var Cliente = document.getElementById('nomeCliente').options[document.getElementById('nomeCliente').selectedIndex].innerText; 
+    $('#Cliente').val(Cliente);
 
     $.ajax({
         url: "../core/save.php",
@@ -181,7 +180,7 @@ $("#frmAlterarPedido").on('submit', (function (e) {
             $("#alteraPedido").prop("disabled", true);
         },
         success: function (data) {
-            // alert(data);
+           //  alert(nome);
 
             if (data == 1) {
                 swal({

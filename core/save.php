@@ -495,7 +495,7 @@ switch ($value) {
 		$valorPedido 		= str_replace(",", ".", $valorPedidoAtual);
 		$codStatus = $_POST['statusPedido'];
 		$codCliente = $_POST['nomeCliente'];
-		$nomeCliente = $_POST['Cliente'];
+		$Cliente = $_POST['Cliente'];
 		$observacao = $_POST['mensagem'];
 		$email = $_POST['email'];
 		$subject = $_POST['subject'];
@@ -517,7 +517,7 @@ switch ($value) {
 				if ($cdt == true) {
 					echo $cdt;
 					if (!$email == '') {
-						$dadosCadastro = "Codigo: ".$cdt." <br>"."Cliente: ".$nomeCliente." <br>"."Licitacao: ".$numeroPregao." <br>"."Autorizacao: ".$numeroAf 
+						$dadosCadastro = "Codigo: ".$cdt." <br>"."Cliente: ".$Cliente." <br>"."Licitacao: ".$numeroPregao." <br>"."Autorizacao: ".$numeroAf 
 					." <br>"."Autorizacao: ".$numeroAf." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do Pedido R$: ".$observacao;
 						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 					}
@@ -534,7 +534,7 @@ switch ($value) {
 			if ($cdt == true) {
 				echo $cdt;
 				if (!$email == '') {
-					$dadosCadastro = "Codigo: ".$cdt." <br>"."Cliente: ".$nomeCliente." <br>"."Licitacao: ".$numeroPregao." <br>"."Autorizacao: ".$numeroAf 
+					$dadosCadastro = "Codigo: ".$cdt." <br>"."Cliente: ".$Cliente." <br>"."Licitacao: ".$numeroPregao." <br>"."Autorizacao: ".$numeroAf 
 					." <br>"."Autorizacao: ".$numeroAf." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do Pedido R$: ".$observacao;
 					crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 				}
