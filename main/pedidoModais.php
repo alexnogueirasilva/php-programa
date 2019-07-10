@@ -118,7 +118,7 @@ $nomeUsuario
                     <input type="hidden" value="<?php echo $nomeUsuario; ?>" name="nomeUsuarioAlterar" id="nomeUsuarioAlterar">
                     <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataAtual" id="dataAtual">
                     <input type="hidden" name="idInstituicaoAlterar" id="idInstituicaoAlterar">
-                    <input type="hidden" name="Cliente" id="Cliente">
+                    <input type="hidden" name="ClienteAlterar" id="ClienteAlterar">
                     <div class="form-group">
                         <select class="form-control" name="statusPedidoAlterar" id="statusPedidoAlterar" required>
                             <option value="" selected disabled>Selecione o Status</option>                           

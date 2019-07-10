@@ -150,7 +150,7 @@ $(document).on("click", "#btnPedidoAlterar", function () {
     var anexoAlterar = $(this).data('anexoalterar');
     var idInstituicao = $(this).data('idinstituicaoalterar');
     
-$('#codigoControleAlterar').val(codigoControle);
+    $('#codigoControleAlterar').val(codigoControle);
     $('#statusPedidoAlterar').val(statusAlterar);
     $('#mensagemPedidoAlterar').val(mensagemAlterar);
     $('#dataAlteracaoPedidoAlterar').val(dataAlteracao);
@@ -167,13 +167,13 @@ $('#codigoControleAlterar').val(codigoControle);
 //SETA O CÓDIGO NO FORMULARIO PARA ATUALIZAR
 $("#frmAlterarPedido").on('submit', (function (e) {
     e.preventDefault();
-   var tipo = $('#tipo').val(codigoControle);
+   var tipo = $('#tipo').val();
     if (tipo == 'AlterarPedido2') {
           var Cliente = document.getElementById('idClientePedidoAlterar').options[document.getElementById('idClientePedidoAlterar').selectedIndex].innerText; 
-          $('#Cliente').val(Cliente);
+          $('#ClienteAlterar').val(Cliente);
     } else {
          var Cliente = document.getElementById('statusPedidoAlterar').options[document.getElementById('statusPedidoAlterar').selectedIndex].innerText; 
-         $('#Cliente').val(Cliente);
+         $('#ClienteAlterar').val(Cliente);
     }
      //pegando texto do option
   
@@ -194,7 +194,7 @@ $("#frmAlterarPedido").on('submit', (function (e) {
             $("#alteraPedido").prop("disabled", true);
         },
         success: function (data) {
-            alert(data);
+            //alert(data);
 
             if (data == 1) {
                 swal({

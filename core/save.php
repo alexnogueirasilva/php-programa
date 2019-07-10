@@ -643,7 +643,7 @@ switch ($value) {
 		$subject 			= $_POST['subjectAlterar'];
 		$nomeUsuario		= $_POST['nomeUsuarioAlterar'];
 		$mensagemEmail		= $_POST['mensagemEmailAlterar'];
-		$Cliente			= $_POST['Cliente'];
+		$Cliente			= $_POST['ClienteAlterar'];
 				
 		if ($statusPedido == "16" || $statusPedido == "7"  || $statusPedido == "2") {
 			if ($dataFechamento == "") {
@@ -656,8 +656,7 @@ switch ($value) {
 		if ($cad == true) {
 			echo 1;
 			if(!$email ==''){
-				$dadosCadastro = "Codigo: ".$codControle." <br>"."Cliente: ".$Cliente." <br>"."Licitacao: ".$numeroLicitacao." <br>"."Autorizacao: ".$numeroAf
-						." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do pedido: ".$mensagemAlterar;
+				$dadosCadastro = "Codigo: ".$codControle." <br>"."Cliente: ".$Cliente." <br>"."Observacao do pedido: ".$mensagemAlterar;
 				crud::enviarEmailPedido($email,$subject,$nomeUsuario,$mensagemEmail,$dadosCadastro);
 			}
 		} else {
