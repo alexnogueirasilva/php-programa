@@ -165,11 +165,21 @@ $('#codigoControleAlterar').val(codigoControle);
 //SETA O CÓDIGO NO FORMULARIO PARA ATUALIZAR
 $("#frmAlterarPedido").on('submit', (function (e) {
     e.preventDefault();
-    //pegando texto do option
-    var Cliente = document.getElementById('idClientePedidoAlterar').options[document.getElementById('idClientePedidoAlterar').selectedIndex].innerText; 
-    $('#Cliente').val(Cliente);
-    var nome = document.getElementById('statusPedidoAlterar').options[document.getElementById('statusPedidoAlterar').selectedIndex].innerText; 
+   var tipo = $('#tipo').val(codigoControle);
+    if (tipo == 'AlterarPedido2') {
+          var Cliente = document.getElementById('idClientePedidoAlterar').options[document.getElementById('idClientePedidoAlterar').selectedIndex].innerText; 
+          $('#Cliente').val(Cliente);
+    } else {
+         var Cliente = document.getElementById('statusPedidoAlterar').options[document.getElementById('statusPedidoAlterar').selectedIndex].innerText; 
+         $('#Cliente').val(Cliente);
+    }
+     //pegando texto do option
+  
+   
+   // $('#Cliente').val(Cliente);
    // alert(nome);
+    
+   
     $.ajax({
         url: "../core/save.php",
         type: "POST",
@@ -182,7 +192,7 @@ $("#frmAlterarPedido").on('submit', (function (e) {
             $("#alteraPedido").prop("disabled", true);
         },
         success: function (data) {
-           //  alert(nome);
+            alert(data);
 
             if (data == 1) {
                 swal({
