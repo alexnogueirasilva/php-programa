@@ -170,7 +170,7 @@ $("#frmAlterarPedido").on('submit', (function (e) {
    var tipo = $('#tipo').val();
     if (tipo == 'AlterarPedido2') {
           var Cliente = document.getElementById('idClientePedidoAlterar').options[document.getElementById('idClientePedidoAlterar').selectedIndex].innerText; 
-          $('#ClienteAlterar').val(Cliente);
+          $('#ClienteAlterar2').val(Cliente);
     } else {
          var Cliente = document.getElementById('statusPedidoAlterar').options[document.getElementById('statusPedidoAlterar').selectedIndex].innerText; 
          $('#ClienteAlterar').val(Cliente);

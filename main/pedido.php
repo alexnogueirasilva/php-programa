@@ -176,7 +176,7 @@ if($logado != 1){$logado2 = 600;
                     <input type="hidden" id="Cliente" name="dataFechamentoPedidoAlterar">
                     <input type="hidden" value="<?php echo $nomeUsuario; ?>" name="nomeUsuarioAlterar2" id="nomeUsuarioAlterar2">
                     <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataAtual2" id="dataAtual2">
-                    <input type="hidden" name="Cliente" id="Cliente">
+                    <input type="hidden" name="ClienteAlterar2" id="ClienteAlterar2">
                     <div class="form-group">
                         <select class="form-control" name="idClientePedidoAlterar" id="idClientePedidoAlterar" required>
                             <option value="" selected disabled>Selecione o Cliente</option>
