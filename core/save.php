@@ -518,7 +518,7 @@ switch ($value) {
 					echo $cdt;
 					if (!$email == '') {
 						$dadosCadastro = "Codigo: ".$cdt." <br>"."Cliente: ".$Cliente." <br>"."Licitacao: ".$numeroPregao." <br>"."Autorizacao: ".$numeroAf 
-					." <br>"."Autorizacao: ".$numeroAf." <br>"."Valor do Pedido R$".$valorPedidoAtual." <br>"."Observacao: ".$observacao;
+					." <br>"."Valor do Pedido R$".$valorPedidoAtual." <br>"."Observacao: ".$observacao;
 						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 					}
 				} else {
@@ -536,7 +536,7 @@ switch ($value) {
 				echo $cdt;
 				if (!$email == '') {
 					$dadosCadastro = "Codigo: ".$cdt." <br>"."Cliente: ".$Cliente." <br>"."Licitacao: ".$numeroPregao." <br>"."Autorizacao: ".$numeroAf 
-					." <br>"."Autorizacao: ".$numeroAf." <br>"."Valor do Pedido R$".$valorPedidoAtual." <br>"."Observacao: ".$observacao;
+					." <br>"."Valor do Pedido R$".$valorPedidoAtual." <br>"."Observacao: ".$observacao;
 					crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 				}
 			} else {
@@ -672,7 +672,7 @@ switch ($value) {
 		$nomeUsuario 	= $_POST['ExcnomeUsuario'];
 		$subject 		= $_POST['Excsubject'];
 		$mensagemEmail	= $_POST['excmensagemEmail'];
-		$Cliente	= $_POST['excCliente'];
+		$Cliente		= $_POST['ExcNomePedido'];
 		
 		$cad = crud::deletePedido($id, $idInstituicao);
 		if ($cad == true) {
