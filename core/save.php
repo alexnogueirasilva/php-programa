@@ -603,7 +603,6 @@ switch ($value) {
 				if ($cad == true) {
 					echo 1;
 					if (!$email == '') {
-						//crud::enviarEmailPedido($email,$subject,$nomeUsuario);
 						$dadosCadastro = "Codigo: ".$codControle." <br>"."Cliente: ".$Cliente." <br>"."Licitacao: ".$numeroLicitacao." <br>"."Autorizacao: ".$numeroAf
 						." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do pedido: ".$mensagemAlterar;
 						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
@@ -617,7 +616,7 @@ switch ($value) {
 		} else {
 			//CASO NÃO TENHA ANEXO ENTRA AQUI
 			$anexo = $anexoAlterar;
-			$cad = crud::AlterarPedido2($codControle, $statusPedido, $mensagemAlterar, $nomeCliente,	$numeroAf, $valorPedido, $numeroLicitacao, $anexoAlterar, $idInstituicao, $dataAlteracao);
+			$cad = crud::AlterarPedido2($codControle, $statusPedido, $mensagemAlterar, $nomeCliente,$numeroAf, $valorPedido, $numeroLicitacao, $anexoAlterar, $idInstituicao, $dataAlteracao);
 
 			if ($cad == true) {
 				echo 1;
