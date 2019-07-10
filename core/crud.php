@@ -1178,7 +1178,7 @@ class crud
 		$stmt->execute();
 		return $stmt;
 	}
-	public static function enviarEmailPedido($email, $subject, $nomeUsuario,$mensagemEmail)	{
+	public static function enviarEmailPedido($email, $subject, $nomeUsuario,$mensagemEmail,$dadosCadastro)	{
 		$to = $email;
 		if($mensagemEmail == ''){
 			$mensagemEmail = "sem informacoes!";
@@ -1188,6 +1188,7 @@ class crud
 				$message = "Ola, <br><br> " .$nomeUsuario. " efetuou movimentacao de pedido no sistema <br><br> " . "\r\n";
 				$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a> <br><br> " . "\r\n";
 				$message .= "Mensagem do Usuario: " . $mensagemEmail. " <br><br>" . "\r\n";
+				$message .= "Dados do cadastro: <br>" . $dadosCadastro. " <br><br>" . "\r\n";
 				$message .= "Favor da tratamento" . "\r\n";
 				$headers = 'MIME-Version: 1.0' . "\r\n";
 				$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n";

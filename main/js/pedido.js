@@ -83,6 +83,8 @@ $(document).on("click", "#btnExcluiPedido", function () {
 //SETA O CÓDIGO NO FORMULARIO PARA EXCLUIR
 $('#frmExcluirPedido').on('submit', (function (e) {
     e.preventDefault();
+    var Cliente = document.getElementById('idClientePedidoAlterar').options[document.getElementById('idClientePedidoAlterar').selectedIndex].innerText; 
+          $('#excCliente').val(Cliente);
     $.ajax({
         url: "../core/save.php",
         type: "POST",

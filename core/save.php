@@ -656,7 +656,9 @@ switch ($value) {
 		if ($cad == true) {
 			echo 1;
 			if(!$email ==''){
-				crud::enviarEmailPedido($email,$subject,$nomeUsuario,$mensagemEmail);
+				$dadosCadastro = "Codigo: ".$codControle." <br>"."Cliente: ".$Cliente." <br>"."Licitacao: ".$numeroLicitacao." <br>"."Autorizacao: ".$numeroAf
+						." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do pedido: ".$mensagemAlterar;
+				crud::enviarEmailPedido($email,$subject,$nomeUsuario,$mensagemEmail,$dadosCadastro);
 			}
 		} else {
 			echo 0;
@@ -670,13 +672,14 @@ switch ($value) {
 		$nomeUsuario 	= $_POST['ExcnomeUsuario'];
 		$subject 		= $_POST['Excsubject'];
 		$mensagemEmail	= $_POST['excmensagemEmail'];
+		$Cliente	= $_POST['excCliente'];
 		
-
 		$cad = crud::deletePedido($id, $idInstituicao);
 		if ($cad == true) {
 			echo 1;
 			if(!$email ==''){
-				crud::enviarEmailPedido($email,$subject,$nomeUsuario,$mensagemEmail);
+				$dadosCadastro = "Codigo: ".$id." <br>"."Cliente: ".$Cliente." <br>"."Observacao: ".$mensagemEmail;
+				crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 			}
 		} else {
 			echo 0;
