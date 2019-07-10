@@ -574,6 +574,7 @@ switch ($value) {
 		$subject			= $_POST['subjectAlterar2'];
 		$nomeUsuario		= $_POST['nomeUsuarioAlterar2'];
 		$Cliente 			= $_POST['ClienteAlterar2'];
+		$Status 			= $_POST['statusAlterar2'];
 		//ENTRA AQUI SE TIVER ANEXO
 		if (!empty($_FILES["file"]["name"])) {
 
@@ -603,7 +604,7 @@ switch ($value) {
 				if ($cad == true) {
 					echo 1;
 					if (!$email == '') {
-						$dadosCadastro = "Codigo: ".$codControle." <br>"."Cliente: ".$Cliente." <br>"."Licitacao: ".$numeroLicitacao." <br>"."Autorizacao: ".$numeroAf
+						$dadosCadastro = "Codigo: ".$codControle." <br>"."Cliente: ".$Cliente." <br>"."Status: ".$Status." <br>"."Licitacao: ".$numeroLicitacao." <br>"."Autorizacao: ".$numeroAf
 						." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do pedido: ".$mensagemAlterar;
 						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 					}
@@ -621,8 +622,8 @@ switch ($value) {
 			if ($cad == true) {
 				echo 1;
 				if (!$email == '') {
-					$dadosCadastro = "Codigo: ".$codControle." <br>"."Cliente: ".$Cliente." <br>"."Licitacao: ".$numeroLicitacao." <br>"."Autorizacao: ".$numeroAf
-						." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do pedido: ".$mensagemAlterar;
+					$dadosCadastro = "Codigo: ".$codControle." <br>"."Cliente: ".$Cliente." <br>"."Status: ".$Status." <br>"."Licitacao: ".$numeroLicitacao." <br>"."Autorizacao: ".$numeroAf
+					." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do pedido: ".$mensagemAlterar;
 						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 				}
 			} else {
@@ -643,6 +644,7 @@ switch ($value) {
 		$nomeUsuario		= $_POST['nomeUsuarioAlterar'];
 		$mensagemEmail		= $_POST['mensagemEmailAlterar'];
 		$Cliente			= $_POST['ClienteAlterar'];
+		$Status 			= $_POST['statusAlterar'];
 				
 		if ($statusPedido == "16" || $statusPedido == "7"  || $statusPedido == "2") {
 			if ($dataFechamento == "") {
@@ -655,7 +657,7 @@ switch ($value) {
 		if ($cad == true) {
 			echo 1;
 			if(!$email ==''){
-				$dadosCadastro = "Codigo: ".$codControle." <br>"."Cliente: ".$Cliente." <br>"."Observacao do pedido: ".$mensagemAlterar;
+				$dadosCadastro = "Codigo: ".$codControle." <br>"."Cliente: ".$Cliente." <br>"."Status: ".$Status." <br>"."Observacao do pedido: ".$mensagemAlterar;
 				crud::enviarEmailPedido($email,$subject,$nomeUsuario,$mensagemEmail,$dadosCadastro);
 			}
 		} else {

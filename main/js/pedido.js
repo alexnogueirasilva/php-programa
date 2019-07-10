@@ -137,25 +137,30 @@ $('#frmExcluirPedido').on('submit', (function (e) {
 
 //SETA O CÓDIGO NO MODAL PARA ATUALIZAR
 $(document).on("click", "#btnPedidoAlterar", function () {
-
     var codigoControle = $(this).data('codigocontrolealterar');
     var statusAlterar = $(this).data('statusalterar');
+    var nomesatus = $(this).data('nomesatus');
     var mensagemAlterar = $(this).data('mensagemalterar');
     var dataFechamento = $(this).data('datafechamento');
     var dataAlteracao = $(this).data('dataalteracao');
     var Cliente = $(this).data('idclientealterar');
+    var nomealterar = $(this).data('nomealterar');
     var numeroAf = $(this).data('numeroaf');
     var numeroLicitacao = $(this).data('numerolicitacao');
     var valorPedido = $(this).data('valorpedido');
     var anexoAlterar = $(this).data('anexoalterar');
-    var idInstituicao = $(this).data('idinstituicaoalterar');
-    
+    var idInstituicao = $(this).data('idinstituicaoalterar');    
+
     $('#codigoControleAlterar').val(codigoControle);
     $('#statusPedidoAlterar').val(statusAlterar);
+    $('#statusAlterar').val(nomesatus);
+    $('#statusAlterar2').val(nomesatus);
     $('#mensagemPedidoAlterar').val(mensagemAlterar);
     $('#dataAlteracaoPedidoAlterar').val(dataAlteracao);
     $('#dataFechamentoPedidoAlterar').val(dataFechamento);
     $('#idClientePedidoAlterar').val(Cliente);
+    $('#ClienteAlterar2').val(nomealterar);
+    $('#ClienteAlterar').val(nomealterar);
     $('#numeroAfPedidoAlterar').val(numeroAf);
     $('#numeroLicitacaoPedidoAlterar').val(numeroLicitacao);
     $('#valorPedidoAlterar').val(valorPedido);
@@ -167,14 +172,15 @@ $(document).on("click", "#btnPedidoAlterar", function () {
 //SETA O CÓDIGO NO FORMULARIO PARA ATUALIZAR
 $("#frmAlterarPedido").on('submit', (function (e) {
     e.preventDefault();
-   var tipo = $('#tipo').val();
+    
+  /* var tipo = $('#tipo').val();
     if (tipo == 'AlterarPedido2') {
           var Cliente = document.getElementById('idClientePedidoAlterar').options[document.getElementById('idClientePedidoAlterar').selectedIndex].innerText; 
           $('#ClienteAlterar2').val(Cliente);
     } else {
          var Cliente = document.getElementById('statusPedidoAlterar').options[document.getElementById('statusPedidoAlterar').selectedIndex].innerText; 
          $('#ClienteAlterar').val(Cliente);
-    }
+    }*/
      //pegando texto do option
   
    
