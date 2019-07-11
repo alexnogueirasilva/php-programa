@@ -1178,7 +1178,7 @@ class crud
 		$stmt->execute();
 		return $stmt;
 	}
-	public static function enviarEmailPedido($email, $subject, $nomeUsuario,$mensagemEmail,$dadosCadastro)	{
+	public static function enviarEmailPedido($email, $subject, $nomeUsuario,$mensagemEmail,$dadosCadastro,$anexo)	{
 		$to = $email;
 		if($mensagemEmail == ''){
 			$mensagemEmail = "sem informacoes!";
@@ -1187,6 +1187,7 @@ class crud
 				//$subject = "Informacoes de Pedido"; // assunto
 				$message = "Ola, <br><br> " .$nomeUsuario. " efetuou movimentacao de pedido no sistema <br><br> " . "\r\n";
 				$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a> <br><br> " . "\r\n";
+				$message .= "<a href=http://sistemaocorrencia.devnogueira.online/anexos/".$anexo."> Click aqui para visualisar o anexo</a> <br><br> " . "\r\n";
 				$message .= "Mensagem do Usuario: " . $mensagemEmail. " <br><br>" . "\r\n";
 				$message .= "Dados do cadastro: <br>" . $dadosCadastro. " <br><br>" . "\r\n";
 				$message .= "Favor da tratamento" . "\r\n";

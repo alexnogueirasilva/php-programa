@@ -113,6 +113,7 @@ $nomeUsuario
                 <form id="frmAlterarPedido" action="" method="post" enctype="multipart/form-data">
                     <input type="hidden" value="AlterarPedido" name="tipo" id="tipo">
                     <input type="hidden" id="codigoControleAlterar" name="codigoControleAlterar">
+                    <input type="hidden" id="anexoAlterar" name="anexoAlterar">
                     <input type="hidden" id="subjectAlterar" name="subjectAlterar" value="Alteracao do Pedido">
                     <input type="hidden" id="dataFechamentoPedidoAlterar" name="dataFechamentoPedidoAlterar">
                     <input type="hidden" value="<?php echo $nomeUsuario; ?>" name="nomeUsuarioAlterar" id="nomeUsuarioAlterar">

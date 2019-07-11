@@ -129,6 +129,7 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                                             <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']); ?>">Anexo</a></td>
                                             <td><a class="btn btn-primary waves-effect waves-light" type="button" id="btnPedidoAlterar" data-toggle="modal" data-target="#modalPedidoAlterar" data-whatever="@getbootstrap" target="_blank" 
                                             data-idinstituicaoalterar="<?php print($row['fk_idInstituicao']); ?>"
+                                            data-anexoalterar="<?php print($row['anexo']); ?>"
                                              data-statusalterar="<?php print($row['codStatus']); ?>" data-mensagemalterar="<?php print($row['observacao']); ?>" data-codigocontrolealterar="<?php print($row['codControle']); ?>" data-dataalteracao="<?php print($row['dataAlteracao']); ?>" data-nomesatus="<?php print($row['nomeStatus']); ?>" data-nomealterar="<?php print($row['nomeCliente']); ?>" data-datafechamento="<?php print($row['dataFechamento']); ?>">Alterar</a></td>
                                             
                                             <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" data-toggle="modal" data-target="#modalDetPedido" data-whatever="@getbootstrap" 
