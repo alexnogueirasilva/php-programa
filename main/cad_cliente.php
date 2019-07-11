@@ -51,9 +51,9 @@ $queryCliente = "SELECT * FROM cliente WHERE fk_idInstituicao =  '".$idInstituic
 						<div class="input-group">
 							<select class="form-control" name="cdtTipoCliente" id="cdtTipoCliente" required="true">
 								<option value="">Tipo Cliente</option>
-								<option value="E">1 - Estadual</option>
-								<option value="F">2 - Federal</option>
-								<option value="M">3 - Municipal</option>
+								<option value="Estadual">1 - Estadual</option>
+								<option value="Federal">2 - Federal</option>
+								<option value="Municipal">3 - Municipal</option>
 							</select>
 						</div>
 					</div>
@@ -275,9 +275,9 @@ $queryCliente = "SELECT * FROM cliente WHERE fk_idInstituicao =  '".$idInstituic
 											<div class="input-group">
 												<select class="form-control" name="edttipo" id="edttipo" required="true">
 													<option value="">Tipo Cliente</option>
-													<option value="E">1 - Estadual</option>
-													<option value="F">2 - Federal</option>
-													<option value="M">3 - Municipal</option>
+													<option value="Estadual">1 - Estadual</option>
+													<option value="Federal">2 - Federal</option>
+													<option value="Municipal">3 - Municipal</option>
 												</select>
 												<span class="input-group-addon"><span class="fa fa-signal"></span></span>
 											</div>
