@@ -659,7 +659,7 @@ switch ($value) {
 			echo 1;
 			if(!$email ==''){
 				$dadosCadastro = "Codigo: ".$codControle." <br>"."Cliente: ".$Cliente." <br>"."Status: ".$Status." <br>"."Observacao do pedido: ".$mensagemEmail;
-				crud::enviarEmailPedido($email,$subject,$nomeUsuario,$mensagemEmail,$dadosCadastro,$anexo);
+				crud::enviarEmailPedido($email,$subject,$nomeUsuario,$mensagemAlterar,$dadosCadastro,$anexo);
 			}
 		} else {
 			echo 0;
