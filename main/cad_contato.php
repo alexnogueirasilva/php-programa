@@ -14,7 +14,7 @@ $acao = 1;
 		<div class="white-box">
 			
 			<div class="col-sm-6">
-			<button class="btn btn-success waves-effect waves-light" type="button" data-toggle="modal" data-target="#modalContato" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-plus"></i></span>Cadastro</button>
+			<button class="btn btn-success waves-effect waves-light" id="btnCadastrar" type="button" data-toggle="modal" data-target="#modalContato" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-plus"></i></span>Cadastro</button>
 		<button class="btn btn-success waves-effect waves-light" type="button" onclick="window.location.href = 'Home.php'" data-whatever="@getbootstrap"><span class="btn-label"><i class="fa fa-home"></i></span>Home</button>
 				<br>
 				<h2>Lista de Contatos -
@@ -62,8 +62,10 @@ $acao = 1;
 								<td><?php print($row['emailContato']); ?></td>
 								<td><?php print($row['telefoneContato']); ?></td>
 								<td><?php print($row['celularContato']); ?></td>
-								<td><a class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#modalContato" id="btnEditar" data-whatever="@getbootstrap" data-codigo="<?php print($row['codContato']); ?>" data-codcliente="<?php print($row['codCliente']); ?>" data-nome="<?php print($row['nomeContato']); ?>" data-celular="<?php print($row['celularContato']); ?>" data-telefone="<?php print($row['telefoneContato']); ?>" data-email="<?php print($row['emailContato']); ?>" data-cargosetor="<?php print($row['cargoSetor']); ?>"><span class="fa fa-pencil"></span> Editar</a></td>
-								<td><a class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#modalContato" id="btnDetalhes" data-whatever="@getbootstrap" data-codigo="<?php print($row['codContato']); ?>" data-codcliente="<?php print($row['codCliente']); ?>" data-nome="<?php print($row['nomeContato']); ?>" data-celular="<?php print($row['celularContato']); ?>" data-telefone="<?php print($row['telefoneContato']); ?>" data-email="<?php print($row['emailContato']); ?>" data-cargosetor="<?php print($row['cargoSetor']); ?>"><span class="fa fa-pencil"></span> Detalhes</a></td>
+								<td><a class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#modalContato" id="btnEditar" data-whatever="@getbootstrap" data-codigo="<?php print($row['codContato']); ?>" data-codcliente="<?php print($row['codCliente']); ?>" data-nome="<?php print($row['nomeContato']); ?>" data-celular="<?php print($row['celularContato']); ?>" data-telefone="<?php print($row['telefoneContato']); ?>" data-email="<?php print($row['emailContato']); ?>" data-cargosetor="<?php print($row['cargoSetor']); ?>"   data-datacadastro="<?php print(crud::formataData($row['dataCadastro'])); ?>"  
+								data-dataalteracao="<?php print(crud::formataData($row['dataAlteracao'])); ?>"  ><span class="fa fa-pencil"></span> Editar</a></td>
+								<td><a class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#modalContato" id="btnDetalhes" data-whatever="@getbootstrap" data-codigo="<?php print($row['codContato']); ?>" data-codcliente="<?php print($row['codCliente']); ?>" data-nome="<?php print($row['nomeContato']); ?>" data-celular="<?php print($row['celularContato']); ?>" data-telefone="<?php print($row['telefoneContato']); ?>" data-email="<?php print($row['emailContato']); ?>" data-cargosetor="<?php print($row['cargoSetor']); ?>" data-datacadastro="<?php print(crud::formataData($row['dataCadastro'])); ?>"  
+								data-dataalteracao="<?php print(crud::formataData($row['dataAlteracao'])); ?>" ><span class="fa fa-pencil"></span> Detalhes</a></td>
 								<td><a class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#modalContato" data-whatever="@getbootstrap" id="btnExcluir" data-codigo="<?php print($row['codContato']); ?>" data-codcliente="<?php print($row['codCliente']); ?>" data-nome="<?php print($row['nomeContato']); ?>" data-celular="<?php print($row['celularContato']); ?>" data-telefone="<?php print($row['telefoneContato']); ?>" data-email="<?php print($row['emailContato']); ?>" data-cargosetor="<?php print($row['cargoSetor']); ?>" ><span class="fa fa-trash-o"></span> Excluir</a></td>
 							</tr>
 						<?php
@@ -146,9 +148,10 @@ $acao = 1;
 								<br>
 							</div>
 							<br>
+							<span class="input-group-addon" id="datas" style="font-size: 15px;"><span class="fa fa-users"></span></span>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-info waves-effect waves-light" id="btnLimpar" data-whatever="@getbootstrap"><span class="fa fa-save"></span> Limpar</button>
-								<button type="button" class="btn btn-warning waves-effect" data-dismiss="modal"><span class="fa fa-trash"></span> Cancelar</button>
+								<button type="button" class="btn btn-warning waves-effect" data-dismiss="modal" id="btnCancelar"><span class="fa fa-trash"></span> Cancelar</button>
 								<button type="submit" class="btn btn-success waves-effect waves-light" id="btnSalvar"><span class="fa fa-save"></span> Salvar</button>
 							</div>
 						</div>						

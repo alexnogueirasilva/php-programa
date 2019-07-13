@@ -67,6 +67,8 @@ $(document).on("click", "#btnEditar", function() {
     var Celular = $(this).data('celular');
     var Email = $(this).data('email');
     var Telefone = $(this).data('telefone');
+    var DadaCadastro = $(this).data('datacadastro');
+    var DataAlteracao = $(this).data('dataalteracao');
     var Acao =2;
      
     $('#codContato').val(Codigo);
@@ -75,6 +77,7 @@ $(document).on("click", "#btnEditar", function() {
     $('#telefoneContato').val(Telefone);
     $('#celularContato').val(Celular);
     $('#emailContato').val(Email);
+    $('#datas').html("Cadastrado em: "+ DadaCadastro + " e Ultima alteração: "+ DataAlteracao);
     $('#acao').val(Acao);
 });
 
@@ -106,9 +109,7 @@ $(document).on("click", "#btnExcluir", function() {
     $("#emailContato").prop("readonly", true);
     $("#cargoSetor").prop("readonly", true);
 });
-
-$(document).on("click", "#btnLimpar", function() {
-     
+function limparCampos() {
     $('#codContato').val('');
     $('#codCliente').val('');
     $('#nomeContato').val('');
@@ -116,6 +117,7 @@ $(document).on("click", "#btnLimpar", function() {
     $('#celularContato').val('');
     $('#emailContato').val('');
     $('#cargoSetor').val('');
+    $('#datas').text('');
     $('#acao').val(1);
     //habilitando inputs
     $("#codContato").prop("readonly", false);
@@ -127,6 +129,18 @@ $(document).on("click", "#btnLimpar", function() {
     $("#emailContato").prop("readonly", false);
     $("#cargoSetor").prop("readonly", false);
     $("#btnSalvar").prop("disabled", false);
+}
+$(document).on("click", "#btnLimpar", function() {
+     limparCampos();
+
+});
+$(document).on("click", "#btnCancelar", function() {
+     limparCampos();
+});
+
+$(document).on("click", "#btnCadastrar", function() {
+     limparCampos();
+    $('#datas').html("Cadastrando em... "+ $('#dataAtual').val());
 });
 
 $(document).on("click", "#btnDetalhes", function() {
@@ -138,7 +152,9 @@ $(document).on("click", "#btnDetalhes", function() {
     var Email = $(this).data('email');
     var Telefone = $(this).data('telefone');
     var CargoSetor = $(this).data('cargosetor');
-    var Acao =3;
+    var DadaCadastro = $(this).data('datacadastro');
+    var DataAlteracao = $(this).data('dataalteracao');
+    var Acao = 3;
     //atribuido valores no id do formularios
     $('#codContato').val(Codigo);
     $('#codCliente').val(codCliente);
@@ -147,7 +163,9 @@ $(document).on("click", "#btnDetalhes", function() {
     $('#celularContato').val(Celular);
     $('#emailContato').val(Email);
     $('#cargoSetor').val(CargoSetor);
+    $('#datas').html("Cadastrado em: "+ DadaCadastro + " e Ultima alteração: "+ DataAlteracao);
     $('#acao').val(Acao);
+    
     //desabilitando inputs
     $("#codContato").prop("readonly", true);
     $("#codCliente").prop("disabled", true);
