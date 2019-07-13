@@ -1109,7 +1109,7 @@ class crud
 	//CADASTRO DE CONTATOS
 	public static function listarContato($idInstituicao)
 	{
-		$sql = "SELECT * FROM contatoCliente WHERE fk_idInstituicao = '" . $idInstituicao . "' ORDER BY nome desc";
+		$sql = "SELECT * FROM contato WHERE fk_idInstituicao = '" . $idInstituicao . "' ORDER BY nomeContato desc";
 
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
