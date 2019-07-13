@@ -4,8 +4,9 @@ include_once 'vrf_lgin.php';
 include_once '../core/crud.php';
 include_once '../core/crudContato.php';
 //CONTATO TODOS
-$totalContatos = crudContato::dataview("SELECT COUNT(*) as total from contato where fk_idInstituicao = '".$idInstituicao."'" );
-$arrayContatosTodos = $totalContatos->fetchAll(PDO::FETCH_ASSOC);
+
+$arrayContatosTodos = crudContato::qtdeContato($idInstituicao);
+
 //DEMANDA TODOS
 $totalDemandas = crud::dataview("SELECT COUNT(*) as total from demanda where fk_idInstituicao = '".$idInstituicao."'" );
 $arrayDemandasTodos = $totalDemandas->fetchAll(PDO::FETCH_ASSOC);

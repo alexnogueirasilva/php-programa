@@ -2,9 +2,18 @@ permissaoNivel();
 
 $("#frmContato").submit(function (e) {
     e.preventDefault();
-    alert("click salvar");
+    //alert("click salvar");
    // var nomeCliente = document.getElementById('nomeCliente').options[document.getElementById('nomeCliente').selectedIndex].innerText;
     //$('#nomeCliente').val(nomeCliente);
+
+    var Operacao = $('#acao').val();
+    if (Operacao == 1) {
+        Operacao = "Cadastrado ";
+    } else if(Operacao == 2){
+        Operacao = "Alterado ";
+    }else{
+        Operacao = "Excluido ";
+    }
     $.ajax({ //Função AJAX
         url: "../core/saveContato.php", //Arquivo php
         type: "POST", //Método de envio				
@@ -14,11 +23,11 @@ $("#frmContato").submit(function (e) {
         cache: false,
         processData: false,
         success: function (data) {
-            alert("resultado salvar: " + data);
+          // alert("resultado salvar: " + data);
             if (data > 0) {
                 swal({
                     title: "OK!",
-                    text: " Cadastrado com Sucesso! \nCódigo " + data,
+                    text: Operacao +"com Sucesso! \nCódigo " + data,
                     type: "success",
                     confirmButtonText: "Fechar",
                     closeOnConfirm: false
@@ -34,11 +43,14 @@ $("#frmContato").submit(function (e) {
                     text: "Algo deu errado!",
                     type: "error",
                     confirmButtonText: "Fechar",
-                    closeOnConfirm: false
+                    closeOnConfirm: true
                 },
                     function (isConfirm) {
                         if (isConfirm) {
-                            window.location = "cad_contato.php";
+                           // window.location = "cad_contato.php";
+                            $('#modalContato').modal('hide');
+                            $('#erro').val(data);
+                            $('#modalSuportePedido').modal('show');
                         }
                     });
             }
@@ -46,312 +58,103 @@ $("#frmContato").submit(function (e) {
     });
 
 });
-        /*
-$(document).on("click", "#btnLimpar", function() {
-    limparCampos();
-    $("#codigoAcesso").prop("disabled", false);
-});
+
 $(document).on("click", "#btnEditar", function() {
-    //limparCampos();
-    var codigo = $(this).data('codigo');
-    var nome = $(this).data('nome');
-    var nomeFantasia = $(this).data('nomefantasia');
-    var codigoAcesso = $(this).data('codigoacesso');
-    var acao = 2;
-
-    $('#idInstituicao').val(codigo);
-    $('#codigoAcesso').val(codigoAcesso);
-    $('#nomeInstituicao').val(nome);
-    $('#nomeFantasia').val(nomeFantasia);
-    $('#acao').val(acao);
-    $('#modalPesquisarAndre').modal('hide');
-
-});
-
-$('#btnBuscar').click(function() {
-    var valorPesquisar = $("#valorPesquisa").val();
-    var tipo = "pesquisar";
-    $.ajax({
-        url: 'buscar.php',
-        type: "POST",
-        data: {
-            tipo: tipo,
-            valorPesquisar: valorPesquisar
-        },
-        success: function(data) {
-            //		alert(data);
-            if (data) {
-                $('#tabela2').html(data);
-            } else {
-                alert("nenhum dados encontrado para pesquisa com ");
-            }
-        }
-    });
-
-    return false;
-});
-
-function limparCampos() {
-    $("#codigoAcesso").val('');
-    $("#idInstituicao").val('');
-    $("#nomeInstituicao").val('');
-    $('#nomeFantasia').val('');
-    $('#nome').val('');
-}
-$(document).on("click", "#btnAtiva", function() {
-    var id = $(this).data('codigo');
-    var status = $(this).data('statusatual');
-    var nome = $(this).data('nome');
-    if (status == "A") {
-        alert("Cliente já está Ativo!");
-    } else {
-        $('#modalConfirmacaoAtiva').modal('show');
-    }
-    $('#codigoClienteAt').val(id);
-    $('#statusAtualAt').val(status);
-    $('#nomeClienteAt').html(nome);
-
-
-});
-
-$(document).on("click", "#btnDesativa", function() {
-    var id = $(this).data('codigo');
-    var status = $(this).data('statusatual');
-    var nome = $(this).data('nome');
-
-    if (status == "D") {
-        alert("Cliente já está Desativado!");
-    } else {
-        $('#modalConfirmacaoDesativa').modal('show');
-    }
-    $('#codigoClienteDes').val(id);
-    $('#statusAtualDes').val(status);
-    $('#nomeClienteDes').html(nome);
-
+        
+    var Codigo = $(this).data('codigo');
+    var codCliente = $(this).data('codcliente');
+    var Nome     = $(this).data('nome');
+    var Celular = $(this).data('celular');
+    var Email = $(this).data('email');
+    var Telefone = $(this).data('telefone');
+    var Acao =2;
+     
+    $('#codContato').val(Codigo);
+    $('#codCliente').val(codCliente);
+    $('#nomeContato').val(Nome);
+    $('#telefoneContato').val(Telefone);
+    $('#celularContato').val(Celular);
+    $('#emailContato').val(Email);
+    $('#acao').val(Acao);
 });
 
 $(document).on("click", "#btnExcluir", function() {
-    var codigo = $(this).data('codigo');
-    var nome = $(this).data('nome');
-
-    $('#excidInstituicao').val(codigo);
-    $('#excnomeInstituicao').html(nome);
-    $('#modalPesquisarAndre').modal('hide');
-    $('#modalExcluir').modal('show');
+    //atribuido valores as variaveis
+    var Codigo = $(this).data('codigo');
+    var codCliente = $(this).data('codcliente');
+    var Nome     = $(this).data('nome');
+    var Celular = $(this).data('celular');
+    var Email = $(this).data('email');
+    var Telefone = $(this).data('telefone');
+    var CargoSetor = $(this).data('cargosetor');
+    var Acao =3;
+    //atribuido valores no id do formularios
+    $('#codContato').val(Codigo);
+    $('#codCliente').val(codCliente);
+    $('#nomeContato').val(Nome);
+    $('#telefoneContato').val(Telefone);
+    $('#celularContato').val(Celular);
+    $('#emailContato').val(Email);
+    $('#cargoSetor').val(CargoSetor);
+    $('#acao').val(Acao);
+    //desabilitando inputs
+    $("#codContato").prop("readonly", true);
+    $("#codCliente").prop("readonly", true);
+    $("#nomeContato").prop("readonly", true);
+    $("#telefoneContato").prop("readonly", true);
+    $("#celularContato").prop("readonly", true);
+    $("#emailContato").prop("readonly", true);
+    $("#cargoSetor").prop("readonly", true);
 });
 
-$('#btnConfirmar').click(function() {
-    var idInstituicao = $("#excidInstituicao").val();
-    var tipo = "excluirInstituicao";
-    $.ajax({
-        url: '../core/save.php',
-        type: "POST",
-        data: {
-            tipo: tipo,
-            idInstituicao: idInstituicao
-        },
-        success: function(result) {
-            //	alert(result);
-            if (result == 1) {
-                swal({
-                        title: "OK!",
-                        text: "Cadastro Excluído com Sucesso!",
-                        type: "success",
-                        confirmButtonText: "Fechar",
-                        closeOnConfirm: false
-                    },
-                    function(isConfirm) {
-                        if (isConfirm) {
-                            window.location = "cad_instituicao.php";
-                        }
-                    });
-            } else {
-                swal({
-                        title: "Ops!",
-                        text: "Algo deu errado ao excluir! ",
-                        type: "error",
-                        confirmButtonText: "Fechar",
-                        closeOnConfirm: false
-                    },
-                    function(isConfirm) {
-                        if (isConfirm) {
-                            window.location = "cad_instituicao.php";
-                        }
-                    });
-            }
-        }
-    });
+$(document).on("click", "#btnLimpar", function() {
+     
+    $('#codContato').val('');
+    $('#codCliente').val('');
+    $('#nomeContato').val('');
+    $('#telefoneContato').val('');
+    $('#celularContato').val('');
+    $('#emailContato').val('');
+    $('#cargoSetor').val('');
+    $('#acao').val(1);
+    //habilitando inputs
+    $("#codContato").prop("readonly", false);
+    $("#codCliente").prop("readonly", false);
+    $("#codCliente").prop("disabled", false);
+    $("#nomeContato").prop("readonly", false);
+    $("#telefoneContato").prop("readonly", false);
+    $("#celularContato").prop("readonly", false);
+    $("#emailContato").prop("readonly", false);
+    $("#cargoSetor").prop("readonly", false);
+    $("#btnSalvar").prop("disabled", false);
 });
 
-$('#btnDesativaCliente').click(function() {
-    var tipo = "desativaCliente";
-    var id = $('#codigoClienteDes').val();
-    var status = $('#statusAtualDes').val();
-    var idInstituicao = $("#idInstituicaoDes").val();
-    $.ajax({
-        url: '../core/save.php',
-        type: "POST",
-        data: {
-            tipo: tipo,
-            id: id,
-            idInstituicao: idInstituicao
-        },
-        success: function(result) {
-            if (result == 1) {
-                swal({
-                        title: "OK!",
-                        text: "Clinte desativado com Sucesso!",
-                        type: "success",
-                        confirmButtonText: "Fechar",
-                        closeOnConfirm: false
-                    },
-                    function(isConfirm) {
-                        if (isConfirm) {
-                            //	$('#modalConfirmacaoDesativa').modal('hide');
-                            window.location = "cad_cliente.php";
-                        }
-                    });
-            } else {
-                swal({
-                        title: "Ops!",
-                        text: "Algo deu errado ao desativar o cliente!",
-                        type: "error",
-                        confirmButtonText: "Fechar",
-                        closeOnConfirm: false
-                    },
-                    function(isConfirm) {
-                        if (isConfirm) {
-                            window.location = "cad_cliente.php";
-                        }
-                    });
-                //	alert(result);
-                //alert("Erro ao salvar");
-            }
-        }
-    });
+$(document).on("click", "#btnDetalhes", function() {
+    //atribuido valores as variaveis
+    var Codigo = $(this).data('codigo');
+    var codCliente = $(this).data('codcliente');
+    var Nome     = $(this).data('nome');
+    var Celular = $(this).data('celular');
+    var Email = $(this).data('email');
+    var Telefone = $(this).data('telefone');
+    var CargoSetor = $(this).data('cargosetor');
+    var Acao =3;
+    //atribuido valores no id do formularios
+    $('#codContato').val(Codigo);
+    $('#codCliente').val(codCliente);
+    $('#nomeContato').val(Nome);
+    $('#telefoneContato').val(Telefone);
+    $('#celularContato').val(Celular);
+    $('#emailContato').val(Email);
+    $('#cargoSetor').val(CargoSetor);
+    $('#acao').val(Acao);
+    //desabilitando inputs
+    $("#codContato").prop("readonly", true);
+    $("#codCliente").prop("disabled", true);
+    $("#nomeContato").prop("readonly", true);
+    $("#telefoneContato").prop("readonly", true);
+    $("#celularContato").prop("readonly", true);
+    $("#emailContato").prop("readonly", true);
+    $("#cargoSetor").prop("readonly", true);
+    $("#btnSalvar").prop("disabled", true);
 });
-
-$('#btnAtivaCliente').click(function() {
-    var tipo = "ativaCliente";
-    var id = $('#codigoClienteAt').val();
-    var status = $('#statusAtualAt').val();
-    var idInstituicao = $("#idInstituicaoAt").val();
-    $.ajax({
-        url: '../core/save.php',
-        type: "POST",
-        data: {
-            tipo: tipo,
-            id: id,
-            idInstituicao: idInstituicao
-        },
-        success: function(result) {
-            if (result == 1) {
-                swal({
-                        title: "OK!",
-                        text: "Clinte ativado com Sucesso!",
-                        type: "success",
-                        confirmButtonText: "Fechar",
-                        closeOnConfirm: false
-                    },
-                    function(isConfirm) {
-                        if (isConfirm) {
-                            //	$('#modalConfirmacaoDesativa').modal('hide');
-                            window.location = "cad_cliente.php";
-                        }
-                    });
-            } else {
-                swal({
-                        title: "Ops!",
-                        text: "Algo deu errado ao ativar o cliente!",
-                        type: "error",
-                        confirmButtonText: "Fechar",
-                        closeOnConfirm: false
-                    },
-                    function(isConfirm) {
-                        if (isConfirm) {
-                            window.location = "cad_cliente.php";
-                        }
-                    });
-                //	alert(result);
-                //alert("Erro ao salvar");
-            }
-
-        }
-    });
-
-});
-
-$('#edtcliente').submit(function() {
-    $.ajax({ //Função AJAX
-        url: "../core/save.php",
-        type: "POST",
-        data: new FormData(this),
-        contentType: false,
-        cache: false,
-        processData: false,
-        success: function(result) {
-            if (result == 1) {
-                swal({
-                        title: "OK!",
-                        text: "Cliente editado com Sucesso!",
-                        type: "success",
-                        confirmButtonText: "Fechar",
-                        closeOnConfirm: false
-                    },
-                    function(isConfirm) {
-                        if (isConfirm) {
-                            window.location = "cad_instituicao.php";
-                        }
-                    });
-            } else {
-                swal({
-                        title: "Ops!",
-                        text: "Algo deu errado ao editar cliente!",
-                        type: "error",
-                        confirmButtonText: "Fechar",
-                        closeOnConfirm: false
-                    },
-                    function(isConfirm) {
-                        if (isConfirm) {
-                            window.location = "cad_instituicao.php";
-                        }
-                    });
-            }
-        }
-    });
-    return false; //Evita que a página seja atualizada
-});
-
-
-$("#tbl-user").DataTable({
-    //TRADUÇÃO DATATABLE
-    "oLanguage": {
-        "sProcessing": "Processando...",
-        "sLengthMenu": "Mostrar _MENU_ registros",
-        "sZeroRecords": "Não foram encontrados resultados",
-        "sInfo": "",
-        "sInfoEmpty": "",
-        "sInfoFiltered": "",
-        "sInfoPostFix": "",
-        "sSearch": "Buscar:",
-        "sUrl": "",
-        "oPaginate": {
-            "sFirst": "Primeiro",
-            "sPrevious": "Anterior",
-            "sNext": "Seguinte",
-            "sLast": "Último"
-        }
-    }
-});
-
-//BUSCA TODOS OS STATUS PARA MUDAR A COR CONFORME
-$("tr #status").each(function(i) {
-if ($(this).text() == "D") {
-    this.style.color = "white";
-    this.style.background = "red";
-} else {
-    this.style.color = "white";
-    this.style.background = "green";
-}
-});
-*/

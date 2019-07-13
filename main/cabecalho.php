@@ -134,6 +134,7 @@ $dataAtual = date('Y-m-d H:i:s');
                         <ul class="nav nav-second-level">                           
                             <li><a href="cad_user.php">Cadastros Usuários</a></li>
                             <li><a href="cad_cliente.php">Cadastros Clientes</a></li>
+                            <li><a href="cad_contato.php">Cadastro Contatos</a></li>
                             <li><a href="cad_dep.php">Cadastros Departamentos</a></li>
                             <li><a href="cad_instituicao.php">Cadastro Instituicao</a></li>
                             <li><a href="demanda.php">Cadastro Demanda</a></li>                            
@@ -150,7 +151,6 @@ $dataAtual = date('Y-m-d H:i:s');
                             <ul class="nav nav-second-level">                               
                                 <li><a href="cadastro.php">Cadastros Usuários</a></li>  
                                 <li><a href="e-mail.php">E-mail</a></li>
-                                <li><a href="cad_contato.php">Cadastro Contatos</a></li>
                                 <li><a href="valida_cadastro.php">Validação de Cadastros</a></li>
                                 <li><a href="teste_dem_fechada.php">Demandas fechadas</a></li>
                             </ul>
