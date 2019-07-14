@@ -69,6 +69,9 @@ $(document).on("click", "#btnEditar", function() {
     var Telefone = $(this).data('telefone');
     var DadaCadastro = $(this).data('datacadastro');
     var DataAlteracao = $(this).data('dataalteracao');
+    var codUsuario = $(this).data('codusuario');
+    var nomeUsuario = $(this).data('nomeusuario');
+    
     var Acao =2;
      
     $('#codContato').val(Codigo);
@@ -77,7 +80,9 @@ $(document).on("click", "#btnEditar", function() {
     $('#telefoneContato').val(Telefone);
     $('#celularContato').val(Celular);
     $('#emailContato').val(Email);
-    $('#datas').html("Cadastrado em: "+ DadaCadastro + " e Ultima alteração: "+ DataAlteracao);
+    $('#codUsuario').val(codUsuario);
+    $('#nomeUsuario').val(nomeUsuario);
+    $('#datas').html("Cadastrado em: "+ DadaCadastro + " - Ultima alteração: "+ DataAlteracao +" - Por: "+nomeUsuario);
     $('#acao').val(Acao);
 });
 
@@ -154,6 +159,8 @@ $(document).on("click", "#btnDetalhes", function() {
     var CargoSetor = $(this).data('cargosetor');
     var DadaCadastro = $(this).data('datacadastro');
     var DataAlteracao = $(this).data('dataalteracao');
+    var codUsuario = $(this).data('codusuario');
+    var nomeUsuario = $(this).data('nomeusuario');
     var Acao = 3;
     //atribuido valores no id do formularios
     $('#codContato').val(Codigo);
@@ -163,7 +170,9 @@ $(document).on("click", "#btnDetalhes", function() {
     $('#celularContato').val(Celular);
     $('#emailContato').val(Email);
     $('#cargoSetor').val(CargoSetor);
-    $('#datas').html("Cadastrado em: "+ DadaCadastro + " e Ultima alteração: "+ DataAlteracao);
+    $('#codUsuario').val(codUsuario);
+    $('#nomeUsuario').val(nomeUsuario);
+    $('#datas').html("Cadastrado em: "+ DadaCadastro + " - Ultima alteração: "+ DataAlteracao+" - Por: "+nomeUsuario);
     $('#acao').val(Acao);
     
     //desabilitando inputs

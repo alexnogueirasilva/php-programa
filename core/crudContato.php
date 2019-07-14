@@ -51,11 +51,11 @@ class crudContato
 		}
 	}
 
-	public static function cadastrar($codCliente, $dataCadastro, $idInstituicao, $nomeContato,$telefoneContato,$celularContato,$emailContato,$cargoSetor ){
+	public static function cadastrar($codCliente, $dataCadastro, $idInstituicao, $nomeContato,$telefoneContato,$celularContato,$emailContato,$cargoSetor,$codUsuario ){
 		$pdo = Database::connect();
 		try {
-			$stmt = $pdo->prepare("INSERT INTO contato (nomeContato, telefoneContato,  celularContato,   emailContato,  fk_codCliente, dataCadastro, fk_idInstituicao,cargoSetor) 
-												VALUES(:nomeContato, :telefoneContato, :celularContato, :emailContato, :codCliente, :dataCadastro,:idInstituicao,:cargoSetor)");
+			$stmt = $pdo->prepare("INSERT INTO contato (nomeContato, telefoneContato,  celularContato,   emailContato,  fk_codCliente, dataCadastro, fk_idInstituicao,cargoSetor,fk_idUsuario) 
+												VALUES(:nomeContato, :telefoneContato, :celularContato, :emailContato, :codCliente, :dataCadastro,:idInstituicao,:cargoSetor,:codUsuario)");
 			$stmt->bindparam(":nomeContato", $nomeContato);
 			$stmt->bindparam(":telefoneContato", $telefoneContato);
 			$stmt->bindparam(":celularContato", $celularContato);
@@ -64,6 +64,7 @@ class crudContato
 			$stmt->bindparam(":dataCadastro", $dataCadastro);
 			$stmt->bindparam(":idInstituicao", $idInstituicao);
 			$stmt->bindparam(":cargoSetor", $cargoSetor);
+			$stmt->bindparam(":codUsuario", $codUsuario);
 			
 			$stmt->execute();
 			$id_cad = $pdo->lastInsertId();
@@ -91,11 +92,11 @@ class crudContato
 			return false;
 		}
 	}
-	public static function alterar($codContato,$codCliente, $dataAlteracao, $idInstituicao, $nomeContato,$telefoneContato,$celularContato,$emailContato,$cargoSetor)	{
+	public static function alterar($codContato,$codCliente, $dataAlteracao, $idInstituicao, $nomeContato,$telefoneContato,$celularContato,$emailContato,$cargoSetor,$codUsuario){
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
-			$stmt = $pdo->prepare("UPDATE contato SET nomeContato=:nomeContato, telefoneContato=:telefoneContato,celularContato=:celularContato,emailContato=:emailContato,fk_codCliente=:codCliente,dataAlteracao=:dataAlteracao, cargoSetor=:cargoSetor 
+			$stmt = $pdo->prepare("UPDATE contato SET nomeContato=:nomeContato, telefoneContato=:telefoneContato,celularContato=:celularContato,emailContato=:emailContato,fk_codCliente=:codCliente,dataAlteracao=:dataAlteracao, cargoSetor=:cargoSetor,fk_idUsuario=:codUsuario
 		WHERE codContato=:codContato AND fk_idInstituicao=:idInstituicao ");
 			$stmt->bindparam(":codContato", $codContato);
 			$stmt->bindparam(":nomeContato", $nomeContato);
@@ -106,6 +107,7 @@ class crudContato
 			$stmt->bindparam(":dataAlteracao", $dataAlteracao);
 			$stmt->bindparam(":idInstituicao", $idInstituicao);
 			$stmt->bindparam(":cargoSetor",$cargoSetor);
+			$stmt->bindparam(":codUsuario",$codUsuario);
 			$stmt->execute();
 
 			return $codContato;
@@ -116,7 +118,7 @@ class crudContato
 	}
 	
 	public static function listarContato($idInstituicao){
-		$sql = "SELECT * FROM contato c INNER JOIN cliente cli on cli.codCliente = c.fk_codCliente WHERE c.fk_idInstituicao = '" . $idInstituicao . "' ORDER BY nomeContato desc";
+		$sql = "SELECT * FROM contato c INNER JOIN cliente cli on cli.codCliente = c.fk_codCliente INNER JOIN usuarios u on u.id= c.fk_idUsuario WHERE c.fk_idInstituicao = '" . $idInstituicao . "' ORDER BY nomeContato desc";
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$stmt = $pdo->prepare($sql);

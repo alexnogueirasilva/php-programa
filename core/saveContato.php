@@ -19,14 +19,15 @@ switch ($value) {
 		$emailContato 		= $_POST['emailContato'];	
 		$codContato 		= $_POST['codContato'];
 		$cargoSetor 		= $_POST['cargoSetor'];
+		$codUsuario 		= $_POST['codUsuario'];
 		$acao 				= $_POST['acao'];	
 
 			if ($acao == 1) {
 					//cadastrar
-				$codContato = crudContato::cadastrar($codCliente, $dataCadastro, $idInstituicao, $nomeContato,$telefoneContato,$celularContato,$emailContato,$cargoSetor  );
+				$codContato = crudContato::cadastrar($codCliente, $dataCadastro, $idInstituicao, $nomeContato,$telefoneContato,$celularContato,$emailContato,$cargoSetor,$codUsuario  );
 			} else if ($acao == 2) {
 					//alterar						
-				$codContato = crudContato::alterar($codContato,$codCliente, $dataCadastro, $idInstituicao, $nomeContato,$telefoneContato,$celularContato,$emailContato,$cargoSetor);
+				$codContato = crudContato::alterar($codContato,$codCliente, $dataCadastro, $idInstituicao, $nomeContato,$telefoneContato,$celularContato,$emailContato,$cargoSetor,$codUsuario);
 			} else if ($acao == 3) {
 					//excluir						
 				$codContato = crudContato::excluir($codContato, $idInstituicao);
