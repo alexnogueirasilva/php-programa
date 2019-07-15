@@ -102,7 +102,7 @@ $acao = 1;
 								<input type="hidden" value="<?php echo $dataAtual; ?>" name="dataAtual" id="dataAtual">
 								<label for="nomeCliente" class="control-label">Nome </label>
 								<input type="hidden" name="nomeCliente" id="nomeCliente">
-								<input type="hidden" name="codUsuario" id="codUsuario">
+								<input type="hidden" value="<?php echo $idUsuario; ?>" name="codUsuario" id="codUsuario">
 								<input type="hidden" name="nomeUsuario" id="nomeUsuario">
 								<select class="form-control" name="codCliente" id="codCliente" required>
 									<option value="" selected disabled>Selecione o Cliente</option>
@@ -125,7 +125,7 @@ $acao = 1;
 								<input type="text" class="form-control" size="100" name="nomeContato" id="nomeContato" placeholder="Nome do contato" required value="">
 							</div>
 							<div class="form-group">
-								<label for="Cargo/ Setor" class="control-label">Nome </label>
+								<label for="CargoSetor" class="control-label">Cargo/ Setor </label>
 								<input type="text" class="form-control" size="100" name="cargoSetor" id="cargoSetor" placeholder="Cargo/ Setor"  value="">
 							</div>
 							<div class="form-inline">
