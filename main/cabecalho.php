@@ -130,6 +130,16 @@ $dataAtual = date('Y-m-d H:i:s');
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
+                    <li> <a id="cadPedidosMunicipio" href="#" class="waves-effect"><i class="icon-envelope fa-fw"></i>Cadastro Pedido Municipais<span class="fa arrow"></span> </a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="pedidoAtendidoMunicipio.php">Atendidos</a></li>
+                            <li><a href="pedidoCanceladoMunicipio.php">Cancelados</a></li>
+                            <li><a href="pedidoPendenteMunicipio.php">Pendente</a></li>
+                            <li><a href="pedidoMunicipio.php">Todos </a></li>
+                            <li><a href="pedidoHomeMunicipio.php">Dashboard </a></li>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
                     <li id="cadLogin"> <a href="#" class="waves-effect"><i class="icon-graph fa-fw"></i> Gerência<span class="fa arrow"></span> </a>
                         <ul class="nav nav-second-level">                           
                             <li><a href="cad_user.php">Cadastros Usuários</a></li>

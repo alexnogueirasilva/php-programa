@@ -653,6 +653,22 @@ public static function listarPedidoNaoAteCanc($idInstituicao) {//nao atendidos/c
 	$stmt->execute();
 	return $stmt;
 }
+
+public static function listarPedidoNaoAteCancMunicipio($idInstituicao) {//nao atendidos/cancelado
+
+	$sql = "SELECT sta.nome,con.codControle,con.dataAlteracao,con.dataFechamento,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
+	FROM controlePedido as con 
+	inner join cliente as cli on cli.codCliente = con.codCliente 
+	inner join statusPedido as sta on sta.codStatus = con.codStatus
+	where sta.nome  not in  ('ATENDIDO','CANCELADO') AND con.fk_idInstituicao = '" . $idInstituicao . "' AND cli.tipoCliente NOT IN ('Estadual','Federal','Estadual')
+	ORDER BY con.dataCadastro desc";
+
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	return $stmt;
+}
 public static function listarPedidoCanceladosNegados($idInstituicao) {// cancelado ou negado
 
 	$sql = "SELECT sta.nome,con.codControle,con.dataAlteracao,con.dataFechamento,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao,con.fk_idInstituicao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
@@ -660,6 +676,36 @@ public static function listarPedidoCanceladosNegados($idInstituicao) {// cancela
 	inner join cliente as cli on cli.codCliente = con.codCliente 
 	inner join statusPedido as sta on sta.codStatus = con.codStatus
 	where sta.nome in  ('NEGADO','CANCELADO') AND con.fk_idInstituicao = '" . $idInstituicao . "'
+	ORDER BY con.dataCadastro desc";
+
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	return $stmt;
+}
+public static function listarPedidoNaoAtendCancMunicipio($idInstituicao)
+	{
+		$sql = "SELECT con.fk_idInstituicao,con.codControle,con.dataFechamento,con.dataAlteracao,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
+		FROM controlePedido as con 
+		inner join cliente as cli on cli.codCliente = con.codCliente 
+		inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE sta.nome not in ('ATENDIDO','CANCELADO','NEGADO') AND con.fk_idInstituicao = '" . $idInstituicao . "'  AND cli.tipoCliente NOT IN ('Estadual','Federal','Estadual')
+		ORDER BY con.dataCadastro desc";
+
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		return $stmt;
+	}
+
+public static function listarPedidoCanceladosNegadosMunicipio($idInstituicao) {// cancelado ou negado
+
+	$sql = "SELECT sta.nome,con.codControle,con.dataAlteracao,con.dataFechamento,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao,con.fk_idInstituicao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
+	FROM controlePedido as con 
+	inner join cliente as cli on cli.codCliente = con.codCliente 
+	inner join statusPedido as sta on sta.codStatus = con.codStatus
+	where sta.nome in  ('NEGADO','CANCELADO') AND con.fk_idInstituicao = '" . $idInstituicao . "' AND cli.tipoCliente NOT IN ('Estadual','Federal','Estadual')
 	ORDER BY con.dataCadastro desc";
 
 	$pdo = Database::connect();
@@ -683,6 +729,21 @@ public static function listarPedidoAtendidos($idInstituicao) {// Atendidos
 	$stmt->execute();
 	return $stmt;
 }
+public static function listarPedidoAtendidosMunicipio($idInstituicao) {// Atendidos
+
+	$sql = "SELECT sta.nome,con.fk_idInstituicao,con.codControle,con.dataAlteracao,con.dataFechamento,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente,sta.codStatus, sta.nome as nomeStatus 
+	FROM controlePedido as con 
+	inner join cliente as cli on cli.codCliente = con.codCliente 
+	inner join statusPedido as sta on sta.codStatus = con.codStatus
+	where sta.nome in  ('ATENDIDO') AND con.fk_idInstituicao = '" . $idInstituicao . "' AND cli.tipoCliente NOT IN ('Estadual','Federal','Estadual')
+	ORDER BY con.dataCadastro desc";
+
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	return $stmt;
+}
 
 public static function listarPedidoId($id) {	
 	$sql = "SELECT con.codControle,con.fk_idInstituicao,con.dataAlteracao,con.dataFechamento,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
@@ -690,6 +751,20 @@ public static function listarPedidoId($id) {
 	inner join cliente as cli on cli.codCliente = con.codCliente 
 	inner join statusPedido as sta on sta.codStatus = con.codStatus
 	 WHERE con.codCliente = $id AND con.fk_idInstituicao = '" . $idInstituicao . "'
+	 	 ORDER BY con.dataCadastro desc";
+
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	return $stmt;
+}
+public static function listarPedidoIdMunicipio($id) {	
+	$sql = "SELECT con.codControle,con.fk_idInstituicao,con.dataAlteracao,con.dataFechamento,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
+	FROM controlePedido as con 
+	inner join cliente as cli on cli.codCliente = con.codCliente 
+	inner join statusPedido as sta on sta.codStatus = con.codStatus
+	 WHERE con.codCliente = $id AND con.fk_idInstituicao = '" . $idInstituicao . "' AND cli.tipoCliente NOT IN ('Estadual','Federal','Estadual')
 	 	 ORDER BY con.dataCadastro desc";
 
 	$pdo = Database::connect();
