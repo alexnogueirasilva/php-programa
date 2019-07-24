@@ -705,7 +705,7 @@ public static function listarPedidoCanceladosNegadosMunicipio($idInstituicao) {/
 	FROM controlePedido as con 
 	inner join cliente as cli on cli.codCliente = con.codCliente 
 	inner join statusPedido as sta on sta.codStatus = con.codStatus
-	where sta.nome in  ('NEGADO','CANCELADO') AND con.fk_idInstituicao = '" . $idInstituicao . "' AND cli.tipoCliente NOT IN ('Estadual','Federal','Estadual')
+	where con.fk_idInstituicao = '" . $idInstituicao . "' AND cli.tipoCliente NOT IN ('Estadual','Federal','Estadual')
 	ORDER BY con.dataCadastro desc";
 
 	$pdo = Database::connect();

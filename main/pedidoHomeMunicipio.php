@@ -128,7 +128,7 @@ $arraystatus = $status->fetchAll(PDO::FETCH_ASSOC);
 										<a href="pedidoMunicipio.php"><a href="#"><?php print($arrayAndre[1]['nomeCliente']); ?></a></a>
 									</td>
 									<td>
-										<a href="pedido.php"><a href="#"><?php print($arrayAndre[1]['qtdePedidos']); ?></a></a>
+										<a href="pedidoMunicipio.php"><a href="#"><?php print($arrayAndre[1]['qtdePedidos']); ?></a></a>
 									</td>
 									<td class="hidden-xs">
 										<a class="btn btn-xs btn-info" href="#">Detalhes</a>
@@ -151,7 +151,7 @@ $arraystatus = $status->fetchAll(PDO::FETCH_ASSOC);
 										<a href="pedidoMunicipio.php"><a href="#"><?php print($arrayAndre[3]['nomeCliente']); ?></a></a>
 									</td>
 									<td>
-										<a href="pedido.php"><a href="#"><?php print($arrayAndre[3]['qtdePedidos']); ?></a></a>
+										<a href="pedidoMunicipio.php"><a href="#"><?php print($arrayAndre[3]['qtdePedidos']); ?></a></a>
 									</td>
 									<td class="hidden-xs">
 										<a class="btn btn-xs btn-info" href="#">Detalhes</a>
