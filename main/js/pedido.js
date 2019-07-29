@@ -159,6 +159,7 @@ $(document).on("click", "#btnPedidoAlterar", function () {
     $('#dataAlteracaoPedidoAlterar').val(dataAlteracao);
     $('#dataFechamentoPedidoAlterar').val(dataFechamento);
     $('#idClientePedidoAlterar').val(Cliente);
+    $('#ClienteAlterar').val(nomealterar);
     $('#ClienteAlterar2').val(nomealterar);
     
     //$('#ClienteAlterar').val(nomealterar);
