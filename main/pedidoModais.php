@@ -120,6 +120,7 @@ $nomeUsuario
                     <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataAtual" id="dataAtual">
                     <input type="hidden" name="idInstituicaoAlterar" id="idInstituicaoAlterar">
                     <input type="hidden" name="ClienteAlterar" id="ClienteAlterar">
+                    <input type="hidden" name="ClienteAlterar2" id="ClienteAlterar2">
                     <input type="hidden" name="statusAlterar" id="statusAlterar">
                     <div class="form-group">
                         <select class="form-control" name="statusPedidoAlterar" id="statusPedidoAlterar" required>

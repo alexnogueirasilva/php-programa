@@ -644,7 +644,7 @@ switch ($value) {
 		$subject 			= $_POST['subjectAlterar'];
 		$nomeUsuario		= $_POST['nomeUsuarioAlterar'];
 		$mensagemEmail		= $_POST['mensagemEmailAlterar'];
-		$Cliente			= $_POST['ClienteAlterar'];
+		$Cliente			= $_POST['ClienteAlterar2'];
 		$Status 			= $_POST['statusAlterar'];
 		$anexo		       = $_POST['anexoAlterar'];
 				
