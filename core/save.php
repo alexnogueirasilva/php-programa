@@ -632,6 +632,7 @@ switch ($value) {
 		}
 		break;
 
+	
 	case 'AlterarPedido':
 		$statusPedido		= $_POST['statusPedidoAlterar'];
 		$codControle        = $_POST['codigoControleAlterar'];
