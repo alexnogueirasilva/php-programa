@@ -19,8 +19,10 @@ $dataAtual = date('Y-m-d H:i:s');
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="shortcut icon" type="image/x-icon" href="../../assests/imagens/favicon.ico">
+
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/logo2.png">
-    <title>SD - Sistema de Ocorrências</title>
+    <title>SO - Sistema de Ocorrências</title>
     <link href="css/AdminLTE.css" rel="stylesheet">
     <!-- Bootstrap Core CSS -->
     <link href="../assets/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
