@@ -161,7 +161,7 @@ $(document).on("click", "#btnPedidoAlterar", function () {
     $('#idClientePedidoAlterar').val(Cliente);
     $('#ClienteAlterar22').val(nomealterar);
     $('#ClienteAlterar2').val(nomealterar);
-    
+   
     //$('#ClienteAlterar').val(nomealterar);
     $('#numeroAfPedidoAlterar').val(numeroAf);
     $('#numeroLicitacaoPedidoAlterar').val(numeroLicitacao);

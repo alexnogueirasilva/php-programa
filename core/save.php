@@ -647,7 +647,7 @@ switch ($value) {
 		$Cliente			= $_POST['ClienteAlterar22'];
 		$Status 			= $_POST['statusAlterar'];
 		$anexo		       = $_POST['anexoAlterar'];
-				
+			
 		if ($statusPedido == "16" || $statusPedido == "7"  || $statusPedido == "2") {
 			if ($dataFechamento == "") {
 				$dataFechamento = $dataAlteracao;
