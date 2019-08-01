@@ -108,7 +108,7 @@ $('#frmExcluirPedido').on('submit', (function (e) {
                 },
                     function (isConfirm) {
                         if (isConfirm) {
-                            window.location.reload();//window.location = "pedido.php";
+                            window.location.reload(); // window.location = "pedido.php";
                         }
                     });
             } else {
