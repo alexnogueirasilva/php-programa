@@ -192,12 +192,12 @@ $nomeUsuario
             <div class="modal-body">
                 <form id="frmExcluirPedido">
                     <div class="row">
-                        <input type="text" name="tipo" id="tipo" value="deletePedido">
-                        <input type="text" name="ExcIdInstituicao" id="ExcIdInstituicao">
-                        <input type="text" value="<?php echo $nomeUsuario; ?>" name="ExcnomeUsuario" id="ExcnomeUsuario">
-                        <input type="text" name="Excsubject" id="Excsubject" value="Exclusao de Pedido">
-                        <input type="text" name="excIdPedido" id="excIdPedido">
-                        <input type="text" name="excCliente" id="excCliente">
+                        <input type="hidden" name="tipo" id="tipo" value="deletePedido">
+                        <input type="hidden" name="ExcIdInstituicao" id="ExcIdInstituicao">
+                        <input type="hidden" value="<?php echo $nomeUsuario; ?>" name="ExcnomeUsuario" id="ExcnomeUsuario">
+                        <input type="hidden" name="Excsubject" id="Excsubject" value="Exclusao de Pedido">
+                        <input type="hidden" name="excIdPedido" id="excIdPedido">
+                        <input type="hidden" name="excCliente" id="excCliente">
                         <div class="col-md-12">
                             <div id="contextoModal">
                                 <h2>Você vai EXCLUIR pedido do Cliente: </h2>
