@@ -639,7 +639,7 @@ public static function listarPedido(){
 }
 
 public static function listarPedidoMunicipio($idInstituicao){
-	$sql = "SELECT con.codControle,con.dataAlteracao,con.dataFechamento,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
+	$sql = "SELECT con.codControle,con.dataAlteracao,con.dataFechamento,con.dataCadastro,con.numeroPregao,con.fk_idInstituicao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
 	FROM controlePedido as con 
 	inner join cliente as cli on cli.codCliente = con.codCliente 
 	inner join statusPedido as sta on sta.codStatus = con.codStatus
