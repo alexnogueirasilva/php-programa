@@ -916,7 +916,7 @@ class crud
 	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$stmt = $pdo->prepare("DELETE FROM controlePedido WHERE codControle=:codControle AND fk_idInstituicao =:idInstituicao ");
+		$stmt = $pdo->prepare("DELETE FROM controlePedido WHERE codControle = $id AND fk_idInstituicao = $idInstituicao ");
 		$stmt->bindparam(":codControle", $id);
 		$stmt->bindparam(":idInstituicao", $idInstituicao);
 		$stmt->execute();
