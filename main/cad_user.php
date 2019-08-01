@@ -399,7 +399,7 @@ require_once "rodape.php";
 					}, //Dados
 					success: function(result) {
 					
-						alert( "resultado ajax:  "+result);
+					//	alert( "resultado ajax:  "+result);
 						if (result == 1) {
 							swal({
 									title: "OK!",
