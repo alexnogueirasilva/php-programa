@@ -144,14 +144,14 @@ if($logado != 1){$logado2 = 600;
                                             data-numeroaf="<?php print($row['numeroAf']); ?>" 
                                             data-numerolicitacao="<?php print($row['numeroPregao']); ?>" 
                                             data-valorpedido="<?php print($row['valorPedido']); ?>" 
-                                            data-idinstituicaoalterar="<?php print($row['fk_idInstituicao']); ?>" 
+                                            data-idinstituicaoalterar="<?php print($row['intituicao_id']); ?>" 
                                             data-anexoalterar="<?php print($row['anexo']); ?>">Alterar</a></td>
                                             <td> <a class="btn btn-danger waves-effect waves-light" type="button" id="btnExcluiPedido" 
                                             data-target="#modalExluirPedido" 
                                             data-whatever="@getbootstrap"  
                                             data-codigoexcluir="<?php print($row['codControle']); ?>" 
                                             data-nomeexcluir="<?php print($row['nomeCliente']); ?>" 
-                                            data-idinstituicaoexcluir="<?php print($row['fk_idInstituicao']); ?>">Excluir</a></td>
+                                            data-idinstituicaoexcluir="<?php print($row['intituicao_id']); ?>">Excluir</a></td>
                                             <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" 
                                             data-toggle="modal" 
                                             data-target="#modalDetPedido" 
