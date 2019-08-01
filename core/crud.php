@@ -425,10 +425,11 @@ class crud
 			$message .= "<a href=http://sistemaocorrencia.devnogueira.online/main/valida_cadastro.php?v=$valida&v2=$to> SO - Click aqui para validar seu cadastro </a>";
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'content-type: text/html; charset=iso-8859-1' . "\r\n"; //formato
-			$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>' . "\r\n"; //
-			$headers .= 'From:< contato@sistemaocorrencia.com.br>' . "\r\n"; //email de envio
-			$headers .= 'CC:< programadorfsaba@gmail.com>' . "\r\n"; // email de copia
-			$headers .= 'Reply-To: < carlosandrefsaba@gmail.com>' . "\r\n"; //email para resposta
+			//$headers .= 'To: Carlos Andre <programadorfsaba@gmail.com>' . "\r\n"; //
+			$headers .= 'From:< noreply@sistemadevnogueira.online>' . "\r\n"; //email de envio
+			//$headers .= 'From:< contato@sistemaocorrencia.com.br>' . "\r\n"; //email de envio
+			//$headers .= 'CC:<' . $emailUser . '>' . "\r\n"; //email com copia
+			$headers .= 'Reply-To: < suporte@sistemadevnogueira.online>' . "\r\n"; //email para resposta
 
 			mail($to, $subject, $message, $headers);
 
