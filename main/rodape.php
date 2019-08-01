@@ -1,5 +1,5 @@
 </div>
-<footer class="footer text-center"> 2019 &copy; SD - Sistemas de Ocorrência  </footer>
+<footer class="footer text-center"> 2019 &copy; SO - Sistemas de Ocorrência  </footer>
         
         </div>
         <!-- /#wrapper -->
