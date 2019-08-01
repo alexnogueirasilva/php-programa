@@ -5,7 +5,7 @@ require_once 'crud.php';
 $value = isset($_POST['tipo']) ? $_POST['tipo'] : '';
 
 switch ($value) {
-	case 'editausr':
+	case 'editausr1':
 		$id = $_POST['id'];
 		$nome = $_POST['nome'];
 

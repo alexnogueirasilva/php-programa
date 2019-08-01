@@ -231,6 +231,7 @@ $queryUsuarios = "SELECT usr.dica,usr.fk_idInstituicao,usr.id, usr.nome, usr.ema
 <!-- MODAL EXCLUIR-->
 <div class="modal fade" id="modalExluirUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2">
 	<div class="modal-dialog" role="document">
+	<input type="hidden" value="<?php echo $idInstituicao; ?>" name="excidInstituicao" id="excidInstituicao">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -273,6 +274,7 @@ $queryUsuarios = "SELECT usr.dica,usr.fk_idInstituicao,usr.id, usr.nome, usr.ema
 								<input type="text" hidden name="tipo" value="editaUsr">
 								<input type="hidden" name="iduser" id="iduser">
 								<input type="hidden" name="edtidInstituicao" id="edtidInstituicao">
+								
 								<div class="row">
 									<div class="col-lg-12">
 
@@ -502,7 +504,8 @@ require_once "rodape.php";
 				type: "POST",
 				data: {
 					tipo: tipo,
-					idUser: idUser
+					idUser: idUser,
+					idInstituicao : idInstituicao
 				},
 				success: function(result) { //alert(data);
 					if (result == 1) {
@@ -579,7 +582,7 @@ require_once "rodape.php";
 					id: id
 				},
 				success: function(result) {
-					//alert(data);
+				//	alert(result);
 					if (result == 1) {
 						//alert(result);
 						//alert("Ativado com Sucesso!");
