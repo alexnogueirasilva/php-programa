@@ -377,20 +377,20 @@ $("tr #statusControle").each(function (i) {
     if ($(this).text() == "RECEPCIONADO" || $(this).text() == "LIBERADO PARCIALMENTE") {
         //$(status).css("color", "red");
         this.style.background = "blue"; //cor do fundo
-        this.style.color = "White"; //cor da fonte
+        this.style.color = "black"; //cor da fonte
     } else if ($(this).text() == "ATENDIDO") {
-        this.style.color = "White"; //cor da fonte
+        this.style.color = "black"; //cor da fonte
         this.style.background = "green"; //cor do fundo
     } else if ($(this).text() == "PENDENTE") {
-        this.style.color = "White"; //cor da fonte
-        this.style.background = "red"; //cor do fundo
+        this.style.color = "black"; //cor da fonte
+        this.style.background = "OrangeRed "; //cor do fundo
     } else if ($(this).text() == "CANCELADO" || $(this).text() == "NEGADO") {
         //$(status).css("color", "red");
-        this.style.color = "White"; //cor da fonte
+        this.style.color = "black"; //cor da fonte
         this.style.background = "red"; //cor do fundo
     } else {
-        this.style.background = "Yellow"; //cor do fundo
-        this.style.color = "White";
+        this.style.background = "CornflowerBlue"; //cor do fundo
+        this.style.color = "black";
     }
 });
 
