@@ -388,7 +388,11 @@ $("tr #statusControle").each(function (i) {
         //$(status).css("color", "red");
         this.style.color = "black"; //cor da fonte
         this.style.background = "red"; //cor do fundo
-    } else {
+    } else if ($(this).text() == "ANALISE FINANCEIRO") {
+        //$(status).css("color", "red");
+        this.style.color = "black"; //cor da fonte
+        this.style.background = "Orange"; //cor do fundo
+    }else {
         this.style.background = "CornflowerBlue"; //cor do fundo
         this.style.color = "black";
     }
