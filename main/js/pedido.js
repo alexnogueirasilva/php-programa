@@ -154,6 +154,7 @@ $(document).on("click", "#btnPedidoAlterar", function () {
     $('#codigoControleAlterar').val(codigoControle);
     $('#statusPedidoAlterar').val(statusAlterar);
     $('#statusAlterar').val(nomesatus);
+    $('#nomeClienteAlterar').val(nomealterar);
     $('#statusAlterar2').val(nomesatus);
     $('#mensagemPedidoAlterar').val(mensagemAlterar);
     $('#dataAlteracaoPedidoAlterar').val(dataAlteracao);
