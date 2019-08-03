@@ -8,7 +8,10 @@ $nivel = $_SESSION['nivel'];
 $idUsuario = $_SESSION['usuarioID'];
 $nomeUsuario = $_SESSION['nomeUsuario'];
 $dataAtual = date('Y-m-d H:i:s');
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="pt-br">

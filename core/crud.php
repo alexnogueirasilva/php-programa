@@ -7,8 +7,7 @@ class crud
 
 
 	//Aqui fazemos a verificação do login do usuário e do seu nível de acesso
-	public static function pesquisaLoginUsr($nome, $senha)
-	{
+	public static function pesquisaLoginUsr($nome, $senha){
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$pwd = sha1($senha);
