@@ -5,7 +5,7 @@ require_once 'crud.php';
 $value = isset($_POST['tipo']) ? $_POST['tipo'] : '';
 
 switch ($value) {
-	case 'editausr':
+	case 'editausr1':
 		$id = $_POST['id'];
 		$nome = $_POST['nome'];
 
@@ -647,7 +647,7 @@ switch ($value) {
 		$Cliente			= $_POST['ClienteAlterar22'];
 		$Status 			= $_POST['statusAlterar'];
 		$anexo		       = $_POST['anexoAlterar'];
-				
+			
 		if ($statusPedido == "16" || $statusPedido == "7"  || $statusPedido == "2") {
 			if ($dataFechamento == "") {
 				$dataFechamento = $dataAlteracao;

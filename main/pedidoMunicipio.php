@@ -123,7 +123,7 @@ if($logado != 1){$logado2 = 600;
                                         ?>
                                         <tr>
                                             <td style="text-transform: uppercase;">
-                                                <?php print($row['nomeCliente']); ?></td>
+                                            <?php print($row['nomeCliente']); ?></td>
                                             <td><?php print($row['tipoCliente']); ?></td>
                                             <td><?php print($row['numeroPregao']); ?></td>
                                             <td><?php print($row['numeroAf']); ?></td>
@@ -132,10 +132,40 @@ if($logado != 1){$logado2 = 600;
 
                                             <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']); ?>">Anexo</a></td>
 
-                                            <td><a class="btn btn-warning waves-effect waves-light" type="button" id="btnPedidoAlterar" data-toggle="modal" data-target="#modalPedidoAlterar2" data-whatever="@getbootstrap" target="_blank" data-statusalterar="<?php print($row['codStatus']); ?>" data-idclientealterar="<?php print($row['codCliente']); ?>" data-nomealterar="<?php print($row['nomeCliente']); ?>" data-nomesatus="<?php print($row['nomeStatus']); ?>" data-mensagemalterar="<?php print($row['observacao']); ?>" data-codigocontrolealterar="<?php print($row['codControle']); ?>" data-numeroaf="<?php print($row['numeroAf']); ?>" data-numerolicitacao="<?php print($row['numeroPregao']); ?>" data-valorpedido="<?php print($row['valorPedido']); ?>" data-idinstituicaoalterar="<?php print($row['fk_idInstituicao']); ?>" data-anexoalterar="<?php print($row['anexo']); ?>">Alterar</a></td>
-                                            <td> <a class="btn btn-danger waves-effect waves-light" type="button" id="btnExcluiPedido" data-target="#modalExluirPedido" data-whatever="@getbootstrap"  
-                                            data-codigoexcluir="<?php print($row['codControle']); ?>" data-nomeexcluir="<?php print($row['nomeCliente']); ?>" data-idinstituicaoexcluir="<?php print($row['fk_idInstituicao']); ?>">Excluir</a></td>
-                                            <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" data-toggle="modal" data-target="#modalDetPedido" data-whatever="@getbootstrap" data-codigocontroledet="<?php print($row['codControle']); ?>" data-nomeclientedet="<?php print($row['nomeCliente']); ?>" data-tipoclientedet="<?php print($row['tipoCliente']); ?>" data-numeropregaodet="<?php print($row['numeroPregao']); ?>" data-numeropedidodet="<?php print($row['numeroAf']); ?>" data-valorpedidodet="R$<?php print(number_format($row['valorPedido'], 2, ',', '.')); ?>" data-statuscontroledet="<?php print($row['nomeStatus']); ?>" data-datacadastrodet="<?php print(crud::formataData($row['dataCadastro'])); ?>" data-mensagem="<?php print($row['observacao']); ?>" data-idinstituicao="<?php print($row['fk_idInstituicao']); ?>">Detalhes</a></td>
+                                            <td><a class="btn btn-warning waves-effect waves-light" type="button" id="btnPedidoAlterar" 
+                                            data-toggle="modal" data-target="#modalPedidoAlterar2" 
+                                            data-whatever="@getbootstrap" target="_blank" 
+                                            data-statusalterar="<?php print($row['codStatus']); ?>" 
+                                            data-idclientealterar="<?php print($row['codCliente']); ?>" 
+                                            data-nomealterar="<?php print($row['nomeCliente']); ?>" 
+                                            data-nomesatus="<?php print($row['nomeStatus']); ?>" 
+                                            data-mensagemalterar="<?php print($row['observacao']); ?>" 
+                                            data-codigocontrolealterar="<?php print($row['codControle']); ?>" 
+                                            data-numeroaf="<?php print($row['numeroAf']); ?>" 
+                                            data-numerolicitacao="<?php print($row['numeroPregao']); ?>" 
+                                            data-valorpedido="<?php print($row['valorPedido']); ?>" 
+                                            data-idinstituicaoalterar="<?php print($row['intituicao_id']); ?>" 
+                                            data-anexoalterar="<?php print($row['anexo']); ?>">Alterar</a></td>
+                                            <td> <a class="btn btn-danger waves-effect waves-light" type="button" id="btnExcluiPedido" 
+                                            data-target="#modalExluirPedido" 
+                                            data-whatever="@getbootstrap"  
+                                            data-codigoexcluir="<?php print($row['codControle']); ?>" 
+                                            data-nomeexcluir="<?php print($row['nomeCliente']); ?>" 
+                                            data-idinstituicaoexcluir="<?php print($row['intituicao_id']); ?>">Excluir</a></td>
+                                            <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" 
+                                            data-toggle="modal" 
+                                            data-target="#modalDetPedido" 
+                                            data-whatever="@getbootstrap" 
+                                            data-codigocontroledet="<?php print($row['codControle']); ?>" 
+                                            data-nomeclientedet="<?php print($row['nomeCliente']); ?>" 
+                                            data-tipoclientedet="<?php print($row['tipoCliente']); ?>" 
+                                            data-numeropregaodet="<?php print($row['numeroPregao']); ?>" 
+                                            data-numeropedidodet="<?php print($row['numeroAf']); ?>" 
+                                            data-valorpedidodet="R$<?php print(number_format($row['valorPedido'], 2, ',', '.')); ?>" 
+                                            data-statuscontroledet="<?php print($row['nomeStatus']); ?>" 
+                                            data-datacadastrodet="<?php print(crud::formataData($row['dataCadastro'])); ?>" 
+                                            data-mensagem="<?php print($row['observacao']); ?>" 
+                                            data-idinstituicao="<?php print($row['fk_idInstituicao']); ?>">Detalhes</a></td>
                                         </tr>
                                     <?php
                                 }

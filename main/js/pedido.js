@@ -108,7 +108,7 @@ $('#frmExcluirPedido').on('submit', (function (e) {
                 },
                     function (isConfirm) {
                         if (isConfirm) {
-                            window.location = "pedido.php";
+                            window.location.reload(); // window.location = "pedido.php";
                         }
                     });
             } else {
@@ -161,7 +161,7 @@ $(document).on("click", "#btnPedidoAlterar", function () {
     $('#idClientePedidoAlterar').val(Cliente);
     $('#ClienteAlterar22').val(nomealterar);
     $('#ClienteAlterar2').val(nomealterar);
-    
+   
     //$('#ClienteAlterar').val(nomealterar);
     $('#numeroAfPedidoAlterar').val(numeroAf);
     $('#numeroLicitacaoPedidoAlterar').val(numeroLicitacao);
@@ -377,20 +377,24 @@ $("tr #statusControle").each(function (i) {
     if ($(this).text() == "RECEPCIONADO" || $(this).text() == "LIBERADO PARCIALMENTE") {
         //$(status).css("color", "red");
         this.style.background = "blue"; //cor do fundo
-        this.style.color = "White"; //cor da fonte
+        this.style.color = "black"; //cor da fonte
     } else if ($(this).text() == "ATENDIDO") {
-        this.style.color = "White"; //cor da fonte
+        this.style.color = "black"; //cor da fonte
         this.style.background = "green"; //cor do fundo
     } else if ($(this).text() == "PENDENTE") {
-        this.style.color = "White"; //cor da fonte
-        this.style.background = "red"; //cor do fundo
+        this.style.color = "black"; //cor da fonte
+        this.style.background = "OrangeRed "; //cor do fundo
     } else if ($(this).text() == "CANCELADO" || $(this).text() == "NEGADO") {
         //$(status).css("color", "red");
-        this.style.color = "White"; //cor da fonte
+        this.style.color = "black"; //cor da fonte
         this.style.background = "red"; //cor do fundo
-    } else {
-        this.style.background = "Yellow"; //cor do fundo
-        this.style.color = "White";
+    } else if ($(this).text() == "ANALISE FINANCEIRO") {
+        //$(status).css("color", "red");
+        this.style.color = "black"; //cor da fonte
+        this.style.background = "Orange"; //cor do fundo
+    }else {
+        this.style.background = "CornflowerBlue"; //cor do fundo
+        this.style.color = "black";
     }
 });
 
