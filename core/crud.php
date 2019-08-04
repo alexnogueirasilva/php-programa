@@ -746,8 +746,7 @@ class crud
 		return $stmt;
 	}
 
-	public static function listarPedido($idInstituicao)
-	{
+	public static function listarPedido($idInstituicao){
 
 		$sql = "SELECT con.fk_idInstituicao ,con.codControle,con.dataFechamento,con.dataAlteracao,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.codCliente, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
 		FROM controlePedido as con 

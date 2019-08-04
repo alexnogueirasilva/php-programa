@@ -93,7 +93,7 @@ if($logado != 1){$logado2 = 600;
                             </thead>
                             <tbody>
                                 <?php
-                                $dados = Crud::listarPedido($idInstituicao);
+                                $dados = PedidoDAO::listarPedido($idInstituicao);
                                 $totalPedido = 0;
                                 $teste = 0;
                                 if ($dados->rowCount() > 0) {
@@ -139,7 +139,7 @@ if($logado != 1){$logado2 = 600;
                                         </tr>
                                     <?php
                                 }
-                                echo "Qtde pedidos nao atendidos:  " . $teste . " - ";
+                                echo "Qtde de pedidos:  " . $teste . " - ";
                                 echo "Valor Total Pedido R$" . number_format($totalPedido, 2, ',', '.');
                             } else {
                                 echo "<p class='text-danger'>Sem Pedidos Cadastrados</p>";

@@ -142,7 +142,7 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                                         </tr>
                                     <?php
                                 }
-                                echo "Qtde pedidos nao atendidos:  " . $teste . " - ";
+                                echo "Qtde pedidos Cancelados:  " . $teste . " - ";
                                 echo "Valor Total Pedido R$" . number_format($totalPedido, 2, ',', '.');
                             } else {
                                 echo "<p class='text-danger'>Sem Pedidos Cadastrados</p>";
