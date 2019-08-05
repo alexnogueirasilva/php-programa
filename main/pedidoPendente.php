@@ -79,7 +79,7 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                             </thead>
                             <tbody>
                                 <?php
-                                $dados = crud::listarPedidoNaoAtendCanc($idInstituicao);
+                                $dados = PedidoDAO::listarPedidoNaoAteCanc($idInstituicao);
                                 $totalPedido = 0;
                                 $teste = 0;
                                 if ($dados->rowCount() > 0) {
@@ -139,7 +139,7 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                                         </tr>
                                     <?php
                                 }
-                                echo "Qtde pedidos nao atendidos:  " . $teste . " - ";
+                                echo "Qtde pedidos Pendentes:  " . $teste . " - ";
                                 echo "Valor Total Pedido R$" . number_format($totalPedido, 2, ',', '.');
                             } else {
                                 echo "<p class='text-danger'>Sem Pedidos Cadastrados</p>";

@@ -7,8 +7,7 @@ class crud
 
 
 	//Aqui fazemos a verificação do login do usuário e do seu nível de acesso
-	public static function pesquisaLoginUsr($nome, $senha)
-	{
+	public static function pesquisaLoginUsr($nome, $senha){
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$pwd = sha1($senha);
@@ -747,8 +746,7 @@ class crud
 		return $stmt;
 	}
 
-	public static function listarPedido($idInstituicao)
-	{
+	public static function listarPedido($idInstituicao){
 
 		$sql = "SELECT con.fk_idInstituicao ,con.codControle,con.dataFechamento,con.dataAlteracao,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.codCliente, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
 		FROM controlePedido as con 

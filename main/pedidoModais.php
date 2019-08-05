@@ -42,9 +42,9 @@ $nomeUsuario
                                         <?php print($row['nomeCliente']); ?>
                                     </option>
                                 <?php
+                                }
                             }
-                        }
-                        ?>
+                            ?>
                         </select>
                     </div>
 
@@ -74,9 +74,9 @@ $nomeUsuario
                                             <?php print($row['nome']); ?>
                                         </option>
                                     <?php
+                                    }
                                 }
-                            }
-                            ?>
+                                ?>
                             </select>
                         </div>
                     </div>
@@ -120,26 +120,28 @@ $nomeUsuario
                     <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataAtual" id="dataAtual">
                     <input type="hidden" name="idInstituicaoAlterar" id="idInstituicaoAlterar">
                     <input type="hidden" name="ClienteAlterar22" id="ClienteAlterar22">
-                    
+                    <div class="form-group">
+                        <input type="text"  class="form-control" disabled="disabled" name="nomeClienteAlterar" id="nomeClienteAlterar">
+                    </div>
                     <input type="hidden" name="statusAlterar" id="statusAlterar">
                     <div class="form-group">
                         <select class="form-control" name="statusPedidoAlterar" id="statusPedidoAlterar" required>
-                            <option value="" selected disabled>Selecione o Status</option>                           
-                            <?php                             
+                            <option value="" selected disabled>Selecione o Status</option>
+                            <?php
                             $selectStatus = crud::listarStatus($idInstituicao);
                             if ($selectStatus->rowCount() > 0) {
                                 while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
-                                    ?>                                    
+                                    ?>
                                     <option value="<?php print($row['codStatus']); ?>">
-                                        <?php  print($row['nome']); ?>                                       
-                                       
+                                        <?php print($row['nome']); ?>
+
                                     </option>
                                 <?php
+                                }
                             }
-                        }
-                        ?>
+                            ?>
                         </select>
-                       
+
                     </div>
                     <!--
                     <input type="checkbox" name="email2" checked="checked" />
@@ -151,29 +153,29 @@ $nomeUsuario
             } else{
                 echo "Não Checado";
             }
-            ? >  -->   
+            ? >  -->
 
                     <div class="form-group">
                         <label for="message-text" class="control-label">Observação:</label>
                         <textarea name="mensagemPedidoAlterar" class="form-control" rows="3" id="mensagemPedidoAlterar"></textarea>
                         <br>
-                        
+
                         <div class="form-group">
                             <input type="text" size="50" class="form-control" name="emailAlterar" id="emailAlterar" placeholder="Informe e-mail separando por virgula ">
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">Mensagem:</label>
                             <textarea name="mensagemEmailAlterar" class="form-control" rows="3" id="mensagemEmailAlterar"></textarea>
-                        </div>                     
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        <button type="submit" id="alteraPedido" class="btn btn-primary">Enviar</button>                        
-                    </div>                    
+                        <button type="submit" id="alteraPedido" class="btn btn-primary">Enviar</button>
+                    </div>
                 </form>
-                
+
             </div>
-            
+
         </div>
     </div>
 </div>
@@ -211,9 +213,9 @@ $nomeUsuario
                         <input type="text" size="50" class="form-control" name="emailExcluir" id="emailExcluir" placeholder="Informe e-mail separando por virgula ">
                     </div>
                     <div class="form-group">
-                            <label for="message-text" class="control-label">Mensagem:</label>
-                            <textarea name="excmensagemEmail" class="form-control" rows="3" id="excmensagemEmail"></textarea>
-                        </div>                       
+                        <label for="message-text" class="control-label">Mensagem:</label>
+                        <textarea name="excmensagemEmail" class="form-control" rows="3" id="excmensagemEmail"></textarea>
+                    </div>
                     <div class="modal-footer">
 
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
