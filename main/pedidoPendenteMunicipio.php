@@ -92,7 +92,7 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                                         $dataCriada = $row['dataCadastro'];
                                         $codStatus = $row['codStatus'];
 
-                                        $dataAtual = date('Y-m-d H:i:s');
+                                        $dataAtual = date('Y-m-d');
 
                                         $datatime1 = new DateTime($row['dataCadastro']);
                                         $datatime2 = new DateTime($dataAtual);
@@ -101,8 +101,8 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                                             $datatime2 =  new DateTime($row['dataFechamento']);
                                         }
 
-                                        $data1  = $datatime1->format('Y-m-d H:i');
-                                        $data2  = $datatime2->format('Y-m-d H:i');
+                                        $data1  = $datatime1->format('Y-m-d');
+                                        $data2  = $datatime2->format('Y-m-d');
 
                                         $criada = strtotime($data1);
                                         $atual = strtotime($data2);
@@ -131,7 +131,7 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                                                    data-mensagemalterar="<?php print($row['observacao']); ?>"
                                                    data-codigocontrolealterar="<?php print($row['codControle']); ?>"
                                                    data-dataalteracao="<?php print($row['dataAlteracao']); ?>"
-                                                    data-idinstituicaoalterar="<?php print($row['fk_idInstituicao']); ?>"
+                                                   data-idinstituicaoalterar="<?php print($row['fk_idInstituicao']); ?>"
                                                    data-nomealterar="<?php print($row['nomeCliente']); ?>"
                                                    data-nomesatus="<?php print($row['nomeStatus']); ?>"
                                                    data-anexoalterar="<?php print($row['anexo']); ?>"

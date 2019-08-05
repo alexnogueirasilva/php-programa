@@ -546,7 +546,7 @@ class PedidoDAO
 		$qtde = strlen($data);
 		$data1 = new DateTime($data);
 		if ( $qtde > 10) {
-			$dataFormatada = $data1->format('d/m/Y h:i:s');  
+			$dataFormatada = $data1->format('d/m/Y');  
 		} else {
 			$dataFormatada = $data1->format('d/m/Y');  
 		}
@@ -625,7 +625,7 @@ class PedidoDAO
 
 //controlepedido
 public static function listarPedido(){
-	$sql = "SELECT con.codControle,con.dataAlteracao,con.dataFechamento,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
+	$sql = "SELECT con.codControle,CAST(con.dataAlteracao AS date) as dataAlteracao,con.dataFechamento,CAST(con.dataCadastro AS date) as dataCadastro ,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
 	FROM controlePedido as con 
 	inner join cliente as cli on cli.codCliente = con.codCliente 
 	inner join statusPedido as sta on sta.codStatus = con.codStatus
@@ -639,7 +639,7 @@ public static function listarPedido(){
 }
 
 public static function listarPedidoMunicipio($idInstituicao){
-	$sql = "SELECT con.codControle,con.dataAlteracao,con.dataFechamento,con.dataCadastro,con.numeroPregao,con.fk_idInstituicao as intituicao_id, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
+	$sql = "SELECT con.codControle,CAST(con.dataAlteracao AS date) as dataAlteracao,con.dataFechamento,CAST(con.dataCadastro AS date) as dataCadastro,con.numeroPregao,con.fk_idInstituicao as intituicao_id, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
 	FROM controlePedido as con 
 	inner join cliente as cli on cli.codCliente = con.codCliente 
 	inner join statusPedido as sta on sta.codStatus = con.codStatus
@@ -700,7 +700,7 @@ public static function listarPedidoCanceladosNegados($idInstituicao) {// cancela
 }
 public static function listarPedidoNaoAtendCancMunicipio($idInstituicao)
 	{
-		$sql = "SELECT con.fk_idInstituicao,con.codControle,con.dataFechamento,con.dataAlteracao,con.dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
+		$sql = "SELECT con.fk_idInstituicao,con.codControle,CAST(con.dataFechamento AS Date) as dataFechamento,CAST(con.dataAlteracao AS Date) as dataAlteracao,CAST(con.dataCadastro AS Date) as dataCadastro,con.numeroPregao, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
 		FROM controlePedido as con 
 		inner join cliente as cli on cli.codCliente = con.codCliente 
 		inner join statusPedido as sta on sta.codStatus = con.codStatus WHERE sta.nome not in ('ATENDIDO','CANCELADO','NEGADO') AND con.fk_idInstituicao = '" . $idInstituicao . "'  AND cli.tipoCliente NOT IN ('Estadual','Federal','Estadual')
