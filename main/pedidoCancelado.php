@@ -125,7 +125,6 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                                             <td><?php print(crud::formataData($row['dataFechamento'])); ?></td>
                                             <td id="statusControle"><?php print($row['nomeStatus']); ?></td>
                                             <td><?php print($horas .   'hs ' . 'e ' .  $minutos . 'm'); ?></td>
-
                                             <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']); ?>">Anexo</a></td>
                                             <td><a class="btn btn-primary waves-effect waves-light" type="button" id="btnPedidoAlterar" data-toggle="modal" data-target="#modalPedidoAlterar" data-whatever="@getbootstrap" target="_blank" 
                                             data-idinstituicaoalterar="<?php print($row['fk_idInstituicao']); ?>"
