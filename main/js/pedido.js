@@ -143,7 +143,7 @@ $(document).on("click", "#btnPedidoAlterar", function () {
     var mensagemAlterar = $(this).data('mensagemalterar');
     var dataFechamento = $(this).data('datafechamento');
     var dataAlteracao = $(this).data('dataalteracao');
-    var Cliente = $(this).data('idclientealterar');
+    var idCliente = $(this).data('idclientealterar');
     var nomealterar = $(this).data('nomealterar');
     var numeroAf = $(this).data('numeroaf');
     var numeroLicitacao = $(this).data('numerolicitacao');
@@ -159,7 +159,7 @@ $(document).on("click", "#btnPedidoAlterar", function () {
     $('#mensagemPedidoAlterar').val(mensagemAlterar);
     $('#dataAlteracaoPedidoAlterar').val(dataAlteracao);
     $('#dataFechamentoPedidoAlterar').val(dataFechamento);
-    $('#idClientePedidoAlterar').val(Cliente);
+    $('#idClientePedidoAlterar').val(idCliente);
     $('#ClienteAlterar22').val(nomealterar);
     $('#ClienteAlterar2').val(nomealterar);
    
