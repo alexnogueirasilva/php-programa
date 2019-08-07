@@ -119,7 +119,7 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                                             <td><b><?php print($row['numeroPregao']); ?></b></td>
                                             <td><b><?php print($row['numeroAf']); ?></b></td>
                                             <td><b>R$<?php print(number_format($row['valorPedido'], 2, ',', '.')); ?></b></td>
-                                            <td><b><?php print(crud::formataData($row['dataCadastro'])); ?></b></td>
+                                            <td><b><?php print(PedidoDAO::formataData($row['dataCadastro'])); ?></b></td>
                                             <td id="statusControle"><b><?php print($row['nomeStatus']); ?></b></td>
                                             <td><b><?php print($horas .   'hs ' . 'e ' .  $minutos . 'm'); ?></b></td>
 
