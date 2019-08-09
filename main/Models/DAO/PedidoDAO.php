@@ -83,7 +83,7 @@ public static function listarPedidoNaoAteCanc($idInstituicao) {//nao atendidos/c
 	inner join cliente as cli on cli.codCliente = con.codCliente 
 	inner join statusPedido as sta on sta.codStatus = con.codStatus
 	where sta.nome  not in  ('ATENDIDO','CANCELADO') AND con.fk_idInstituicao = '" . $idInstituicao . "' AND cli.tipoCliente IN ('Estadual','Federal','Estadual')
-	ORDER BY CAST(con.dataCadastro AS date) as dataCadastro desc";
+	ORDER BY con.dataCadastro  desc";
 
 	$pdo = Database::connect();
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
