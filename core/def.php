@@ -1,7 +1,7 @@
 <?php
 
 //funcional
-define('DB_HOST', "mysql380.umbler.com");
+define('DB_HOST', "mysql380.umbler.com:41890");
 define('DB_NAME', "fabmed");
 define('DB_USER', "fabmed");
 define('DB_PASS', "Bruna2012*");
