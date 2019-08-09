@@ -498,7 +498,7 @@ switch ($value) {
 		$Cliente = $_POST['Cliente'];
 		$observacao = $_POST['mensagem'];
 		$email = $_POST['email'];
-		$subject = $_POST['subject'];
+		$subject = $_POST['subject']." - ".$_POST['Cliente'];
 		$nomeUsuario = $_POST['nomeUsuario'];
 
 		//ENTRA AQUI SE TIVER ANEXO
@@ -571,7 +571,7 @@ switch ($value) {
 		$anexoAlterar       = $_POST['anexoAlterar'];
 		$dataAbertura 		= $_POST['dataAtual2'];
 		$dataAlteracao 		= $_POST['dataAtual2'];
-		$subject			= $_POST['subjectAlterar2'];
+		$subject			= $_POST['subjectAlterar2']." - ".$_POST['ClienteAlterar2'];
 		$nomeUsuario		= $_POST['nomeUsuarioAlterar2'];
 		$Cliente 			= $_POST['ClienteAlterar2'];
 		$Status 			= $_POST['statusAlterar2'];
@@ -641,7 +641,7 @@ switch ($value) {
 		$email		 		= $_POST['emailAlterar'];
 		$dataAlteracao 		= $_POST['dataAtual'];
 		$dataFechamento 	= $_POST['dataFechamentoPedidoAlterar'];
-		$subject 			= $_POST['subjectAlterar'];
+		$subject 			= $_POST['subjectAlterar']." - ".$_POST['ClienteAlterar22'];;
 		$nomeUsuario		= $_POST['nomeUsuarioAlterar'];
 		$mensagemEmail		= $_POST['mensagemEmailAlterar'];
 		$Cliente			= $_POST['ClienteAlterar22'];
@@ -671,7 +671,7 @@ switch ($value) {
 		$email      	= $_POST['emailExcluir'];
 		$id      		= $_POST['excIdPedido'];
 		$idInstituicao 	= $_POST['ExcIdInstituicao'];
-		$nomeUsuario 	= $_POST['ExcnomeUsuario'];
+		$nomeUsuario 	= $_POST['ExcnomeUsuario']." - ".$_POST['ExcNomePedido'];
 		$subject 		= $_POST['Excsubject'];
 		$mensagemEmail	= $_POST['excmensagemEmail'];
 		$Cliente		= $_POST['ExcNomePedido'];
