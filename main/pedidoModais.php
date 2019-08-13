@@ -199,12 +199,14 @@ $nomeUsuario
                         <input type="hidden" value="<?php echo $nomeUsuario; ?>" name="ExcnomeUsuario" id="ExcnomeUsuario">
                         <input type="hidden" name="Excsubject" id="Excsubject" value="Exclusao de Pedido">
                         <input type="hidden" name="excIdPedido" id="excIdPedido">
+                        <input type="hidden" name="ExcNomePedido1" id="ExcNomePedido1">
+                
                         <input type="hidden" name="excCliente" id="excCliente">
                         <div class="col-md-12">
                             <div id="contextoModal">
                                 <h2>Você vai EXCLUIR pedido do Cliente: </h2>
                                 <div class="form-group">
-                                    <input type="text" size="50" class="form-control" disabled="disabled" name="ExcNomePedido" id="ExcNomePedido">
+                                    <input type="text" size="50" class="form-control" readonly="readonly" name="ExcNomePedido" id="ExcNomePedido">
                                 </div>
                             </div>
                         </div>

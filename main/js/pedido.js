@@ -74,6 +74,7 @@ $(document).on("click", "#btnExcluiPedido", function () {
     //alert("id "+id+" nome "+nome+" int. "+idInstituicao);
     $('#excIdPedido').val(id);
     $('#ExcNomePedido').val(nome);
+    $('#ExcNomePedido1').val(nome);
     $('#ExcIdInstituicao').val(idInstituicao);
 
     $('#modalExluirPedido').modal('show');
@@ -97,7 +98,7 @@ $('#frmExcluirPedido').on('submit', (function (e) {
             $("#btnExcluirPedido").prop("disabled", true);
         },
         success: function (result) {
-            //alert(result);
+           // alert(result);
             if (result == 1) {
                 swal({
                     title: "OK!",

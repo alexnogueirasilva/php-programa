@@ -671,11 +671,11 @@ switch ($value) {
 		$email      	= $_POST['emailExcluir'];
 		$id      		= $_POST['excIdPedido'];
 		$idInstituicao 	= $_POST['ExcIdInstituicao'];
-		$nomeUsuario 	= $_POST['ExcnomeUsuario']." - ".$_POST['ExcNomePedido'];
-		$subject 		= $_POST['Excsubject'];
+		$nomeUsuario 	= $_POST['ExcnomeUsuario'];
+		$subject 		= $_POST['Excsubject']." - ".$_POST['ExcNomePedido'];
 		$mensagemEmail	= $_POST['excmensagemEmail'];
 		$Cliente		= $_POST['ExcNomePedido'];
-		
+		$anexo		       = '';
 		$cad = crud::deletePedido($id, $idInstituicao);
 		if ($cad == true) {
 			echo 1;

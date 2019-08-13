@@ -68,7 +68,7 @@ public static function listarPedidoMunicipio($idInstituicao){
 	inner join cliente as cli on cli.codCliente = con.codCliente 
 	inner join statusPedido as sta on sta.codStatus = con.codStatus
 	where con.fk_idInstituicao = '" . $idInstituicao . "'	AND cli.tipoCliente NOT IN ('Estadual','Federal','Estadual')
-	ORDER BY CAST(con.dataCadastro AS date) as dataCadastro desc";
+	ORDER BY con.dataCadastro desc";
 
 	$pdo = Database::connect();
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -277,14 +277,15 @@ public static function AlterarPedido($codControle, $statusPedido, $mensagemAlter
 	}
 }
 
-public static function deletePedido($codControle){
-	$pdo = Database::connect();
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$stmt = $pdo->prepare("DELETE FROM controlepedido WHERE codControle=:codControle");
-	$stmt->bindparam(":codControle", $codControle);
-	$stmt->execute();
-	return true;
-}
-//controlepedido
-
-}
+public static function deletePedido($id, $idInstituicao)
+	{
+		$pdo = Database::connect();
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare("DELETE FROM controlePedido WHERE codControle = :id AND fk_idInstituicao = :idInstituicao ");
+		$stmt->bindparam(":id", $id);
+		$stmt->bindparam(":idInstituicao", $idInstituicao);
+		$stmt->execute();
+		return true;
+	}
+	}
+	//controlepedido
