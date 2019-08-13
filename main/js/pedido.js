@@ -98,7 +98,7 @@ $('#frmExcluirPedido').on('submit', (function (e) {
             $("#btnExcluirPedido").prop("disabled", true);
         },
         success: function (result) {
-           // alert(result);
+           //alert(result);
             if (result == 1) {
                 swal({
                     title: "OK!",
