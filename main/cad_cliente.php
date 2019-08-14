@@ -49,7 +49,7 @@ $queryCliente = "SELECT * FROM cliente WHERE fk_idInstituicao =  '" . $idInstitu
 
 						<div class="form-group">
 							<div class="input-group">
-								<select class="form-control" name="tipoCliente" id="tipoCliente" required="true">
+								<select class="form-control" name="cdtTipoCliente" id="cdtTipoCliente" required="true">
 									<option value="">Selecione o Tipo do Cliente</option>
 									<option value="Estadual">1 - Estadual</option>
 									<option value="Federal">2 - Federal</option>
@@ -322,7 +322,7 @@ require_once "rodape.php";
 				cache: false,
 				processData: false,
 				success: function(result) {
-					//alert("resultado: " +result);		
+					alert("resultado: " +result);		
 					if (result == 1) {
 						swal({
 								title: "OK!",
