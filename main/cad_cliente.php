@@ -322,7 +322,7 @@ require_once "rodape.php";
 				cache: false,
 				processData: false,
 				success: function(result) {
-					alert("resultado: " +result);		
+					//alert("resultado: " +result);		
 					if (result == 1) {
 						swal({
 								title: "OK!",
