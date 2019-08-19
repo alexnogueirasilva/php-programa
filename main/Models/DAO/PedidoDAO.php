@@ -63,7 +63,7 @@ public static function listarPedido($idInstituicao){
 }
 
 public static function listarPedidoMunicipio($idInstituicao){
-	$sql = "SELECT con.codControle,CAST(con.dataAlteracao AS date) as dataAlteracao,con.dataFechamento,CAST(con.dataCadastro AS date) as dataCadastro,con.numeroPregao,con.fk_idInstituicao as intituicao_id, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
+	$sql = "SELECT cli.codCliente,con.codControle,CAST(con.dataAlteracao AS date) as dataAlteracao,con.dataFechamento,CAST(con.dataCadastro AS date) as dataCadastro,con.numeroPregao,con.fk_idInstituicao as intituicao_id, con.numeroAf, con.codStatus, con.valorPedido,con.anexo,con.observacao, cli.nomeCliente, cli.tipoCliente, sta.nome as nomeStatus 
 	FROM controlePedido as con 
 	inner join cliente as cli on cli.codCliente = con.codCliente 
 	inner join statusPedido as sta on sta.codStatus = con.codStatus

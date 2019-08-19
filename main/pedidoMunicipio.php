@@ -202,8 +202,6 @@ if($logado != 1){$logado2 = 600;
                     <input type="hidden" id="subjectAlterar2" name="subjectAlterar2" value="Alteracao de Pedido">
                     <input type="hidden" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="idInstituicaoAlterar" id="idInstituicaoAlterar" placeholder="instituicao" required>
                     <input type="hidden" id="dataFechamentoPedidoAlterar" name="dataFechamentoPedidoAlterar">
-                    <input type="hidden" id="dataFechamentoPedidoAlterar" name="Cliente">
-                    <input type="hidden" id="Cliente" name="dataFechamentoPedidoAlterar">
                     <input type="hidden" value="<?php echo $nomeUsuario; ?>" name="nomeUsuarioAlterar2" id="nomeUsuarioAlterar2">
                     <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataAtual2" id="dataAtual2">
                     <input type="hidden" name="ClienteAlterar2" id="ClienteAlterar2">
@@ -287,7 +285,6 @@ if($logado != 1){$logado2 = 600;
 
 
 
-
 <!-- /#page-wrapper -->
 
 <?php
@@ -295,84 +292,3 @@ require_once "rodape.php";
 include_once "pedidoModais.php";
 ?>
 <script src="js/pedido.js"></script>
-<script type="text/javascript">
-    $(document).ready(function(e) {
-
-        permissaoNivel();
-
-        $('#usuarioDestino').change(function() {
-            var codUserDestino = $("#usuarioDestino").val();
-            $.ajax({
-                url: 'busca_email.php',
-                type: "POST",
-                data: {
-                    codUserDestino: codUserDestino
-                },
-                success: function(data) {
-                    //alert(data);
-                    if (data) {
-                        $('#emailDestino').val(data);
-                    }
-                }
-            });
-        });
-
-        //Click no botao detalhas do pedido
-        $(document).on("click", "#btnPedidoDetalhes", function() {
-            //pegando valor das colunas da tabela e atribuindo as variaveis
-            var idControle = $(this).data('codigocontroledet');
-            var nomeCliente = $(this).data('nomeclientedet');
-            var tipoCliente = $(this).data('tipoclientedet');
-            var numeroPregao = $(this).data('numeropregaodet');
-            var numeroPedido = $(this).data('numeropedidodet');
-            var valorPedido = $(this).data('valorpedidodet');
-            var statusControle = $(this).data('statuscontroledet');
-            var dataCadastro = $(this).data('datacadastrodet');
-            var mensagem = $(this).data('mensagem');
-            var tempoPedido = "testes"; // $horas . ' Horas' . ' e ' . $minutos . " Minutos";
-
-            if (status == "Fechada") {
-                status = status + " - Em: " + dataFechamento;
-            }
-            if (mensagem == "") {
-                mensagem = " Nenhuma Obserção não encontrado ";
-            }
-            if (tipoCliente == "M") {
-                tipoCliente = "Municipal";
-            } else if (tipoCliente == "E") {
-                tipoCliente = "Estadual";
-            } else if (tipoCliente == "F") {
-                tipoCliente = "Federal";
-            }
-            //pegando valor das variaveis vindo da tabela e atribuindo aos id dos campos do modal para exibir
-            $('#codigoDetalhes').html(idControle);
-            $('#nomeClienteDetalhes').html(nomeCliente);
-            $('#tipoClienteDetalhes').html(tipoCliente);
-            $('#licitacaoDetalhes').html(numeroPregao);
-            $('#pedidoDetalhes').html(numeroPedido);
-            $('#tempoDetalhes').html(tempoPedido);
-            $('#valorDetathes').html(valorPedido);
-            $('#statusDetalhes').html(statusControle);
-            $('#dataCriacaoDetalhes').html(dataCadastro);
-            $('#mensagemDetatalhes').html(mensagem);
-
-            //MONTA OS COMENTÁRIOS NO MODAL
-            var tipo = 'busca_mensagensPedido';
-            $.ajax({
-                url: 'busca_mensagens.php',
-                type: "POST",
-                data: {
-                    idControle: idControle,
-                    tipo: tipo
-                },
-                success: function(data) {
-                    //  alert(idControle);  
-                    if (idControle) {
-                        $('#comentariosPedido').html(data);
-                    }
-                }
-            });
-        });
-
-    });
-</script>

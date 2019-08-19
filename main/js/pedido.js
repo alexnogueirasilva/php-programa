@@ -151,7 +151,6 @@ $(document).on("click", "#btnPedidoAlterar", function () {
     var valorPedido = $(this).data('valorpedido');
     var anexoAlterar = $(this).data('anexoalterar');
     var idInstituicao = $(this).data('idinstituicaoalterar');    
-
     $('#codigoControleAlterar').val(codigoControle);
     $('#statusPedidoAlterar').val(statusAlterar);
     $('#statusAlterar').val(nomesatus);
@@ -161,6 +160,7 @@ $(document).on("click", "#btnPedidoAlterar", function () {
     $('#dataAlteracaoPedidoAlterar').val(dataAlteracao);
     $('#dataFechamentoPedidoAlterar').val(dataFechamento);
     $('#idClientePedidoAlterar').val(idCliente);
+    alert (" id cliente " + idCliente);
     $('#ClienteAlterar22').val(nomealterar);
     $('#ClienteAlterar2').val(nomealterar);
    
