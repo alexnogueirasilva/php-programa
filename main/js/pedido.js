@@ -152,6 +152,7 @@ $(document).on("click", "#btnPedidoAlterar", function () {
     var anexoAlterar = $(this).data('anexoalterar');
     var idInstituicao = $(this).data('idinstituicaoalterar');    
     $('#codigoControleAlterar').val(codigoControle);
+    $('#codigoDetalhesAlterar').val(codigoControle);
     $('#statusPedidoAlterar').val(statusAlterar);
     $('#statusAlterar').val(nomesatus);
     $('#nomeClienteAlterar').val(nomealterar);
@@ -160,7 +161,7 @@ $(document).on("click", "#btnPedidoAlterar", function () {
     $('#dataAlteracaoPedidoAlterar').val(dataAlteracao);
     $('#dataFechamentoPedidoAlterar').val(dataFechamento);
     $('#idClientePedidoAlterar').val(idCliente);
-    alert (" id cliente " + idCliente);
+    //alert (" teste click alterar ");
     $('#ClienteAlterar22').val(nomealterar);
     $('#ClienteAlterar2').val(nomealterar);
    
@@ -170,6 +171,22 @@ $(document).on("click", "#btnPedidoAlterar", function () {
     $('#valorPedidoAlterar').val(valorPedido);
     $('#anexoAlterar').val(anexoAlterar);
     $('#idInstituicaoAlterar').val(idInstituicao);
+    var tipo = 'busca_mensagensPedido';
+    $.ajax({
+        url: 'busca_mensagens.php',
+        type: "POST",
+        data: {
+            idControle: codigoControle,
+            tipo: tipo
+        },
+        success: function (data) {
+            //alert("teste comentario" +data);
+             // alert(codigoControle);  
+            if (codigoControle) {
+                $('#comentariosPedidoAlterar').html(data);
+            }
+        }
+    });
 });
 //SETA O CÓDIGO NO MODAL PARA ATUALIZAR
 
@@ -246,6 +263,40 @@ $("#frmAlterarPedido").on('submit', (function (e) {
 //SETA O CÓDIGO NO FORMULARIO PARA ATUALIZAR
 
 //ADICIONA MENSAGEM
+$(document).on("click", "#addMensagem",function () {
+    var tipo = "adicionaMensagemPedido";
+    var idLogado = $("#idLogado").val();
+    var datahora = $("#datahora").val();
+    var codPedido = $('#codigoDetalhesAlterar').val();
+    var mensagem = $("#mensagemComentario").val();
+    var idInstituicao = $("#idInstituicaoMensagem").val();
+
+    $.ajax({
+        url: '../core/save.php',
+        type: "POST",
+        data: {
+            tipo: tipo,
+            idLogado: idLogado,
+            datahora: datahora,
+            codPedido: codPedido,
+            mensagem: mensagem,
+            idInstituicao: idInstituicao
+        },
+        success: function (result) {
+             //alert("adicionar mensagem "+result);
+            if (result == 1) {
+                alert("Mensagem adicionada com Sucesso!");
+                atualizaMsg();
+                $("#mensagemComentario").val('');
+               
+            } else {
+                alert("Erro ao salvar");
+            }
+
+        }
+    });
+    return false; //Evita que a página seja atualizada
+});
 $('#frmAddMensagem').submit(function () {
     var tipo = "adicionaMensagemPedido";
     var idLogado = $("#idLogado").val();
@@ -285,6 +336,10 @@ $('#frmAddMensagem').submit(function () {
 //FUNÇÃO QUE ATUALIZA AS MENSAGENS NOS DETALHES APÓS SUBMETE-LA -------------------------
 function atualizaMsg() {
     var idControle = $("#codigoDetalhes").text();
+    if(idControle == ""){
+        idControle = $("#codigoDetalhesAlterar").val();
+    }
+   // alert(" cod "+idControle);
     var tipo = 'busca_mensagensPedido';
     //MONTA OS COMENTÁRIOS NO MODAL
     $.ajax({
@@ -295,8 +350,10 @@ function atualizaMsg() {
             idControle: idControle
         },
         success: function (data) {
+           // alert("atualizar mensagem");
             if (data) {
                 $('#comentariosPedido').html(data);
+                $('#comentariosPedidoAlterar').html(data);
             }
         }
     });
