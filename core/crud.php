@@ -809,13 +809,13 @@ class crud
 	}
 
 
-	public static function CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao)
+	public static function CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao,$idUsuario,$garantia)
 	{
 		$pdo = Database::connect();
 
 		try {
-			$stmt = $pdo->prepare("INSERT INTO controlePedido (numeroPregao, numeroAf,valorPedido,codStatus,codCliente,anexo,observacao, dataCadastro,fk_idInstituicao) 
-													VALUES(:numeroPregao, :numeroAf, :valorPedido, :codStatus, :codCliente, :anexo, :observacao,:dataCadastro,:idInstituicao)");
+			$stmt = $pdo->prepare("INSERT INTO controlePedido (numeroPregao, numeroAf,valorPedido,codStatus,codCliente,anexo,observacao, dataCadastro,fk_idInstituicao,fk_idUsuarioPed,garantia) 
+													VALUES(:numeroPregao, :numeroAf, :valorPedido, :codStatus, :codCliente, :anexo, :observacao,:dataCadastro,:idInstituicao,:idUsuario,:garantia)");
 			//numeroPregao,numeroAf,valorPedido,codStatus,codCliente,anexo, observacao
 			$stmt->bindparam(":numeroPregao", $numeroPregao);
 			$stmt->bindparam(":numeroAf", $numeroAf);
@@ -826,6 +826,8 @@ class crud
 			$stmt->bindparam(":observacao", $observacao);
 			$stmt->bindparam(":dataCadastro", $dataCadastro);
 			$stmt->bindparam(":idInstituicao", $idInstituicao);
+			$stmt->bindparam(":idUsuario", $idUsuario);
+			$stmt->bindparam(":garantia", $garantia);
 			
 			$stmt->execute();
 			$id_cad = $pdo->lastInsertId();
@@ -839,12 +841,12 @@ class crud
 		}
 	}
 
-	public static function editarPedido($codControle, $numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $idInstituicao)
+	public static function editarPedido($codControle, $numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $idInstituicao,$garantia)
 	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
-			$stmt = $pdo->prepare("UPDATE controlepedido SET numeroPregao=:numeroPregao, numeroAf=:numeroAf,valorPedido=:valorPedido,codStatus=:codStatus,codCliente=:codCliente,anexo=:anexo,observacao=:observacao 
+			$stmt = $pdo->prepare("UPDATE controlepedido SET numeroPregao=:numeroPregao, numeroAf=:numeroAf,valorPedido=:valorPedido,codStatus=:codStatus,codCliente=:codCliente,anexo=:anexo,observacao=:observacao,garantia=:garantia 
 		WHERE codControle=:codControle AND fk_idInstituicao=:idInstituicao ");
 			$stmt->bindparam(":codControle", $codControle);
 			$stmt->bindparam(":numeroPregao", $numeroPregao);
@@ -855,6 +857,7 @@ class crud
 			$stmt->bindparam(":anexo", $anexo);
 			$stmt->bindparam(":observacao", $observacao);
 			$stmt->bindparam(":idInstituicao", $idInstituicao);
+			$stmt->bindparam(":garantia", $garantia);
 			$stmt->execute();
 
 			return true;
@@ -863,18 +866,20 @@ class crud
 			return false;
 		}
 	}
-	public static function AlterarPedido($codControle, $statusPedido, $mensagemAlterar, $idInstituicao, $dataAlteracao, $dataFechamento)
+	public static function AlterarPedido($codControle, $statusPedido, $mensagemAlterar, $idInstituicao, $dataAlteracao, $dataFechamento,$idUsuario,$garantia)
 	{
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
-			$stmt = $pdo->prepare("UPDATE controlePedido SET codStatus=:statusPedido, observacao=:mensagemAlterar,dataAlteracao=:dataAlteracao, dataFechamento=:dataFechamento WHERE codControle=:codControle AND fk_idInstituicao=:idInstituicao ");
+			$stmt = $pdo->prepare("UPDATE controlePedido SET codStatus=:statusPedido, observacao=:mensagemAlterar,dataAlteracao=:dataAlteracao, dataFechamento=:dataFechamento, fk_idUsuarioPed=:idUsuario, garantia=:garantia WHERE codControle=:codControle AND fk_idInstituicao=:idInstituicao ");
 			$stmt->bindparam(":codControle", $codControle);
 			$stmt->bindparam(":statusPedido", $statusPedido);
 			$stmt->bindparam(":mensagemAlterar", $mensagemAlterar);
 			$stmt->bindparam(":idInstituicao", $idInstituicao);
 			$stmt->bindparam(":dataAlteracao", $dataAlteracao);
 			$stmt->bindparam(":dataFechamento", $dataFechamento);
+			$stmt->bindparam(":idUsuario", $idUsuario);
+			$stmt->bindparam(":garantia", $garantia);
 			$stmt->execute();
 
 			return true;
@@ -883,14 +888,14 @@ class crud
 			return false;
 		}
 	}
-	public static function AlterarPedido2($codControle, $statusPedido, $mensagemAlterar, $nomeCliente, $numeroAf, $valorPedido, $numeroLicitacao, $anexoAlterar, $idInstituicao, $dataAlteracao)
+	public static function AlterarPedido2($codControle, $statusPedido, $mensagemAlterar, $nomeCliente, $numeroAf, $valorPedido, $numeroLicitacao, $anexoAlterar, $idInstituicao, $dataAlteracao,$idUsuario,$garantia)
 	{
 
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		try {
 			$stmt = $pdo->prepare("UPDATE controlePedido SET codStatus=:statusPedido, observacao=:mensagemAlterar, 
-		codCliente=:nomeCliente, numeroAf=:numeroAf, valorPedido=:valorPedido, numeroPregao=:numeroLicitacao, anexo=:anexoAlterar, dataAlteracao=:dataAlteracao WHERE codControle=:codControle AND fk_idInstituicao=:idInstituicao ");
+		codCliente=:nomeCliente, numeroAf=:numeroAf, valorPedido=:valorPedido, numeroPregao=:numeroLicitacao, anexo=:anexoAlterar, dataAlteracao=:dataAlteracao, fk_idUsuarioPed=:idUsuario, garantia=:garantia WHERE codControle=:codControle AND fk_idInstituicao=:idInstituicao ");
 			$stmt->bindparam(":codControle", $codControle);
 			$stmt->bindparam(":statusPedido", $statusPedido);
 			$stmt->bindparam(":mensagemAlterar", $mensagemAlterar);
@@ -901,6 +906,8 @@ class crud
 			$stmt->bindparam(":anexoAlterar", $anexoAlterar);
 			$stmt->bindparam(":idInstituicao", $idInstituicao);
 			$stmt->bindparam(":dataAlteracao", $dataAlteracao);
+			$stmt->bindparam(":idUsuario", $idUsuario);
+			$stmt->bindparam(":garantia", $garantia);
 
 			$stmt->execute();
 
@@ -910,7 +917,6 @@ class crud
 			return false;
 		}
 	}
-
 	public static function deletePedido($id, $idInstituicao)
 	{
 		$pdo = Database::connect();
@@ -1185,8 +1191,8 @@ class crud
 		
 				//$subject = "Informacoes de Pedido"; // assunto
 				$message = "Ola, <br><br> " .$nomeUsuario. " efetuou movimentacao de pedido no sistema <br><br> " . "\r\n";
-				$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a> <br><br> " . "\r\n";
-				$message .= "<a href=http://sistemaocorrencia.devnogueira.online/anexos/".$anexo."> Click aqui para visualisar o anexo</a> <br><br> " . "\r\n";
+				$message .= "<a href=http://www.devaction.com.br> Click aqui para acessar o sistema</a> <br><br> " . "\r\n";
+				$message .= "<a href=http://www.devaction.com.br/anexos/".$anexo."> Click aqui para visualisar o anexo</a> <br><br> " . "\r\n";
 				$message .= "Mensagem do Usuario: " . $mensagemEmail. " <br><br>" . "\r\n";
 				$message .= "Dados do cadastro: <br>" . $dadosCadastro. " <br><br>" . "\r\n";
 				$message .= "Favor da tratamento" . "\r\n";
@@ -1204,8 +1210,8 @@ class crud
 		
 				//$subject = "Informacoes de Pedido"; // assunto
 				$message = "Ola, <br><br> " .$nomeUsuario. " efetuou movimentacao de pedido no sistema <br><br> " . "\r\n";
-				$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a> <br><br> " . "\r\n";
-				$message .= "<a href=http://sistemaocorrencia.devnogueira.online/anexos/".$anexo."> Click aqui para visualisar o anexo</a> <br><br> " . "\r\n";
+				$message .= "<a href=http://www.devaction.com.br.online> Click aqui para acessar o sistema</a> <br><br> " . "\r\n";
+				$message .= "<a href=http://www.devaction.com.br/anexos/".$anexo."> Click aqui para visualisar o anexo</a> <br><br> " . "\r\n";
 				$message .= "Dados do cadastro: <br>" . $dadosCadastro. " <br><br>" . "\r\n";
 				$message .= "favor da tratamento" . "\r\n";
 				$headers = 'MIME-Version: 1.0' . "\r\n";
@@ -1224,7 +1230,7 @@ class crud
 		$message = "Usuario: " . $nomeUsuario . " identificou o erro no sistema <br><br> " . "\r\n";
 		$message .= "Mensagem do Usuario: " . $mensagem . "  <br><br> " . "\r\n";
 		$message .= "erro ocorrido em: " . $data . "  <br><br> " . "\r\n";
-		$message .= "<a href=http://sistemaocorrencia.devnogueira.online> Click aqui para acessar o sistema</a> <br><br> " . "\r\n";
+		$message .= "<a href=http://www.devaction.com.br> Click aqui para acessar o sistema</a> <br><br> " . "\r\n";
 		$message .= "error " . $erro . " <br><br>"  . "\r\n";
 		$message .= "favor da tratamento" . "\r\n";
 		$headers = 'MIME-Version: 1.0' . "\r\n";

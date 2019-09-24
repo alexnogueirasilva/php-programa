@@ -26,6 +26,7 @@ $nomeUsuario
                     <input type="hidden" value="CadastroPedido" name="tipo" id="tipo">
                     <input type="hidden" value="<?php echo $nomeAnexo; ?>" name="dataAtual" id="dataAtual">
                     <input type="hidden" value="<?php echo $nomeUsuario; ?>" name="nomeUsuario" id="nomeUsuario">
+                     <input type="hidden" value="<?php echo $idLogado; ?>" name="idUsuario" id="idUsuario">
                     <input type="hidden" value="Cadastro de Pedido" name="subject" id="subject">
                     <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicao" id="idInstituicao">
                     <input type="hidden" id="Cliente" name="Cliente">
@@ -38,10 +39,10 @@ $nomeUsuario
                             if ($selectCliente->rowCount() > 0) {
                                 while ($row = $selectCliente->fetch(PDO::FETCH_ASSOC)) {
                                     ?>
-                            <option value="<?php print($row['codCliente']); ?>">
-                                <?php print($row['nomeCliente']); ?>
-                            </option>
-                            <?php
+                                    <option value="<?php print($row['codCliente']); ?>">
+                                        <?php print($row['nomeCliente']); ?>
+                                    </option>
+                                <?php
                                 }
                             }
                             ?>
@@ -70,13 +71,21 @@ $nomeUsuario
                                 if ($selectStatus->rowCount() > 0) {
                                     while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
                                         ?>
-                                <option value="<?php print($row['codStatus']); ?>">
-                                    <?php print($row['nome']); ?>
-                                </option>
-                                <?php
+                                        <option value="<?php print($row['codStatus']); ?>">
+                                            <?php print($row['nome']); ?>
+                                        </option>
+                                    <?php
                                     }
                                 }
                                 ?>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <select class="form-control" name="garantia" id="garantia" required>
+                                <option value="" selected disabled>Garantia</option>
+                                        <option value="NAO">NAO</option>
+                                        <option value="SIM">SIM</option>                             
                             </select>
                         </div>
                     </div>
@@ -102,8 +111,8 @@ $nomeUsuario
 <!-- MODAL CRIA PEDIDO -->
 
 <!-- MODAL ALTERAR PEDIDO-->
-<div class="modal fade bs-example-modal-lg" id="modalPedidoAlterar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade" id="modalPedidoAlterar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -117,12 +126,12 @@ $nomeUsuario
                     <input type="hidden" id="subjectAlterar" name="subjectAlterar" value="Alteracao do Pedido">
                     <input type="hidden" id="dataFechamentoPedidoAlterar" name="dataFechamentoPedidoAlterar">
                     <input type="hidden" value="<?php echo $nomeUsuario; ?>" name="nomeUsuarioAlterar" id="nomeUsuarioAlterar">
+                   <input type="hidden" value="<?php echo $idLogado; ?>" name="idUsuarioAlterar" id="idUsuarioAlterar">
                     <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataAtual" id="dataAtual">
                     <input type="hidden" name="idInstituicaoAlterar" id="idInstituicaoAlterar">
                     <input type="hidden" name="ClienteAlterar22" id="ClienteAlterar22">
-                    <input type="hidden" name="codigoDetalhesAlterar" id="codigoDetalhesAlterar">
                     <div class="form-group">
-                        <input type="text" class="form-control" disabled="disabled" name="nomeClienteAlterar" id="nomeClienteAlterar">
+                        <input type="text"  class="form-control" disabled="disabled" name="nomeClienteAlterar" id="nomeClienteAlterar">
                     </div>
                     <input type="hidden" name="statusAlterar" id="statusAlterar">
                     <div class="form-group">
@@ -133,16 +142,23 @@ $nomeUsuario
                             if ($selectStatus->rowCount() > 0) {
                                 while ($row = $selectStatus->fetch(PDO::FETCH_ASSOC)) {
                                     ?>
-                            <option value="<?php print($row['codStatus']); ?>">
-                                <?php print($row['nome']); ?>
+                                    <option value="<?php print($row['codStatus']); ?>">
+                                        <?php print($row['nome']); ?>
 
-                            </option>
-                            <?php
+                                    </option>
+                                <?php
                                 }
                             }
                             ?>
                         </select>
-
+                        <br>
+                        <div class="form-group">
+                            <select class="form-control" name="garantiaAlterar" id="garantiaAlterar" required>
+                                <option value="" selected disabled>Garantia</option>
+                                        <option value="NAO">NAO</option>
+                                        <option value="SIM">SIM</option>                             
+                            </select>
+                        </div>
                     </div>
                     <!--
                     <input type="checkbox" name="email2" checked="checked" />
@@ -159,43 +175,23 @@ $nomeUsuario
                     <div class="form-group">
                         <label for="message-text" class="control-label">Observação:</label>
                         <textarea name="mensagemPedidoAlterar" class="form-control" rows="3" id="mensagemPedidoAlterar"></textarea>
+                        <br>
 
-                    </div>
-                    <div class="col-md-12">
-                        <h4><strong>Comentários:</strong></h4>
-                        <table class="table table-striped">
-                            <tbody id="comentariosPedidoAlterar">
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-md-12">
-
-                        <input type="hidden" value="<?php echo $idLogado; ?>" name="idLogado" id="idLogado">
-                        <input type="hidden" value="<?php echo $dataMsg; ?>" name="datahora" id="datahora">
-                        <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicaoMensagem" id="idInstituicaoMensagem">
                         <div class="form-group">
-                            <label for="message-text" class="control-label">Adicionar Comentário</label>
-                            <textarea name="mensagemComentario" class="form-control" rows="2" id="mensagemComentario" required></textarea>
+                            <input type="text" size="50" class="form-control" name="emailAlterar" id="emailAlterar" placeholder="Informe e-mail separando por virgula ">
                         </div>
                         <div class="form-group">
-                            <button id="addMensagem" class="btn btn-primary">Enviar</button>
+                            <label for="message-text" class="control-label">Mensagem:</label>
+                            <textarea name="mensagemEmailAlterar" class="form-control" rows="3" id="mensagemEmailAlterar"></textarea>
                         </div>
                     </div>
-                    <br>
-                    <div class="form-group">
-                        <input type="text" size="50" class="form-control" name="emailAlterar" id="emailAlterar" placeholder="Informe e-mail separando por virgula ">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        <button type="submit" id="alteraPedido" class="btn btn-primary">Enviar</button>
                     </div>
-                    <div class="form-group">
-                        <label for="message-text" class="control-label">Mensagem:</label>
-                        <textarea name="mensagemEmailAlterar" class="form-control" rows="3" id="mensagemEmailAlterar"></textarea>
-                    </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="submit" id="alteraPedido" class="btn btn-primary">Enviar</button>
-            </div>
-            </form>
+                </form>
 
+            </div>
 
         </div>
     </div>
@@ -221,7 +217,7 @@ $nomeUsuario
                         <input type="hidden" name="Excsubject" id="Excsubject" value="Exclusao de Pedido">
                         <input type="hidden" name="excIdPedido" id="excIdPedido">
                         <input type="hidden" name="ExcNomePedido1" id="ExcNomePedido1">
-
+                
                         <input type="hidden" name="excCliente" id="excCliente">
                         <div class="col-md-12">
                             <div id="contextoModal">
@@ -297,6 +293,10 @@ $nomeUsuario
                                 <td id="statusDetalhes"></td>
                             </tr>
                             <tr>
+                                <td>Garantia</td>
+                                <td id="garantiaDetalhes"></td>
+                            </tr>
+                            <tr>
                                 <th>Decorridos</th>
                                 <td id="tempoDetalhes"></td>
                             </tr>
@@ -333,7 +333,7 @@ $nomeUsuario
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <td><a class="btn btn-primary waves-effect waves-light" type="button" id="btnPedidoAlterar2" data-toggle="modal" data-target="#modalPedidoAlterar" data-whatever="@getbootstrap" value="<?php echo $idControle; ?>" target="_blank" data-codigocontrolealterar="<?php print($row['codControle']); ?>">Alterar</a></td>
+                <!--td><a class="btn btn-primary waves-effect waves-light" type="button" id="btnPedidoAlterar2" data-toggle="modal" data-target="#modalPedidoAlterar" data-whatever="@getbootstrap" value="< ?php echo $idControle; ?>" target="_blank" data-codigocontrolealterar="< ?php print($row['codControle']); ?>">Alterar</a></td-->
             </div>
         </div>
     </div>

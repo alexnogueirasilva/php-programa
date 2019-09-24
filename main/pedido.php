@@ -69,6 +69,7 @@ if($logado != 1){$logado2 = 600;
                                     <th>Licitação</th>
                                     <th>Pedido</th>
                                     <th>Status</th>
+                                    <th>Garantia</th>
                                     <th>Valor</th>
                                     <th>Anexo</th>
                                     <th>Alterar</th>
@@ -80,9 +81,9 @@ if($logado != 1){$logado2 = 600;
                                     <th>Cliente</th>
                                     <th>Tipo</th>
                                     <th>Licitação</th>
-
                                     <th>Pedido</th>
                                     <th>Status</th>
+                                    <th>Garantia</th>
                                     <th>Valor</th>
                                     <th>Anexo</th>
                                     <th>Alterar</th>
@@ -128,14 +129,15 @@ if($logado != 1){$logado2 = 600;
                                             <td><?php print($row['numeroPregao']); ?></td>
                                             <td><?php print($row['numeroAf']); ?></td>
                                             <td id="statusControle"><?php print($row['nomeStatus']); ?></td>
+                                            <td id="statusGarantia"><?php print($row['garantia']); ?></td>
                                             <td> R$<?php print(number_format($row['valorPedido'], 2, ',', '.')); ?></td>
 
                                             <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']); ?>">Anexo</a></td>
 
-                                            <td><a class="btn btn-warning waves-effect waves-light" type="button" id="btnPedidoAlterar" data-toggle="modal" data-target="#modalPedidoAlterar2" data-whatever="@getbootstrap" target="_blank" data-statusalterar="<?php print($row['codStatus']); ?>" data-idclientealterar="<?php print($row['codCliente']); ?>" data-nomealterar="<?php print($row['nomeCliente']); ?>" data-nomesatus="<?php print($row['nomeStatus']); ?>" data-mensagemalterar="<?php print($row['observacao']); ?>" data-codigocontrolealterar="<?php print($row['codControle']); ?>" data-numeroaf="<?php print($row['numeroAf']); ?>" data-numerolicitacao="<?php print($row['numeroPregao']); ?>" data-valorpedido="<?php print($row['valorPedido']); ?>" data-idinstituicaoalterar="<?php print($row['fk_idInstituicao']); ?>" data-anexoalterar="<?php print($row['anexo']); ?>">Alterar</a></td>
+                                            <td><a class="btn btn-warning waves-effect waves-light" type="button" id="btnPedidoAlterar" data-toggle="modal" data-target="#modalPedidoAlterar2" data-whatever="@getbootstrap" target="_blank" data-statusalterar="<?php print($row['codStatus']); ?>" data-idclientealterar="<?php print($row['codCliente']); ?>" data-nomealterar="<?php print($row['nomeCliente']); ?>" data-nomesatus="<?php print($row['nomeStatus']); ?>" data-mensagemalterar="<?php print($row['observacao']); ?>" data-codigocontrolealterar="<?php print($row['codControle']); ?>" data-numeroaf="<?php print($row['numeroAf']); ?>" data-numerolicitacao="<?php print($row['numeroPregao']); ?>" data-valorpedido="<?php print($row['valorPedido']); ?>" data-idinstituicaoalterar="<?php print($row['fk_idInstituicao']); ?>"  data-nomeusuario="<?php print($row['nomeUsuario']); ?>" data-idusuario="<?php print($row['fk_idUsuarioPed']); ?>" data-garantia="<?php print($row['garantia']); ?>" data-anexoalterar="<?php print($row['anexo']); ?>">Alterar</a></td>
                                             <td> <a class="btn btn-danger waves-effect waves-light" type="button" id="btnExcluiPedido" data-target="#modalExluirPedido" data-whatever="@getbootstrap"  
                                             data-codigoexcluir="<?php print($row['codControle']); ?>" data-nomeexcluir="<?php print($row['nomeCliente']); ?>" data-idinstituicaoexcluir="<?php print($row['fk_idInstituicao']); ?>">Excluir</a></td>
-                                            <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" data-toggle="modal" data-target="#modalDetPedido" data-whatever="@getbootstrap" data-codigocontroledet="<?php print($row['codControle']); ?>" data-nomeclientedet="<?php print($row['nomeCliente']); ?>" data-tipoclientedet="<?php print($row['tipoCliente']); ?>" data-numeropregaodet="<?php print($row['numeroPregao']); ?>" data-numeropedidodet="<?php print($row['numeroAf']); ?>" data-valorpedidodet="R$<?php print(number_format($row['valorPedido'], 2, ',', '.')); ?>" data-statuscontroledet="<?php print($row['nomeStatus']); ?>" data-datacadastrodet="<?php print(crud::formataData($row['dataCadastro'])); ?>" data-mensagem="<?php print($row['observacao']); ?>" data-idinstituicao="<?php print($row['fk_idInstituicao']); ?>">Detalhes</a></td>
+                                            <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" data-toggle="modal" data-target="#modalDetPedido" data-whatever="@getbootstrap" data-codigocontroledet="<?php print($row['codControle']); ?>" data-nomeclientedet="<?php print($row['nomeCliente']); ?>" data-tipoclientedet="<?php print($row['tipoCliente']); ?>" data-numeropregaodet="<?php print($row['numeroPregao']); ?>" data-numeropedidodet="<?php print($row['numeroAf']); ?>" data-valorpedidodet="R$<?php print(number_format($row['valorPedido'], 2, ',', '.')); ?>" data-statuscontroledet="<?php print($row['nomeStatus']); ?>" data-datacadastrodet="<?php print(crud::formataData($row['dataCadastro'])); ?>" data-mensagem="<?php print($row['observacao']); ?>" data-nomeusuario="<?php print($row['nomeUsuario']); ?>" data-idusuario="<?php print($row['fk_idUsuarioPed']); ?>" data-garantia="<?php print($row['garantia']); ?>" data-idinstituicao="<?php print($row['fk_idInstituicao']); ?>">Detalhes</a></td>
                                         </tr>
                                     <?php
                                 }
@@ -173,6 +175,7 @@ if($logado != 1){$logado2 = 600;
                     <input type="hidden" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="idInstituicaoAlterar" id="idInstituicaoAlterar" placeholder="instituicao" required>
                     <input type="hidden" id="dataFechamentoPedidoAlterar" name="dataFechamentoPedidoAlterar">
                     <input type="hidden" value="<?php echo $nomeUsuario; ?>" name="nomeUsuarioAlterar2" id="nomeUsuarioAlterar2">
+                    <input type="hidden" value="<?php echo $idLogado; ?>" name="idUsuarioAlterar2" id="idUsuarioAlterar2">
                     <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataAtual2" id="dataAtual2">
                     <input type="hidden" name="ClienteAlterar2" id="ClienteAlterar2">
                     <input type="hidden" name="statusAlterar2" id="statusAlterar2">
@@ -195,10 +198,10 @@ if($logado != 1){$logado2 = 600;
                     </div>
                     <div class="form-inline">
                     <div class="form-group">
-                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroAfPedidoAlterar" id="numeroAfPedidoAlterar" placeholder="Numero da AF" required>
+                            <input type="text" size="48" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroAfPedidoAlterar" id="numeroAfPedidoAlterar" placeholder="Numero da AF" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroLicitacaoPedidoAlterar" id="numeroLicitacaoPedidoAlterar" placeholder="Numero da licitacao" required>
+                            <input type="text" size="48" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroLicitacaoPedidoAlterar" id="numeroLicitacaoPedidoAlterar" placeholder="Numero da licitacao" required>
                         </div>                
                     </div>
                     <br>
@@ -222,8 +225,14 @@ if($logado != 1){$logado2 = 600;
                             }
                             ?>
                             </select>
+                        </div>                                           
+                        <div class="form-group">
+                            <select class="form-control" name="garantiaAlterar" id="garantiaAlterar" required>
+                                <option value="" selected disabled>Garantia</option>
+                                        <option value="NAO">NAO</option>
+                                        <option value="SIM">SIM</option>                             
+                            </select>
                         </div>
-                        
                     </div>
                     <br>                    
                     <div class="form-group">
@@ -295,6 +304,7 @@ include_once "pedidoModais.php";
             var numeroPedido = $(this).data('numeropedidodet');
             var valorPedido = $(this).data('valorpedidodet');
             var statusControle = $(this).data('statuscontroledet');
+            var garantia = $(this).data('garantia');
             var dataCadastro = $(this).data('datacadastrodet');
             var mensagem = $(this).data('mensagem');
             var tempoPedido = "testes"; // $horas . ' Horas' . ' e ' . $minutos . " Minutos";
@@ -321,6 +331,7 @@ include_once "pedidoModais.php";
             $('#tempoDetalhes').html(tempoPedido);
             $('#valorDetathes').html(valorPedido);
             $('#statusDetalhes').html(statusControle);
+            $('#garantiaDetalhes').html(garantia);
             $('#dataCriacaoDetalhes').html(dataCadastro);
             $('#mensagemDetatalhes').html(mensagem);
 

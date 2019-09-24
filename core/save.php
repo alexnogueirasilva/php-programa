@@ -494,13 +494,14 @@ switch ($value) {
 		$valorPedidoAtual = $_POST['valorPedido'];
 		$valorPedido 		= str_replace(",", ".", $valorPedidoAtual);
 		$codStatus = $_POST['statusPedido'];
+		$garantia = $_POST['garantia'];
 		$codCliente = $_POST['nomeCliente'];
 		$Cliente = $_POST['Cliente'];
 		$observacao = $_POST['mensagem'];
 		$email = $_POST['email'];
 		$subject = $_POST['subject']." - ".$_POST['Cliente'];
 		$nomeUsuario = $_POST['nomeUsuario'];
-
+        $idUsuario = $_POST['idUsuario'];
 		//ENTRA AQUI SE TIVER ANEXO
 		if (!empty($_FILES["file"]["name"])) {
 			$validextensions = array("jpeg", "jpg", "png", "PNG", "JPG", "JPEG", "pdf", "PDF", "docx");
@@ -513,12 +514,12 @@ switch ($value) {
 				$targetPath = "../anexos/" . md5($dataAbertura) . "." . $file_extension;
 				move_uploaded_file($sourcePath, $targetPath); // Move arquivo				
 				//SALVA NO BANCO
-				$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao);
+				$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao,$idUsuario,$garantia);
 				if ($cdt == true) {
 					echo $cdt;
 					if (!$email == '') {
 						$dadosCadastro = "Codigo: ".$cdt." <br>"."Cliente: ".$Cliente." <br>"."Licitacao: ".$numeroPregao." <br>"."Autorizacao: ".$numeroAf 
-					." <br>"."Valor do Pedido R$".$valorPedidoAtual." <br>"."Observacao: ".$observacao;
+					." <br>"."Valor do Pedido R$".$valorPedidoAtual." <br>"."Observacao: ".$observacao." <br>"."Garantia: ".$garantia ;
 						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 					}
 				} else {
@@ -530,13 +531,13 @@ switch ($value) {
 			//CASO NÃO TENHA ANEXO ENTRA AQUI	
 		} else {
 			$anexo = "sem_anexo.php";
-			$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao);
+			$cdt = crud::CadastroPedido($numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $dataCadastro, $idInstituicao,$idUsuario, $garantia);
 			if ($cdt == true) {
 				
 				echo $cdt;
 				if (!$email == '') {
 					$dadosCadastro = "Codigo: ".$cdt." <br>"."Cliente: ".$Cliente." <br>"."Licitacao: ".$numeroPregao." <br>"."Autorizacao: ".$numeroAf 
-					." <br>"."Valor do Pedido R$".$valorPedidoAtual." <br>"."Observacao: ".$observacao;
+					." <br>"."Valor do Pedido R$".$valorPedidoAtual." <br>"."Observacao: ".$observacao." <br>"."Garantia: ".$garantia;
 					crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 				}
 			} else {
@@ -549,7 +550,7 @@ switch ($value) {
 	case 'editarPedido':
 		$descricao  = $_POST['edtDescricao'];
 		$edtId         = $_POST['edtId'];
-		$cad = crud::editarPedido($codControle, $numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $idInstituicao);
+		$cad = crud::editarPedido($codControle, $numeroPregao, $numeroAf, $valorPedido, $codStatus, $codCliente, $anexo, $observacao, $idInstituicao,$garantia);
 		if ($cad == true) {
 			echo 1;
 		} else {
@@ -561,6 +562,7 @@ switch ($value) {
 		$codControle        = $_POST['codigoControleAlterar'];
 		$email		        = $_POST['emailAlterar2'];
 		$statusPedido		= $_POST['statusPedidoAlterar'];
+		$garantia			= $_POST['garantiaAlterar'];
 		$mensagemAlterar    = $_POST['mensagemPedidoAlterar'];
 		$nomeCliente  		= $_POST['idClientePedidoAlterar'];
 		$numeroAf         	= $_POST['numeroAfPedidoAlterar'];
@@ -573,6 +575,7 @@ switch ($value) {
 		$dataAlteracao 		= $_POST['dataAtual2'];
 		$subject			= $_POST['subjectAlterar2']." - ".$_POST['ClienteAlterar2'];
 		$nomeUsuario		= $_POST['nomeUsuarioAlterar2'];
+		$idUsuario			= $_POST['idUsuarioAlterar2'];
 		$Cliente 			= $_POST['ClienteAlterar2'];
 		$Status 			= $_POST['statusAlterar2'];
 		//ENTRA AQUI SE TIVER ANEXO
@@ -598,14 +601,16 @@ switch ($value) {
 					$numeroLicitacao,
 					$anexoAlterar,
 					$idInstituicao,
-					$dataAlteracao
+					$dataAlteracao,
+					$idUsuario, 
+					$garantia
 				);
 				$anexo = $anexoAlterar;
 				if ($cad == true) {
 					echo 1;
 					if (!$email == '') {
 						$dadosCadastro = "Codigo: ".$codControle." <br>"."Cliente: ".$Cliente." <br>"."Status: ".$Status." <br>"."Licitacao: ".$numeroLicitacao." <br>"."Autorizacao: ".$numeroAf
-						." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do pedido: ".$mensagemAlterar;
+						." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do pedido: ".$mensagemAlterar." <br>"."Garantia: ".$garantia;
 						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 					}
 				} else {
@@ -617,13 +622,13 @@ switch ($value) {
 		} else {
 			//CASO NÃO TENHA ANEXO ENTRA AQUI
 			$anexo = $anexoAlterar;
-			$cad = crud::AlterarPedido2($codControle, $statusPedido, $mensagemAlterar, $nomeCliente,$numeroAf, $valorPedido, $numeroLicitacao, $anexoAlterar, $idInstituicao, $dataAlteracao);
+			$cad = crud::AlterarPedido2($codControle, $statusPedido, $mensagemAlterar, $nomeCliente,$numeroAf, $valorPedido, $numeroLicitacao, $anexoAlterar, $idInstituicao, $dataAlteracao,$idUsuario,$garantia);
 
 			if ($cad == true) {
 				echo 1;
 				if (!$email == '') {
 					$dadosCadastro = "Codigo: ".$codControle." <br>"."Cliente: ".$Cliente." <br>"."Status: ".$Status." <br>"."Licitacao: ".$numeroLicitacao." <br>"."Autorizacao: ".$numeroAf
-					." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do pedido: ".$mensagemAlterar;
+					." <br>"."Valor do Pedido R$: ".$valorPedidoAtual." <br>"."Observacao do pedido: ".$mensagemAlterar ." <br>"."Garantia: ".$garantia;
 						crud::enviarEmailPedidoAnexo($email, $subject, $nomeUsuario, $anexo,$dadosCadastro);
 				}
 			} else {
@@ -635,6 +640,7 @@ switch ($value) {
 	
 	case 'AlterarPedido':
 		$statusPedido		= $_POST['statusPedidoAlterar'];
+		$garantia			= $_POST['garantiaAlterar'];
 		$codControle        = $_POST['codigoControleAlterar'];
 		$mensagemAlterar    = $_POST['mensagemPedidoAlterar'];
 		$idInstituicao 		= $_POST['idInstituicaoAlterar'];
@@ -643,6 +649,7 @@ switch ($value) {
 		$dataFechamento 	= $_POST['dataFechamentoPedidoAlterar'];
 		$subject 			= $_POST['subjectAlterar']." - ".$_POST['ClienteAlterar22'];;
 		$nomeUsuario		= $_POST['nomeUsuarioAlterar'];
+		$idUsuario			= $_POST['idUsuarioAlterar'];
 		$mensagemEmail		= $_POST['mensagemEmailAlterar'];
 		$Cliente			= $_POST['ClienteAlterar22'];
 		$Status 			= $_POST['statusAlterar'];
@@ -655,11 +662,11 @@ switch ($value) {
 		} else {
 			$dataFechamento = null;
 		}
-		$cad = crud::AlterarPedido($codControle, $statusPedido, $mensagemAlterar, $idInstituicao, $dataAlteracao, $dataFechamento);
+		$cad = crud::AlterarPedido($codControle, $statusPedido, $mensagemAlterar, $idInstituicao, $dataAlteracao, $dataFechamento,$idUsuario,$garantia);
 		if ($cad == true) {
 			echo 1;
 			if(!$email ==''){
-				$dadosCadastro = "Codigo: ".$codControle." <br>"."Cliente: ".$Cliente." <br>"."Status: ".$Status." <br>"."Observacao do pedido: ".$mensagemAlterar;
+				$dadosCadastro = "Codigo: ".$codControle." <br>"."Cliente: ".$Cliente." <br>"."Status: ".$Status." <br>"."Observacao do pedido: ".$mensagemAlterar." <br>"."Garantia: ".$garantia;
 				crud::enviarEmailPedido($email,$subject,$nomeUsuario,$mensagemEmail,$dadosCadastro,$anexo);
 			}
 		} else {

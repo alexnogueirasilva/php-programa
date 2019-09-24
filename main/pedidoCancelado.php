@@ -57,7 +57,8 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                                     <th>Data</th>
                                     <th>Cancelado</th>
                                     <th>Status</th>
-                                    <th>Decorridos</th>
+                                    <th>Garantia</th>
+                                     <th>Decorridos</th>
                                     <th>Anexo</th>
                                     <th>Alterar</th>
                                     <th>Detalhes</th>
@@ -72,6 +73,7 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                                     <th>Data</th>
                                     <th>Cancelado</th>
                                     <th>Status</th>
+                                    <th>Garantia</th>
                                     <th>Decorridos</th>
                                     <th>Anexo</th>
                                     <th>Alterar</th>
@@ -124,20 +126,21 @@ $instituicao    = $_SESSION['instituicaoUsuario'];
                                             <td><?php print(crud::formataData($row['dataCadastro'])); ?></td>
                                             <td><?php print(crud::formataData($row['dataFechamento'])); ?></td>
                                             <td id="statusControle"><?php print($row['nomeStatus']); ?></td>
+                                            <td id="statusGarantia"><?php print($row['garantia']); ?></td>
                                             <td><?php print($horas .   'hs ' . 'e ' .  $minutos . 'm'); ?></td>
                                             <td><a class="btn btn-primary waves-effect waves-light" id="btnAnexo" target="_blank" href="../anexos/<?php print($row['anexo']); ?>">Anexo</a></td>
                                             <td><a class="btn btn-primary waves-effect waves-light" type="button" id="btnPedidoAlterar" data-toggle="modal" data-target="#modalPedidoAlterar" data-whatever="@getbootstrap" target="_blank" 
                                             data-idinstituicaoalterar="<?php print($row['fk_idInstituicao']); ?>"
-                                            data-anexoalterar="<?php print($row['anexo']); ?>"
-                                             data-statusalterar="<?php print($row['codStatus']); ?>" data-mensagemalterar="<?php print($row['observacao']); ?>" data-codigocontrolealterar="<?php print($row['codControle']); ?>" data-dataalteracao="<?php print($row['dataAlteracao']); ?>" data-nomesatus="<?php print($row['nomeStatus']); ?>" data-nomealterar="<?php print($row['nomeCliente']); ?>" data-datafechamento="<?php print($row['dataFechamento']); ?>">Alterar</a></td>
+                                            data-anexoalterar="<?php print($row['anexo']); ?>" data-garantia="<?php print($row['garantia']); ?>" 
+                                             data-nomeusuario="<?php print($row['nomeUsuario']); ?>" data-idusuario="<?php print($row['fk_idUsuarioPed']); ?>"  data-statusalterar="<?php print($row['codStatus']); ?>" data-mensagemalterar="<?php print($row['observacao']); ?>" data-codigocontrolealterar="<?php print($row['codControle']); ?>" data-dataalteracao="<?php print($row['dataAlteracao']); ?>" data-nomesatus="<?php print($row['nomeStatus']); ?>" data-idcliente="<?php print($row['codCliente']); ?>"  data-nomealterar="<?php print($row['nomeCliente']); ?>" data-datafechamento="<?php print($row['dataFechamento']); ?>">Alterar</a></td>
                                             
                                             <td><a class="btn btn-success waves-effect waves-light" type="button" id="btnPedidoDetalhes" data-toggle="modal" data-target="#modalDetPedido" data-whatever="@getbootstrap" 
-                                            data-codigocontroledet="<?php print($row['codControle']); ?>" data-nomeclientedet="<?php print($row['nomeCliente']); ?>" 
+                                            data-garantia="<?php print($row['garantia']); ?>" data-codigocontroledet="<?php print($row['codControle']); ?>" data-nomeclientedet="<?php print($row['nomeCliente']); ?>" data-idcliente="<?php print($row['codCliente']); ?>" 
                                             data-tipoclientedet="<?php print($row['tipoCliente']); ?>" data-numeropregaodet="<?php print($row['numeroPregao']); ?>" 
                                             data-numeropedidodet="<?php print($row['numeroAf']); ?>" data-valorpedidodet="R$<?php print(number_format($row['valorPedido'], 2, ',', '.')); ?>" 
                                             data-statuscontroledet="<?php print($row['nomeStatus']); ?>" data-datacadastrodet="<?php print(crud::formataData($row['dataCadastro'])); ?>"
                                             data-datafechamento="<?php print(crud::formataData($row['dataFechamento'])); ?>"  data-dataalteracao="<?php print(crud::formataData($row['dataAlteracao'])); ?>" 
-                                            data-mensagem="<?php print($row['observacao']); ?>">Detalhes</a></td>
+                                           data-nomeusuario="<?php print($row['nomeUsuario']); ?>" data-idusuario="<?php print($row['fk_idUsuarioPed']); ?>"  data-mensagem="<?php print($row['observacao']); ?>">Detalhes</a></td>
                                         </tr>
                                     <?php
                                 }
