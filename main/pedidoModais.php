@@ -26,7 +26,7 @@ $nomeUsuario
                     <input type="hidden" value="CadastroPedido" name="tipo" id="tipo">
                     <input type="hidden" value="<?php echo $nomeAnexo; ?>" name="dataAtual" id="dataAtual">
                     <input type="hidden" value="<?php echo $nomeUsuario; ?>" name="nomeUsuario" id="nomeUsuario">
-                     <input type="hidden" value="<?php echo $idLogado; ?>" name="idUsuario" id="idUsuario">
+                    <input type="hidden" value="<?php echo $idLogado; ?>" name="idUsuario" id="idUsuario">
                     <input type="hidden" value="Cadastro de Pedido" name="subject" id="subject">
                     <input type="hidden" value="<?php echo $idInstituicao; ?>" name="idInstituicao" id="idInstituicao">
                     <input type="hidden" id="Cliente" name="Cliente">
@@ -42,7 +42,7 @@ $nomeUsuario
                                     <option value="<?php print($row['codCliente']); ?>">
                                         <?php print($row['nomeCliente']); ?>
                                     </option>
-                                <?php
+                            <?php
                                 }
                             }
                             ?>
@@ -51,10 +51,10 @@ $nomeUsuario
 
                     <div class="form-inline">
                         <div class="form-group">
-                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroAf" id="numeroAf" placeholder="Numero da AF" required>
+                            <input type="text" size="48" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroAf" id="numeroAf" placeholder="Numero da AF" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" size="50" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroPregao" id="numeroPregao" placeholder="Numero Licitação" required>
+                            <input type="text" size="48" style="text-transform: uppercase;" maxlength="40" class="form-control" name="numeroPregao" id="numeroPregao" placeholder="Numero Licitação" required>
                         </div>
                     </div>
                     <br>
@@ -74,18 +74,17 @@ $nomeUsuario
                                         <option value="<?php print($row['codStatus']); ?>">
                                             <?php print($row['nome']); ?>
                                         </option>
-                                    <?php
+                                <?php
                                     }
                                 }
                                 ?>
                             </select>
-                        </div>
-                        <br>
+                        </div>                       
                         <div class="form-group">
                             <select class="form-control" name="garantia" id="garantia" required>
                                 <option value="" selected disabled>Garantia</option>
-                                        <option value="NAO">NAO</option>
-                                        <option value="SIM">SIM</option>                             
+                                <option value="NAO">NAO</option>
+                                <option value="SIM">SIM</option>
                             </select>
                         </div>
                     </div>
@@ -126,12 +125,12 @@ $nomeUsuario
                     <input type="hidden" id="subjectAlterar" name="subjectAlterar" value="Alteracao do Pedido">
                     <input type="hidden" id="dataFechamentoPedidoAlterar" name="dataFechamentoPedidoAlterar">
                     <input type="hidden" value="<?php echo $nomeUsuario; ?>" name="nomeUsuarioAlterar" id="nomeUsuarioAlterar">
-                   <input type="hidden" value="<?php echo $idLogado; ?>" name="idUsuarioAlterar" id="idUsuarioAlterar">
+                    <input type="hidden" value="<?php echo $idLogado; ?>" name="idUsuarioAlterar" id="idUsuarioAlterar">
                     <input type="hidden" value="<?php echo $dataAtual; ?>" name="dataAtual" id="dataAtual">
                     <input type="hidden" name="idInstituicaoAlterar" id="idInstituicaoAlterar">
                     <input type="hidden" name="ClienteAlterar22" id="ClienteAlterar22">
                     <div class="form-group">
-                        <input type="text"  class="form-control" disabled="disabled" name="nomeClienteAlterar" id="nomeClienteAlterar">
+                        <input type="text" class="form-control" disabled="disabled" name="nomeClienteAlterar" id="nomeClienteAlterar">
                     </div>
                     <input type="hidden" name="statusAlterar" id="statusAlterar">
                     <div class="form-group">
@@ -146,7 +145,7 @@ $nomeUsuario
                                         <?php print($row['nome']); ?>
 
                                     </option>
-                                <?php
+                            <?php
                                 }
                             }
                             ?>
@@ -155,8 +154,8 @@ $nomeUsuario
                         <div class="form-group">
                             <select class="form-control" name="garantiaAlterar" id="garantiaAlterar" required>
                                 <option value="" selected disabled>Garantia</option>
-                                        <option value="NAO">NAO</option>
-                                        <option value="SIM">SIM</option>                             
+                                <option value="NAO">NAO</option>
+                                <option value="SIM">SIM</option>
                             </select>
                         </div>
                     </div>
@@ -217,7 +216,7 @@ $nomeUsuario
                         <input type="hidden" name="Excsubject" id="Excsubject" value="Exclusao de Pedido">
                         <input type="hidden" name="excIdPedido" id="excIdPedido">
                         <input type="hidden" name="ExcNomePedido1" id="ExcNomePedido1">
-                
+
                         <input type="hidden" name="excCliente" id="excCliente">
                         <div class="col-md-12">
                             <div id="contextoModal">

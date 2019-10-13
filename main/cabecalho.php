@@ -171,6 +171,16 @@ $dataAtual = date('Y-m-d H:i:s');
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+                        <li> <a id="cadSugestoes" href="#" class="waves-effect"><i class="icon-envelope fa-fw"></i>SUGESTOES<span class="fa arrow"></span> </a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="sugestao.php">Cadastro</a></li>
+                                <li><a href="#">Lista</a></li>
+                                <li><a href="#">Pendente</a></li>
+                                <li><a href="#">Todos </a></li>
+                                <li><a href="#">Dashboard </a></li>
+                            </ul>
+                        <!-- /.nav-second-level -->
+                        </li>
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->

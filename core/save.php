@@ -859,4 +859,40 @@ switch ($value) {
 		crud::enviarEmailSuporte($email, $mensagem, $nomeUsuario, $erro, $data);
 
 		break;
+		
+		
+		/**
+		 * Cadastro Sugestoes - inicio
+		 */
+	case 'cadastroSugestoes':
+	
+	$idSugestao = $_POST['idSugestao'];
+	$tipoSugestao = $_POST['tipoSugestao'];
+	$statusSugestao = $_POST['statusSugestao'];
+	$descricaoSugestao = $_POST['descricaoSugestao'];
+	$idUsuario = $_POST['idUsuario'];
+	$idInstituicao = $_POST['idInstituicao'];
+	$dataCadastro = $_POST['dataAtual'];
+	$dataAlteracao = $_POST['dataAtual'];
+	$acao = $_POST['acao'];
+	
+		if ($acao == 1) {
+			$cadastro = crud::cadastrarSugestao($tipoSugestao, $statusSugestao, 
+			$descricaoSugestao, $idUsuario, $idInstituicao, $dataCadastro, $dataAlteracao);
+		} else if ($acao == 2) {
+			$cadastro = crud::alterarSugestao($idSugestao, $tipoSugestao, $statusSugestao, 
+			$descricaoSugestao, $idUsuario, $idInstituicao, $dataAlteracao);
+		} else if ($acao == 3) {
+			$cadastro = crud::excluirSugestao($idSugestao, $idUsuario, $idInstituicao);
+		}
+		if ($cadastro == true) {
+			echo $cadastro;
+		} else {
+			echo 0;
+		}
+	break;
+
+		 /**
+		  * Cadastro Sugestoes - final 
+		  */
 }

@@ -1241,4 +1241,113 @@ class crud
 
 		mail($to, $subject, $message, $headers);
 	}
+
+
+ /**
+ * Cadastro Sugestoes - final 
+*/
+
+public static function listarSugestaoGeral()
+{
+	$sql = "SELECT sug.sug_id, sug.sug_tipo, sug.sug_descricao, sug.sug_status, sug.sug_usuario, sug.sug_idInstituicao, sug.sug_datacadastro, sug.sug_dataalteracao,
+	usr.nome, usr.id FROM sugestoes sug INNER JOIN usuarios as usr ON usr.id = sug.sug_usuario INNER JOIN departamentos as dep ON usr.id_dep = dep.id ORDER BY sug.sug_id ASC";
+
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	return $stmt;
+}
+public static function listarSugestoes($idInstituicao)
+{
+	$sql = " SELECT sug.sug_id, sug.sug_tipo, sug.sug_descricao, sug.sug_status, sug.sug_usuario, sug.sug_idInstituicao, sug.sug_datacadastro, sug.sug_dataalteracao,
+usr.nome, usr.id FROM sugestoes sug INNER JOIN usuarios as usr ON usr.id = sug.sug_usuario INNER JOIN departamentos as dep ON usr.id_dep = dep.id WHERE sug.sug_idInstituicao = '" . $idInstituicao . "' ORDER BY sug.sug_id ASC";
+
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	return $stmt;
+}
+
+public static function listarSugestaoDescricao($valorPesquisar)
+{
+	$sql = " SELECT sug.sug_id, sug.sug_tipo, sug.sug_descricao, sug.sug_status, sug.sug_usuario, sug.sug_idInstituicao, sug.sug_datacadastro, sug.sug_dataalteracao,
+	usr.nome, usr.id FROM sugestoes sug INNER JOIN usuarios as usr ON usr.id = sug.sug_usuario INNER JOIN departamentos as dep ON usr.id_dep = dep.id WHERE sug.sug_descricao LIKE'%" . $valorPesquisar . "%' ORDER BY sug.sug_id desc";
+
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	return $stmt;
+}
+
+public static function cadastrarSugestao($tipoSugestao, $statusSugestao, 
+$descricaoSugestao, $idUsuario, $idInstituicao, $dataCadastro, $dataAlteracao)
+{
+	$pdo = Database::connect();
+	try {
+		//SELECT sug_id, sug_tipo, sug_descricao, sug_status, sug_usuario, sug_idInstituicao, sug_datacadastro, sug_dataalteracao FROM sugestoes
+		$stmt = $pdo->prepare("INSERT INTO sugestoes(sug_tipo, sug_descricao, sug_status, sug_usuario, sug_idInstituicao, sug_datacadastro, sug_dataalteracao) 
+									VALUES (:tipoSugestao, :descricaoSugestao, :statusSugestao,  :idUsuario, :idInstituicao, :dataCadastro, :dataAlteracao)");
+		$stmt->bindparam(":tipoSugestao", $tipoSugestao);
+		$stmt->bindparam(":statusSugestao", $statusSugestao);
+		$stmt->bindparam(":descricaoSugestao", $descricaoSugestao);
+		$stmt->bindparam(":idUsuario", $idUsuario);
+		$stmt->bindparam(":idInstituicao", $idInstituicao);
+		$stmt->bindparam(":dataCadastro", $dataCadastro);
+		$stmt->bindparam(":dataAlteracao", $dataAlteracao);
+		$stmt->execute();
+		$id_cad = $pdo->lastInsertId();
+		
+			return	$id_cad;
+
+
+	} catch (PDOException $e) {
+		echo $e->getMessage();
+		return false;
+	}
+}
+public static function alterarSugestao($idSugestao, $tipoSugestao, $statusSugestao, 
+$descricaoSugestao, $idUsuario, $idInstituicao, $dataAlteracao)
+{
+	$pdo = Database::connect();
+	try {
+		$stmt = $pdo->prepare("UPDATE sugestoes SET sug_tipo=:tipoSugestao, sug_descricao=:descricaoSugestao, sug_status=:statusSugestao, sug_usuario=:idUsuario, sug_idInstituicao=:idInstituicao, sug_dataalteracao=:dataAlteracao WHERE sug_id=:idSugestao");
+		$stmt->bindparam(":idSugestao", $idSugestao);
+		$stmt->bindparam(":tipoSugestao", $tipoSugestao);
+		$stmt->bindparam(":statusSugestao", $statusSugestao);
+		$stmt->bindparam(":descricaoSugestao", $descricaoSugestao);
+		$stmt->bindparam(":idUsuario", $idUsuario);
+		$stmt->bindparam(":idInstituicao", $idInstituicao);
+		$stmt->bindparam(":dataAlteracao", $dataAlteracao);		
+		$stmt->execute();
+		return	$idSugestao;
+	} catch (PDOException $e) {
+		echo $e->getMessage();
+		return false;
+	}
+}
+public static function excluirSugestao($idSugestao, $idUsuario, $idInstituicao)
+{
+	$pdo = Database::connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	try {
+		$stmt = $pdo->prepare("DELETE FROM sugestoes WHERE sug_id =:idSugestao AND sug_usuario=:idUsuario AND sug_idInstituicao=:idInstituicao");
+		$stmt->bindParam(":idSugestao", $idSugestao);
+		$stmt->bindParam(":idUsuario", $idUsuario);
+		$stmt->bindParam(":idInstituicao", $idInstituicao);
+		$stmt->execute();
+
+		return	$idSugestao;
+	} catch (PDOException $e) {
+		echo $e->getMessage();
+		return false;
+	}
+}
+
+/**
+ * Cadastro Sugestoes - final 
+*/
+
 }
